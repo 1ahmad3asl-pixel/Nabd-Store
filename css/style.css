@@ -1,3 +1,6 @@
+سنبدأ بملف css/style.css فقط.
+احذف محتوى الملف القديم بالكامل، ثم انسخ هذا الكود مكانه. لا تعدّل أي ملف آخر الآن.
+Writing
 *{
     box-sizing:border-box;
     margin:0;
@@ -29,6 +32,10 @@ button{
     font-family:inherit;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .main-header{
     height:70px;
     background:var(--primary);
@@ -51,22 +58,26 @@ button{
 .header-actions{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
 }
+
+/* الرصيد يظهر كرقم فقط */
 
 .wallet{
     display:flex;
     align-items:center;
-    gap:5px;
+    justify-content:center;
     background:rgba(255,255,255,.15);
     padding:9px 13px;
     border-radius:12px;
     font-size:14px;
+    min-width:72px;
 }
 
 .wallet strong{
     direction:ltr;
     display:inline-block;
+    font-variant-numeric:tabular-nums;
 }
 
 .menu-btn{
@@ -84,6 +95,49 @@ button{
     background:rgba(255,255,255,.12);
 }
 
+/* =========================
+   MOVING DHIKR BAR
+========================= */
+
+.dhikr-bar{
+    width:100%;
+    overflow:hidden;
+    background:white;
+    border-bottom:1px solid var(--border);
+    height:38px;
+    display:flex;
+    align-items:center;
+    white-space:nowrap;
+}
+
+.dhikr-track{
+    display:inline-flex;
+    align-items:center;
+    gap:45px;
+    padding-right:30px;
+    animation:dhikrMove 22s linear infinite;
+}
+
+.dhikr-track span{
+    color:var(--primary);
+    font-size:14px;
+    font-weight:bold;
+}
+
+@keyframes dhikrMove{
+    from{
+        transform:translateX(100%);
+    }
+
+    to{
+        transform:translateX(-100%);
+    }
+}
+
+/* =========================
+   OVERLAY
+========================= */
+
 .overlay{
     position:fixed;
     inset:0;
@@ -98,6 +152,10 @@ button{
     opacity:1;
     visibility:visible;
 }
+
+/* =========================
+   DRAWER
+========================= */
 
 .drawer{
     position:fixed;
@@ -213,11 +271,19 @@ button{
     font-size:11px;
 }
 
+/* =========================
+   MAIN CONTAINER
+========================= */
+
 .container{
     width:92%;
     max-width:1100px;
     margin:25px auto;
 }
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
     background:linear-gradient(135deg,var(--primary),var(--primary-dark));
@@ -272,7 +338,12 @@ button{
     direction:ltr;
     display:block;
     font-size:22px;
+    font-variant-numeric:tabular-nums;
 }
+
+/* =========================
+   QUICK MENU
+========================= */
 
 .quick-menu{
     display:grid;
@@ -307,6 +378,10 @@ button{
     font-size:13px;
 }
 
+/* =========================
+   SERVICES
+========================= */
+
 .services-section{
     margin-top:5px;
 }
@@ -326,41 +401,84 @@ button{
     margin-top:5px;
 }
 
-.categories{
-    display:flex;
-    gap:9px;
-    overflow-x:auto;
-    padding:3px 2px 10px;
-    margin-bottom:15px;
-    scrollbar-width:none;
-}
+/* =========================
+   CATEGORIES GRID
+   مربعات 1:1
+========================= */
 
-.categories::-webkit-scrollbar{
-    display:none;
+.categories{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+    padding:3px 2px;
 }
 
 .category{
-    white-space:nowrap;
+    width:100%;
+    aspect-ratio:1 / 1;
     border:1px solid var(--border);
     background:white;
     color:#333;
-    padding:10px 17px;
-    border-radius:22px;
+    border-radius:17px;
     cursor:pointer;
-    box-shadow:0 2px 7px rgba(0,0,0,.04);
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
     transition:.2s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    padding:10px;
+    overflow:hidden;
+    position:relative;
 }
 
 .category:hover{
     border-color:var(--primary);
     color:var(--primary);
+    transform:translateY(-2px);
 }
 
 .category.active{
-    background:var(--primary);
-    color:white;
-    border-color:var(--primary);
+    background:var(--primary-light);
+    color:var(--primary);
+    border:2px solid var(--primary);
 }
+
+/*
+   مساحة صورة التصنيف.
+   يمكن وضع الصور لاحقاً من HTML/JS.
+*/
+
+.category img{
+    width:72%;
+    aspect-ratio:1 / 1;
+    object-fit:contain;
+    margin:auto;
+    display:block;
+}
+
+.category-icon{
+    width:72%;
+    aspect-ratio:1 / 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    margin:auto;
+}
+
+.category-title{
+    width:100%;
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    padding:8px 3px 4px;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
 
 .products{
     display:grid;
@@ -418,6 +536,7 @@ button{
     direction:ltr;
     text-align:right;
     margin-bottom:12px;
+    font-variant-numeric:tabular-nums;
 }
 
 .buy-btn{
@@ -444,6 +563,10 @@ button{
     background:#9aa2ad;
     cursor:not-allowed;
 }
+
+/* =========================
+   LOADING
+========================= */
 
 .products-loading{
     grid-column:1/-1;
@@ -474,6 +597,37 @@ button{
     }
 }
 
+/* =========================
+   WHATSAPP SUPPORT
+========================= */
+
+.whatsapp-float{
+    position:fixed;
+    left:18px;
+    bottom:18px;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:#25D366;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:29px;
+    box-shadow:0 5px 18px rgba(0,0,0,.22);
+    z-index:450;
+    transition:.2s;
+}
+
+.whatsapp-float:hover{
+    transform:scale(1.08);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
 .main-footer{
     text-align:center;
     padding:35px 10px 28px;
@@ -491,6 +645,10 @@ button{
 .main-footer p{
     margin-bottom:8px;
 }
+
+/* =========================
+   TOAST
+========================= */
 
 .toast{
     position:fixed;
@@ -515,6 +673,10 @@ button{
     visibility:visible;
     transform:translateX(-50%) translateY(0);
 }
+
+/* =========================
+   MODAL
+========================= */
 
 .modal{
     position:fixed;
@@ -562,6 +724,10 @@ button{
     cursor:pointer;
 }
 
+/* =========================
+   EMPTY STATE
+========================= */
+
 .empty-state{
     grid-column:1/-1;
     background:white;
@@ -571,6 +737,10 @@ button{
     color:var(--muted);
     box-shadow:var(--shadow);
 }
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:900px){
 
@@ -613,14 +783,27 @@ button{
     }
 
     .wallet{
-        font-size:11px;
-        padding:8px 9px;
+        font-size:12px;
+        padding:8px 10px;
+        min-width:65px;
     }
 
     .menu-btn{
         width:38px;
         height:38px;
         font-size:24px;
+    }
+
+    .dhikr-bar{
+        height:35px;
+    }
+
+    .dhikr-track{
+        gap:30px;
+    }
+
+    .dhikr-track span{
+        font-size:12px;
     }
 
     .container{
@@ -656,6 +839,30 @@ button{
         font-size:11px;
     }
 
+    /*
+       التصنيفات:
+       3 مربعات في الصف حتى على الهاتف
+    */
+
+    .categories{
+        grid-template-columns:repeat(3,1fr);
+        gap:8px;
+    }
+
+    .category{
+        border-radius:13px;
+        padding:7px;
+    }
+
+    .category-icon{
+        font-size:30px;
+    }
+
+    .category-title{
+        font-size:11px;
+        padding:6px 2px 3px;
+    }
+
     .products{
         grid-template-columns:repeat(2,1fr);
         gap:10px;
@@ -687,6 +894,14 @@ button{
     .buy-btn{
         padding:10px 5px;
         font-size:13px;
+    }
+
+    .whatsapp-float{
+        width:52px;
+        height:52px;
+        left:14px;
+        bottom:14px;
+        font-size:27px;
     }
 
 }
