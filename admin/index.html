@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة تحكم المدير - متجر النبض الرقمي</title>
+
+<link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<header class="admin-header">
+
+    <div class="admin-brand">
+        <span>⚡</span>
+        <strong>متجر النبض الرقمي</strong>
+    </div>
+
+    <div class="admin-header-actions">
+
+        <div class="admin-balance">
+            رصيد API:
+            <strong id="apiBalance">$0.00</strong>
+        </div>
+
+        <button id="menuButton" class="admin-menu-button">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar" id="sidebar">
+
+        <div class="admin-profile">
+
+            <div class="admin-avatar">
+                👑
+            </div>
+
+            <div>
+                <strong>المدير</strong>
+                <small>Administrator</small>
+            </div>
+
+        </div>
+
+        <nav class="admin-nav">
+
+            <button class="admin-nav-item active" data-section="dashboard">
+                <span>📊</span>
+                <span>الرئيسية</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="customers">
+                <span>👥</span>
+                <span>العملاء</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="orders">
+                <span>📦</span>
+                <span>الطلبات</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="products">
+                <span>🛍️</span>
+                <span>المنتجات</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="wallet">
+                <span>💰</span>
+                <span>المحفظة</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="notifications">
+                <span>🔔</span>
+                <span>الإشعارات</span>
+            </button>
+
+            <button class="admin-nav-item" data-section="settings">
+                <span>⚙️</span>
+                <span>الإعدادات</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button id="logoutButton" class="logout-button">
+                🚪 تسجيل الخروج
+            </button>
+
+        </div>
+
+    </aside>
+
+    <main class="admin-main">
+
+        <section id="dashboardSection" class="admin-section active">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>لوحة التحكم</span>
+                    <h1>مرحبًا بك أيها المدير 👋</h1>
+                </div>
+
+                <button id="refreshDashboard" class="refresh-button">
+                    🔄 تحديث
+                </button>
+
+            </div>
+
+            <div class="statistics-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div>
+                        <span>العملاء</span>
+                        <strong id="totalCustomers">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div>
+                        <span>الطلبات</span>
+                        <strong id="totalOrders">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💵</div>
+                    <div>
+                        <span>المبيعات</span>
+                        <strong id="totalSales">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div>
+                        <span>الأرباح</span>
+                        <strong id="totalProfit">$0.00</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="admin-card">
+
+                    <div class="card-heading">
+                        <h2>آخر الطلبات</h2>
+                        <button
+                            class="small-button"
+                            data-section-link="orders"
+                        >
+                            عرض الكل
+                        </button>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>العميل</th>
+                                    <th>المنتج</th>
+                                    <th>السعر</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="recentOrders">
+
+                                <tr>
+                                    <td colspan="5">
+                                        لا توجد طلبات حاليًا
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="admin-card">
+
+                    <div class="card-heading">
+                        <h2>إعدادات التسعير</h2>
+                    </div>
+
+                    <div class="setting-preview">
+
+                        <div>
+                            <span>هامش الربح العام</span>
+                            <strong id="profitRatePreview">10%</strong>
+                        </div>
+
+                        <div>
+                            <span>خصومات العملاء</span>
+                            <strong>مخصصة</strong>
+                        </div>
+
+                        <button
+                            class="primary-button"
+                            data-section-link="settings"
+                        >
+                            تعديل الإعدادات
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="customersSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>إدارة العملاء</span>
+                    <h1>العملاء</h1>
+                </div>
+
+                <button id="refreshCustomers" class="refresh-button">
+                    🔄 تحديث
+                </button>
+
+            </div>
+
+            <div class="admin-card">
+
+                <div class="search-bar">
+
+                    <input
+                        type="search"
+                        id="customerSearch"
+                        placeholder="ابحث باسم العميل أو Customer ID..."
+                    >
+
+                    <button id="searchCustomers" class="primary-button">
+                        بحث
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>العميل</th>
+                                <th>الرصيد</th>
+                                <th>الطلبات</th>
+                                <th>الخصم</th>
+                                <th>الحالة</th>
+                                <th>إدارة</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="customersTable">
+
+                            <tr>
+                                <td colspan="7">
+                                    لا توجد بيانات عملاء حاليًا
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="ordersSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>إدارة الطلبات</span>
+                    <h1>الطلبات</h1>
+                </div>
+
+                <button id="refreshOrders" class="refresh-button">
+                    🔄 تحديث
+                </button>
+
+            </div>
+
+            <div class="admin-card">
+
+                <div class="filter-bar">
+
+                    <input
+                        type="search"
+                        id="orderSearch"
+                        placeholder="ابحث برقم الطلب أو العميل..."
+                    >
+
+                    <select id="orderStatusFilter">
+
+                        <option value="all">
+                            جميع الحالات
+                        </option>
+
+                        <option value="pending">
+                            قيد الانتظار
+                        </option>
+
+                        <option value="processing">
+                            قيد المعالجة
+                        </option>
+
+                        <option value="completed">
+                            مكتمل
+                        </option>
+
+                        <option value="rejected">
+                            مرفوض
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>الطلب</th>
+                                <th>Customer ID</th>
+                                <th>المنتج</th>
+                                <th>سعر API</th>
+                                <th>سعر البيع</th>
+                                <th>الخصم</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="ordersTable">
+
+                            <tr>
+                                <td colspan="8">
+                                    لا توجد طلبات حاليًا
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="productsSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>إدارة الخدمات</span>
+                    <h1>المنتجات والخدمات</h1>
+                </div>
+
+                <button id="refreshProducts" class="refresh-button">
+                    🔄 تحديث من API
+                </button>
+
+            </div>
+
+            <div class="admin-card">
+
+                <div class="product-management-info">
+
+                    <div>
+                        <span>مصدر الأسعار</span>
+                        <strong>Nemer Card API</strong>
+                    </div>
+
+                    <div>
+                        <span>هامش الربح الحالي</span>
+                        <strong id="productProfitRate">10%</strong>
+                    </div>
+
+                    <div>
+                        <span>آخر تحديث</span>
+                        <strong id="productsLastUpdate">لم يتم التحديث</strong>
+                    </div>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>الخدمة</th>
+                                <th>القسم</th>
+                                <th>سعر API</th>
+                                <th>سعر البيع</th>
+                                <th>التوفر</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productsTable">
+
+                            <tr>
+                                <td colspan="6">
+                                    سيتم تحميل المنتجات من API
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="walletSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>الإدارة المالية</span>
+                    <h1>المحفظة والحركات</h1>
+                </div>
+
+            </div>
+
+            <div class="statistics-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div>
+                        <span>إجمالي أرصدة العملاء</span>
+                        <strong id="totalCustomerBalance">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">➕</div>
+                    <div>
+                        <span>الإيداعات</span>
+                        <strong id="totalDeposits">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">➖</div>
+                    <div>
+                        <span>الخصومات</span>
+                        <strong id="totalWithdrawals">$0.00</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="admin-card">
+
+                <div class="card-heading">
+                    <h2>آخر العمليات المالية</h2>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>العملية</th>
+                                <th>Customer ID</th>
+                                <th>المبلغ</th>
+                                <th>النوع</th>
+                                <th>التاريخ</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="transactionsTable">
+
+                            <tr>
+                                <td colspan="5">
+                                    لا توجد عمليات حاليًا
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="notificationsSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>التواصل</span>
+                    <h1>الإشعارات</h1>
+                </div>
+
+            </div>
+
+            <div class="admin-card">
+
+                <div class="notification-form">
+
+                    <label>
+                        نوع الإشعار
+                    </label>
+
+                    <select id="notificationTarget">
+
+                        <option value="all">
+                            جميع العملاء
+                        </option>
+
+                        <option value="customer">
+                            عميل محدد
+                        </option>
+
+                    </select>
+
+                    <label>
+                        Customer ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="notificationCustomerId"
+                        placeholder="مثال: NP-000001"
+                    >
+
+                    <label>
+                        عنوان الإشعار
+                    </label>
+
+                    <input
+                        type="text"
+                        id="notificationTitle"
+                        placeholder="عنوان الإشعار"
+                    >
+
+                    <label>
+                        نص الإشعار
+                    </label>
+
+                    <textarea
+                        id="notificationMessage"
+                        rows="5"
+                        placeholder="اكتب نص الإشعار..."
+                    ></textarea>
+
+                    <button
+                        id="sendNotification"
+                        class="primary-button"
+                    >
+                        إرسال الإشعار
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="settingsSection" class="admin-section">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>إعدادات المتجر</span>
+                    <h1>الإعدادات</h1>
+                </div>
+
+            </div>
+
+            <div class="settings-grid">
+
+                <div class="admin-card">
+
+                    <div class="card-heading">
+                        <h2>التسعير</h2>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            هامش الربح العام (%)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="profitRate"
+                            min="0"
+                            max="100"
+                            step="0.1"
+                            value="10"
+                        >
+
+                        <small>
+                            يضاف هذا الهامش إلى سعر API قبل تطبيق خصم العميل.
+                        </small>
+
+                    </div>
+
+                    <button
+                        id="saveProfitRate"
+                        class="primary-button"
+                    >
+                        حفظ هامش الربح
+                    </button>
+
+                </div>
+
+                <div class="admin-card">
+
+                    <div class="card-heading">
+                        <h2>إعدادات المتجر</h2>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            اسم المتجر
+                        </label>
+
+                        <input
+                            type="text"
+                            id="storeName"
+                            value="متجر النبض الرقمي"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            العملة
+                        </label>
+
+                        <select id="storeCurrency">
+
+                            <option value="USD">
+                                USD - الدولار الأمريكي
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button
+                        id="saveStoreSettings"
+                        class="primary-button"
+                    >
+                        حفظ الإعدادات
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
