@@ -3,91 +3,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nabd-Store</title>
+<title>متجر النبض الرقمي</title>
 
 <style>
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Tahoma,sans-serif;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Tahoma,sans-serif;
 }
 
 body{
-background:linear-gradient(180deg,#0d0d0d,#1b1b1b);
-color:#f5d36b;
+    background:#f4f7fb;
+    color:#172033;
 }
 
 header{
-background:#111;
-color:#f5d36b;
-padding:20px;
-text-align:center;
-font-size:30px;
-font-weight:bold;
-border-bottom:2px solid #d4af37;
+    height:70px;
+    background:#0d6efd;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+
+.logo{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.wallet{
+    background:rgba(255,255,255,.15);
+    padding:9px 13px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.menu-btn{
+    border:0;
+    background:transparent;
+    color:white;
+    font-size:27px;
+    cursor:pointer;
+}
+
+.drawer{
+    position:fixed;
+    top:0;
+    right:-290px;
+    width:280px;
+    height:100%;
+    background:white;
+    z-index:300;
+    transition:.3s;
+    box-shadow:-4px 0 15px rgba(0,0,0,.15);
+}
+
+.drawer.active{
+    right:0;
+}
+
+.drawer-header{
+    background:#0d6efd;
+    color:white;
+    padding:25px 20px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.drawer a{
+    display:block;
+    padding:17px 20px;
+    text-decoration:none;
+    color:#222;
+    border-bottom:1px solid #eee;
+    cursor:pointer;
+}
+
+.drawer a:hover{
+    background:#f1f5ff;
+    color:#0d6efd;
+}
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:250;
+}
+
+.overlay.active{
+    display:block;
+}
+
+.container{
+    width:92%;
+    max-width:1100px;
+    margin:25px auto;
 }
 
 .hero{
-height:80vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
+    background:linear-gradient(135deg,#0d6efd,#0a58ca);
+    color:white;
+    border-radius:20px;
+    padding:28px 22px;
+    margin-bottom:22px;
+    box-shadow:0 5px 18px rgba(13,110,253,.2);
 }
 
 .hero h1{
-font-size:42px;
-margin-bottom:15px;
+    font-size:25px;
+    margin-bottom:10px;
 }
 
 .hero p{
-font-size:20px;
-margin-bottom:25px;
+    opacity:.9;
+    margin-bottom:18px;
 }
 
-button{
-padding:15px 35px;
-border:none;
-background:#d4af37;
-color:#111;
-font-size:18px;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-transition:.3s;
+.balance-box{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border-radius:14px;
+    padding:12px 18px;
 }
 
-button:hover{
-background:#f5d36b;
+.quick-menu{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.quick-item{
+    background:white;
+    border-radius:16px;
+    padding:18px 10px;
+    text-align:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quick-item:hover{
+    transform:translateY(-3px);
+}
+
+.quick-icon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.quick-item span{
+    font-size:13px;
+    color:#444;
+}
+
+.section-title{
+    font-size:21px;
+    margin-bottom:15px;
+}
+
+.categories{
+    display:flex;
+    gap:9px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    margin-bottom:20px;
+}
+
+.category{
+    white-space:nowrap;
+    border:0;
+    background:white;
+    color:#333;
+    padding:10px 17px;
+    border-radius:20px;
+    cursor:pointer;
+    box-shadow:0 2px 7px rgba(0,0,0,.06);
+}
+
+.category.active{
+    background:#0d6efd;
+    color:white;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.product{
+    background:white;
+    border-radius:17px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    transition:.2s;
+}
+
+.product:hover{
+    transform:translateY(-3px);
+}
+
+.product-icon{
+    width:65px;
+    height:65px;
+    background:#edf4ff;
+    color:#0d6efd;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    margin-bottom:14px;
+}
+
+.product h3{
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.product p{
+    color:#777;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.price{
+    font-size:18px;
+    color:#0d6efd;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.buy-btn{
+    width:100%;
+    border:0;
+    background:#0d6efd;
+    color:white;
+    padding:11px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.buy-btn:hover{
+    background:#0b5ed7;
 }
 
 footer{
-background:#111;
-color:#d4af37;
-text-align:center;
-padding:15px;
-border-top:2px solid #d4af37;
+    text-align:center;
+    padding:30px 10px;
+    color:#777;
+    font-size:13px;
+}
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:#172033;
+    color:white;
+    padding:13px 20px;
+    border-radius:12px;
+    opacity:0;
+    transition:.3s;
+    z-index:500;
+    font-size:14px;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:800px){
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    header{
+        height:62px;
+    }
+
+    .logo{
+        font-size:16px;
+    }
+
+    .wallet{
+        font-size:12px;
+        padding:8px 10px;
+    }
+
+    .container{
+        width:94%;
+        margin:18px auto;
+    }
+
+    .hero{
+        padding:23px 18px;
+    }
+
+    .hero h1{
+        font-size:21px;
+    }
+
+    .quick-menu{
+        grid-template-columns:repeat(4,1fr);
+        gap:7px;
+    }
+
+    .quick-item{
+        padding:13px 5px;
+    }
+
+    .quick-icon{
+        font-size:21px;
+    }
+
+    .quick-item span{
+        font-size:11px;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .product{
+        padding:13px;
+    }
+
+    .product-icon{
+        width:55px;
+        height:55px;
+        font-size:25px;
+    }
+
+    .product h3{
+        font-size:15px;
+    }
+
+    .price{
+        font-size:16px;
+    }
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
-Nabd-Store
+    <div class="logo">متجر النبض الرقمي</div>
+
+    <div class="header-left">
+        <div class="wallet">
+            💰 المحفظة: <strong id="balance">$0.00</strong>
+        </div>
+
+        <button class="menu-btn" onclick="openMenu()">☰</button>
+    </div>
 </header>
 
-<section class="hero">
-<h1>مرحبًا بك</h1>
-<p>هذه واجهة الموقع الأولية.</p>
-<button>ابدأ الآن</button>
-</section>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="drawer" id="drawer">
+    <div class="drawer-header">
+        متجر النبض الرقمي
+    </div>
+
+    <a onclick="closeMenu()">🏠 الرئيسية</a>
+    <a onclick="showMessage('قسم طلباتي سيكون متاحًا بعد ربط قاعدة البيانات')">📦 طلباتي</a>
+    <a onclick="showMessage('لا توجد إشعارات حاليًا')">🔔 الإشعارات</a>
+    <a onclick="showMessage('قسم الحساب سيكون متاحًا بعد إضافة تسجيل الدخول')">👤 حسابي</a>
+    <a onclick="showMessage('المحفظة: $0.00')">💰 المحفظة</a>
+</div>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>مرحبًا بك في متجر النبض الرقمي 👋</h1>
+        <p>متجرك الإلكتروني للخدمات الرقمية والشحن والأرقام.</p>
+
+        <div class="balance-box">
+            رصيدك الحالي:
+            <strong id="heroBalance">$0.00</strong>
+        </div>
+    </section>
+
+    <div class="quick-menu">
+
+        <div class="quick-item" onclick="showMessage('قسم طلباتي سيكون متاحًا بعد ربط قاعدة البيانات')">
+            <div class="quick-icon">📦</div>
+            <span>طلباتي</span>
+        </div>
+
+        <div class="quick-item" onclick="showMessage('لا توجد إشعارات حاليًا')">
+            <div class="quick-icon">🔔</div>
+            <span>الإشعارات</span>
+        </div>
+
+        <div class="quick-item" onclick="showMessage('قسم الحساب سيكون متاحًا بعد إضافة تسجيل الدخول')">
+            <div class="quick-icon">👤</div>
+            <span>حسابي</span>
+        </div>
+
+        <div class="quick-item" onclick="showMessage('رصيدك الحالي $0.00')">
+            <div class="quick-icon">💰</div>
+            <span>المحفظة</span>
+        </div>
+
+    </div>
+
+    <h2 class="section-title">الخدمات</h2>
+
+    <div class="categories">
+        <button class="category active" onclick="filterProducts('all',this)">الكل</button>
+        <button class="category" onclick="filterProducts('games',this)">🎮 الألعاب</button>
+        <button class="category" onclick="filterProducts('numbers',this)">📱 الأرقام</button>
+        <button class="category" onclick="filterProducts('social',this)">📢 السوشيال</button>
+    </div>
+
+    <div class="products">
+
+        <div class="product" data-category="games">
+            <div class="product-icon">🎮</div>
+            <h3>PUBG Mobile</h3>
+            <p>شحن شدات PUBG Mobile</p>
+            <div class="price">$1.05</div>
+            <button class="buy-btn" onclick="buyProduct('PUBG Mobile')">
+                شراء الآن
+            </button>
+        </div>
+
+        <div class="product" data-category="games">
+            <div class="product-icon">🔥</div>
+            <h3>Free Fire</h3>
+            <p>شحن ألماس Free Fire</p>
+            <div class="price">$1.15</div>
+            <button class="buy-btn" onclick="buyProduct('Free Fire')">
+                شراء الآن
+            </button>
+        </div>
+
+        <div class="product" data-category="numbers">
+            <div class="product-icon">📱</div>
+            <h3>WhatsApp Number</h3>
+            <p>أرقام واتساب دولية</p>
+            <div class="price">$5.00</div>
+            <button class="buy-btn" onclick="buyProduct('WhatsApp Number')">
+                شراء الآن
+            </button>
+        </div>
+
+        <div class="product" data-category="numbers">
+            <div class="product-icon">✈️</div>
+            <h3>Telegram Number</h3>
+            <p>أرقام تيليجرام دولية</p>
+            <div class="price">$3.00</div>
+            <button class="buy-btn" onclick="buyProduct('Telegram Number')">
+                شراء الآن
+            </button>
+        </div>
+
+        <div class="product" data-category="social">
+            <div class="product-icon">📢</div>
+            <h3>Social Media</h3>
+            <p>خدمات السوشيال ميديا</p>
+            <div class="price">$1.00</div>
+            <button class="buy-btn" onclick="buyProduct('Social Media')">
+                شراء الآن
+            </button>
+        </div>
+
+    </div>
+
+</main>
 
 <footer>
-جميع الحقوق محفوظة © 2026
+    جميع الحقوق محفوظة © 2026 متجر النبض الرقمي
 </footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+function openMenu(){
+    document.getElementById("drawer").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu(){
+    document.getElementById("drawer").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+function showMessage(message){
+    closeMenu();
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(function(){
+        toast.classList.remove("show");
+    },3000);
+}
+
+function buyProduct(productName){
+    showMessage(
+        "سيتم ربط شراء " +
+        productName +
+        " بالمحفظة وواجهة API في المرحلة القادمة."
+    );
+}
+
+function filterProducts(category,button){
+
+    const buttons = document.querySelectorAll(".category");
+
+    buttons.forEach(function(btn){
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const products = document.querySelectorAll(".product");
+
+    products.forEach(function(product){
+
+        if(category === "all"){
+            product.style.display = "block";
+        }
+
+        else if(product.dataset.category === category){
+            product.style.display = "block";
+        }
+
+        else{
+            product.style.display = "none";
+        }
+
+    });
+}
+
+</script>
 
 </body>
 </html>
