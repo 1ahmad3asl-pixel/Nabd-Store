@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر النبض الرقمي</title>
+
+<title>Nabd-Store</title>
 
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -11,175 +13,380 @@
 <body>
 
 <header class="main-header">
+
     <div class="header-logo">
-        <span>متجر النبض الرقمي</span>
+        <span>Nabd-Store</span>
     </div>
 
     <div class="header-actions">
+
         <div class="wallet">
-            <span>💰</span>
-            <span>المحفظة:</span>
-            <strong id="balance">$0.00</strong>
+            <strong id="balance">0.000</strong>
         </div>
 
         <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة">
             ☰
         </button>
+
     </div>
+
 </header>
 
+
+<!-- شريط الأذكار المتحرك -->
+
+<div class="dhikr-bar">
+
+    <div class="dhikr-track">
+
+        <span>سبحان الله</span>
+        <span>الحمد لله</span>
+        <span>لا إله إلا الله</span>
+        <span>الله أكبر</span>
+
+        <span>سبحان الله</span>
+        <span>الحمد لله</span>
+        <span>لا إله إلا الله</span>
+        <span>الله أكبر</span>
+
+    </div>
+
+</div>
+
+
 <div class="overlay" id="overlay"></div>
+
+
+<!-- القائمة الجانبية -->
 
 <aside class="drawer" id="drawer">
 
     <div class="drawer-header">
-        <div class="drawer-logo">متجر النبض الرقمي</div>
-        <button class="close-btn" id="closeMenu">×</button>
+
+        <div class="drawer-logo">
+            Nabd-Store
+        </div>
+
+        <button class="close-btn" id="closeMenu">
+            ×
+        </button>
+
     </div>
 
+
     <div class="drawer-user">
-        <div class="user-avatar">👤</div>
-        <div>
-            <strong id="menuUserName">زائر</strong>
-            <small id="menuCustomerId">لم يتم تسجيل الدخول</small>
+
+        <div class="user-avatar">
+            👤
         </div>
+
+        <div>
+
+            <strong id="menuUserName">
+                ضيف
+            </strong>
+
+            <small id="menuCustomerId">
+                لم يتم تسجيل الدخول
+            </small>
+
+        </div>
+
     </div>
+
 
     <nav class="drawer-nav">
 
         <a href="#home" class="drawer-link active">
+
             <span>🏠</span>
             <span>الرئيسية</span>
+
         </a>
+
 
         <a href="#orders" class="drawer-link">
+
             <span>📦</span>
             <span>طلباتي</span>
+
         </a>
+
 
         <a href="#notifications" class="drawer-link">
+
             <span>🔔</span>
             <span>الإشعارات</span>
-            <span class="notification-badge" id="notificationBadge">0</span>
+
+            <span class="notification-badge" id="notificationBadge">
+                0
+            </span>
+
         </a>
+
 
         <a href="#account" class="drawer-link">
+
             <span>👤</span>
             <span>حسابي</span>
+
         </a>
 
+
         <a href="#wallet" class="drawer-link">
-            <span>💰</span>
+
+            <span>💳</span>
             <span>المحفظة</span>
+
         </a>
 
     </nav>
 
 </aside>
 
+
 <main class="container" id="home">
+
+
+    <!-- الواجهة الرئيسية -->
 
     <section class="hero">
 
         <div class="hero-content">
 
             <div>
-                <span class="hero-label">مرحبًا بك 👋</span>
 
-                <h1>متجر النبض الرقمي</h1>
+                <span class="hero-label">
+                    مرحبًا بك 👋
+                </span>
+
+                <h1>
+                    Nabd-Store
+                </h1>
 
                 <p>
                     خدمات رقمية، شحن ألعاب، أرقام وخدمات إلكترونية
                     في مكان واحد.
                 </p>
+
             </div>
+
 
             <div class="hero-balance">
 
-                <span>رصيدك الحالي</span>
+                <span>
+                    رصيدك الحالي
+                </span>
 
-                <strong id="heroBalance">$0.00</strong>
+                <strong id="heroBalance">
+                    0.000
+                </strong>
 
             </div>
 
         </div>
 
     </section>
+
+
+    <!-- القائمة السريعة -->
 
     <section class="quick-menu">
 
+
         <button class="quick-item" data-action="orders">
-            <div class="quick-icon">📦</div>
-            <span>طلباتي</span>
+
+            <div class="quick-icon">
+                📦
+            </div>
+
+            <span>
+                طلباتي
+            </span>
+
         </button>
+
 
         <button class="quick-item" data-action="notifications">
-            <div class="quick-icon">🔔</div>
-            <span>الإشعارات</span>
+
+            <div class="quick-icon">
+                🔔
+            </div>
+
+            <span>
+                الإشعارات
+            </span>
+
         </button>
+
 
         <button class="quick-item" data-action="account">
-            <div class="quick-icon">👤</div>
-            <span>حسابي</span>
+
+            <div class="quick-icon">
+                👤
+            </div>
+
+            <span>
+                حسابي
+            </span>
+
         </button>
 
+
         <button class="quick-item" data-action="wallet">
-            <div class="quick-icon">💰</div>
-            <span>المحفظة</span>
+
+            <div class="quick-icon">
+                💳
+            </div>
+
+            <span>
+                المحفظة
+            </span>
+
         </button>
+
 
     </section>
 
+
+    <!-- الخدمات -->
+
     <section class="services-section">
 
+
         <div class="section-heading">
+
             <div>
-                <span class="section-label">الخدمات</span>
-                <h2>اختر الخدمة التي تريدها</h2>
+
+                <span class="section-label">
+                    الخدمات
+                </span>
+
+                <h2>
+                    اختر الخدمة التي تريدها
+                </h2>
+
             </div>
+
         </div>
+
+
+        <!-- التصنيفات -->
 
         <div class="categories" id="categories">
 
+
             <button class="category active" data-category="all">
-                الكل
+
+                <div class="category-icon">
+                    🛍️
+                </div>
+
+                <div class="category-title">
+                    الكل
+                </div>
+
             </button>
+
 
             <button class="category" data-category="games">
-                🎮 الألعاب
+
+                <div class="category-icon">
+                    🎮
+                </div>
+
+                <div class="category-title">
+                    الألعاب
+                </div>
+
             </button>
+
 
             <button class="category" data-category="numbers">
-                📱 الأرقام
+
+                <div class="category-icon">
+                    📱
+                </div>
+
+                <div class="category-title">
+                    الأرقام
+                </div>
+
             </button>
+
 
             <button class="category" data-category="social">
-                📢 السوشيال
+
+                <div class="category-icon">
+                    📢
+                </div>
+
+                <div class="category-title">
+                    السوشيال
+                </div>
+
             </button>
+
 
             <button class="category" data-category="other">
-                ⚡ خدمات أخرى
+
+                <div class="category-icon">
+                    ⚡
+                </div>
+
+                <div class="category-title">
+                    خدمات أخرى
+                </div>
+
             </button>
 
+
         </div>
+
+
+        <!-- المنتجات -->
 
         <div class="products" id="products">
 
             <div class="products-loading" id="productsLoading">
+
                 <div class="loading-spinner"></div>
-                <p>جاري تحميل الخدمات...</p>
+
+                <p>
+                    جاري تحميل الخدمات...
+                </p>
+
             </div>
 
         </div>
 
+
     </section>
 
+
 </main>
+
+
+<!-- واتساب الدعم الفني -->
+
+<a
+    class="whatsapp-float"
+    href="https://wa.me/994405694104"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="التواصل مع الدعم الفني عبر واتساب"
+    title="الدعم الفني"
+>
+    ☎
+</a>
+
+
+<!-- الفوتر -->
 
 <footer class="main-footer">
 
     <div class="footer-logo">
-        متجر النبض الرقمي
+        Nabd-Store
     </div>
 
     <p>
@@ -192,7 +399,13 @@
 
 </footer>
 
+
+<!-- Toast -->
+
 <div class="toast" id="toast"></div>
+
+
+<!-- Modal -->
 
 <div class="modal" id="modal">
 
@@ -209,6 +422,7 @@
     </div>
 
 </div>
+
 
 <script src="js/app.js"></script>
 
