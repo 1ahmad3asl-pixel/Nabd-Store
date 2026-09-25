@@ -1,430 +1,568 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="stylesheet" href="css/style.css">
+</head><body><header class="main-header"><!-- اسم المتجر -->
+<div class="header-logo">
+    <span>Nabd-Store</span>
+</div>
 
-<title>Nabd-Store</title>
+<!-- الرصيد + القائمة -->
+<div class="header-actions">
 
-<link rel="stylesheet" href="css/style.css">
-</head>
+    <div class="wallet">
+        <span class="wallet-icon">💳</span>
 
-<body>
-
-<header class="main-header">
-
-    <div class="header-logo">
-        <span>Nabd-Store</span>
+        <strong id="balance">
+            $0.000
+        </strong>
     </div>
 
-    <div class="header-actions">
-
-        <div class="wallet">
-            <strong id="balance">0.000</strong>
-        </div>
-
-        <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة">
-            ☰
-        </button>
-
-    </div>
-
-</header>
-
-
-<!-- شريط الأذكار المتحرك -->
-
-<div class="dhikr-bar">
-
-    <div class="dhikr-track">
-
-        <span>سبحان الله</span>
-        <span>الحمد لله</span>
-        <span>لا إله إلا الله</span>
-        <span>الله أكبر</span>
-
-        <span>سبحان الله</span>
-        <span>الحمد لله</span>
-        <span>لا إله إلا الله</span>
-        <span>الله أكبر</span>
-
-    </div>
+    <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="فتح القائمة"
+        type="button"
+    >
+        ☰
+    </button>
 
 </div>
 
-
-<div class="overlay" id="overlay"></div>
-
-
-<!-- القائمة الجانبية -->
-
-<aside class="drawer" id="drawer">
-
-    <div class="drawer-header">
-
-        <div class="drawer-logo">
-            Nabd-Store
-        </div>
-
-        <button class="close-btn" id="closeMenu">
-            ×
-        </button>
-
-    </div>
-
-
-    <div class="drawer-user">
-
-        <div class="user-avatar">
-            👤
-        </div>
-
-        <div>
-
-            <strong id="menuUserName">
-                ضيف
-            </strong>
-
-            <small id="menuCustomerId">
-                لم يتم تسجيل الدخول
-            </small>
-
-        </div>
-
-    </div>
-
-
-    <nav class="drawer-nav">
-
-        <a href="#home" class="drawer-link active">
-
-            <span>🏠</span>
-            <span>الرئيسية</span>
-
-        </a>
-
-
-        <a href="#orders" class="drawer-link">
-
-            <span>📦</span>
-            <span>طلباتي</span>
-
-        </a>
-
-
-        <a href="#notifications" class="drawer-link">
-
-            <span>🔔</span>
-            <span>الإشعارات</span>
-
-            <span class="notification-badge" id="notificationBadge">
-                0
-            </span>
-
-        </a>
-
-
-        <a href="#account" class="drawer-link">
-
-            <span>👤</span>
-            <span>حسابي</span>
-
-        </a>
-
-
-        <a href="#wallet" class="drawer-link">
-
-            <span>💳</span>
-            <span>المحفظة</span>
-
-        </a>
-
-    </nav>
-
-</aside>
-
-
-<main class="container" id="home">
-
-
-    <!-- الواجهة الرئيسية -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <div>
-
-                <span class="hero-label">
-                    مرحبًا بك 👋
-                </span>
-
-                <h1>
-                    Nabd-Store
-                </h1>
-
-                <p>
-                    خدمات رقمية، شحن ألعاب، أرقام وخدمات إلكترونية
-                    في مكان واحد.
-                </p>
-
-            </div>
-
-
-            <div class="hero-balance">
-
-                <span>
-                    رصيدك الحالي
-                </span>
-
-                <strong id="heroBalance">
-                    0.000
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- القائمة السريعة -->
-
-    <section class="quick-menu">
-
-
-        <button class="quick-item" data-action="orders">
-
-            <div class="quick-icon">
-                📦
-            </div>
-
-            <span>
-                طلباتي
-            </span>
-
-        </button>
-
-
-        <button class="quick-item" data-action="notifications">
-
-            <div class="quick-icon">
-                🔔
-            </div>
-
-            <span>
-                الإشعارات
-            </span>
-
-        </button>
-
-
-        <button class="quick-item" data-action="account">
-
-            <div class="quick-icon">
-                👤
-            </div>
-
-            <span>
-                حسابي
-            </span>
-
-        </button>
-
-
-        <button class="quick-item" data-action="wallet">
-
-            <div class="quick-icon">
-                💳
-            </div>
-
-            <span>
-                المحفظة
-            </span>
-
-        </button>
-
-
-    </section>
-
-
-    <!-- الخدمات -->
-
-    <section class="services-section">
-
-
-        <div class="section-heading">
-
-            <div>
-
-                <span class="section-label">
-                    الخدمات
-                </span>
-
-                <h2>
-                    اختر الخدمة التي تريدها
-                </h2>
-
-            </div>
-
-        </div>
-
-
-        <!-- التصنيفات -->
-
-        <div class="categories" id="categories">
-
-
-            <button class="category active" data-category="all">
-
-                <div class="category-icon">
-                    🛍️
-                </div>
-
-                <div class="category-title">
-                    الكل
-                </div>
-
-            </button>
-
-
-            <button class="category" data-category="games">
-
-                <div class="category-icon">
-                    🎮
-                </div>
-
-                <div class="category-title">
-                    الألعاب
-                </div>
-
-            </button>
-
-
-            <button class="category" data-category="numbers">
-
-                <div class="category-icon">
-                    📱
-                </div>
-
-                <div class="category-title">
-                    الأرقام
-                </div>
-
-            </button>
-
-
-            <button class="category" data-category="social">
-
-                <div class="category-icon">
-                    📢
-                </div>
-
-                <div class="category-title">
-                    السوشيال
-                </div>
-
-            </button>
-
-
-            <button class="category" data-category="other">
-
-                <div class="category-icon">
-                    ⚡
-                </div>
-
-                <div class="category-title">
-                    خدمات أخرى
-                </div>
-
-            </button>
-
-
-        </div>
-
-
-        <!-- المنتجات -->
-
-        <div class="products" id="products">
-
-            <div class="products-loading" id="productsLoading">
-
-                <div class="loading-spinner"></div>
-
-                <p>
-                    جاري تحميل الخدمات...
-                </p>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-</main>
-
-
-<!-- واتساب الدعم الفني -->
-
-<a
-    class="whatsapp-float"
-    href="https://wa.me/994405694104"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="التواصل مع الدعم الفني عبر واتساب"
-    title="الدعم الفني"
->
-    ☎
-</a>
-
-
-<!-- الفوتر -->
-
-<footer class="main-footer">
-
-    <div class="footer-logo">
+</header><!-- =========================
+     شريط الأذكار
+========================= --><div class="dhikr-bar"><div class="dhikr-track">
+
+    <span>سبحان الله</span>
+    <span>الحمد لله</span>
+    <span>لا إله إلا الله</span>
+    <span>الله أكبر</span>
+
+    <span>سبحان الله</span>
+    <span>الحمد لله</span>
+    <span>لا إله إلا الله</span>
+    <span>الله أكبر</span>
+
+</div>
+
+</div><!-- =========================
+     البحث
+========================= --><section class="search-section"><div class="search-box">
+
+    <span class="search-icon">
+        🔎
+    </span>
+
+    <input
+        type="search"
+        id="searchInput"
+        placeholder="ابحث عن خدمة أو منتج..."
+        autocomplete="off"
+        aria-label="البحث عن المنتجات والخدمات"
+    >
+
+    <button
+        type="button"
+        id="clearSearch"
+        class="clear-search"
+        aria-label="مسح البحث"
+        title="مسح"
+    >
+        ×
+    </button>
+
+</div>
+
+</section><div class="overlay" id="overlay"></div><!-- =========================
+     القائمة الجانبية
+========================= --><aside class="drawer" id="drawer"><div class="drawer-header">
+
+    <div class="drawer-logo">
         Nabd-Store
     </div>
 
-    <p>
-        خدماتك الرقمية في مكان واحد
-    </p>
+    <button
+        class="close-btn"
+        id="closeMenu"
+        type="button"
+        aria-label="إغلاق القائمة"
+    >
+        ×
+    </button>
 
-    <span>
-        جميع الحقوق محفوظة © 2026
-    </span>
-
-</footer>
-
-
-<!-- Toast -->
-
-<div class="toast" id="toast"></div>
+</div>
 
 
-<!-- Modal -->
+<div class="drawer-user">
 
-<div class="modal" id="modal">
+    <div class="user-avatar">
+        👤
+    </div>
 
-    <div class="modal-overlay" id="modalOverlay"></div>
+    <div>
 
-    <div class="modal-content">
+        <strong id="menuUserName">
+            ضيف
+        </strong>
 
-        <button class="modal-close" id="modalClose">
-            ×
-        </button>
-
-        <div id="modalBody"></div>
+        <small id="menuCustomerId">
+            لم يتم تسجيل الدخول
+        </small>
 
     </div>
 
 </div>
 
 
-<script src="js/app.js"></script>
+<nav class="drawer-nav">
 
-</body>
+    <a
+        href="#home"
+        class="drawer-link active"
+    >
+
+        <span>🏠</span>
+        <span>الرئيسية</span>
+
+    </a>
+
+
+    <a
+        href="#orders"
+        class="drawer-link"
+    >
+
+        <span>📦</span>
+        <span>طلباتي</span>
+
+    </a>
+
+
+    <a
+        href="#notifications"
+        class="drawer-link"
+    >
+
+        <span>🔔</span>
+        <span>الإشعارات</span>
+
+        <span
+            class="notification-badge"
+            id="notificationBadge"
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <a
+        href="#account"
+        class="drawer-link"
+    >
+
+        <span>👤</span>
+        <span>حسابي</span>
+
+    </a>
+
+
+    <a
+        href="#wallet"
+        class="drawer-link"
+    >
+
+        <span>💳</span>
+        <span>المحفظة</span>
+
+    </a>
+
+</nav>
+
+</aside><!-- =========================
+     المحتوى الرئيسي
+========================= --><main class="container" id="home"><!-- =========================
+     الواجهة الرئيسية
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div>
+
+            <span class="hero-label">
+                مرحبًا بك 👋
+            </span>
+
+            <h1>
+                Nabd-Store
+            </h1>
+
+            <p>
+                خدمات رقمية، شحن ألعاب، أرقام وخدمات إلكترونية
+                في مكان واحد.
+            </p>
+
+        </div>
+
+
+        <div class="hero-balance">
+
+            <span>
+                رصيدك الحالي
+            </span>
+
+            <strong id="heroBalance">
+                $0.000
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     القائمة السريعة
+========================= -->
+
+<section class="quick-menu">
+
+
+    <button
+        class="quick-item"
+        data-action="orders"
+        type="button"
+    >
+
+        <div class="quick-icon">
+            📦
+        </div>
+
+        <span>
+            طلباتي
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-item"
+        data-action="notifications"
+        type="button"
+    >
+
+        <div class="quick-icon">
+            🔔
+        </div>
+
+        <span>
+            الإشعارات
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-item"
+        data-action="account"
+        type="button"
+    >
+
+        <div class="quick-icon">
+            👤
+        </div>
+
+        <span>
+            حسابي
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-item"
+        data-action="wallet"
+        type="button"
+    >
+
+        <div class="quick-icon">
+            💳
+        </div>
+
+        <span>
+            المحفظة
+        </span>
+
+    </button>
+
+
+</section>
+
+
+<!-- =========================
+     الواجهات الداخلية
+     
+     سيتم التحكم بها من app.js
+     عند الضغط على الأيقونات.
+========================= -->
+
+<section
+    id="internalPage"
+    class="internal-page"
+    hidden
+>
+
+    <div class="internal-page-header">
+
+        <button
+            type="button"
+            id="internalBack"
+            class="internal-back"
+            aria-label="العودة"
+        >
+            ←
+        </button>
+
+        <div>
+
+            <span
+                id="internalPageIcon"
+                class="internal-page-icon"
+            >
+                📦
+            </span>
+
+            <h2 id="internalPageTitle">
+                الصفحة
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="internalPageContent"
+        class="internal-page-content"
+    >
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     الخدمات
+========================= -->
+
+<section
+    class="services-section"
+    id="servicesSection"
+>
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                الخدمات
+            </span>
+
+            <h2>
+                اختر الخدمة التي تريدها
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         التصنيفات
+         
+         لا يوجد "الكل"
+    ========================= -->
+
+    <div
+        class="categories"
+        id="categories"
+    >
+
+
+        <button
+            class="category"
+            data-category="games"
+            type="button"
+        >
+
+            <div class="category-icon">
+                🎮
+            </div>
+
+            <div class="category-title">
+                الألعاب
+            </div>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="numbers"
+            type="button"
+        >
+
+            <div class="category-icon">
+                📱
+            </div>
+
+            <div class="category-title">
+                الأرقام
+            </div>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="social"
+            type="button"
+        >
+
+            <div class="category-icon">
+                📢
+            </div>
+
+            <div class="category-title">
+                السوشيال
+            </div>
+
+        </button>
+
+
+        <button
+            class="category"
+            data-category="other"
+            type="button"
+        >
+
+            <div class="category-icon">
+                ⚡
+            </div>
+
+            <div class="category-title">
+                خدمات أخرى
+            </div>
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =========================
+         نتائج البحث
+    ========================= -->
+
+    <div
+        id="searchResultsInfo"
+        class="search-results-info"
+        hidden
+    >
+    </div>
+
+
+    <!-- =========================
+         المنتجات
+    ========================= -->
+
+    <div
+        class="products"
+        id="products"
+    >
+
+        <div
+            class="products-loading"
+            id="productsLoading"
+        >
+
+            <div class="loading-spinner"></div>
+
+            <p>
+                جاري تحميل الخدمات...
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+</main><!-- =========================
+     واتساب الدعم الفني
+========================= --><a
+class="whatsapp-float"
+href="https://wa.me/994405694104"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="التواصل مع الدعم الفني عبر واتساب"
+title="الدعم الفني"
+
+«»
+
+☎
+
+</a><!-- =========================
+     الفوتر
+========================= --><footer class="main-footer"><div class="footer-logo">
+    Nabd-Store
+</div>
+
+<p>
+    خدماتك الرقمية في مكان واحد
+</p>
+
+<span>
+    جميع الحقوق محفوظة © 2026
+</span>
+
+</footer><!-- =========================
+     Toast
+========================= --><div
+    class="toast"
+    id="toast"
+>
+</div><!-- =========================
+     Modal
+========================= --><div
+    class="modal"
+    id="modal"
+><div
+    class="modal-overlay"
+    id="modalOverlay"
+>
+</div>
+
+
+<div class="modal-content">
+
+    <button
+        class="modal-close"
+        id="modalClose"
+        type="button"
+        aria-label="إغلاق"
+    >
+        ×
+    </button>
+
+    <div id="modalBody">
+    </div>
+
+</div>
+
+</div><script src="js/app.js"></script></body>
 </html>
