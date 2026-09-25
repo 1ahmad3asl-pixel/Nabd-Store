@@ -1,4 +1,4 @@
-const NEMER_API_BASE = "https://nemer-card.com/api";
+const NEMER_API_BASE = "https://nemer-card.com";
 
 async function nemerRequest(endpoint, options = {}) {
     const response = await fetch(
@@ -8,7 +8,7 @@ async function nemerRequest(endpoint, options = {}) {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                ...(options.headers || {})
+                "api-token": process.env.NEMER_API_TOKEN
             },
             body: options.body
                 ? JSON.stringify(options.body)
@@ -28,7 +28,7 @@ async function nemerRequest(endpoint, options = {}) {
         throw new Error(
             data.message ||
             data.error ||
-            "Nemer Card API request failed."
+            "Nemer Card API request failed"
         );
     }
 
@@ -36,25 +36,40 @@ async function nemerRequest(endpoint, options = {}) {
 }
 
 async function getNemerProducts() {
-    return await nemerRequest("/products");
+    return await nemerRequest("/client/api/products");
 }
 
-async function getNemerBalance() {
-    return await nemerRequest("/balance");
+async function getNemerProfile() {
+    return await nemerRequest("/client/api/profile");
 }
 
-async function createNemerOrder(productId, params) {
-    return await nemerRequest("/orders", {
-        method: "POST",
-        body: {
-            product_id: productId,
-            params: params
+async function createNemerOrder(productId, params = {}) {
+    const query = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(params)) {
+        if (value !== undefined && value !== null && value !== "") {
+            query.append(key, value);
         }
-    });
+    }
+
+    const response = await nemerRequest(
+        `/client/api/newOrder/${productId}/params?${query.toString()}`
+    );
+
+    return response;
+}
+
+async function checkNemerOrders(orderIds) {
+    const orders = `[${orderIds.join(",")}]`;
+
+    return await nemerRequest(
+        `/client/api/check?orders=${encodeURIComponent(orders)}`
+    );
 }
 
 module.exports = {
     getNemerProducts,
-    getNemerBalance,
-    createNemerOrder
+    getNemerProfile,
+    createNemerOrder,
+    checkNemerOrders
 };
