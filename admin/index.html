@@ -21,7 +21,10 @@
         <div class="admin-balance">
             رصيد API:
             <strong id="apiBalance">$0.000</strong>
-        </div></div>
+        </div>
+        <button id="adminThemeToggle" class="admin-theme-toggle" type="button" title="تبديل الوضع الليلي">☀️</button>
+        <button id="logoutButtonHeader" class="admin-theme-toggle" type="button" title="تسجيل الخروج">🚪</button>
+    </div>
 
 </header>
 
@@ -612,6 +615,32 @@
                     >
                         حفظ هامش الربح
                     </button>
+
+                </div>
+
+                <div class="admin-card">
+
+                    <div class="card-heading">
+                        <h2>المظهر والتنسيق</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminFontFamily">الخط</label>
+                        <select id="adminFontFamily">
+                            <option value="Amasis MT Pro">Amasis MT Pro</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Arial">Arial</option>
+                        </select>
+                        <small>يتم تطبيق الخط على لوحة الإدارة بالكامل.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>خانات العملة</label>
+                        <input type="text" value="3 خانات عشرية (0.000)" readonly>
+                        <small>سيظهر رصيد وأسعار المتجر بثلاث خانات عشرية.</small>
+                    </div>
+
+                    <button id="saveAppearanceSettings" class="primary-button">حفظ المظهر</button>
 
                 </div>
 
