@@ -2137,3 +2137,352 @@ html[data-theme="dark"] .pubg-no-params{
     border-color:#292929;
     color:#aaa;
 }
+
+
+/* =========================================================
+   PREMIUM BLACK + DARK-GOLD STORE SKIN
+   Level 1 / Level 2 / Level 3 / Checkout
+========================================================= */
+
+/* المستوى الأول: إزالة الأزرق واستبداله بإطار ذهبي غامق */
+.reference-category-grid .category-art{
+  background:
+    radial-gradient(circle at 50% 38%,rgba(184,134,11,.34) 0,rgba(82,58,0,.30) 32%,rgba(5,5,5,.98) 74%),
+    linear-gradient(145deg,#2a2004,#050505)!important;
+  border:3px solid #8f6900!important;
+  box-shadow:
+    inset 0 0 0 2px rgba(245,196,0,.12),
+    inset 0 0 26px rgba(184,134,11,.30),
+    0 0 14px rgba(143,105,0,.28)!important;
+}
+.reference-category-grid .category-art::before{
+  border-color:rgba(245,196,0,.48);
+  box-shadow:inset 0 0 18px rgba(184,134,11,.20);
+}
+.reference-category-grid .category-art::after{
+  color:rgba(245,196,0,.62);
+  text-shadow:0 0 8px rgba(184,134,11,.70);
+}
+.reference-category-grid .category-art>span{
+  filter:drop-shadow(0 0 9px rgba(184,134,11,.70))!important;
+}
+
+/* إزالة أي أثر أزرق من البحث */
+.search-box:focus-within{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(184,134,11,.12);
+}
+.category-placeholder-icon{
+  filter:drop-shadow(0 0 10px rgba(184,134,11,.55));
+}
+
+/* المستوى الثاني: خلفية سوداء وإطار ذهبي غامق */
+#internalPage{
+  background:#050505;
+  color:#f5f5f5;
+}
+.internal-page-header{
+  border-bottom-color:#292929;
+}
+.internal-back{
+  border-color:#8f6900;
+  background:#111;
+  color:#f5c400;
+}
+#internalPageTitle{
+  color:#f5f5f5;
+}
+.game-page-note{
+  color:#a8a8a8;
+}
+.game-category-tile{
+  color:#f5f5f5;
+}
+.game-tile-image{
+  background:#0b0b0b;
+  border:2px solid #8f6900;
+  box-shadow:
+    inset 0 0 18px rgba(184,134,11,.12),
+    0 4px 14px rgba(0,0,0,.55),
+    0 0 12px rgba(143,105,0,.20);
+}
+.game-tile-title{
+  color:#f5f5f5;
+}
+.game-empty,
+.game-products-placeholder{
+  background:#111;
+  border-color:#292929;
+  color:#aaa;
+}
+.game-products-placeholder h3{
+  color:#f5f5f5;
+}
+
+/* المستوى الثالث: البطاقات والمنتجات بالأسود والذهبي */
+.game-products-heading{
+  border-bottom-color:#292929;
+  color:#f5f5f5;
+}
+.game-products-heading strong{
+  color:#c99f00;
+}
+.game-product-card{
+  background:#111!important;
+  border:1px solid #8f6900!important;
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.45),
+    0 0 10px rgba(143,105,0,.12);
+}
+.game-product-card .product-icon{
+  background:#17130a;
+  border:1px solid rgba(184,134,11,.38);
+}
+.game-product-card h3{
+  color:#f5f5f5;
+}
+.game-product-card p{
+  color:#a8a8a8;
+}
+.game-product-card .price{
+  color:#f5c400;
+}
+.game-product-group-card .game-tile-image{
+  background:#0b0b0b;
+}
+
+/* شاشة اختيار PUBG / المستوى الثالث */
+.pubg-picker-head{
+  border-bottom-color:#292929;
+}
+.pubg-picker-image{
+  background:#0b0b0b;
+  border:2px solid #8f6900;
+  box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 14px rgba(143,105,0,.16);
+}
+.pubg-picker-head h2,
+.pubg-field-label,
+.pubg-field label{
+  color:#f5f5f5;
+}
+.pubg-back{
+  color:#bbb;
+}
+.pubg-field input,
+.pubg-select-trigger,
+.pubg-options,
+.pubg-option{
+  background:#111;
+  color:#f5f5f5;
+  border-color:#8f6900;
+}
+.pubg-option{
+  border-bottom-color:#292929;
+}
+.pubg-option:hover{
+  background:#1a1608;
+}
+.pubg-option-price{
+  color:#c9c9c9;
+}
+.pubg-selected-summary{
+  background:#15120a;
+  border:1px solid #8f6900;
+  color:#ccc;
+}
+.pubg-selected-summary strong{
+  color:#f5c400;
+}
+.pubg-no-params{
+  background:#151515;
+  border-color:#292929;
+  color:#aaa;
+}
+.pubg-field input:focus{
+  border-color:#b8860b;
+  box-shadow:0 0 0 3px rgba(184,134,11,.12);
+}
+
+/* إتمام الطلب: داكن في الوضع الليلي وأبيض في الوضع الفاتح */
+html[data-theme="dark"] .modal-content{
+  background:#0b0b0b;
+  color:#f5f5f5;
+  border:1px solid #8f6900;
+  box-shadow:0 12px 40px rgba(0,0,0,.60),0 0 18px rgba(143,105,0,.12);
+}
+html[data-theme="dark"] .order-product-name{
+  color:#f5f5f5;
+  background:#151515;
+  border-color:#292929;
+}
+html[data-theme="dark"] .order-field label{
+  color:#f5f5f5;
+}
+html[data-theme="dark"] .order-field input{
+  background:#111;
+  color:#f5f5f5;
+  border-color:#8f6900;
+}
+html[data-theme="dark"] .order-field input::placeholder{
+  color:#888;
+}
+html[data-theme="dark"] .order-price-row{
+  background:#15120a;
+  border-color:#8f6900;
+}
+html[data-theme="dark"] .order-price-row span{
+  color:#ccc;
+}
+html[data-theme="dark"] .order-price-row strong{
+  color:#f5c400;
+}
+html[data-theme="dark"] .modal-close{
+  background:#2a250b;
+  color:#f5f5f5;
+}
+
+html[data-theme="light"] #internalPage{
+  background:#fff;
+  color:#171717;
+}
+html[data-theme="light"] .internal-page-header{
+  border-bottom-color:#e3dcc7;
+}
+html[data-theme="light"] .internal-back{
+  background:#fff;
+  color:#8f6900;
+  border-color:#b8860b;
+}
+html[data-theme="light"] #internalPageTitle,
+html[data-theme="light"] .game-tile-title{
+  color:#171717;
+}
+html[data-theme="light"] .game-page-note{
+  color:#666;
+}
+html[data-theme="light"] .game-tile-image{
+  background:#fff;
+  border-color:#b8860b;
+  box-shadow:inset 0 0 16px rgba(184,134,11,.08),0 3px 10px rgba(0,0,0,.10);
+}
+html[data-theme="light"] .game-empty,
+html[data-theme="light"] .game-products-placeholder{
+  background:#fff;
+  border-color:#e3dcc7;
+  color:#666;
+}
+html[data-theme="light"] .game-products-placeholder h3{
+  color:#171717;
+}
+html[data-theme="light"] .game-products-heading{
+  border-bottom-color:#e3dcc7;
+  color:#171717;
+}
+html[data-theme="light"] .game-product-card{
+  background:#fff!important;
+  border-color:#b8860b!important;
+  box-shadow:0 4px 14px rgba(143,105,0,.10);
+}
+html[data-theme="light"] .game-product-card .product-icon{
+  background:#fffaf0;
+  border-color:rgba(184,134,11,.30);
+}
+html[data-theme="light"] .game-product-card h3{
+  color:#171717;
+}
+html[data-theme="light"] .game-product-card p{
+  color:#666;
+}
+html[data-theme="light"] .game-product-card .price{
+  color:#8f6900;
+}
+html[data-theme="light"] .pubg-picker-head{
+  border-bottom-color:#e3dcc7;
+}
+html[data-theme="light"] .pubg-picker-image{
+  background:#fff;
+  border-color:#b8860b;
+}
+html[data-theme="light"] .pubg-picker-head h2,
+html[data-theme="light"] .pubg-field-label,
+html[data-theme="light"] .pubg-field label{
+  color:#171717;
+}
+html[data-theme="light"] .pubg-field input,
+html[data-theme="light"] .pubg-select-trigger,
+html[data-theme="light"] .pubg-options,
+html[data-theme="light"] .pubg-option{
+  background:#fff;
+  color:#171717;
+  border-color:#b8860b;
+}
+html[data-theme="light"] .pubg-option{
+  border-bottom-color:#e3dcc7;
+}
+html[data-theme="light"] .pubg-option:hover{
+  background:#fffaf0;
+}
+html[data-theme="light"] .pubg-option-price{
+  color:#666;
+}
+html[data-theme="light"] .pubg-selected-summary{
+  background:#fffaf0;
+  border-color:#b8860b;
+  color:#555;
+}
+html[data-theme="light"] .pubg-selected-summary strong{
+  color:#8f6900;
+}
+html[data-theme="light"] .pubg-no-params{
+  background:#fafafa;
+  border-color:#e3dcc7;
+  color:#666;
+}
+
+html[data-theme="light"] .modal-content{
+  background:#fff;
+  color:#171717;
+  border:1px solid #e3dcc7;
+  box-shadow:0 12px 35px rgba(0,0,0,.15);
+}
+html[data-theme="light"] .order-product-name{
+  color:#171717;
+  background:#f7f7f5;
+  border-color:#e3dcc7;
+}
+html[data-theme="light"] .order-field label{
+  color:#222;
+}
+html[data-theme="light"] .order-field input{
+  background:#fff;
+  color:#111;
+  border-color:#d8d8d8;
+}
+html[data-theme="light"] .order-price-row{
+  background:#f7f7f5;
+  border-color:#e3dcc7;
+}
+html[data-theme="light"] .order-price-row span{
+  color:#444;
+}
+html[data-theme="light"] .order-price-row strong{
+  color:#8f6900;
+}
+
+/* الوضع الفاتح يبقى أبيض حتى داخل مسارات الألعاب والإتمام */
+html[data-theme="light"] .game-product-group-card .game-tile-image{background:#fff;}
+
+/* المستوى الأول في الوضع الفاتح: ذهب أيضًا بدل الأزرق */
+html[data-theme="light"] .reference-category-grid .category-art{
+  background:linear-gradient(145deg,#fff8d6,#fff,#f6e8b0)!important;
+  border-color:#b8860b!important;
+  box-shadow:inset 0 0 18px rgba(184,134,11,.12),0 0 12px rgba(143,105,0,.14)!important;
+}
+html[data-theme="light"] .reference-category-grid .category-art::before{
+  border-color:rgba(184,134,11,.45);
+  box-shadow:inset 0 0 18px rgba(184,134,11,.10);
+}
+html[data-theme="light"] .reference-category-grid .category-art::after{
+  color:rgba(143,105,0,.62);
+  text-shadow:0 0 8px rgba(184,134,11,.35);
+}
