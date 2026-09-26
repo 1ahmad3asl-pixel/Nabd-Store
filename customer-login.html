@@ -6,36 +6,35 @@
 <title>حساب العميل - Nabd-Store</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-body{min-height:100vh;display:grid;place-items:center;background:#090909;color:#f5f5f5;padding:20px}
-.auth-card{width:min(460px,100%);background:#141414;border-radius:22px;padding:28px;box-shadow:0 15px 45px rgba(0,0,0,.12)}
-.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}
-.auth-tabs button{padding:12px;border:0;border-radius:10px;cursor:pointer}
-.auth-tabs .active{background:#111;color:#fff}
-.auth-form label{display:block;font-weight:700;margin:12px 0 7px}
-.auth-form input{width:100%;box-sizing:border-box;padding:13px;border:1px solid #333;background:#0d0d0d;color:#f5f5f5;border-radius:10px;font-size:16px}
-.auth-form button[type=submit]{width:100%;margin-top:20px;padding:13px;border:0;border-radius:10px;cursor:pointer;font-size:16px}
-.auth-error{display:none;margin-top:14px;padding:11px;border-radius:10px;background:#ffe8e8;color:#a00}
-.google-login{display:block;margin-top:12px;padding:13px;text-align:center;border:1px solid #d4aa12;border-radius:10px;text-decoration:none;color:#f5c400;font-weight:700;background:#141414}.back{display:inline-block;margin-top:16px;text-decoration:none}
+body{min-height:100vh;display:grid;place-items:center;background:var(--background);color:var(--text);padding:20px}
+.auth-card{width:min(430px,100%);text-align:center}
+.account-icon{font-size:46px;margin-bottom:8px}.auth-card h1{margin:0 0 6px;font-size:28px}
+.store-name{margin:0 0 26px;color:var(--primary);font-family:"ERAS BOLD ITC","Eras Bold ITC",Arial,sans-serif;font-size:22px}
+.auth-form{text-align:right}.auth-form label{display:block;font-weight:700;margin:14px 0 7px}
+.auth-form input{width:100%;box-sizing:border-box;padding:14px;border:1px solid var(--border);background:var(--white);color:var(--text);border-radius:11px;font-size:16px}
+.password-row{position:relative}.password-row input{padding-left:50px}
+.password-toggle{position:absolute;left:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px}
+.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.auth-actions button{padding:13px;border:0;border-radius:11px;cursor:pointer;font-size:16px;font-weight:700}
+.login-btn{background:linear-gradient(135deg,#f5c400,#c99f00);color:#111}
+.register-btn{background:transparent;color:var(--primary);border:1px solid var(--primary)!important}
+.google-login{display:block;margin-top:12px;padding:13px;text-align:center;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--text);font-weight:700;background:var(--white)}
+.auth-error{display:none;margin-top:14px;padding:11px;border-radius:10px;background:#ffe8e8;color:#a00;text-align:center}
+.back{display:inline-block;margin-top:18px;text-decoration:none;color:var(--muted)}
 </style>
 </head>
 <body>
 <main class="auth-card">
-<div style="font-size:42px">👤</div>
-<h1>حسابك في Nabd-Store</h1>
-<p>سجّل الدخول لمتابعة طلباتك وحسابك، أو أنشئ حسابًا جديدًا.</p>
-<div class="auth-tabs">
-<button id="loginTab" class="active" type="submit">تسجيل الدخول</button>
-<button id="registerTab" type="submit">إنشاء حساب</button>
-</div>
+<div class="account-icon">👤</div>
+<h1>حسابي</h1>
+<div class="store-name">Nabd-Store</div>
 <form id="authForm" class="auth-form">
-<div id="nameField" hidden>
-<label for="name">الاسم</label>
-<input id="name" type="text" autocomplete="name">
-</div>
+<div id="nameField" hidden><label for="name">الاسم</label><input id="name" type="text" autocomplete="name"></div>
 <label for="email">البريد الإلكتروني</label>
 <input id="email" type="email" autocomplete="email" required>
 <label for="password">كلمة المرور</label>
-<input id="password" type="password" minlength="8" autocomplete="current-password" required>
+<div class="password-row"><input id="password" type="password" minlength="8" autocomplete="current-password" required><button class="password-toggle" id="passwordToggle" type="button">عرض</button></div>
+<div class="auth-actions"><button id="loginBtn" class="login-btn" type="submit">تسجيل الدخول</button><button id="registerBtn" class="register-btn" type="button">إنشاء حساب</button></div>
 <a class="google-login" href="/api/customer/google">تسجيل الدخول باستخدام Google</a>
 <div id="authError" class="auth-error"></div>
 </form>
@@ -43,34 +42,11 @@ body{min-height:100vh;display:grid;place-items:center;background:#090909;color:#
 </main>
 <script>
 let mode="login";
-const form=document.getElementById("authForm");
-const nameField=document.getElementById("nameField");
-const loginTab=document.getElementById("loginTab");
-const registerTab=document.getElementById("registerTab");
-const error=document.getElementById("authError");
-function setMode(next){
- mode=next;
- nameField.hidden=mode!=="register";
- document.getElementById("loginTab").classList.toggle("active",mode==="login");
- document.getElementById("registerTab").classList.toggle("active",mode==="register");
- loginTab.classList.toggle("active",mode==="login");
-registerTab.classList.toggle("active",mode==="register");
- error.style.display="none";
-}
-loginTab.onclick=()=>{setMode("login");};
-registerTab.onclick=()=>{setMode("register");};
-form.addEventListener("submit",async e=>{
- e.preventDefault(); error.style.display="none"; const clickedMode=(document.activeElement===registerTab)?"register":"login"; mode=clickedMode; loginTab.disabled=true; registerTab.disabled=true;
- try{
-  const body={email:document.getElementById("email").value.trim(),password:document.getElementById("password").value};
-  if(mode==="register") body.name=document.getElementById("name").value.trim();
-  const r=await fetch("/api/customer/"+(mode==="login"?"login":"register"),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});
-  const data=await r.json();
-  if(!r.ok) throw new Error(data.message||"تعذر إكمال العملية.");
-  location.href="/customer-profile.html";
- }catch(err){error.textContent=err.message;error.style.display="block";}
- finally{loginTab.disabled=false; registerTab.disabled=false;}
-});
+const form=document.getElementById("authForm"),nameField=document.getElementById("nameField"),loginBtn=document.getElementById("loginBtn"),registerBtn=document.getElementById("registerBtn"),password=document.getElementById("password"),passwordToggle=document.getElementById("passwordToggle"),error=document.getElementById("authError");
+function setMode(next){mode=next;nameField.hidden=mode!=="register";loginBtn.textContent=mode==="login"?"تسجيل الدخول":"تسجيل الحساب";registerBtn.textContent=mode==="login"?"إنشاء حساب":"العودة لتسجيل الدخول";error.style.display="none";document.getElementById("name").required=mode==="register";}
+registerBtn.onclick=()=>setMode(mode==="login"?"register":"login");
+passwordToggle.onclick=()=>{const visible=password.type==="text";password.type=visible?"password":"text";passwordToggle.textContent=visible?"عرض":"إخفاء";};
+form.addEventListener("submit",async e=>{e.preventDefault();error.style.display="none";loginBtn.disabled=true;registerBtn.disabled=true;try{const body={email:document.getElementById("email").value.trim(),password:password.value};if(mode==="register")body.name=document.getElementById("name").value.trim();const r=await fetch("/api/customer/"+(mode==="login"?"login":"register"),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});const data=await r.json();if(!r.ok)throw new Error(data.message||"تعذر إكمال العملية.");location.href="/customer-profile.html";}catch(err){error.textContent=err.message;error.style.display="block";}finally{loginBtn.disabled=false;registerBtn.disabled=false;}});
 </script>
 </body>
 </html>
