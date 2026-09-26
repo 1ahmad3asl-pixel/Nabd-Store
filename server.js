@@ -16,7 +16,8 @@ const PROFIT_RATE = Number(process.env.PROFIT_RATE || 10);
 const STORE_NAME = process.env.STORE_NAME || "Nabd-Store";
 
 app.use(cors());
-app.use(express.json());\n
+app.use(express.json());
+
 /* =========================
    ADMIN AUTHENTICATION
 ========================= */
@@ -333,7 +334,15 @@ app.post("/api/admin/notifications", (req, res) => {
    FRONTEND
 ========================= */
 
-app.use(express.static(path.join(__dirname)));\n\napp.get("/admin", requireAdmin, (req, res) => {\n    res.sendFile(path.join(__dirname, "admin", "index.html"));\n});\n\napp.get("/admin/index.html", requireAdmin, (req, res) => {\n    res.sendFile(path.join(__dirname, "admin", "index.html"));\n});
+app.get("/admin", requireAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.get("/admin/index.html", requireAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.use(express.static(path.join(__dirname)));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
