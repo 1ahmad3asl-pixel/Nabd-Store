@@ -589,18 +589,28 @@ function openGamesPage() {
 
     const tiles = getGameTiles();
 
+    const thirdLevelGames = new Set(["ببجي موبايل", "جواكر", "Roblox Game"]);
+
     content.innerHTML =
-        '<div class="game-page-note">الألعاب</div>' +
+        '<div class="game-page-note">اختر اللعبة للدخول إلى المستوى التالي.</div>' +
         '<div class="game-category-grid">' +
         tiles.map(function(tile) {
-            return '<div class="game-category-tile game-category-tile-static">' +
+            const isThirdLevelReady = thirdLevelGames.has(tile.title);
+            return '<button class="game-category-tile ' + (isThirdLevelReady ? "" : "game-category-tile-static") + '" type="button" data-game-title="' +
+                escapeHtml(tile.title) + '" ' + (isThirdLevelReady ? "" : "disabled") + '>' +
                 '<span class="game-tile-image">' +
                     '<span class="game-placeholder">🎮</span>' +
                 '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
-                '</div>';
+                '</button>';
         }).join("") +
         '</div>';
+
+    content.querySelectorAll(".game-category-tile:not(:disabled)").forEach(function(tile) {
+        tile.addEventListener("click", function() {
+            openGamePlaceholder(tile.getAttribute("data-game-title") || "اللعبة");
+        });
+    });
 
     window.scrollTo({top: 0, behavior: "smooth"});
 }
