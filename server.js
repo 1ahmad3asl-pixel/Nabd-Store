@@ -912,9 +912,27 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       if (Number.isFinite(maxQty) && qty > maxQty) return res.status(400).json({status:"ERROR",message:"الكمية أكبر من الحد الأقصى للمنتج."});
     }
 
-    const allowedParams = Array.isArray(product.params) ? new Set(product.params.map(String)) : null;
+    const allowedParamList = Array.isArray(product.params)
+      ? product.params.map(value => String(value).trim()).filter(Boolean)
+      : null;
+    const allowedParams = allowedParamList ? new Set(allowedParamList) : null;
+
+    // واجهة ببجي تعرض "ID المقاتل" للمستخدم، بينما قد يكون اسم
+    // الباراميتر الفعلي مختلفًا داخل كتالوج المزود. إذا كان المنتج
+    // يملك باراميترًا واحدًا فقط، نربط playerId به تلقائيًا.
+    const normalizedRawParams = {...rawParams};
+    if (isPubgProduct &&
+        Object.prototype.hasOwnProperty.call(normalizedRawParams, "playerId") &&
+        allowedParamList &&
+        !allowedParams.has("playerId") &&
+        allowedParamList.length === 1) {
+      const value = normalizedRawParams.playerId;
+      delete normalizedRawParams.playerId;
+      normalizedRawParams[allowedParamList[0]] = value;
+    }
+
     const params = {};
-    const entries = Object.entries(rawParams);
+    const entries = Object.entries(normalizedRawParams);
     if (entries.length > 20) return res.status(400).json({status:"ERROR",message:"عدد بيانات الطلب كبير جدًا."});
     for (const [key, value] of entries) {
       if (allowedParams && !allowedParams.has(String(key))) continue;
