@@ -1354,6 +1354,11 @@ function initializeSettings() {
         saveStore.addEventListener("click", saveStoreSettings);
     }
 
+    const saveDhikr = document.getElementById("saveDhikrSettings");
+    if (saveDhikr) {
+        saveDhikr.addEventListener("click", saveDhikrSettings);
+    }
+
     document.querySelectorAll(".settings-tab").forEach(function(tab){
         tab.addEventListener("click",function(){
             const panel=tab.getAttribute("data-settings-panel");
@@ -1417,6 +1422,7 @@ function updateSettingsUI() {
     setValue("storeCurrency", adminState.settings.currency ?? "USD");
     setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
     setValue("adminFont", adminState.settings.font_family ?? "Dubai Medium");
+    setValue("dhikrItems", Array.isArray(adminState.settings.dhikr_items) ? adminState.settings.dhikr_items.join("\n") : "لا إله إلا الله\nالله أكبر\nسبحان الله\nالحمد لله");
     applyAdminFont(adminState.settings.font_family ?? "Dubai Medium");
     setText("adminFontPreview", adminState.settings.font_family ?? "Dubai Medium");
     setText("adminDecimalsPreview", (Number(adminState.settings.currency_decimals ?? 3) === 2 ? "2 خانتان عشريتان" : "3 خانات عشرية"));
@@ -1438,6 +1444,33 @@ function applyAdminFont(font) {
     const allowed = ["Dubai Medium"];
     const selected = allowed.includes(String(font)) ? String(font) : "Dubai Medium";
     document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
+}
+
+async function saveDhikrSettings() {
+    const input = document.getElementById("dhikrItems");
+    if (!input) return;
+    const items = input.value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+    if (!items.length) {
+        showAdminToast("أدخل ذكرًا واحدًا على الأقل.");
+        return;
+    }
+    if (items.length > 12) {
+        showAdminToast("يمكن إضافة 12 عبارة كحد أقصى.");
+        return;
+    }
+    if (items.some(item => item.length > 80)) {
+        showAdminToast("كل عبارة يجب ألا تتجاوز 80 حرفًا.");
+        return;
+    }
+    try {
+        const data = await ADMIN_API.updateSettings({dhikr_items: items});
+        adminState.settings = {...adminState.settings, ...(data.settings || {}), dhikr_items: items};
+        updateSettingsUI();
+        showAdminToast("تم حفظ شريط الأذكار.");
+    } catch (error) {
+        console.error(error);
+        showAdminToast(error.message || "تعذر حفظ شريط الأذكار.");
+    }
 }
 
 async function saveProfitSettings() {
