@@ -731,6 +731,18 @@ function getUsableProductParams(product) {
         });
 }
 
+function getDisplayParamLabel(label) {
+    const text = normalizeGameText(label);
+    if (
+        text.includes("ايدي") ||
+        text.includes("الايدي") ||
+        text.includes("id")
+    ) {
+        return "ID";
+    }
+    return String(label || "").trim();
+}
+
 function renderPubgParamFields(product) {
     const params = getUsableProductParams(product);
 
@@ -739,7 +751,7 @@ function renderPubgParamFields(product) {
     }
 
     return params.map(function(label, index) {
-        const safeLabel = escapeHtml(label);
+        const safeLabel = escapeHtml(getDisplayParamLabel(label));
         return '<div class="pubg-field">' +
             '<label for="pubg_param_' + index + '">' + safeLabel + '</label>' +
             '<input id="pubg_param_' + index + '" data-pubg-param="' + escapeHtml(label) + '" type="text" inputmode="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '">' +
@@ -810,7 +822,6 @@ function renderPubgProductPicker(gameTitle, group) {
                 '<span>السعر</span>' +
                 '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
             '</div>' +
-            '<div id="pubgQtyWrap"></div>' +
             '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
                 (!firstProduct || (firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
                 '>إرسال الطلب <span>→</span></button>' +
@@ -827,27 +838,10 @@ function renderPubgProductPicker(gameTitle, group) {
         const selectedPrice = document.getElementById("pubgSelectedPrice");
         const fields = document.getElementById("pubgParamFields");
         const submit = document.getElementById("pubgSubmitOrder");
-        const qtyWrap = document.getElementById("pubgQtyWrap");
 
         if (selectedName) selectedName.textContent = product.name || "اختر الباقة";
         if (selectedPrice) selectedPrice.textContent = formatMoney(getPubgProductPrice(product));
         if (fields) fields.innerHTML = renderPubgParamFields(product);
-
-        if (qtyWrap) {
-            const minQty = Number(product.qty_values && product.qty_values.min);
-            const maxQty = Number(product.qty_values && product.qty_values.max);
-            if (Number.isFinite(minQty) || Number.isFinite(maxQty)) {
-                const min = Number.isFinite(minQty) ? minQty : 1;
-                const max = Number.isFinite(maxQty) ? maxQty : 999999999;
-                qtyWrap.innerHTML =
-                    '<div class="pubg-field-label">الكمية</div>' +
-                    '<div class="pubg-field">' +
-                        '<input id="pubgQty" type="number" min="' + min + '" max="' + max + '" value="' + min + '" inputmode="numeric">' +
-                    '</div>';
-            } else {
-                qtyWrap.innerHTML = '';
-            }
-        }
 
         if (submit) {
             submit.disabled = product.available === false || product.available === 0;
@@ -931,8 +925,6 @@ async function submitGamePickerOrder(product, root) {
         return;
     }
 
-    const qtyInput = root ? root.querySelector("#pubgQty") : null;
-    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
     const submit = root ? root.querySelector("#pubgSubmitOrder") : null;
     if (submit) submit.disabled = true;
 
@@ -940,7 +932,7 @@ async function submitGamePickerOrder(product, root) {
         const response = await fetch(BACKEND_URL + "/api/orders", {
             method: "POST",
             headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+            body: JSON.stringify({product_id: product.id, params: params})
         });
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") {
@@ -1342,25 +1334,19 @@ function renderProducts() {
 function openProductModal(product) {
     const params = Array.isArray(product.params) ? product.params : [];
     const fields = params.map(function(label, index) {
-        const safeLabel = escapeHtml(String(label || "البيانات"));
+        const safeLabel = escapeHtml(getDisplayParamLabel(String(label || "البيانات")));
         return '<div class="order-field">' +
             '<label for="param_' + index + '">' + safeLabel + '</label>' +
             '<input id="param_' + index + '" type="text" placeholder="أدخل ' + safeLabel + '" autocomplete="off">' +
             '</div>';
     }).join("");
 
-    const minQty = Number(product.qty_values?.min || 1);
-    const maxQty = Number(product.qty_values?.max || 999999999);
     const price = Number(product.price) || 0;
 
     showModal("تأكيد عملية الشراء",
         '<div class="order-form">' +
             '<div class="order-product-name">' + escapeHtml(product.name || "منتج") + '</div>' +
             fields +
-            '<div class="order-field">' +
-                '<label for="orderQty">الكمية</label>' +
-                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" value="' + minQty + '" inputmode="numeric">' +
-            '</div>' +
             '<div class="order-price-row">' +
                 '<span>السعر</span>' +
                 '<strong id="orderPrice">' + formatMoney(price) + '</strong>' +
@@ -1381,8 +1367,6 @@ async function submitProductOrder(product) {
         const input = document.getElementById("param_" + index);
         if (input && input.value.trim()) params[label] = input.value.trim();
     });
-    const qtyInput = document.getElementById("orderQty");
-    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
     const confirm = document.getElementById("confirmProductOrder");
     if (confirm) confirm.disabled = true;
 
@@ -1390,7 +1374,7 @@ async function submitProductOrder(product) {
         const response = await fetch(BACKEND_URL + "/api/orders", {
             method: "POST",
             headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+            body: JSON.stringify({product_id: product.id, params: params})
         });
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر إنشاء الطلب");
