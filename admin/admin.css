@@ -184,3 +184,16 @@ html[data-theme="light"] .admin-theme-toggle{background:rgba(255,255,255,.42);}
     .admin-balance{display:block;font-size:11px;}
     .admin-balance strong{font-size:17px;}
 }
+
+
+/* ===== معايير لوحة الإدارة ===== */
+:root{--admin-font:"Amasis MT Pro",Tahoma,Arial,sans-serif;}
+*{font-family:var(--admin-font);}
+.admin-header,.admin-tabs,.admin-main{direction:rtl;}
+.admin-standards-card{border-top:3px solid var(--primary);}
+.standard-item strong{direction:rtl;}
+.settings-note{line-height:1.7;}
+@media(max-width:600px){
+    .admin-standards-card{padding:14px;}
+    .standard-item{padding:11px;}
+}
