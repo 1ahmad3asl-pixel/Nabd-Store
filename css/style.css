@@ -99,53 +99,11 @@ transition:
 .menu-btn:hover{ background:rgba(255,255,255,.12); }
 .menu-btn:active{ transform:scale(.92); }
 /* ========================= MOVING DHIKR BAR ========================= */
-.dhikr-bar{ width:100%;
-overflow:hidden;
-
-background:#111111;
-
-border-bottom:1px solid var(--border);
-
-/*
- * قريب من ارتفاع الشريط العلوي
- */
-height:58px;
-
-display:flex;
-align-items:center;
-
-white-space:nowrap;
-
-position:relative;
-}
-.dhikr-track{ display:inline-flex;
-align-items:center;
-
-gap:55px;
-
-padding-right:40px;
-
-animation:
-    dhikrMove 25s linear infinite;
-
-min-width:max-content;
-}
-.dhikr-track span{ color:var(--primary);
-font-size:17px;
-
-font-weight:900;
-
-white-space:nowrap;
-}
-@keyframes dhikrMove{
-from{
-    transform:translateX(100%);
-}
-
-to{
-    transform:translateX(-100%);
-}
-}
+.dhikr-bar{width:92%;max-width:1100px;height:58px;margin:10px auto 0;overflow:hidden;background:#111;border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;white-space:nowrap;position:relative;box-shadow:0 3px 12px rgba(0,0,0,.05);}
+.dhikr-track{display:flex;align-items:center;gap:0;min-width:max-content;animation:dhikrMove 22s linear infinite;will-change:transform;}
+.dhikr-group{display:flex;align-items:center;gap:55px;padding-inline:27.5px;flex:none;}
+.dhikr-track span{color:var(--primary);font-size:17px;font-weight:900;white-space:nowrap;}
+@keyframes dhikrMove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 /* ========================= SEARCH BAR جاهز ليتم ربطه بالـHTML لاحقًا ========================= */
 .search-section{ width:100%;
 margin:0;
