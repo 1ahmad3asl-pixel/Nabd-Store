@@ -397,7 +397,17 @@ app.post("/api/customer/login", async (req, res) => {
   }
 });
 
-app.get("/api/customer/countries", (req, res) => {\n  const countries = getCountries().map(country => ({\n    country,\n    calling_code: "+" + getCountryCallingCode(country),\n    flag: country.replace(/./g, char => String.fromCodePoint(char.charCodeAt(0) + 127397))\n  }));\n  countries.sort((a, b) => a.calling_code.localeCompare(b.calling_code) || a.country.localeCompare(b.country));\n  res.json({ status: "OK", countries });\n});\n\napp.get("/api/customer/phone-country", requireCustomer, (req, res) => {
+app.get("/api/customer/countries", (req, res) => {
+  const countries = getCountries().map(country => ({
+    country,
+    calling_code: "+" + getCountryCallingCode(country),
+    flag: country.replace(/./g, char => String.fromCodePoint(char.charCodeAt(0) + 127397))
+  }));
+  countries.sort((a, b) => a.calling_code.localeCompare(b.calling_code) || a.country.localeCompare(b.country));
+  res.json({ status: "OK", countries });
+});
+
+app.get("/api/customer/phone-country", requireCustomer, (req, res) => {
   const phoneData = parseCustomerPhone(req.query?.phone);
   if (!phoneData) return res.status(400).json({ status: "ERROR", message: "رقم الهاتف غير صحيح." });
   res.json({ status: "OK", country: phoneData.country });
