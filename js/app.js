@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateBalance(0);
 
-    loadProducts();
+    // لا نحمّل منتجات Nemer عند فتح الموقع. صفحة الألعاب تُعرض فورًا،
+    // وتُحمّل بيانات المنتجات فقط عند الحاجة.
 });
 
 
@@ -659,37 +660,7 @@ async function loadCachedGameImages(tiles) {
 
             imageBox.innerHTML =
                 '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
-        });
-    } catch (error) {
-        console.warn("Cached game images unavailable:", error);
-    }
-}
-
-
-function openGamesPage() {
-    if (!state.productsLoaded) {
-        const content = document.getElementById("internalPageContent");
-        const services = document.getElementById("servicesSection");
-        const internal = document.getElementById("internalPage");
-        if (services) services.hidden = true;
-        if (internal) internal.hidden = false;
-        if (content) {
-            content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات الألعاب...</p></div>';
-        }
-        loadProducts().then(function() {
-            openGamesPage();
-        }).catch(function() {
-            if (content) {
-                content.innerHTML = '<div class="products-loading"><p>تعذر تحميل ألعاب المتجر حاليًا.</p><button class="buy-btn" type="button" id="retryGamesProducts">إعادة المحاولة</button></div>';
-                const retry = document.getElementById("retryGamesProducts");
-                if (retry) retry.addEventListener("click", function() {
-                    loadProducts().then(openGamesPage).catch(function() {});
-                }, {once:true});
-            }
-        });
-        return;
-    }
-
+        })function openGamesPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
@@ -704,6 +675,8 @@ function openGamesPage() {
     if (title) title.textContent = "الألعاب";
     if (icon) icon.textContent = "🎮";
 
+    // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك لا يوجد سبب لانتظار API.
+    // نعرضها فورًا، ثم نجلب المنتجات في الخلفية عند اختيار لعبة.
     const tiles = getGameTiles();
 
     content.innerHTML =
@@ -714,22 +687,32 @@ function openGamesPage() {
                 escapeHtml(tile.title) + '">' +
                 '<span class="game-tile-image">' +
                     (tile.image
-                        ? '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">'
+                        ? '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">' 
                         : '<span class="game-placeholder">🎮</span>') +
                 '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
-                '</button>';
+            '</button>';
         }).join("") +
         '</div>';
 
     content.querySelectorAll(".game-category-tile").forEach(function(tile) {
-        tile.addEventListener("click", function() {
-            openGamePlaceholder(tile.getAttribute("data-game-title") || "اللعبة");
+        tile.addEventListener("click", async function() {
+            const gameTitle = tile.getAttribute("data-game-title") || "اللعبة";
+
+            if (!state.productsLoaded) {
+                content.innerHTML =
+                    '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات اللعبة...</p></div>';
+                try {
+                    await loadProducts();
+                } catch (error) {
+                    return;
+                }
+            }
+
+            openGamePlaceholder(gameTitle);
         });
     });
 
-    // نعرض الصور الاحتياطية فورًا، ثم نستبدلها بصور الألعاب الرسمية من Google Play.
-    loadOfficialGameImages(tiles);
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
