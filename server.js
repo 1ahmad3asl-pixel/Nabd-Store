@@ -10,6 +10,8 @@ const {
     getNemerProfile
 } = require("./api");
 
+const { query, initDb, getSetting, setSetting, createSession, getSession, deleteSession, cleanupSessions } = require("./db");
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -29,7 +31,6 @@ const ADMIN_SESSION_SECRET = String(
     process.env.ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString("hex")
 );
 
-const adminSessions = new Map();
 const adminLoginAttempts = new Map();
 
 function markAdminSecurityHeaders(res) {
@@ -42,14 +43,12 @@ function getClientIp(req) {
     return String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "")
         .split(",")[0].trim();
 }
-const adminSettings = {
-    profit_rate: PROFIT_RATE,
-    store_name: STORE_NAME,
-    currency: process.env.CURRENCY || "USD"
-};
-const adminOrders = [];
-const adminCustomers = [];
-const adminTransactions = [];
+const adminSettings = { profit_rate: PROFIT_RATE, store_name: STORE_NAME, currency: process.env.CURRENCY || "USD" };
+async function loadSettings() {
+    adminSettings.profit_rate = Number(await getSetting("profit_rate", PROFIT_RATE));
+    adminSettings.store_name = await getSetting("store_name", STORE_NAME);
+    adminSettings.currency = await getSetting("currency", process.env.CURRENCY || "USD");
+}
 
 function createAdminSession() {
     const token = crypto
@@ -57,27 +56,15 @@ function createAdminSession() {
         .update(crypto.randomUUID() + Date.now())
         .digest("hex");
 
-    adminSessions.set(token, {
-        createdAt: Date.now()
-    });
-
     return token;
 }
 
-function getAdminSession(req) {
-    const token = req.headers.cookie
-        ?.split(";")
-        .map(item => item.trim())
-        .find(item => item.startsWith("nabd_admin_session="))
-        ?.split("=")
-        .slice(1)
-        .join("=");
-
-    if (!token || !adminSessions.has(token)) {
-        return null;
-    }
-
-    return { token, session: adminSessions.get(token) };
+async function getAdminSession(req) {
+    const token = req.headers.cookie?.split(";").map(item => item.trim())
+        .find(item => item.startsWith("nabd_admin_session="))?.split("=").slice(1).join("=");
+    if (!token) return null;
+    const session = await getSession(token);
+    return session ? { token, session } : null;
 }
 
 function requireAdmin(req, res, next) {
@@ -89,8 +76,7 @@ function requireAdmin(req, res, next) {
         });
     }
 
-    const auth = getAdminSession(req);
-
+    getAdminSession(req).then(auth => {
     if (!auth) {
         if (req.path === "/admin" || req.path === "/admin/index.html") {
             return res.redirect("/admin/login.html");
@@ -103,6 +89,7 @@ function requireAdmin(req, res, next) {
     }
 
     next();
+    }).catch(() => res.status(401).json({ status: "ERROR", message: "جلسة الإدارة غير صالحة." }));
 }
 
 function adminSameSecret(a, b) {
@@ -112,7 +99,7 @@ function adminSameSecret(a, b) {
         crypto.timingSafeEqual(left, right);
 }
 
-app.post("/api/admin/login", (req, res) => {
+app.post("/api/admin/login", async (req, res) => {
     markAdminSecurityHeaders(res);
     const ip = getClientIp(req);
     const attempt = adminLoginAttempts.get(ip) || { count: 0, blockedUntil: 0 };
@@ -148,6 +135,7 @@ app.post("/api/admin/login", (req, res) => {
 
     adminLoginAttempts.delete(ip);
     const token = createAdminSession();
+    await createSession(token, new Date(Date.now() + 24 * 60 * 60 * 1000));
 
     res.setHeader(
         "Set-Cookie",
@@ -169,9 +157,9 @@ app.get("/api/admin/auth/me", requireAdmin, (req, res) => {
     });
 });
 
-app.post("/api/admin/logout", requireAdmin, (req, res) => {
-    const auth = getAdminSession(req);
-    if (auth) adminSessions.delete(auth.token);
+app.post("/api/admin/logout", requireAdmin, async (req, res) => {
+    const auth = await getAdminSession(req);
+    if (auth) await deleteSession(auth.token);
 
     res.setHeader(
         "Set-Cookie",
@@ -249,7 +237,8 @@ app.get("/api/admin/products", async (req, res) => {
     }
 });
 
-app.get("/api/admin/settings", (req, res) => {
+app.get("/api/admin/settings", async (req, res) => {
+    await loadSettings();
     res.json({ status: "OK", settings: adminSettings });
 });
 
@@ -263,74 +252,46 @@ app.put("/api/admin/settings", (req, res) => {
             });
         }
         adminSettings.profit_rate = profit;
+        await setSetting("profit_rate", profit);
     }
 
     if (req.body?.store_name !== undefined) {
         adminSettings.store_name = String(req.body.store_name).trim() || STORE_NAME;
+        await setSetting("store_name", adminSettings.store_name);
     }
 
     if (req.body?.currency !== undefined) {
         adminSettings.currency = String(req.body.currency).trim() || "USD";
+        await setSetting("currency", adminSettings.currency);
     }
 
     res.json({ status: "OK", settings: adminSettings });
 });
 
-app.get("/api/admin/customers", (req, res) => {
-    const search = String(req.query.search || "").toLowerCase();
-    const customers = adminCustomers.filter(customer =>
-        !search ||
-        JSON.stringify(customer).toLowerCase().includes(search)
-    );
-    res.json({ status: "OK", customers });
+app.get("/api/admin/customers", async (req, res) => {
+    const search = String(req.query.search || "").trim();
+    const result = search
+        ? await query("SELECT * FROM customers WHERE customer_id ILIKE $1 OR name ILIKE $1 ORDER BY created_at DESC", [`%${search}%`])
+        : await query("SELECT * FROM customers ORDER BY created_at DESC");
+    res.json({ status: "OK", customers: result.rows });
 });
-
-app.get("/api/admin/customers/:id", (req, res) => {
-    const customer = adminCustomers.find(
-        item => String(item.customer_id) === String(req.params.id)
-    );
-    if (!customer) {
-        return res.status(404).json({
-            status: "ERROR",
-            message: "العميل غير موجود."
-        });
-    }
-    res.json({ status: "OK", customer });
+app.get("/api/admin/customers/:id", async (req, res) => {
+    const result = await query("SELECT * FROM customers WHERE customer_id=$1", [String(req.params.id)]);
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+    res.json({ status: "OK", customer: result.rows[0] });
 });
-
-app.put("/api/admin/customers/:id/discount", (req, res) => {
+app.put("/api/admin/customers/:id/discount", async (req, res) => {
     const discount = Number(req.body?.discount);
-    if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
-        return res.status(400).json({
-            status: "ERROR",
-            message: "الخصم يجب أن يكون بين 0 و100."
-        });
-    }
-
-    const customer = adminCustomers.find(
-        item => String(item.customer_id) === String(req.params.id)
-    );
-
-    if (!customer) {
-        return res.status(404).json({
-            status: "ERROR",
-            message: "لا يمكن إنشاء عميل من خلال هذا المسار."
-        });
-    }
-
-    customer.discount = discount;
-    res.json({ status: "OK", customer });
+    if (!Number.isFinite(discount) || discount < 0 || discount > 100) return res.status(400).json({ status: "ERROR", message: "الخصم يجب أن يكون بين 0 و100." });
+    const result = await query("UPDATE customers SET discount=$1, updated_at=NOW() WHERE customer_id=$2 RETURNING *", [discount, String(req.params.id)]);
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+    res.json({ status: "OK", customer: result.rows[0] });
 });
 
-app.get("/api/admin/orders", (req, res) => {
-    res.json({ status: "OK", orders: adminOrders.slice().reverse() });
-});
-
-app.get("/api/admin/transactions", (req, res) => {
-    res.json({
-        status: "OK",
-        transactions: adminTransactions.slice().reverse()
-    });
+app.get("/api/admin/orders", async (req, res) => {
+    const result = await query("SELECT * FROM orders ORDER BY created_app.get("/api/admin/transactions", async (req, res) => {
+    const result = await query("SELECT * FROM transactions ORDER BY created_at DESC");
+    res.json({ status: "OK", transactions: result.rows });
 });
 
 app.post("/api/admin/notifications", (req, res) => {
@@ -342,16 +303,11 @@ app.post("/api/admin/notifications", (req, res) => {
         });
     }
 
-    res.json({
-        status: "OK",
-        notification: {
-            target: target || "all",
-            customer_id: customer_id || null,
-            title: String(title),
-            message: String(message),
-            created_at: new Date().toISOString()
-        }
-    });
+    const result = await query(
+        "INSERT INTO notifications(target, customer_id, title, message) VALUES($1,$2,$3,$4) RETURNING *",
+        [target || "all", customer_id || null, String(title), String(message)]
+    );
+    res.json({ status: "OK", notification: result.rows[0] });
 });
 
 
@@ -398,7 +354,7 @@ app.get("/api/products", async (req, res) => {
                 const originalPrice = Number(product.price || 0);
 
                 const sellingPrice =
-                    originalPrice * (1 + PROFIT_RATE / 100);
+                    originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
 
                 return {
                     ...product,
@@ -414,7 +370,7 @@ app.get("/api/products", async (req, res) => {
 
         res.json({
             status: "OK",
-            profit_rate: PROFIT_RATE,
+            profit_rate: Number(adminSettings.profit_rate),
             products: result
         });
 
@@ -499,7 +455,14 @@ app.post("/api/orders", async (req, res) => {
             created_at: new Date().toISOString()
         };
 
-        adminOrders.push(orderRecord);
+        await query(`INSERT INTO orders
+            (id, order_id, customer_id, product_id, product_name, api_price, price, profit, discount, status)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+            ON CONFLICT(id) DO NOTHING`, [String(orderRecord.id), String(orderRecord.order_id), String(orderRecord.customer_id), String(orderRecord.product_id), String(orderRecord.product_name), orderRecord.api_price, orderRecord.price, orderRecord.profit, orderRecord.discount, String(orderRecord.status)]);
+        if (orderRecord.customer_id !== "guest") {
+            await query(`INSERT INTO customers(customer_id, orders_count) VALUES($1,1)
+                ON CONFLICT(customer_id) DO UPDATE SET orders_count=customers.orders_count+1, updated_at=NOW()`, [String(orderRecord.customer_id)]);
+        }
 
         res.json({
             status: "OK",
@@ -568,9 +531,9 @@ app.get("/api/orders/check", async (req, res) => {
 
 app.get("/api/store", (req, res) => {
     res.json({
-        name: STORE_NAME,
-        currency: process.env.CURRENCY || "USD",
-        profit_rate: PROFIT_RATE
+        name: adminSettings.store_name,
+        currency: adminSettings.currency,
+        profit_rate: Number(adminSettings.profit_rate)
     });
 });
 
@@ -597,8 +560,13 @@ app.get("*", (req, res) => {
    START SERVER
 ========================= */
 
-app.listen(PORT, () => {
-    console.log(
-        `${STORE_NAME} server running on port ${PORT}`
-    );
-});
+initDb()
+    .then(async () => {
+        await loadSettings();
+        await cleanupSessions();
+        app.listen(PORT, () => console.log(adminSettings.store_name + " server running on port " + PORT));
+    })
+    .catch(error => {
+        console.error("Database initialization failed:", error);
+        process.exit(1);
+    });
