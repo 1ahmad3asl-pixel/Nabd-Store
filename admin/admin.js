@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     initializeAdminNavigation();
     initializeAdminMenu();
+    initializeAdminTheme();
     initializeDashboard();
     initializeCustomers();
     initializeOrders();
@@ -247,6 +248,27 @@ function showAdminSection(section) {
 
 }
 
+function initializeAdminTheme() {
+    const toggle = document.getElementById("adminThemeToggle");
+    const saved = localStorage.getItem("nabd-admin-theme") || "dark";
+    document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
+    updateAdminThemeButton();
+    if (toggle) toggle.addEventListener("click", function () {
+        const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem("nabd-admin-theme", next);
+        updateAdminThemeButton();
+        setText("adminThemeStatus", next === "dark" ? "ليلي" : "نهاري");
+    });
+}
+function updateAdminThemeButton() {
+    const toggle = document.getElementById("adminThemeToggle");
+    if (!toggle) return;
+    const dark = document.documentElement.dataset.theme !== "light";
+    toggle.textContent = dark ? "☀" : "☾";
+    toggle.title = dark ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي";
+    setText("adminThemeStatus", dark ? "ليلي" : "نهاري");
+}
 function initializeAdminMenu() {
 
     const button =
@@ -1306,10 +1328,8 @@ function initializeSettings() {
             "saveProfitRate"
         );
 
-    const saveStore =
-        document.getElementById(
-            "saveStoreSettings"
-        );
+    const saveStore = document.getElementById("saveStoreSettings");
+    const saveAppearance = document.getElementById("saveAppearanceSettings");
 
     if (saveProfit) {
 
@@ -1388,6 +1408,8 @@ function updateSettingsUI() {
     setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
     setValue("adminFont", adminState.settings.font_family ?? "Amasis MT Pro");
     applyAdminFont(adminState.settings.font_family ?? "Amasis MT Pro");
+    setText("adminFontPreview", adminState.settings.font_family ?? "Amasis MT Pro");
+    setText("adminDecimalsPreview", (Number(adminState.settings.currency_decimals ?? 3) === 2 ? "2 خانتان عشريتان" : "3 خانات عشرية"));
 
     setText(
         "profitRatePreview",
@@ -1816,7 +1838,7 @@ function getStatusHtml(status) {
 
 function formatAdminPrice(value) {
     const number = Number(value) || 0;
-    const decimals = 3;
+    const decimals = Math.max(2, Math.min(3, Number(adminState.settings.currency_decimals ?? 3)));
     const currency = String(adminState.settings.currency || "USD");
     const symbols = {USD:"$",EUR:"€",TRY:"₺",SAR:"﷼",AED:"د.إ"};
     return (symbols[currency] || currency + " ") + number.toFixed(decimals);
