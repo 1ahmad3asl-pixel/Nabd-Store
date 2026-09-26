@@ -1,6 +1,6 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:var(--admin-font,"Dubai Medium","Dubai","Dubai Medium",Tahoma,Arial,sans-serif)}
 :root{
- --admin-font:"Dubai Medium","Dubai","Dubai Medium",Tahoma,Arial,sans-serif;
+ --admin-font:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif;
  --primary:#f5c400;--primary-dark:#c99f00;--primary-light:#2a250b;
  --background:#050505;--white:#111111;--text:#f5f5f5;--muted:#a8a8a8;--border:#292929;
  --success:#16a34a;--warning:#f59e0b;--danger:#dc3545;--shadow:0 4px 18px rgba(0,0,0,.28)
@@ -187,7 +187,7 @@ html[data-theme="light"] .admin-theme-toggle{background:rgba(255,255,255,.42);}
 
 
 /* ===== معايير لوحة الإدارة ===== */
-:root{--admin-font:"Dubai Medium",Tahoma,Arial,sans-serif;}
+:root{--admin-font:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif;}
 *{font-family:var(--admin-font);}
 .admin-header,.admin-tabs,.admin-main{direction:rtl;}
 .admin-standards-card{border-top:3px solid var(--primary);}
