@@ -145,6 +145,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     initializeLogout();
 
     loadAdminDashboard();
+    loadCustomers();
+
+    setInterval(function () {
+        loadAdminDashboard();
+        loadCustomers();
+    }, 15000);
 
 });
 
@@ -441,6 +447,7 @@ async function loadCustomers(search = "") {
         adminState.customers =
             customers;
 
+        setText("totalCustomers", customers.length);
         renderCustomers(customers);
 
     } catch (error) {
