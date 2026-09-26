@@ -57,8 +57,8 @@ function setMode(next){
 registerTab.classList.toggle("active",mode==="register");
  error.style.display="none";
 }
-loginTab.onclick=()=>{mode="login";};
-registerTab.onclick=()=>{mode="register";};
+loginTab.onclick=()=>{setMode("login");};
+registerTab.onclick=()=>{setMode("register");};
 form.addEventListener("submit",async e=>{
  e.preventDefault(); error.style.display="none"; const clickedMode=(document.activeElement===registerTab)?"register":"login"; mode=clickedMode; loginTab.disabled=true; registerTab.disabled=true;
  try{
@@ -67,7 +67,7 @@ form.addEventListener("submit",async e=>{
   const r=await fetch("/api/customer/"+(mode==="login"?"login":"register"),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});
   const data=await r.json();
   if(!r.ok) throw new Error(data.message||"تعذر إكمال العملية.");
-  location.href="/";
+  location.href="/customer-profile.html";
  }catch(err){error.textContent=err.message;error.style.display="block";}
  finally{loginTab.disabled=false; registerTab.disabled=false;}
 });
