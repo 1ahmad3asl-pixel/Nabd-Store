@@ -72,3 +72,26 @@ input,select,textarea{width:100%;border:1px solid var(--border);background:var(-
 .sidebar-bottom{padding:7px 8px}.logout-button{font-size:11px;padding:8px 10px}.statistics-grid{gap:10px}
 .page-heading{align-items:flex-start;flex-wrap:wrap}
 }
+/* ADMIN TOP NAV REDESIGN */
+body{background:var(--background);font-family:"Amasis MT Pro Black","Amasis MT Pro",Tahoma,Arial,sans-serif;}
+.admin-header{height:62px;padding:0 14px;background:var(--primary);color:#080808;border-bottom:1px solid var(--primary-dark);box-shadow:0 2px 14px rgba(0,0,0,.18);}
+.admin-brand{color:#080808;font-size:20px;}
+.admin-balance{background:transparent;padding:0;border-radius:0;font-size:13px;color:#080808;}
+.admin-balance strong{font-size:20px;font-family:"ERAS BOLD ITC","Eras Bold ITC",Arial,sans-serif;font-variant-numeric:tabular-nums;}
+.admin-menu-button{display:none;}
+.admin-layout{display:block;min-height:100vh;padding-top:62px;}
+.admin-sidebar{display:none;}
+.admin-tabs{position:sticky;top:62px;z-index:800;width:100%;display:flex;align-items:stretch;overflow-x:auto;background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.08);scrollbar-width:none;}
+.admin-tabs::-webkit-scrollbar{display:none;}
+.admin-tabs .admin-nav-item{flex:0 0 auto;width:auto;min-height:52px;padding:9px 16px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-size:13px;font-weight:800;}
+.admin-tabs .admin-nav-item:hover{background:var(--primary-light);color:var(--primary-dark);}
+.admin-tabs .admin-nav-item.active{background:var(--primary-light);color:var(--primary-dark);border-bottom-color:var(--primary);box-shadow:none;}
+.admin-tabs .admin-logout-tab{margin-right:auto;color:var(--danger);}
+.admin-main{width:100%;margin:0;padding:22px;}
+.admin-card,.stat-card,.refresh-button,.small-button{background:var(--white);border:1px solid var(--border);}
+input,select,textarea{background:var(--white);color:var(--text);}
+th{background:#1b1b1b;color:var(--primary);}
+.admin-balance strong,.stat-card strong{font-variant-numeric:tabular-nums;}
+.primary-button{background:linear-gradient(135deg,var(--primary),var(--primary-dark));}
+@media(max-width:800px){.admin-main{width:100%;margin:0;padding:16px 12px;}.admin-tabs{top:62px;}.admin-tabs .admin-nav-item{padding:8px 13px;font-size:12px;}}
+@media(max-width:600px){.admin-header{height:58px;padding:0 10px;}.admin-layout{padding-top:58px;}.admin-tabs{top:58px;}.admin-brand{font-size:17px;}.admin-balance{display:block;font-size:11px;}.admin-balance strong{font-size:17px;}.admin-main{padding:15px 10px;}.admin-tabs .admin-nav-item{min-height:48px;padding:8px 11px;}}
