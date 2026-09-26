@@ -2,22 +2,22 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,Tahoma,sans-serif;
+    font-family:"Amasis MT Pro Black","Amasis MT Pro",Tahoma,sans-serif;
 }
 
 :root{
-    --primary:#0d6efd;
-    --primary-dark:#0a58ca;
-    --primary-light:#edf4ff;
-    --background:#f4f7fb;
-    --white:#ffffff;
-    --text:#172033;
-    --muted:#70798a;
-    --border:#e5e9f0;
+    --primary:#f5c400;
+    --primary-dark:#c99f00;
+    --primary-light:#2a250b;
+    --background:#090909;
+    --white:#141414;
+    --text:#f5f5f5;
+    --muted:#a8a8a8;
+    --border:#292929;
     --success:#16a34a;
     --warning:#f59e0b;
     --danger:#dc3545;
-    --shadow:0 4px 16px rgba(0,0,0,.06);
+    --shadow:0 8px 28px rgba(0,0,0,.28);
 }
 
 body{
@@ -35,8 +35,9 @@ textarea{
 
 .admin-header{
     height:68px;
-    background:var(--primary);
-    color:white;
+    background:linear-gradient(135deg,#090909,#171300);
+    color:#f5f5f5;
+    border-bottom:1px solid #3b3200;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -53,7 +54,9 @@ textarea{
     display:flex;
     align-items:center;
     gap:9px;
-    font-size:19px;
+    font-size:20px;
+    font-family:"ERAS BOLD ITC","Eras Bold ITC",Arial,sans-serif;
+    color:#f5c400;
 }
 
 .admin-header-actions{
@@ -180,7 +183,7 @@ textarea{
 .logout-button{
     width:100%;
     border:0;
-    background:#fff1f2;
+    background:#241010;
     color:var(--danger);
     padding:12px;
     border-radius:10px;
@@ -224,7 +227,7 @@ textarea{
 .refresh-button,
 .small-button{
     border:0;
-    background:white;
+    background:var(--white);
     color:var(--primary);
     padding:10px 15px;
     border-radius:9px;
@@ -394,13 +397,13 @@ td{
 }
 
 th{
-    background:#f8faff;
-    color:#566074;
+    background:#1b1b1b;
+    color:#f5c400;
     font-weight:bold;
 }
 
 td{
-    color:#333d50;
+    color:var(--text);
 }
 
 .status{
@@ -413,17 +416,17 @@ td{
 }
 
 .status-success{
-    background:#eaf8ef;
+    background:#102516;
     color:var(--success);
 }
 
 .status-warning{
-    background:#fff7e6;
+    background:#2b230c;
     color:#b77900;
 }
 
 .status-danger{
-    background:#fff0f1;
+    background:#2a1111;
     color:var(--danger);
 }
 
@@ -620,4 +623,22 @@ td{
         grid-template-columns:1fr;
     }
 
+}
+
+
+.admin-card,.stat-card,.refresh-button,.small-button{
+    border:1px solid var(--border);
+}
+.primary-button{
+    background:linear-gradient(135deg,#f5c400,#c99f00);
+    color:#111;
+    font-weight:800;
+    box-shadow:0 4px 18px rgba(245,196,0,.16);
+}
+.primary-button:hover{background:linear-gradient(135deg,#ffe06a,#d6aa00);}
+.admin-nav-item.active{box-shadow:inset -3px 0 0 var(--primary);}
+.admin-nav-item:hover,.admin-nav-item.active{background:var(--primary-light);}
+.admin-nav-item{font-weight:700;}
+.admin-profile strong,.page-heading h1,.card-heading h2{
+    font-family:"Amasis MT Pro Black","Amasis MT Pro",Tahoma,sans-serif;
 }
