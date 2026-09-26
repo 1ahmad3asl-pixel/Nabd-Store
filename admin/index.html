@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>لوحة تحكم المدير - متجر النبض الرقمي</title>
+<title>لوحة إدارة Nabd-Store</title>
 
 <link rel="stylesheet" href="admin.css">
 </head>
@@ -15,14 +15,14 @@
 
     <div class="admin-brand">
         <span>⚡</span>
-        <strong>متجر النبض الرقمي</strong>
+        <strong>Nabd-Store</strong>
     </div>
 
     <div class="admin-header-actions">
 
         <div class="admin-balance">
             رصيد API:
-            <strong id="apiBalance">$0.00</strong>
+            <strong id="apiBalance">$0.000</strong>
         </div>
 
         <button id="menuButton" class="admin-menu-button">
@@ -251,7 +251,7 @@
                     <input
                         type="search"
                         id="customerSearch"
-                        placeholder="ابحث باسم العميل أو Customer ID..."
+                        placeholder="ابحث باسم العميل أو رقم العميل..."
                     >
 
                     <button id="searchCustomers" class="primary-button">
@@ -267,7 +267,7 @@
                         <thead>
 
                             <tr>
-                                <th>Customer ID</th>
+                                <th>رقم العميل</th>
                                 <th>العميل</th>
                                 <th>الرصيد</th>
                                 <th>الطلبات</th>
@@ -355,7 +355,7 @@
 
                             <tr>
                                 <th>الطلب</th>
-                                <th>Customer ID</th>
+                                <th>رقم العميل</th>
                                 <th>المنتج</th>
                                 <th>سعر API</th>
                                 <th>سعر البيع</th>
@@ -508,7 +508,7 @@
 
                             <tr>
                                 <th>العملية</th>
-                                <th>Customer ID</th>
+                                <th>رقم العميل</th>
                                 <th>المبلغ</th>
                                 <th>النوع</th>
                                 <th>التاريخ</th>
@@ -572,7 +572,7 @@
                     <input
                         type="text"
                         id="notificationCustomerId"
-                        placeholder="مثال: NP-000001"
+                        placeholder="مثال: 1"
                     >
 
                     <label>
