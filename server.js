@@ -795,78 +795,95 @@ app.get("/api/products", async (req, res) => {
 app.post("/api/orders", requireCustomer, async (req, res) => {
   try {
     const productId = req.body?.product_id;
-    const params = req.body?.params && typeof req.body.params === "object"
-      ? req.body.params
-      : {};
+    const params = req.body?.params && typeof req.body.params === "object" ? req.body.params : {};
     const qty = Number(req.body?.qty || 1);
-
-    if (!productId) {
-      return res.status(400).json({ status: "ERROR", message: "product_id مطلوب." });
-    }
-    if (!Number.isInteger(qty) || qty < 1 || qty > 1000000) {
-      return res.status(400).json({ status: "ERROR", message: "الكمية غير صالحة." });
-    }
+    if (!productId) return res.status(400).json({status:"ERROR",message:"product_id مطلوب."});
+    if (!Number.isInteger(qty) || qty < 1 || qty > 1000000) return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
 
     const products = await getNemerProducts();
-    const product = Array.isArray(products)
-      ? products.find(item => String(item.id) === String(productId))
-      : null;
+    const product = Array.isArray(products) ? products.find(item => String(item.id) === String(productId)) : null;
+    if (!product) return res.status(404).json({status:"ERROR",message:"المنتج غير موجود."});
+    if (product.available === false || product.available === 0) return res.status(400).json({status:"ERROR",message:"المنتج غير متاح حاليًا."});
 
-    if (!product) {
-      return res.status(404).json({ status: "ERROR", message: "المنتج غير موجود." });
-    }
-    if (product.available === false || product.available === 0) {
-      return res.status(400).json({ status: "ERROR", message: "المنتج غير متاح حاليًا." });
-    }
-
-    const orderParams = {
-      ...params,
-      qty,
-      order_uuid: crypto.randomUUID()
-    };
-
-    const order = await createNemerOrder(productId, orderParams);
     await loadSettings();
-
     const apiPrice = Number(product.price || 0);
-    const salePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
-    const orderId = String(order?.id ?? order?.order_id ?? orderParams.order_uuid);
-    const status = String(order?.status || "pending");
+    const baseSalePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
 
-    await query(`
-      INSERT INTO orders
-        (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status)
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-      ON CONFLICT(id) DO NOTHING
-    `, [
-      orderId,
-      orderId,
-      req.customer.customer_id,
-      String(product.id),
-      String(product.name || ""),
-      Number(apiPrice.toFixed(4)),
-      Number(salePrice.toFixed(4)),
-      Number((salePrice - apiPrice).toFixed(4)),
-      0,
-      status
-    ]);
+    const reservation = await withTransaction(async (client) => {
+      const customerResult = await client.query(
+        "SELECT customer_id,customer_number,name,balance,discount,active FROM customers WHERE customer_id=$1 FOR UPDATE",
+        [req.customer.customer_id]
+      );
+      const customer = customerResult.rows[0];
+      if (!customer || !customer.active) {
+        const error = new Error("حساب العميل غير متاح."); error.statusCode = 403; throw error;
+      }
 
-    await query(
-      `UPDATE customers
-       SET orders_count=orders_count+1,updated_at=NOW()
-       WHERE customer_id=$1`,
-      [req.customer.customer_id]
-    );
+      const discount = Math.min(100, Math.max(0, Number(customer.discount || 0)));
+      const unitPrice = baseSalePrice * (1 - discount / 100);
+      const totalPrice = unitPrice * qty;
+      const before = Number(customer.balance || 0);
+      if (!Number.isFinite(totalPrice) || totalPrice < 0) {
+        const error = new Error("تعذر حساب سعر الطلب."); error.statusCode = 400; throw error;
+      }
+      if (before < totalPrice) {
+        const error = new Error("رصيد المحفظة غير كافٍ لإتمام عملية الشراء."); error.statusCode = 400; throw error;
+      }
 
-    res.json({ status: "OK", store: STORE_NAME, order });
-  } catch (error) {
-    console.error("Order error:", error);
-    res.status(500).json({
-      status: "ERROR",
-      message: "تعذر إنشاء الطلب."
+      const orderUuid = crypto.randomUUID();
+      const orderId = "ORD-" + orderUuid;
+      const after = before - totalPrice;
+
+      await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(4),customer.customer_id]);
+      await client.query(
+        "INSERT INTO orders (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'processing')",
+        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(4)),Number(totalPrice.toFixed(4)),Number((totalPrice-apiPrice*qty).toFixed(4)),Number(discount.toFixed(2))]
+      );
+      const transactionId = "TXN-" + crypto.randomUUID();
+      await client.query(
+        "INSERT INTO transactions (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note) VALUES($1,$2,$3,'purchase',$4,$5,'order',$6,$7)",
+        [transactionId,customer.customer_id,Number((-totalPrice).toFixed(4)),Number(before.toFixed(4)),Number(after.toFixed(4)),orderId,"خصم تلقائي مقابل شراء "+String(product.name || "منتج")]
+      );
+      return {customer_id:customer.customer_id,order_id:orderId,order_uuid:orderUuid,total_price:Number(totalPrice.toFixed(4)),before,after};
     });
+
+    let order;
+    try {
+      order = await createNemerOrder(productId,{...params,qty,order_uuid:reservation.order_uuid});
+    } catch (error) {
+      await refundWalletAfterFailedOrder(reservation);
+      throw error;
+    }
+
+    const apiStatus = String(order?.status || "pending").toLowerCase();
+    const failed = ["failed","rejected","cancelled","canceled","error"].includes(apiStatus);
+    if (failed) await refundWalletAfterFailedOrder(reservation);
+
+    await query("UPDATE orders SET status=$1 WHERE id=$2",[failed ? "failed" : apiStatus,reservation.order_id]);
+    if (!failed) await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
+
+    res.json({status:failed?"ERROR":"OK",store:STORE_NAME,order,charged:failed?0:reservation.total_price,balance:failed?Number(reservation.before.toFixed(4)):Number(reservation.after.toFixed(4))});
+  } catch (error) {
+    console.error("Order error:",error);
+    res.status(error.statusCode || 500).json({status:"ERROR",message:error.message || "تعذر إنشاء الطلب."});
   }
 });
+
+async function refundWalletAfterFailedOrder(reservation) {
+  await withTransaction(async (client) => {
+    const customerResult = await client.query("SELECT balance FROM customers WHERE customer_id=$1 FOR UPDATE",[reservation.customer_id]);
+    if (!customerResult.rows[0]) throw new Error("تعذر العثور على حساب العميل لإعادة المبلغ.");
+    const before = Number(customerResult.rows[0].balance || 0);
+    const after = before + Number(reservation.total_price || 0);
+    await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(4),reservation.customer_id]);
+    const transactionId = "TXN-" + crypto.randomUUID();
+    await client.query(
+      "INSERT INTO transactions (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note) VALUES($1,$2,$3,'refund',$4,$5,'order',$6,$7)",
+      [transactionId,reservation.customer_id,Number(reservation.total_price.toFixed(4)),Number(before.toFixed(4)),Number(after.toFixed(4)),reservation.order_id,"إعادة مبلغ طلب فشل تنفيذه"]
+    );
+    await client.query("UPDATE orders SET status='failed' WHERE id=$1",[reservation.order_id]);
+  });
+}
 
 app.get("/api/orders/check", requireCustomer, async (req, res) => {
   try {
