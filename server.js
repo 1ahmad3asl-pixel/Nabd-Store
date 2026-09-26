@@ -26,6 +26,8 @@ const {
 } = require("./db");
 
 const app = express();
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
 const PROFIT_RATE = Number(process.env.PROFIT_RATE || 10);
 const STORE_NAME = process.env.STORE_NAME || "Nabd-Store";
@@ -46,6 +48,7 @@ const adminSettings = {
 const adminLoginAttempts = new Map();
 const customerLoginAttempts = new Map();
 const googleOAuthStates = new Map();
+const COOKIE_SECURE = process.env.COOKIE_SECURE !== "false";
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
 const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store-1.onrender.com").replace(/\/$/, "");
@@ -56,7 +59,7 @@ function requireSameOrigin(req, res, next) {
   if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
 
   const origin = req.headers.origin;
-  if (!origin) return next();
+  if (!origin) return res.status(403).json({ status: "ERROR", message: "مصدر الطلب غير معروف." });
 
   try {
     const originUrl = new URL(origin);
@@ -80,11 +83,15 @@ function securityHeaders(res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "SAMEORIGIN");
   res.setHeader("Referrer-Policy", "same-origin");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://accounts.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://accounts.google.com https://openidconnect.googleapis.com https://nemer-card.com; font-src 'self' data:;");
 }
 
 function clientIp(req) {
-  return String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "")
-    .split(",")[0].trim();
+  return String(req.ip || req.socket.remoteAddress || "").trim();
 }
 
 function safeEqual(a, b) {
@@ -251,7 +258,7 @@ app.post("/api/admin/login", async (req, res) => {
     "Set-Cookie",
     "nabd_admin_session=" + token +
     "; HttpOnly; Path=/; SameSite=Lax; Max-Age=86400" +
-    (process.env.NODE_ENV === "production" ? "; Secure" : "")
+    (COOKIE_SECURE ? "; Secure" : "")
   );
 
   res.json({ status: "OK", admin: { email: ADMIN_EMAIL } });
@@ -457,8 +464,9 @@ app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
 
 app.get("/api/customer/google", (req, res) => {
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(503).send("تسجيل الدخول عبر Google غير مهيأ بعد.");
-  const state = crypto.randomBytes(24).toString("hex");
+  const state = crypto.randomBytes(32).toString("hex");
   googleOAuthStates.set(state, Date.now() + 10 * 60 * 1000);
+  res.setHeader("Set-Cookie", "nabd_google_oauth_state=" + state + "; HttpOnly; Path=/api/customer/google; SameSite=Lax; Max-Age=600" + (COOKIE_SECURE ? "; Secure" : ""));
   const redirectUri = googleRedirectUri();
   const params = new URLSearchParams({client_id:GOOGLE_CLIENT_ID,redirect_uri:redirectUri,response_type:"code",scope:"openid email profile",state,access_type:"online",prompt:"select_account"});
   res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString());
@@ -467,8 +475,10 @@ app.get("/api/customer/google", (req, res) => {
 app.get("/api/customer/google/callback", async (req, res) => {
   const state = String(req.query.state || "");
   const expires = googleOAuthStates.get(state);
+  const stateCookie = cookieValue(req, "nabd_google_oauth_state");
   googleOAuthStates.delete(state);
-  if (!expires || expires < Date.now() || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(400).send("جلسة Google غير صالحة أو تسجيل الدخول غير مهيأ.");
+  res.setHeader("Set-Cookie", "nabd_google_oauth_state=; HttpOnly; Path=/api/customer/google; SameSite=Lax; Max-Age=0" + (COOKIE_SECURE ? "; Secure" : ""));
+  if (!expires || expires < Date.now() || !stateCookie || !safeEqual(state, stateCookie) || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(400).send("جلسة Google غير صالحة أو تسجيل الدخول غير مهيأ.");
   try {
     const redirectUri = googleRedirectUri();
     const tokenResponse = await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code:String(req.query.code||""),client_id:GOOGLE_CLIENT_ID,client_secret:GOOGLE_CLIENT_SECRET,redirect_uri:redirectUri,grant_type:"authorization_code"})});
@@ -488,7 +498,7 @@ app.get("/api/customer/google/callback", async (req, res) => {
     }
     const token = crypto.randomBytes(32).toString("hex");
     await createCustomerSession(token, customer.customer_id, new Date(Date.now()+30*24*60*60*1000));
-    res.setHeader("Set-Cookie","nabd_customer_session="+token+"; HttpOnly; Path=/; SameSite=Lax; Max-Age=2592000"+(process.env.NODE_ENV==="production"?"; Secure":""));
+    res.setHeader("Set-Cookie","nabd_customer_session="+token+"; HttpOnly; Path=/; SameSite=Lax; Max-Age=2592000"+(COOKIE_SECURE?"; Secure":""));
     res.redirect("/customer-profile.html");
   } catch (error) {
     console.error("Google login error:", error);
@@ -644,12 +654,18 @@ app.put("/api/admin/settings", async (req, res) => {
   }
 
   if (req.body?.store_name !== undefined) {
-    adminSettings.store_name = String(req.body.store_name).trim() || STORE_NAME;
+    const storeName = String(req.body.store_name).trim();
+    if (storeName.length > 80) return res.status(400).json({ status: "ERROR", message: "اسم المتجر طويل جدًا." });
+    adminSettings.store_name = storeName || STORE_NAME;
     await setSetting("store_name", adminSettings.store_name);
   }
 
   if (req.body?.currency !== undefined) {
-    adminSettings.currency = String(req.body.currency).trim() || "USD";
+    const currency = String(req.body.currency).trim().toUpperCase();
+    if (!["USD","EUR","TRY","SAR","AED"].includes(currency)) {
+      return res.status(400).json({ status: "ERROR", message: "العملة المحددة غير مدعومة." });
+    }
+    adminSettings.currency = currency;
     await setSetting("currency", adminSettings.currency);
   }
 
@@ -664,7 +680,7 @@ app.put("/api/admin/settings", async (req, res) => {
 
   if (req.body?.font_family !== undefined) {
     const font = String(req.body.font_family).trim();
-    if (!["Amasis MT Pro","Tahoma","Arial"].includes(font)) {
+    if (!["Dubai Medium","Tahoma","Arial"].includes(font)) {
       return res.status(400).json({ status: "ERROR", message: "الخط المحدد غير مدعوم." });
     }
     adminSettings.font_family = font;
@@ -767,16 +783,32 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
 
 app.post("/api/admin/notifications", async (req, res) => {
   const { target, customer_id, title, message } = req.body || {};
-  if (!title || !message) {
-    return res.status(400).json({
-      status: "ERROR",
-      message: "عنوان ونص الإشعار مطلوبان."
-    });
+  const normalizedTarget = String(target || "all").trim().toLowerCase();
+  const cleanTitle = String(title || "").trim();
+  const cleanMessage = String(message || "").trim();
+
+  if (!["all","customer"].includes(normalizedTarget)) {
+    return res.status(400).json({ status: "ERROR", message: "نوع الإشعار غير صالح." });
+  }
+  if (!cleanTitle || !cleanMessage || cleanTitle.length > 120 || cleanMessage.length > 2000) {
+    return res.status(400).json({ status: "ERROR", message: "عنوان أو نص الإشعار غير صالح." });
+  }
+
+  let customerId = null;
+  if (normalizedTarget === "customer") {
+    customerId = String(customer_id || "").trim();
+    if (!customerId || customerId.length > 100) {
+      return res.status(400).json({ status: "ERROR", message: "معرّف العميل غير صالح." });
+    }
+    const customerExists = await query("SELECT 1 FROM customers WHERE customer_id=$1 OR CAST(customer_number AS TEXT)=$1 LIMIT 1", [customerId]);
+    if (!customerExists.rows[0]) {
+      return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+    }
   }
 
   const result = await query(
     "INSERT INTO notifications(target,customer_id,title,message) VALUES($1,$2,$3,$4) RETURNING *",
-    [target || "all", customer_id || null, String(title), String(message)]
+    [normalizedTarget, customerId, cleanTitle, cleanMessage]
   );
   res.json({ status: "OK", notification: result.rows[0] });
 });
@@ -806,12 +838,20 @@ app.get("/api/products", async (req, res) => {
           const originalPrice = Number(product.price || 0);
           const sellingPrice = originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
           return {
-            ...product,
+            id: product.id,
+            product_id: product.product_id,
+            name: product.name,
+            price: Number(sellingPrice.toFixed(4)),
             original_price: Number(originalPrice.toFixed(4)),
-            price: Number(sellingPrice.toFixed(4))
+            available: product.available,
+            category_name: product.category_name || "",
+            category_img: product.category_img || "",
+            parent_id: product.parent_id ?? null,
+            params: Array.isArray(product.params) ? product.params : [],
+            qty_values: product.qty_values ?? null
           };
         })
-      : products;
+      : [];
 
     res.json({
       status: "OK",
