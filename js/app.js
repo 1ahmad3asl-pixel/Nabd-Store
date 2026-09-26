@@ -1076,6 +1076,7 @@ async function submitGamePickerOrder(product, root) {
 
 function openGameProductGroup(gameTitle, groupKey) {
     const content = document.getElementById("internalPageContent");
+    const isRoblox = normalizeGameText(gameTitle).includes("roblox");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
     if (!content) return;
