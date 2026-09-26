@@ -658,11 +658,16 @@ function handleAction(action) {
     }
 }
 
+function formatMoney(value) {
+    const amount = Number(value) || 0;
+    return "$" + amount.toFixed(3);
+}
+
 function updateBalance(value) {
     const amount = Number(value) || 0;
     state.balance = amount;
-    if (elements.balance) elements.balance.textContent = amount.toFixed(2);
-    if (elements.heroBalance) elements.heroBalance.textContent = amount.toFixed(2);
+    if (elements.balance) elements.balance.textContent = formatMoney(amount);
+    if (elements.heroBalance) elements.heroBalance.textContent = formatMoney(amount);
 }
 
 function showModal(title, body) {
@@ -748,7 +753,7 @@ function openProductModal(product) {
     }).join("");
 
     showModal("شراء المنتج",
-        "<div><h3 style=\"margin-bottom:8px;\">" + escapeHtml(product.name || "منتج") + "</h3><p style=\"margin-bottom:12px;\">السعر: <strong>$" + (Number(product.price) || 0).toFixed(4) + "</strong></p>" + fields + "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">الكمية</label><input id=\"orderQty\" type=\"number\" min=\"" + Number(product.qty_values?.min || 1) + "\" max=\"" + Number(product.qty_values?.max || 999999999) + "\" value=\"" + Number(product.qty_values?.min || 1) + "\"><button class=\"buy-btn\" id=\"confirmProductOrder\" type=\"button\" style=\"margin-top:16px;\">تأكيد الطلب</button></div>"
+        "<div><h3 style=\"margin-bottom:8px;\">" + escapeHtml(product.name || "منتج") + "</h3><p style=\"margin-bottom:12px;\">السعر: <strong>" + formatMoney(product.price) + "</strong></p>" + fields + "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">الكمية</label><input id=\"orderQty\" type=\"number\" min=\"" + Number(product.qty_values?.min || 1) + "\" max=\"" + Number(product.qty_values?.max || 999999999) + "\" value=\"" + Number(product.qty_values?.min || 1) + "\"><button class=\"buy-btn\" id=\"confirmProductOrder\" type=\"button\" style=\"margin-top:16px;\">تأكيد الطلب</button></div>"
     );
 
     const confirm = document.getElementById("confirmProductOrder");
