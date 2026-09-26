@@ -47,3 +47,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)}input::place
 @media(max-width:430px){.admin-brand{font-size:16px}.admin-balance{display:none}.admin-nav-item{min-width:74px;padding:7px 8px;font-size:10px}.admin-main{padding-top:128px}}
 
 .admin-nav-logout{flex:0 0 auto;border:0;background:transparent;color:var(--danger);display:flex;align-items:center;gap:6px;padding:10px 13px;border-radius:9px;cursor:pointer;font-size:12px;white-space:nowrap}.admin-nav-logout:hover{background:#2a1111}
+
+
+/* تبويبات نظيفة مثل واجهة المستخدم */
+.admin-profile{display:none;}
+.admin-nav{justify-content:center;}
+.admin-standards-card{margin-bottom:18px;}
+.standards-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.standard-item{background:var(--background);border:1px solid var(--border);border-radius:11px;padding:13px;}
+.standard-item span,.standard-item strong{display:block;}
+.standard-item span{font-size:11px;color:var(--muted);margin-bottom:5px;}
+.standard-item strong{font-size:14px;color:var(--text);}
+@media(max-width:700px){.admin-nav{justify-content:flex-start;}.standards-grid{grid-template-columns:1fr 1fr;}}
