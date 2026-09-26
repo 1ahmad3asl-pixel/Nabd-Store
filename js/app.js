@@ -638,14 +638,30 @@ function getGameProducts(gameTitle) {
     });
 }
 
+function getRobloxGroupTitle(product) {
+    const text = normalizeGameText(product && product.category_name);
+    if (text.includes("usa")) return "Roblox USA";
+    if (text.includes("ksa") || text.includes("sar")) return "Roblox KSA";
+    if (text.includes("uae") || text.includes("aed")) return "Roblox UAE";
+    if (text.includes("cad")) return "Roblox CAD";
+    if (text.includes("eur") || text.includes("€")) return "Roblox EUR";
+    return cleanGameCategoryName(product && product.category_name || "Roblox");
+}
+
 function getGameGroups(gameTitle) {
     const products = getGameProducts(gameTitle);
     const groups = [];
     const seen = new Map();
+    const isRoblox = normalizeGameText(gameTitle).includes("roblox");
 
     products.forEach(function(product) {
-        const categoryName = cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
-        const key = String(product.parent_id ?? "") + "|" + categoryName;
+        const categoryName = isRoblox
+            ? getRobloxGroupTitle(product)
+            : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
+        const parentKey = String(product.parent_id ?? "");
+        const key = isRoblox
+            ? "roblox|" + (parentKey || categoryName)
+            : parentKey + "|" + categoryName;
 
         if (!seen.has(key)) {
             const group = {
@@ -764,6 +780,8 @@ function openGamePlaceholder(gameTitle) {
     if (icon) icon.textContent = "🎮";
 
     const groups = getGameGroups(gameTitle);
+    const robloxImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
+    const isRoblox = normalizeGameText(gameTitle).includes("roblox");
 
     if (!groups.length) {
         content.innerHTML =
@@ -786,7 +804,9 @@ function openGamePlaceholder(gameTitle) {
             const pubgImage = "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480";
             const imageHtml = isPubgGame(gameTitle)
                 ? '<img src="' + pubgImage + '" alt="PUBG MOBILE" loading="lazy">'
-                : (group.image
+                : (isRoblox
+                    ? '<img src="' + robloxImage + '" alt="Roblox" loading="lazy">'
+                    : (group.image
                     ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
                     : '<span class="game-placeholder">🎮</span>');
 
@@ -1083,10 +1103,13 @@ function openGameProductGroup(gameTitle, groupKey) {
         group.products.map(function(product, index) {
             const available = product.available !== false && product.available !== 0;
             const price = Number(product.price) || 0;
+            const robloxProductImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
             const image = product.category_img || "";
-            const imageHtml = image
-                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
-                : '<span class="game-product-fallback">🛍️</span>';
+            const imageHtml = isRoblox
+                ? '<img src="' + robloxProductImage + '" alt="Roblox" loading="lazy">'
+                : (image
+                    ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
+                    : '<span class="game-product-fallback">🛍️</span>');
 
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
                 '<div class="product-icon">' + imageHtml + '</div>' +
