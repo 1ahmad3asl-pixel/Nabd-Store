@@ -399,46 +399,251 @@ function removeAllCategory() {
    CATEGORIES
 ========================= */
 
+const GAME_CATALOG = [
+    { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"] },
+    { title:"Roblox Game", aliases:["roblox"] },
+    { title:"جواكر", aliases:["جواكر","jawaker"] },
+    { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
+    { title:"Clash of Clans", aliases:["clash of clans","clash"] },
+    { title:"فري فاير", aliases:["free fire","فري فاير"] },
+    { title:"Yalla Ludo Gold", aliases:["yalla ludo gold"] },
+    { title:"Lords mobile", aliases:["lords mobile"] },
+    { title:"FarLight84", aliases:["farlight84","farlight 84"] },
+    { title:"8Ball Pool", aliases:["8ball pool","8 ball pool"] },
+    { title:"Project entropy", aliases:["project entropy"] },
+    { title:"Guns of glory", aliases:["guns of glory"] },
+    { title:"City Of Crime Gang War", aliases:["city of crime gang war"] },
+    { title:"Marvel Reveals", aliases:["marvel reveals"] },
+    { title:"Whiteout Survival", aliases:["whiteout survival"] },
+    { title:"Genshin Impact", aliases:["genshin impact"] },
+    { title:"Super SUS", aliases:["super sus"] },
+    { title:"Stumble Guys", aliases:["stumble guys"] },
+    { title:"Honkai : Star Rail", aliases:["honkai","star rail"] },
+    { title:"Yalla Ludo Gold Codes", aliases:["yalla ludo gold codes"] },
+    { title:"Yalla Ludo Diamonds Codes", aliases:["yalla ludo diamonds codes"] },
+    { title:"Mobile Legends Turkish", aliases:["mobile legends","mobile legends turkish"] },
+    { title:"Hero Clash", aliases:["hero clash"] },
+    { title:"Oxide : Survival Island", aliases:["oxide","survival island"] },
+    { title:"King Shot", aliases:["king shot"] },
+    { title:"Zepeto", aliases:["zepeto"] },
+    { title:"Devil May Cry: Peak of Combat", aliases:["devil may cry","peak of combat"] },
+    { title:"Crystal of Atlan", aliases:["crystal of atlan"] },
+    { title:"Bullet Echo", aliases:["bullet echo"] },
+    { title:"Blood Strike", aliases:["blood strike"] },
+    { title:"Acecraft", aliases:["acecraft"] },
+    { title:"Arena Breakout", aliases:["arena breakout"] },
+    { title:"Ludo Club", aliases:["ludo club"] },
+    { title:"AFK Journey", aliases:["afk journey"] },
+    { title:"Division Resurgence", aliases:["division resurgence"] },
+    { title:"Age Of Empires Mobile", aliases:["age of empires"] },
+    { title:"Goddess of Victory: NIKKE", aliases:["goddess of victory","nikke"] },
+    { title:"Age of Magic", aliases:["age of magic"] },
+    { title:"Ghost Story Love Destiny", aliases:["ghost story love destiny"] },
+    { title:"Arena of Valor EU", aliases:["arena of valor"] },
+    { title:"Growtopia", aliases:["growtopia"] },
+    { title:"Golden Spatula", aliases:["golden spatula"] },
+    { title:"Hatsune Miku: Colorful Stage", aliases:["hatsune miku","colorful stage"] },
+    { title:"Arknights Endfield", aliases:["arknights endfield"] },
+    { title:"Haikyu Fly High", aliases:["haikyu fly high"] },
+    { title:"Ballistic Hero VNG", aliases:["ballistic hero vng"] },
+    { title:"Heaven Burns Red", aliases:["heaven burns red"] },
+    { title:"Astral Guardians", aliases:["astral guardians"] },
+    { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
+    { title:"Blockman Go", aliases:["blockman go"] },
+    { title:"Blade X Odyssey of Heroes", aliases:["blade x","odyssey of heroes"] },
+    { title:"Be The King", aliases:["be the king"] },
+    { title:"Captain Tsubasa: Ace", aliases:["captain tsubasa"] },
+    { title:"Idol Party", aliases:["idol party"] },
+    { title:"Hyper Front", aliases:["hyper front"] },
+    { title:"Infinite Lagrange", aliases:["infinite lagrange"] },
+    { title:"Clash of Plants", aliases:["clash of plants"] },
+    { title:"Journey Renewed: Fate Fantasy", aliases:["journey renewed","fate fantasy"] },
+    { title:"Civilization: Eras & Allies", aliases:["civilization eras","civilization","eras allies"] },
+    { title:"Kuroko Street Rivals", aliases:["kuroko street rivals"] },
+    { title:"Cloud Song: Saga of Skywalkers", aliases:["cloud song","skywalkers"] },
+    { title:"King's Choice SEA", aliases:["kings choice"] },
+    { title:"Crossfire Legend", aliases:["crossfire legend"] },
+    { title:"Legend of the Phoenix", aliases:["legend of the phoenix"] },
+    { title:"Legacy of Discord: FuriousWings", aliases:["legacy of discord","furiouswings"] },
+    { title:"Army Dudes", aliases:["army dudes"] },
+    { title:"CrystalFall", aliases:["crystalfall"] },
+    { title:"Crossout Mobile", aliases:["crossout mobile"] },
+    { title:"Dragon Raja SEA", aliases:["dragon raja sea"] },
+    { title:"Dragon Nest M SEA", aliases:["dragon nest m sea"] },
+    { title:"Life Makeover Global", aliases:["life makeover"] },
+    { title:"Love Nikki", aliases:["love nikki"] },
+    { title:"Dragonheir: Silent Gods", aliases:["dragonheir","silent gods"] },
+    { title:"Dream and Lethe Record", aliases:["dream and lethe"] },
+    { title:"Eggy Party", aliases:["eggy party"] },
+    { title:"Echocalypse: Scarlet Covenant", aliases:["echocalypse","scarlet covenant"] },
+    { title:"Dynasty Heroes: Legend Samkok", aliases:["dynasty heroes","legend samkok"] },
+    { title:"Starseed: Asnia Trigger", aliases:["starseed"] },
+    { title:"Magic Chess GoGo", aliases:["magic chess gogo","magic chess"] },
+    { title:"Enhypen World", aliases:["enhypen world"] },
+    { title:"Marvel Duel", aliases:["marvel duel"] },
+    { title:"Extraordinary Ones", aliases:["extraordinary ones"] },
+    { title:"EVE Echoes", aliases:["eve echoes"] },
+    { title:"Mirage Perfect Skyline", aliases:["mirage perfect","skyline"] },
+    { title:"Football Master 2", aliases:["football master 2"] },
+    { title:"Marvel Mystic Mayhem", aliases:["marvel mystic","mayhem"] },
+    { title:"Garena Speed Drifters", aliases:["garena speed","drifters"] },
+    { title:"Mongil Star Dive", aliases:["mongil star dive"] },
+    { title:"Modern Strike Online", aliases:["modern strike","modern strike online"] },
+    { title:"Overmortal Idle Global", aliases:["overmortal idle"] },
+    { title:"Onmyoji Arena", aliases:["onmyoji arena"] },
+    { title:"My Singing Monsters", aliases:["my singing","monsters"] },
+    { title:"Stormshot", aliases:["stormshot"] }
+];
+
+function normalizeGameText(value) {
+    return String(value || "")
+        .toLowerCase()
+        .replace(/[._:/\\-]+/g, " ")
+        .replace(/\\s+/g, " ")
+        .trim();
+}
+
+function findGameMatch(product) {
+    const haystack = normalizeGameText(
+        String(product.category_name || "") + " " + String(product.name || "")
+    );
+    return GAME_CATALOG.find(function(game) {
+        return game.aliases.some(function(alias) {
+            return haystack.includes(normalizeGameText(alias));
+        });
+    }) || null;
+}
+
+function getGameTiles() {
+    const tiles = [];
+    const used = new Set();
+
+    GAME_CATALOG.forEach(function(game) {
+        const products = state.products.filter(function(product) {
+            return findGameMatch(product)?.title === game.title;
+        });
+        if (!products.length) return;
+
+        const imageProduct = products.find(function(product) {
+            return product.category_img;
+        }) || products[0];
+
+        tiles.push({
+            title: game.title,
+            image: imageProduct?.category_img || "",
+            productCount: products.length
+        });
+        used.add(game.title);
+    });
+
+    // إضافة أي ألعاب جديدة من الـAPI لم تكن ضمن القائمة المصورة.
+    state.products.forEach(function(product) {
+        const match = findGameMatch(product);
+        if (!match || used.has(match.title)) return;
+        const image = product.category_img || "";
+        tiles.push({title: match.title, image: image, productCount: 1});
+        used.add(match.title);
+    });
+
+    return tiles;
+}
+
 function initializeCategories() {
+    document.querySelectorAll(".category").forEach(function(button) {
+        if (button.getAttribute("data-category") === "all") return;
 
-    document
-        .querySelectorAll(".category")
-        .forEach(function (button) {
+        button.addEventListener("click", function() {
+            const category = button.getAttribute("data-category") || "other";
 
-            if (
-                button.getAttribute(
-                    "data-category"
-                ) === "all"
-            ) {
+            if (category === "games") {
+                openGamesPage();
                 return;
             }
 
-            button.addEventListener(
-                "click",
-                function () {
-
-                    document
-                        .querySelectorAll(".category")
-                        .forEach(function (item) {
-
-                            item.classList.remove("active");
-
-                        });
-
-                    button.classList.add("active");
-
-                    state.selectedCategory =
-                        button.getAttribute(
-                            "data-category"
-                        ) || "other";
-
-                    renderProducts();
-                }
-            );
-
+            document.querySelectorAll(".category").forEach(function(item) {
+                item.classList.remove("active");
+            });
+            button.classList.add("active");
+            state.selectedCategory = category;
+            renderProducts();
         });
+    });
 
+    const back = document.getElementById("internalBack");
+    if (back) back.addEventListener("click", closeInternalPage);
 }
+
+function openGamesPage() {
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    const content = document.getElementById("internalPageContent");
+
+    if (!services || !internal || !content) return;
+
+    services.hidden = true;
+    internal.hidden = false;
+    if (title) title.textContent = "الألعاب";
+    if (icon) icon.textContent = "🎮";
+
+    const tiles = getGameTiles();
+
+    if (!tiles.length) {
+        content.innerHTML = '<div class="game-empty"><strong>لم يتم تحميل ألعاب بعد</strong><p>سيتم إظهار الألعاب هنا تلقائيًا بعد تحميل بيانات الخدمات.</p></div>';
+        return;
+    }
+
+    content.innerHTML =
+        '<div class="game-page-note">اختر اللعبة للدخول إلى المستوى التالي.</div>' +
+        '<div class="game-category-grid">' +
+        tiles.map(function(tile) {
+            const image = tile.image
+                ? '<img src="' + escapeHtml(tile.image) + '" alt="' + escapeHtml(tile.title) + '" loading="lazy">'
+                : '<span class="game-placeholder">🎮</span>';
+            return '<button class="game-category-tile" type="button" data-game-title="' +
+                escapeHtml(tile.title) + '">' +
+                '<span class="game-tile-image">' + image + '</span>' +
+                '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
+                '</button>';
+        }).join("") +
+        '</div>';
+
+    content.querySelectorAll(".game-category-tile").forEach(function(tile) {
+        tile.addEventListener("click", function() {
+            openGamePlaceholder(tile.getAttribute("data-game-title") || "اللعبة");
+        });
+    });
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function openGamePlaceholder(gameTitle) {
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content) return;
+
+    if (title) title.textContent = gameTitle;
+    if (icon) icon.textContent = "🎮";
+
+    content.innerHTML =
+        '<div class="game-products-placeholder">' +
+        '<div class="game-products-placeholder-icon">🎮</div>' +
+        '<h3>' + escapeHtml(gameTitle) + '</h3>' +
+        '<p>تم إنشاء مستوى اللعبة. في الخطوة التالية سنضع هنا منتجات هذه اللعبة ونربطها بها.</p>' +
+        '</div>';
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function closeInternalPage() {
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    if (internal) internal.hidden = true;
+    if (services) services.hidden = false;
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
 
 
 /* =========================
