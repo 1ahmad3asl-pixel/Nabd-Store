@@ -550,7 +550,7 @@ function getGameTiles() {
 
         return {
             title: game.title,
-            image: (productWithImage && productWithImage.category_img) || game.image || "",
+            image: game.image || (productWithImage && productWithImage.category_img) || "",
             productCount: products.length
         };
     });
