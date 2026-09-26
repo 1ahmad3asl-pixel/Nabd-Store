@@ -1395,6 +1395,10 @@ function updateSettingsUI() {
     );
 
     setText("productProfitRate", profit + "%");
+    setText("adminFontPreview", adminState.settings.font_family ?? "Amasis MT Pro");
+    const currency = String(adminState.settings.currency || "USD");
+    const currencyNames = {USD:"USD ($)",EUR:"EUR (€)",TRY:"TRY (₺)",SAR:"SAR",AED:"AED"};
+    setText("adminCurrencyPreview", currencyNames[currency] || currency);
 
 }
 
@@ -1485,6 +1489,15 @@ async function saveStoreSettings() {
             font_family: document.getElementById("adminFont")?.value || "Amasis MT Pro"
 
         });
+
+        adminState.settings = {
+            ...adminState.settings,
+            store_name: name ? name.value.trim() : adminState.settings.store_name,
+            currency: currency ? currency.value : "USD",
+            currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3),
+            font_family: document.getElementById("adminFont")?.value || "Amasis MT Pro"
+        };
+        updateSettingsUI();
 
         showAdminToast(
             "تم حفظ إعدادات المتجر."
