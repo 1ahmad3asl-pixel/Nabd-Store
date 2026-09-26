@@ -629,15 +629,13 @@ function openGamesPage() {
     if (icon) icon.textContent = "🎮";
 
     const tiles = getGameTiles();
-    const thirdLevelGames = new Set(["ببجي موبايل", "جواكر", "Roblox Game"]);
 
     content.innerHTML =
-        '<div class="game-page-note">اختر اللعبة للدخول إلى المستوى التالي.</div>' +
+        '<div class="game-page-note">اختر اللعبة للدخول إلى التصنيفات والمنتجات المتاحة.</div>' +
         '<div class="game-category-grid">' +
         tiles.map(function(tile) {
-            const isThirdLevelReady = thirdLevelGames.has(tile.title);
-            return '<button class="game-category-tile ' + (isThirdLevelReady ? "" : "game-category-tile-static") + '" type="button" data-game-title="' +
-                escapeHtml(tile.title) + '" ' + (isThirdLevelReady ? "" : "disabled") + '>' +
+            return '<button class="game-category-tile" type="button" data-game-title="' +
+                escapeHtml(tile.title) + '">' +
                 '<span class="game-tile-image">' +
                     '<span class="game-placeholder">🎮</span>' +
                 '</span>' +
@@ -646,7 +644,7 @@ function openGamesPage() {
         }).join("") +
         '</div>';
 
-    content.querySelectorAll(".game-category-tile:not(:disabled)").forEach(function(tile) {
+    content.querySelectorAll(".game-category-tile").forEach(function(tile) {
         tile.addEventListener("click", function() {
             openGamePlaceholder(tile.getAttribute("data-game-title") || "اللعبة");
         });
@@ -727,25 +725,35 @@ function openGameProductGroup(gameTitle, groupKey) {
             '<span>' + escapeHtml(group.title) + '</span>' +
         '</div>' +
         '<div class="game-products-grid">' +
-        group.products.map(function(product) {
+        group.products.map(function(product, index) {
             const available = product.available !== false && product.available !== 0;
             const price = Number(product.price) || 0;
             const image = product.category_img || "";
             const imageHtml = image
-                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
+                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">' 
                 : '<span class="game-product-fallback">🛍️</span>';
 
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
                 '<div class="product-icon">' + imageHtml + '</div>' +
                 '<h3>' + escapeHtml(product.name || "منتج") + '</h3>' +
                 '<div class="price">' + formatMoney(price) + '</div>' +
-                '<button class="buy-btn" type="button" ' + (available ? '' : 'disabled') +
-                    ' onclick="openProductModal(' + encodeURIComponent(JSON.stringify(product)) + ')">' +
+                '<button class="buy-btn game-product-buy" type="button" data-product-index="' + index + '"' +
+                    (available ? '' : ' disabled') + '>' +
                     (available ? 'شراء' : 'غير متوفر') +
                 '</button>' +
             '</article>';
         }).join("") +
         '</div>';
+
+    content.querySelectorAll(".game-product-buy").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const index = Number(button.getAttribute("data-product-index"));
+            const product = group.products[index];
+            if (product && product.available !== false && product.available !== 0) {
+                openProductModal(product);
+            }
+        });
+    });
 
     window.scrollTo({top: 0, behavior: "smooth"});
 }
