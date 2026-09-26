@@ -738,7 +738,19 @@ function openGameProductGroup(gameTitle, groupKey) {
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
                 '<div class="product-icon">' + imageHtml + '</div>' +
                 '<h3>' + escapeHtml(product.name || "منتج") + '</h3>' +
-                '<div class="price">function closeInternalPage() {
+                '<div class="price">' + formatMoney(price) + '</div>' +
+                '<button class="buy-btn" type="button" ' + (available ? '' : 'disabled') +
+                    ' onclick="openProductModal(' + encodeURIComponent(JSON.stringify(product)) + ')">' +
+                    (available ? 'شراء' : 'غير متوفر') +
+                '</button>' +
+            '</article>';
+        }).join("") +
+        '</div>';
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function closeInternalPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     if (internal) internal.hidden = true;
