@@ -511,8 +511,7 @@ app.get("/api/admin/products", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "ERROR",
-      message: "تعذر تحميل المنتجات.",
-      error: error.message
+      message: "تعذر تحميل المنتجات."
     });
   }
 });
