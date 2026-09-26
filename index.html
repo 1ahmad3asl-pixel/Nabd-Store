@@ -438,28 +438,6 @@ title="الدعم الفني"
 </div>
 
 </div><script src="js/app.js?v=20260926-4"></script><script src="js/customer-auth.js?v=20260926-2"></script>
-<script>
-(function(){
-  function openReferenceCategory(button){
-    var services=document.getElementById('servicesSection');
-    var page=document.getElementById('internalPage');
-    var title=document.getElementById('internalPageTitle');
-    var icon=document.getElementById('internalPageIcon');
-    var content=document.getElementById('internalPageContent');
-    if(!services||!page) return;
-    var label=button.getAttribute('data-category-title')||'القسم';
-    var art=button.querySelector('.category-art span');
-    if(title) title.textContent=label;
-    if(icon) icon.textContent=art?art.textContent:'▣';
-    if(content) content.innerHTML='<div class="category-placeholder"><div class="category-placeholder-icon">'+(art?art.textContent:'▣')+'</div><h3>'+label+'</h3><p>تم إنشاء صفحة القسم. سيتم ترتيب المنتجات داخل هذا القسم في الخطوة التالية.</p></div>';
-    services.hidden=true;
-    page.hidden=false;
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  document.querySelectorAll('#categories .category-tile').forEach(function(btn){btn.addEventListener('click',function(){openReferenceCategory(btn);});});
-  var back=document.getElementById('internalBack');
-  if(back) back.addEventListener('click',function(){var services=document.getElementById('servicesSection'),page=document.getElementById('internalPage'); if(page) page.hidden=true; if(services) services.hidden=false; window.scrollTo({top:0,behavior:'smooth'});});
-})();
-</script>
+
 </body>
 </html>
