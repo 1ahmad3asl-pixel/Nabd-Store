@@ -16,13 +16,324 @@ const PROFIT_RATE = Number(process.env.PROFIT_RATE || 10);
 const STORE_NAME = process.env.STORE_NAME || "Nabd-Store";
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());\n
+/* =========================
+   ADMIN AUTHENTICATION
+========================= */
+
+const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || "");
+const ADMIN_SESSION_SECRET = String(
+    process.env.ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString("hex")
+);
+
+const adminSessions = new Map();
+const adminSettings = {
+    profit_rate: PROFIT_RATE,
+    store_name: STORE_NAME,
+    currency: process.env.CURRENCY || "USD"
+};
+const adminOrders = [];
+const adminCustomers = [];
+const adminTransactions = [];
+
+function createAdminSession() {
+    const token = crypto
+        .createHmac("sha256", ADMIN_SESSION_SECRET)
+        .update(crypto.randomUUID() + Date.now())
+        .digest("hex");
+
+    adminSessions.set(token, {
+        createdAt: Date.now()
+    });
+
+    return token;
+}
+
+function getAdminSession(req) {
+    const token = req.headers.cookie
+        ?.split(";")
+        .map(item => item.trim())
+        .find(item => item.startsWith("nabd_admin_session="))
+        ?.split("=")
+        .slice(1)
+        .join("=");
+
+    if (!token || !adminSessions.has(token)) {
+        return null;
+    }
+
+    return { token, session: adminSessions.get(token) };
+}
+
+function requireAdmin(req, res, next) {
+    if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
+        return res.status(503).json({
+            status: "ERROR",
+            message: "لم يتم إعداد بيانات مالك لوحة الإدارة بعد."
+        });
+    }
+
+    const auth = getAdminSession(req);
+
+    if (!auth) {
+        if (req.path === "/admin" || req.path === "/admin/index.html") {
+            return res.redirect("/admin/login.html");
+        }
+
+        return res.status(401).json({
+            status: "ERROR",
+            message: "تسجيل الدخول إلى لوحة الإدارة مطلوب."
+        });
+    }
+
+    next();
+}
+
+function adminSameSecret(a, b) {
+    const left = Buffer.from(String(a));
+    const right = Buffer.from(String(b));
+    return left.length === right.length &&
+        crypto.timingSafeEqual(left, right);
+}
+
+app.post("/api/admin/login", (req, res) => {
+    const email = String(req.body?.email || "").trim().toLowerCase();
+    const password = String(req.body?.password || "");
+
+    if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
+        return res.status(503).json({
+            status: "ERROR",
+            message: "بيانات مالك الإدارة غير مهيأة على الخادم."
+        });
+    }
+
+    if (!adminSameSecret(email, ADMIN_EMAIL) ||
+        !adminSameSecret(password, ADMIN_PASSWORD)) {
+        return res.status(401).json({
+            status: "ERROR",
+            message: "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+        });
+    }
+
+    const token = createAdminSession();
+
+    res.setHeader(
+        "Set-Cookie",
+        "nabd_admin_session=" + token +
+        "; HttpOnly; Path=/; SameSite=Lax; Max-Age=86400" +
+        (process.env.NODE_ENV === "production" ? "; Secure" : "")
+    );
+
+    res.json({
+        status: "OK",
+        admin: { email: ADMIN_EMAIL }
+    });
+});
+
+app.get("/api/admin/auth/me", requireAdmin, (req, res) => {
+    res.json({
+        status: "OK",
+        admin: { email: ADMIN_EMAIL }
+    });
+});
+
+app.post("/api/admin/logout", requireAdmin, (req, res) => {
+    const auth = getAdminSession(req);
+    if (auth) adminSessions.delete(auth.token);
+
+    res.setHeader(
+        "Set-Cookie",
+        "nabd_admin_session=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0" +
+        (process.env.NODE_ENV === "production" ? "; Secure" : "")
+    );
+
+    res.json({ status: "OK" });
+});
+
+/* =========================
+   ADMIN API
+========================= */
+
+app.use("/api/admin", requireAdmin);
+
+app.get("/api/admin/dashboard", async (req, res) => {
+    let apiBalance = 0;
+    try {
+        const profile = await getNemerProfile();
+        apiBalance = Number(
+            profile?.balance ??
+            profile?.data?.balance ??
+            profile?.wallet ??
+            0
+        );
+    } catch (error) {
+        console.error("Admin profile error:", error.message);
+    }
+
+    const totalSales = adminOrders.reduce(
+        (sum, order) => sum + Number(order.price || 0), 0
+    );
+    const totalProfit = adminOrders.reduce(
+        (sum, order) => sum + Number(order.profit || 0), 0
+    );
+
+    res.json({
+        status: "OK",
+        total_customers: adminCustomers.length,
+        total_orders: adminOrders.length,
+        total_sales: Number(totalSales.toFixed(4)),
+        total_profit: Number(totalProfit.toFixed(4)),
+        api_balance: Number(apiBalance.toFixed(4)),
+        recent_orders: adminOrders.slice(-8).reverse(),
+        settings: adminSettings
+    });
+});
+
+app.get("/api/admin/products", async (req, res) => {
+    try {
+        const products = await getNemerProducts();
+        const result = Array.isArray(products)
+            ? products.map(product => {
+                const apiPrice = Number(product.price || 0);
+                const salePrice = apiPrice * (
+                    1 + Number(adminSettings.profit_rate || 0) / 100
+                );
+                return {
+                    ...product,
+                    api_price: Number(apiPrice.toFixed(4)),
+                    price: Number(salePrice.toFixed(4)),
+                    category: product.category_name || ""
+                };
+            })
+            : [];
+
+        res.json({ status: "OK", products: result });
+    } catch (error) {
+        res.status(500).json({
+            status: "ERROR",
+            message: "تعذر تحميل المنتجات.",
+            error: error.message
+        });
+    }
+});
+
+app.get("/api/admin/settings", (req, res) => {
+    res.json({ status: "OK", settings: adminSettings });
+});
+
+app.put("/api/admin/settings", (req, res) => {
+    if (req.body?.profit_rate !== undefined) {
+        const profit = Number(req.body.profit_rate);
+        if (!Number.isFinite(profit) || profit < 0 || profit > 100) {
+            return res.status(400).json({
+                status: "ERROR",
+                message: "نسبة الربح يجب أن تكون بين 0 و100."
+            });
+        }
+        adminSettings.profit_rate = profit;
+    }
+
+    if (req.body?.store_name !== undefined) {
+        adminSettings.store_name = String(req.body.store_name).trim() || STORE_NAME;
+    }
+
+    if (req.body?.currency !== undefined) {
+        adminSettings.currency = String(req.body.currency).trim() || "USD";
+    }
+
+    res.json({ status: "OK", settings: adminSettings });
+});
+
+app.get("/api/admin/customers", (req, res) => {
+    const search = String(req.query.search || "").toLowerCase();
+    const customers = adminCustomers.filter(customer =>
+        !search ||
+        JSON.stringify(customer).toLowerCase().includes(search)
+    );
+    res.json({ status: "OK", customers });
+});
+
+app.get("/api/admin/customers/:id", (req, res) => {
+    const customer = adminCustomers.find(
+        item => String(item.customer_id) === String(req.params.id)
+    );
+    if (!customer) {
+        return res.status(404).json({
+            status: "ERROR",
+            message: "العميل غير موجود."
+        });
+    }
+    res.json({ status: "OK", customer });
+});
+
+app.put("/api/admin/customers/:id/discount", (req, res) => {
+    const discount = Number(req.body?.discount);
+    if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
+        return res.status(400).json({
+            status: "ERROR",
+            message: "الخصم يجب أن يكون بين 0 و100."
+        });
+    }
+
+    let customer = adminCustomers.find(
+        item => String(item.customer_id) === String(req.params.id)
+    );
+
+    if (!customer) {
+        customer = {
+            customer_id: String(req.params.id),
+            name: "عميل",
+            balance: 0,
+            orders_count: 0,
+            discount: 0,
+            active: true
+        };
+        adminCustomers.push(customer);
+    }
+
+    customer.discount = discount;
+    res.json({ status: "OK", customer });
+});
+
+app.get("/api/admin/orders", (req, res) => {
+    res.json({ status: "OK", orders: adminOrders.slice().reverse() });
+});
+
+app.get("/api/admin/transactions", (req, res) => {
+    res.json({
+        status: "OK",
+        transactions: adminTransactions.slice().reverse()
+    });
+});
+
+app.post("/api/admin/notifications", (req, res) => {
+    const { target, customer_id, title, message } = req.body || {};
+    if (!title || !message) {
+        return res.status(400).json({
+            status: "ERROR",
+            message: "عنوان ونص الإشعار مطلوبان."
+        });
+    }
+
+    res.json({
+        status: "OK",
+        notification: {
+            target: target || "all",
+            customer_id: customer_id || null,
+            title: String(title),
+            message: String(message),
+            created_at: new Date().toISOString()
+        }
+    });
+});
+
 
 /* =========================
    FRONTEND
 ========================= */
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname)));\n\napp.get("/admin", requireAdmin, (req, res) => {\n    res.sendFile(path.join(__dirname, "admin", "index.html"));\n});\n\napp.get("/admin/index.html", requireAdmin, (req, res) => {\n    res.sendFile(path.join(__dirname, "admin", "index.html"));\n});
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
