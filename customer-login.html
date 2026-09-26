@@ -24,8 +24,8 @@ body{min-height:100vh;display:grid;place-items:center;background:#090909;color:#
 <h1>حسابك في Nabd-Store</h1>
 <p>سجّل الدخول لمتابعة طلباتك وحسابك، أو أنشئ حسابًا جديدًا.</p>
 <div class="auth-tabs">
-<button id="loginTab" class="active" type="button">تسجيل الدخول</button>
-<button id="registerTab" type="button">إنشاء حساب</button>
+<button id="loginTab" class="active" type="submit">تسجيل الدخول</button>
+<button id="registerTab" type="submit">إنشاء حساب</button>
 </div>
 <form id="authForm" class="auth-form">
 <div id="nameField" hidden>
@@ -36,7 +36,6 @@ body{min-height:100vh;display:grid;place-items:center;background:#090909;color:#
 <input id="email" type="email" autocomplete="email" required>
 <label for="password">كلمة المرور</label>
 <input id="password" type="password" minlength="8" autocomplete="current-password" required>
-<button id="submitButton" type="submit">تسجيل الدخول</button>
 <a class="google-login" href="/api/customer/google">تسجيل الدخول باستخدام Google</a>
 <div id="authError" class="auth-error"></div>
 </form>
@@ -46,20 +45,22 @@ body{min-height:100vh;display:grid;place-items:center;background:#090909;color:#
 let mode="login";
 const form=document.getElementById("authForm");
 const nameField=document.getElementById("nameField");
-const submitButton=document.getElementById("submitButton");
+const loginTab=document.getElementById("loginTab");
+const registerTab=document.getElementById("registerTab");
 const error=document.getElementById("authError");
 function setMode(next){
  mode=next;
  nameField.hidden=mode!=="register";
  document.getElementById("loginTab").classList.toggle("active",mode==="login");
  document.getElementById("registerTab").classList.toggle("active",mode==="register");
- submitButton.textContent=mode==="login"?"تسجيل الدخول":"إنشاء الحساب";
+ loginTab.classList.toggle("active",mode==="login");
+registerTab.classList.toggle("active",mode==="register");
  error.style.display="none";
 }
-document.getElementById("loginTab").onclick=()=>setMode("login");
-document.getElementById("registerTab").onclick=()=>setMode("register");
+loginTab.onclick=()=>{mode="login";};
+registerTab.onclick=()=>{mode="register";};
 form.addEventListener("submit",async e=>{
- e.preventDefault(); error.style.display="none"; submitButton.disabled=true;
+ e.preventDefault(); error.style.display="none"; const clickedMode=(document.activeElement===registerTab)?"register":"login"; mode=clickedMode; loginTab.disabled=true; registerTab.disabled=true;
  try{
   const body={email:document.getElementById("email").value.trim(),password:document.getElementById("password").value};
   if(mode==="register") body.name=document.getElementById("name").value.trim();
@@ -68,7 +69,7 @@ form.addEventListener("submit",async e=>{
   if(!r.ok) throw new Error(data.message||"تعذر إكمال العملية.");
   location.href="/";
  }catch(err){error.textContent=err.message;error.style.display="block";}
- finally{submitButton.disabled=false;}
+ finally{loginTab.disabled=false; registerTab.disabled=false;}
 });
 </script>
 </body>
