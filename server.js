@@ -45,7 +45,7 @@ const customerLoginAttempts = new Map();
 const googleOAuthStates = new Map();
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
-const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store-1.onrender.com").replace(/\\/$/, "");
+const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store-1.onrender.com").replace(/\/$/, "");
 
 app.use(express.json({ limit: "1mb" }));
 
