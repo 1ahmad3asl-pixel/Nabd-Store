@@ -85,6 +85,17 @@ const ADMIN_API = {
         return this.request("/transactions");
     },
 
+    customerWallet(customerId) {
+        return this.request("/customers/" + encodeURIComponent(customerId) + "/wallet");
+    },
+
+    updateCustomerWallet(customerId, action, amount, note) {
+        return this.request("/customers/" + encodeURIComponent(customerId) + "/wallet", {
+            method: "POST",
+            body: JSON.stringify({ action, amount: Number(amount), note: String(note || "") })
+        });
+    },
+
     sendNotification(data) {
         return this.request("/notifications", {
             method: "POST",
@@ -543,6 +554,13 @@ function renderCustomers(customers) {
                         <button
                             class="small-button"
                             data-customer-id="${escapeAdminHtml(String(id))}"
+                            data-action="wallet"
+                        >
+                            💰 المحفظة
+                        </button>
+                        <button
+                            class="small-button"
+                            data-customer-id="${escapeAdminHtml(String(id))}"
                             data-action="discount"
                         >
                             تعديل الخصم
@@ -553,6 +571,16 @@ function renderCustomers(customers) {
             `;
 
         }).join("");
+
+    table
+        .querySelectorAll(
+            '[data-action="wallet"]'
+        )
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                openCustomerWallet(button.getAttribute("data-customer-id"));
+            });
+        });
 
     table
         .querySelectorAll(
@@ -575,6 +603,60 @@ function renderCustomers(customers) {
 
         });
 
+}
+
+async function openCustomerWallet(customerId) {
+    try {
+        const data = await ADMIN_API.customerWallet(customerId);
+        const wallet = data.wallet || {};
+        const transactions = Array.isArray(wallet.transactions) ? wallet.transactions : [];
+        const typeMap = {admin_credit:"إضافة من الإدارة",admin_debit:"خصم من الإدارة",purchase:"شراء",refund:"استرداد",reversal:"عكس عملية"};
+        const rows = transactions.length ? transactions.map(function(item) {
+            const amount = Number(item.amount || 0);
+            return "<tr><td>" + escapeAdminHtml(typeMap[item.type] || item.type || "-") + "</td><td>" +
+                escapeAdminHtml((amount >= 0 ? "+" : "") + formatAdminPrice(amount)) + "</td><td>" +
+                escapeAdminHtml(formatAdminPrice(item.balance_after || 0)) + "</td><td>" +
+                escapeAdminHtml(item.note || "-") + "</td><td>" + escapeAdminHtml(item.created_at || "-") + "</td></tr>";
+        }).join("") : "<tr><td colspan='5'>لا توجد حركات مالية لهذا العميل.</td></tr>";
+
+        const html =
+            "<div id='walletDialog' style='position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px'>" +
+            "<div class='admin-card' style='width:min(100%,900px);max-height:90vh;overflow:auto'>" +
+            "<div class='card-heading'><div><h2>محفظة العميل</h2><p style='margin:6px 0'>" +
+            escapeAdminHtml(wallet.name || "عميل") + " · ID " + escapeAdminHtml(String(wallet.customer_id || customerId)) +
+            "</p></div><button class='small-button' id='closeWalletDialog'>إغلاق</button></div>" +
+            "<div class='statistics-grid' style='margin:15px 0'><div class='stat-card'><div class='stat-icon'>💰</div><div><span>الرصيد الحالي</span><strong>" +
+            formatAdminPrice(wallet.balance || 0) + "</strong></div></div></div>" +
+            "<div style='display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px'>" +
+            "<button class='primary-button' id='walletAdd'>➕ إضافة رصيد</button><button class='small-button' id='walletSubtract'>➖ خصم رصيد</button></div>" +
+            "<div class='table-wrapper'><table><thead><tr><th>العملية</th><th>المبلغ</th><th>الرصيد بعد</th><th>السبب</th><th>التاريخ</th></tr></thead><tbody>" +
+            rows + "</tbody></table></div></div></div>";
+
+        document.body.insertAdjacentHTML("beforeend", html);
+        document.getElementById("closeWalletDialog").onclick = function(){ document.getElementById("walletDialog")?.remove(); };
+
+        async function changeWallet(action) {
+            const amount = prompt(action === "credit" ? "أدخل مبلغ الإضافة بالدولار:" : "أدخل مبلغ الخصم بالدولار:", "0.000");
+            if (amount === null) return;
+            const value = Number(amount);
+            if (!Number.isFinite(value) || value <= 0) { showAdminToast("أدخل مبلغًا صحيحًا أكبر من صفر."); return; }
+            const note = prompt("سبب العملية (اختياري):", action === "credit" ? "إضافة رصيد من الإدارة" : "خصم رصيد من الإدارة");
+            if (note === null) return;
+            try {
+                await ADMIN_API.updateCustomerWallet(customerId, action, value, note);
+                showAdminToast(action === "credit" ? "تمت إضافة الرصيد بنجاح." : "تم خصم الرصيد بنجاح.");
+                document.getElementById("walletDialog")?.remove();
+                await loadCustomers();
+                await openCustomerWallet(customerId);
+                await loadTransactions();
+            } catch (error) { showAdminToast(error.message || "تعذر تعديل الرصيد."); }
+        }
+        document.getElementById("walletAdd").onclick = function(){ changeWallet("credit"); };
+        document.getElementById("walletSubtract").onclick = function(){ changeWallet("debit"); };
+    } catch (error) {
+        console.error(error);
+        showAdminToast(error.message || "تعذر تحميل محفظة العميل.");
+    }
 }
 
 function openDiscountDialog(customerId) {
