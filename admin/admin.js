@@ -1198,8 +1198,9 @@ function renderAdminProducts(products) {
 
             const apiPrice =
                 Number(
-                    product.price ??
+                    product.api_price ??
                     product.cost ??
+                    product.price ??
                     0
                 );
 
