@@ -147,7 +147,8 @@ function parseCustomerPhone(value) {
   if (!parsed || !parsed.isValid()) return null;
   return {
     phone: parsed.number,
-    country: parsed.country ? (new Intl.DisplayNames(["ar"], {type:"region"}).of(parsed.country) || parsed.country) : ""
+    country: parsed.country ? (new Intl.DisplayNames(["ar"], {type:"region"}).of(parsed.country) || parsed.country) : "",
+    country_code: parsed.country || ""
   };
 }
 
@@ -417,6 +418,8 @@ app.put("/api/customer/profile", requireCustomer, async (req, res) => {
   );
   if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
   const customer = result.rows[0];
+  const parsedPhone = parseCustomerPhone(customer.phone);
+  customer.phone_country_code = parsedPhone?.country_code || "";
   customer.customer_id = String(customer.customer_number);
   customer.customer_number = Number(customer.customer_number);
   customer.profile_complete = true;
@@ -432,6 +435,8 @@ app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
     return res.status(401).json({ status: "ERROR", message: "الحساب غير موجود." });
   }
   const customer = result.rows[0];
+  const parsedPhone = parseCustomerPhone(customer.phone);
+  customer.phone_country_code = parsedPhone?.country_code || "";
   customer.customer_id = String(customer.customer_number);
   customer.customer_number = Number(customer.customer_number);
   res.json({ status: "OK", customer });
