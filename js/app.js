@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeSounds();
     initializeSearch();
     initializeTheme();
+    initializeWhatsAppHitArea();
 
     removeAllCategory();
 
@@ -1053,4 +1054,24 @@ function showToast(message) {
 function initializeTheme() {
     const saved = localStorage.getItem("nabd-theme") || "dark";
     document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
+}
+
+
+function initializeWhatsAppHitArea() {
+    const supportButton = document.querySelector(".whatsapp-float");
+    if (!supportButton) return;
+
+    supportButton.addEventListener("click", function(event) {
+        const rect = supportButton.getBoundingClientRect();
+        const x = event.clientX - (rect.left + rect.width / 2);
+        const y = event.clientY - (rect.top + rect.height / 2);
+        const radius = Math.min(rect.width, rect.height) / 2;
+
+        // لا تسمح بفتح واتساب إلا إذا كانت الضغطة داخل الدائرة
+        // نفسها، حتى لو حدثت مشكلة في حساب منطقة اللمس على الهاتف.
+        if ((x * x) + (y * y) > radius * radius) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }, true);
 }
