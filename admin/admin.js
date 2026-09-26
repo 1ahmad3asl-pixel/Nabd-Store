@@ -627,7 +627,7 @@ async function openCustomerWallet(customerId) {
             "<div id='walletDialog' style='position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px'>" +
             "<div class='admin-card' style='width:min(100%,900px);max-height:90vh;overflow:auto'>" +
             "<div class='card-heading'><div><h2>محفظة العميل</h2><p style='margin:6px 0'>" +
-            escapeAdminHtml(wallet.name || "عميل") + " · ID " + escapeAdminHtml(String(wallet.customer_id || customerId)) +
+            escapeAdminHtml(wallet.name || "عميل") + " · ID " + escapeAdminHtml(String(wallet.customer_number || customerId)) +
             "</p></div><button class='small-button' id='closeWalletDialog'>إغلاق</button></div>" +
             "<div class='statistics-grid' style='margin:15px 0'><div class='stat-card'><div class='stat-icon'>💰</div><div><span>الرصيد الحالي</span><strong>" +
             formatAdminPrice(wallet.balance || 0) + "</strong></div></div></div>" +
