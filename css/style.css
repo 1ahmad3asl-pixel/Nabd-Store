@@ -1,12 +1,5 @@
 *{ box-sizing:border-box; margin:0; padding:0;
-/*
- * الخطوط المعتمدة للموقع:
- * الإنجليزية: ERAS BOLD ITC
- * العربية: Amasis MT Pro Black
- *
- * يجب أن تكون الخطوط متوفرة على الجهاز/الموقع
- * أو نضيف ملفات الخطوط لاحقًا داخل المشروع.
- */
+/* الخط العربي المعتمد للمشروع: Dubai Medium */
 
 font-family:"Dubai Medium","Dubai",Arial,Tahoma,sans-serif;
 }
