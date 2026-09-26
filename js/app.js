@@ -704,6 +704,247 @@ function openGamePlaceholder(gameTitle) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
+
+function isPubgGame(gameTitle) {
+    const text = normalizeGameText(gameTitle);
+    return text.includes("pubg") || text.includes("ببجي");
+}
+
+function getUsableProductParams(product) {
+    return (Array.isArray(product && product.params) ? product.params : [])
+        .map(function(label) { return String(label || "").trim(); })
+        .filter(function(label) {
+            return label && label !== "." && label !== "-" && label !== "_";
+        });
+}
+
+function renderPubgParamFields(product) {
+    const params = getUsableProductParams(product);
+
+    if (!params.length) {
+        return '<div class="pubg-no-params">لا توجد بيانات إضافية مطلوبة لهذا المنتج.</div>';
+    }
+
+    return params.map(function(label, index) {
+        const safeLabel = escapeHtml(label);
+        return '<div class="pubg-field">' +
+            '<label for="pubg_param_' + index + '">' + safeLabel + '</label>' +
+            '<input id="pubg_param_' + index + '" data-pubg-param="' + escapeHtml(label) + '" type="text" inputmode="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '">' +
+            '</div>';
+    }).join("");
+}
+
+function getPubgProductPrice(product) {
+    return Number(product && product.price) || 0;
+}
+
+function renderPubgProductPicker(gameTitle, group) {
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content || !group) return;
+
+    if (title) title.textContent = group.title;
+    if (icon) icon.textContent = "🎮";
+
+    const products = group.products || [];
+    const availableProducts = products.filter(function(product) {
+        return product.available !== false && product.available !== 0;
+    });
+    const firstProduct = availableProducts[0] || products[0] || null;
+
+    const listHtml = products.map(function(product, index) {
+        const available = product.available !== false && product.available !== 0;
+        const price = formatMoney(getPubgProductPrice(product));
+        return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
+            (available ? '' : ' disabled') + '>' +
+            '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
+            '<span class="pubg-option-price">' + price + '</span>' +
+            (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
+            '</button>';
+    }).join("");
+
+    const image = group.image || (firstProduct && firstProduct.category_img) || "";
+    const imageHtml = image
+        ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
+        : '<span class="game-placeholder">🎮</span>';
+
+    content.innerHTML =
+        '<div class="pubg-picker">' +
+            '<button class="pubg-back" type="button" id="pubgBackToGroups">← العودة إلى تصنيفات ببجي</button>' +
+            '<div class="pubg-picker-head">' +
+                '<div class="pubg-picker-image">' + imageHtml + '</div>' +
+                '<h2>' + escapeHtml(group.title) + '</h2>' +
+                '<span>' + products.length + ' منتج</span>' +
+            '</div>' +
+            '<div class="pubg-field-label">البيانات المطلوبة</div>' +
+            '<div id="pubgParamFields">' +
+                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
+            '</div>' +
+            '<div class="pubg-field-label">اختر الباقة</div>' +
+            '<div class="pubg-select" id="pubgSelect">' +
+                '<button class="pubg-select-trigger" type="button" aria-expanded="false" aria-controls="pubgOptions">' +
+                    '<span id="pubgSelectedName">' + escapeHtml(firstProduct ? (firstProduct.name || "اختر الباقة") : "اختر الباقة") + '</span>' +
+                    '<span class="pubg-select-arrow">▼</span>' +
+                '</button>' +
+                '<div class="pubg-options" id="pubgOptions" hidden>' +
+                    listHtml +
+                '</div>' +
+            '</div>' +
+            '<div class="pubg-selected-summary">' +
+                '<span>السعر</span>' +
+                '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
+            '</div>' +
+            '<div id="pubgQtyWrap"></div>' +
+            '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
+                (!firstProduct || (firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
+                '>إرسال الطلب <span>→</span></button>' +
+        '</div>';
+
+    let selectedIndex = firstProduct ? products.indexOf(firstProduct) : -1;
+
+    function updateSelectedProduct(index) {
+        const product = products[index];
+        if (!product) return;
+        selectedIndex = index;
+
+        const selectedName = document.getElementById("pubgSelectedName");
+        const selectedPrice = document.getElementById("pubgSelectedPrice");
+        const fields = document.getElementById("pubgParamFields");
+        const submit = document.getElementById("pubgSubmitOrder");
+        const qtyWrap = document.getElementById("pubgQtyWrap");
+
+        if (selectedName) selectedName.textContent = product.name || "اختر الباقة";
+        if (selectedPrice) selectedPrice.textContent = formatMoney(getPubgProductPrice(product));
+        if (fields) fields.innerHTML = renderPubgParamFields(product);
+
+        if (qtyWrap) {
+            const minQty = Number(product.qty_values && product.qty_values.min);
+            const maxQty = Number(product.qty_values && product.qty_values.max);
+            if (Number.isFinite(minQty) || Number.isFinite(maxQty)) {
+                const min = Number.isFinite(minQty) ? minQty : 1;
+                const max = Number.isFinite(maxQty) ? maxQty : 999999999;
+                qtyWrap.innerHTML =
+                    '<div class="pubg-field-label">الكمية</div>' +
+                    '<div class="pubg-field">' +
+                        '<input id="pubgQty" type="number" min="' + min + '" max="' + max + '" value="' + min + '" inputmode="numeric">' +
+                    '</div>';
+            } else {
+                qtyWrap.innerHTML = '';
+            }
+        }
+
+        if (submit) {
+            submit.disabled = product.available === false || product.available === 0;
+        }
+    }
+
+    const back = document.getElementById("pubgBackToGroups");
+    if (back) back.addEventListener("click", function() {
+        openGamePlaceholder(gameTitle);
+    });
+
+    const select = document.getElementById("pubgSelect");
+    const trigger = select ? select.querySelector(".pubg-select-trigger") : null;
+    const options = document.getElementById("pubgOptions");
+
+    if (trigger && options) {
+        trigger.addEventListener("click", function() {
+            const open = !options.hidden;
+            options.hidden = open;
+            trigger.setAttribute("aria-expanded", String(!open));
+            trigger.classList.toggle("is-open", !open);
+        });
+
+        options.querySelectorAll(".pubg-option").forEach(function(option) {
+            option.addEventListener("click", function() {
+                const index = Number(option.getAttribute("data-pubg-index"));
+                updateSelectedProduct(index);
+                options.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+                trigger.classList.remove("is-open");
+            });
+        });
+    }
+
+    document.addEventListener("click", function closePubgDropdown(event) {
+        if (!select || select.contains(event.target)) return;
+        if (options && !options.hidden) {
+            options.hidden = true;
+            if (trigger) {
+                trigger.setAttribute("aria-expanded", "false");
+                trigger.classList.remove("is-open");
+            }
+        }
+        document.removeEventListener("click", closePubgDropdown);
+    });
+
+    const submit = document.getElementById("pubgSubmitOrder");
+    if (submit) {
+        submit.addEventListener("click", function() {
+            const product = products[selectedIndex];
+            if (!product) return;
+            submitGamePickerOrder(product, document.getElementById("pubgPicker"));
+        });
+    }
+
+    const picker = content.querySelector(".pubg-picker");
+    if (picker) picker.id = "pubgPicker";
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+async function submitGamePickerOrder(product, root) {
+    const params = {};
+    const inputs = root ? root.querySelectorAll("[data-pubg-param]") : [];
+    let invalid = false;
+
+    inputs.forEach(function(input) {
+        const label = input.getAttribute("data-pubg-param") || "";
+        const value = String(input.value || "").trim();
+        if (!value) {
+            invalid = true;
+            input.classList.add("is-invalid");
+        } else {
+            input.classList.remove("is-invalid");
+            params[label] = value;
+        }
+    });
+
+    if (invalid) {
+        showToast("يرجى إدخال البيانات المطلوبة أولًا.");
+        return;
+    }
+
+    const qtyInput = root ? root.querySelector("#pubgQty") : null;
+    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
+    const submit = root ? root.querySelector("#pubgSubmitOrder") : null;
+    if (submit) submit.disabled = true;
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/orders", {
+            method: "POST",
+            headers: {"Accept":"application/json","Content-Type":"application/json"},
+            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+        });
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR") {
+            throw new Error(data.message || "تعذر إنشاء الطلب");
+        }
+        if (data.balance !== undefined) updateBalance(data.balance);
+        showToast("تم إرسال الطلب بنجاح.");
+        if (root) {
+            const inputsAfter = root.querySelectorAll("input");
+            inputsAfter.forEach(function(input) { input.value = ""; });
+        }
+    } catch (error) {
+        console.error("PUBG order error:", error);
+        showToast(error.message || "تعذر إنشاء الطلب.");
+    } finally {
+        if (submit) submit.disabled = false;
+    }
+}
+
 function openGameProductGroup(gameTitle, groupKey) {
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
@@ -715,6 +956,11 @@ function openGameProductGroup(gameTitle, groupKey) {
     });
 
     if (!group) return;
+
+    if (isPubgGame(gameTitle)) {
+        renderPubgProductPicker(gameTitle, group);
+        return;
+    }
 
     if (title) title.textContent = group.title;
     if (icon) icon.textContent = "🎮";
@@ -730,7 +976,7 @@ function openGameProductGroup(gameTitle, groupKey) {
             const price = Number(product.price) || 0;
             const image = product.category_img || "";
             const imageHtml = image
-                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">' 
+                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
                 : '<span class="game-product-fallback">🛍️</span>';
 
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
