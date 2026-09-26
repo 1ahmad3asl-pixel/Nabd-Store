@@ -30,6 +30,15 @@ const elements = {
 };
 
 
+// Fallback click delegation for the main category tiles.
+// Keeps the Games entry responsive even if another initializer fails.
+document.addEventListener("click", function(event) {
+    const gamesButton = event.target.closest('.category[data-category="games"]');
+    if (!gamesButton) return;
+    event.preventDefault();
+    openGamesPage();
+});
+
 /* =========================
    START
 ========================= */
