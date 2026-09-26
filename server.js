@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const crypto = require("crypto");
-const { parsePhoneNumberFromString } = require("libphonenumber-js");
+const { parsePhoneNumberFromString, getCountries, getCountryCallingCode } = require("libphonenumber-js");
 
 const {
   getNemerProducts,
@@ -395,7 +395,7 @@ app.post("/api/customer/login", async (req, res) => {
   }
 });
 
-app.get("/api/customer/phone-country", requireCustomer, (req, res) => {
+app.get("/api/customer/countries", (req, res) => {\n  const countries = getCountries().map(country => ({\n    country,\n    calling_code: "+" + getCountryCallingCode(country),\n    flag: country.replace(/./g, char => String.fromCodePoint(char.charCodeAt(0) + 127397))\n  }));\n  countries.sort((a, b) => a.calling_code.localeCompare(b.calling_code) || a.country.localeCompare(b.country));\n  res.json({ status: "OK", countries });\n});\n\napp.get("/api/customer/phone-country", requireCustomer, (req, res) => {
   const phoneData = parseCustomerPhone(req.query?.phone);
   if (!phoneData) return res.status(400).json({ status: "ERROR", message: "رقم الهاتف غير صحيح." });
   res.json({ status: "OK", country: phoneData.country });
