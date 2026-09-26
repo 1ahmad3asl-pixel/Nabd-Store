@@ -573,6 +573,46 @@ function initializeCategories() {
     if (back) back.addEventListener("click", closeInternalPage);
 }
 
+function cleanGameCategoryName(value) {
+    return String(value || "")
+        .replace(/[•·]+/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function getGameProducts(gameTitle) {
+    return state.products.filter(function(product) {
+        const match = findGameMatch(product);
+        return match && match.title === gameTitle;
+    });
+}
+
+function getGameGroups(gameTitle) {
+    const products = getGameProducts(gameTitle);
+    const groups = [];
+    const seen = new Map();
+
+    products.forEach(function(product) {
+        const categoryName = cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
+        const key = String(product.parent_id ?? "") + "|" + categoryName;
+
+        if (!seen.has(key)) {
+            const group = {
+                key: key,
+                title: categoryName,
+                image: product.category_img || "",
+                products: []
+            };
+            seen.set(key, group);
+            groups.push(group);
+        }
+
+        seen.get(key).products.push(product);
+    });
+
+    return groups;
+}
+
 function openGamesPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
@@ -589,7 +629,6 @@ function openGamesPage() {
     if (icon) icon.textContent = "🎮";
 
     const tiles = getGameTiles();
-
     const thirdLevelGames = new Set(["ببجي موبايل", "جواكر", "Roblox Game"]);
 
     content.innerHTML =
@@ -625,9 +664,9 @@ function openGamePlaceholder(gameTitle) {
     if (title) title.textContent = gameTitle;
     if (icon) icon.textContent = "🎮";
 
-    const products = getProductsForGame(gameTitle);
+    const groups = getGameGroups(gameTitle);
 
-    if (!products.length) {
+    if (!groups.length) {
         content.innerHTML =
             '<div class="game-products-placeholder">' +
             '<div class="game-products-placeholder-icon">🎮</div>' +
@@ -640,23 +679,485 @@ function openGamePlaceholder(gameTitle) {
 
     content.innerHTML =
         '<div class="game-products-heading">' +
-        '<strong>' + products.length + ' منتج</strong>' +
-        '<span>منتجات ' + escapeHtml(gameTitle) + '</span>' +
+            '<strong>' + groups.length + ' تصنيف</strong>' +
+            '<span>تصنيفات ' + escapeHtml(gameTitle) + '</span>' +
+        '</div>' +
+        '<div class="game-category-grid game-product-groups-grid">' +
+        groups.map(function(group) {
+            const imageHtml = group.image
+                ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
+                : '<span class="game-placeholder">🎮</span>';
+
+            return '<button class="game-category-tile game-product-group-card" type="button" data-game-group="' +
+                escapeHtml(group.key) + '">' +
+                '<span class="game-tile-image">' + imageHtml + '</span>' +
+                '<span class="game-tile-title">' + escapeHtml(group.title) + '</span>' +
+            '</button>';
+        }).join("") +
+        '</div>';
+
+    content.querySelectorAll(".game-product-group-card").forEach(function(card) {
+        card.addEventListener("click", function() {
+            const key = card.getAttribute("data-game-group") || "";
+            openGameProductGroup(gameTitle, key);
+        });
+    });
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function openGameProductGroup(gameTitle, groupKey) {
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content) return;
+
+    const group = getGameGroups(gameTitle).find(function(item) {
+        return item.key === groupKey;
+    });
+
+    if (!group) return;
+
+    if (title) title.textContent = group.title;
+    if (icon) icon.textContent = "🎮";
+
+    content.innerHTML =
+        '<div class="game-products-heading">' +
+            '<strong>' + group.products.length + ' منتج</strong>' +
+            '<span>' + escapeHtml(group.title) + '</span>' +
         '</div>' +
         '<div class="game-products-grid">' +
-        products.map(function(product) {
+        group.products.map(function(product) {
             const available = product.available !== false && product.available !== 0;
             const price = Number(product.price) || 0;
             const image = product.category_img || "";
             const imageHtml = image
-                ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name || gameTitle) + '" loading="lazy">'
-                : '<span>🛍️</span>';
+                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
+                : '<span class="game-product-fallback">🛍️</span>';
 
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
                 '<div class="product-icon">' + imageHtml + '</div>' +
                 '<h3>' + escapeHtml(product.name || "منتج") + '</h3>' +
-                '<p>' + escapeHtml(product.category_name || "") + '</p>' +
-                '<div class="price">$' + price.toFixed(4) + '</div>' +
+                '<div class="price">function closeInternalPage() {
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    if (internal) internal.hidden = true;
+    if (services) services.hidden = false;
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function initializeSearch() {
+
+    let searchInput =
+        document.getElementById("searchInput");
+
+
+    if (!searchInput) {
+
+        searchInput =
+            document.getElementById("productSearch");
+    }
+
+
+    if (!searchInput) {
+
+        const searchBox =
+            document.createElement("div");
+
+        searchBox.className = "store-search";
+
+        searchBox.innerHTML = `
+            <input
+                id="productSearch"
+                type="search"
+                placeholder="ابحث عن خدمة أو منتج..."
+                autocomplete="off"
+            >
+        `;
+
+
+        const dhikr =
+            document.querySelector(".dhikr-bar");
+
+
+        if (dhikr) {
+
+            dhikr.insertAdjacentElement(
+                "afterend",
+                searchBox
+            );
+
+        } else {
+
+            const container =
+                document.querySelector(".container");
+
+            if (container) {
+                container.prepend(searchBox);
+            }
+        }
+
+
+        searchInput =
+            document.getElementById("productSearch");
+    }
+
+
+    if (!searchInput) return;
+
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            state.searchQuery =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            renderProducts();
+        }
+    );
+
+
+    searchInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                searchInput.value = "";
+                state.searchQuery = "";
+
+                renderProducts();
+
+                searchInput.blur();
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================
+   QUICK MENU
+========================= */
+
+function initializeQuickMenu() {
+
+    document
+        .querySelectorAll(".quick-item")
+        .forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    const action =
+                        item.getAttribute(
+                            "data-action"
+                        );
+
+                    handleAction(action);
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function initializeModal() {
+
+    if (elements.modalClose) {
+
+        elements.modalClose.addEventListener(
+            "click",
+            closeModal
+        );
+    }
+
+
+    if (elements.modalOverlay) {
+
+        elements.modalOverlay.addEventListener(
+            "click",
+            closeModal
+        );
+    }
+
+}
+
+
+function handleAction(action) {
+
+    switch (action) {
+
+        case "orders":
+
+            showModal(
+                "طلباتي",
+                `
+                <div class="empty-state">
+
+                    <div
+                        style="
+                            font-size:40px;
+                            margin-bottom:10px;
+                        "
+                    >
+                        📦
+                    </div>
+
+                    <h3>
+                        طلباتي
+                    </h3>
+
+                    <p>
+                        سيتم عرض طلباتك هنا بعد تسجيل الدخول.
+                    </p>
+
+                </div>
+                `
+            );
+
+            break;
+
+
+        case "notifications":
+
+            showModal(
+                "الإشعارات",
+                `
+                <div class="empty-state">
+
+                    <div
+                        style="
+                            font-size:40px;
+                            margin-bottom:10px;
+                        "
+                    >
+                        🔔
+                    </div>
+
+                    <h3>
+                        لا توجد إشعارات
+                    </h3>
+
+                    <p>
+                        ستظهر إشعارات طلباتك وتحديثات الحساب هنا.
+                    </p>
+
+                </div>
+                `
+
+            );
+
+            break;
+
+        default:
+            showModal("نبض ستور", "<div class=\"empty-state\"><h3>القسم غير متاح حاليًا</h3><p>سيتم تفعيل هذه الخدمة قريبًا.</p></div>");
+    }
+}
+
+function formatMoney(value) {
+    const amount = Number(value) || 0;
+    return "$" + amount.toFixed(3);
+}
+
+function updateBalance(value) {
+    const amount = Number(value) || 0;
+    state.balance = amount;
+    if (elements.balance) elements.balance.textContent = formatMoney(amount);
+    if (elements.heroBalance) elements.heroBalance.textContent = formatMoney(amount);
+}
+
+function showModal(title, body) {
+    if (!elements.modal || !elements.modalBody) return;
+    elements.modalBody.innerHTML = "<h2 style=\"margin-bottom:18px;\">" + escapeHtml(title) + "</h2>" + body;
+    elements.modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+    if (!elements.modal) return;
+    elements.modal.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function escapeHtml(value) {
+    return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+function getProductCategory(product) {
+    const text = String(product.category_name || product.name || "").toLowerCase();
+    if (/جواكر|فري فاير|free fire|ببجي|pubg|لودو|blood strike|روبلوكس|roblox|كلاش|clash|فالورانت|valorant|minecraft|ماينكرافت|fifa|فورتنايت|fortnite/.test(text)) return "games";
+    if (/انستغرام|instagram|فيس بوك|facebook|تيك توك|tiktok|تلجرام|telegram|وتساب|whatsapp|واتساب|سناب|snapchat|كواي|kwai|يوتيوب|youtube|تويتر|twitter/.test(text)) return "social";
+    if (/رقم|وحدات|رصيد|شحن|استرداد رصيد|mtn|syriatel|زين|شامنا/.test(text)) return "numbers";
+    return "other";
+}
+
+async function loadProducts() {
+    if (elements.products) {
+        elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>جاري تحميل الخدمات...</p></div>";
+    }
+    try {
+        const response = await fetch(BACKEND_URL + "/api/products", {headers:{Accept:"application/json"}});
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر تحميل المنتجات");
+        state.products = Array.isArray(data.products) ? data.products : [];
+        renderProducts();
+    } catch (error) {
+        console.error("Products load error:", error);
+        if (elements.products) {
+            elements.products.innerHTML = "<div class=\"products-loading\"><p>تعذر تحميل المنتجات حاليًا.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">إعادة المحاولة</button></div>";
+            const retry = document.getElementById("retryProducts");
+            if (retry) retry.addEventListener("click", loadProducts);
+        }
+    }
+}
+
+function renderProducts() {
+    if (!elements.products) return;
+    const query = state.searchQuery;
+    const filtered = state.products.filter(function(product) {
+        const categoryMatch = state.selectedCategory === "all" || getProductCategory(product) === state.selectedCategory;
+        const searchable = (String(product.name || "") + " " + String(product.category_name || "")).toLowerCase();
+        return categoryMatch && (!query || searchable.includes(query));
+    });
+
+    if (!filtered.length) {
+        elements.products.innerHTML = "<div class=\"products-loading\"><p>لا توجد منتجات مطابقة.</p></div>";
+        return;
+    }
+
+    elements.products.innerHTML = filtered.map(function(product) {
+        const available = product.available !== false && product.available !== 0;
+        const price = Number(product.price) || 0;
+        const image = product.category_img || "";
+        const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
+        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">$" + price.toFixed(4) + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (available ? "" : "disabled") + ">" + (available ? "شراء الآن" : "غير متوفر") + "</button></article>";
+    }).join("");
+
+    elements.products.querySelectorAll(".buy-btn[data-product-id]").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const product = state.products.find(function(item) { return String(item.id) === String(button.getAttribute("data-product-id")); });
+            if (product) openProductModal(product);
+        });
+    });
+}
+
+function openProductModal(product) {
+    const params = Array.isArray(product.params) ? product.params : [];
+    const fields = params.map(function(label, index) {
+        const safeLabel = escapeHtml(String(label || "البيانات"));
+        return '<div class="order-field">' +
+            '<label for="param_' + index + '">' + safeLabel + '</label>' +
+            '<input id="param_' + index + '" type="text" placeholder="أدخل ' + safeLabel + '" autocomplete="off">' +
+            '</div>';
+    }).join("");
+
+    const minQty = Number(product.qty_values?.min || 1);
+    const maxQty = Number(product.qty_values?.max || 999999999);
+    const price = Number(product.price) || 0;
+
+    showModal("تأكيد عملية الشراء",
+        '<div class="order-form">' +
+            '<div class="order-product-name">' + escapeHtml(product.name || "منتج") + '</div>' +
+            fields +
+            '<div class="order-field">' +
+                '<label for="orderQty">الكمية</label>' +
+                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" value="' + minQty + '" inputmode="numeric">' +
+            '</div>' +
+            '<div class="order-price-row">' +
+                '<span>السعر</span>' +
+                '<strong id="orderPrice">' + formatMoney(price) + '</strong>' +
+            '</div>' +
+            '<button class="buy-btn order-confirm-btn" id="confirmProductOrder" type="button">تأكيد عملية الشراء</button>' +
+        '</div>'
+    );
+
+    const confirm = document.getElementById("confirmProductOrder");
+    if (confirm) confirm.addEventListener("click", function() {
+        submitProductOrder(product);
+    });
+}
+
+async function submitProductOrder(product) {
+    const params = {};
+    (Array.isArray(product.params) ? product.params : []).forEach(function(label, index) {
+        const input = document.getElementById("param_" + index);
+        if (input && input.value.trim()) params[label] = input.value.trim();
+    });
+    const qtyInput = document.getElementById("orderQty");
+    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
+    const confirm = document.getElementById("confirmProductOrder");
+    if (confirm) confirm.disabled = true;
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/orders", {
+            method: "POST",
+            headers: {"Accept":"application/json","Content-Type":"application/json"},
+            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+        });
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر إنشاء الطلب");
+        closeModal();
+        if (data.balance !== undefined) updateBalance(data.balance);
+        showToast("تم إنشاء الطلب بنجاح.");
+    } catch (error) {
+        console.error("Order error:", error);
+        showToast(error.message || "تعذر إنشاء الطلب.");
+        if (confirm) confirm.disabled = false;
+    }
+}
+
+function showToast(message) {
+    if (!elements.toast) return;
+    elements.toast.textContent = message;
+    elements.toast.classList.add("show");
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(function() { elements.toast.classList.remove("show"); }, 3000);
+}
+
+
+
+function initializeTheme() {
+    const saved = localStorage.getItem("nabd-theme") || "dark";
+    document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
+}
+
+
+function initializeWhatsAppHitArea() {
+    const supportButton = document.querySelector(".whatsapp-float");
+    if (!supportButton) return;
+
+    supportButton.addEventListener("click", function(event) {
+        const rect = supportButton.getBoundingClientRect();
+        const x = event.clientX - (rect.left + rect.width / 2);
+        const y = event.clientY - (rect.top + rect.height / 2);
+        const radius = Math.min(rect.width, rect.height) / 2;
+
+        // لا تسمح بفتح واتساب إلا إذا كانت الضغطة داخل الدائرة
+        // نفسها، حتى لو حدثت مشكلة في حساب منطقة اللمس على الهاتف.
+        if ((x * x) + (y * y) > radius * radius) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }, true);
+}
+ + price.toFixed(4) + '</div>' +
                 '<button class="buy-btn" type="button" data-game-product-id="' + escapeHtml(String(product.id)) + '" ' +
                 (available ? "" : "disabled") + '>' +
                 (available ? "شراء الآن" : "غير متوفر") +
