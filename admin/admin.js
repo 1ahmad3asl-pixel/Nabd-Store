@@ -1294,13 +1294,6 @@ function initializeAdminTheme(){
     document.documentElement.dataset.theme=saved==="light"?"light":"dark";
 }
 
-function applyAdminFont(){
-    const font=adminState.settings.font_family||"Amasis MT Pro";
-    const stack=font==="Tahoma"?'"Tahoma",Arial,sans-serif':font==="Arial"?'"Arial",Tahoma,sans-serif':'"Amasis MT Pro Black","Amasis MT Pro","ERAS BOLD ITC",Tahoma,Arial,sans-serif';
-    document.documentElement.style.setProperty("--admin-font-family",stack);
-    document.body.style.fontFamily=stack;
-}
-
 async function performAdminLogout(){
     try{await ADMIN_API.logout();}catch(error){console.error(error);}
     window.location.href="login.html";
@@ -1328,13 +1321,19 @@ function initializeSettings() {
     }
 
     if (saveStore) {
-
-        saveStore.addEventListener(
-            "click",
-            saveStoreSettings
-        );
-
+        saveStore.addEventListener("click", saveStoreSettings);
     }
+
+    document.querySelectorAll(".settings-tab").forEach(function(tab){
+        tab.addEventListener("click",function(){
+            const panel=tab.getAttribute("data-settings-panel");
+            document.querySelectorAll(".settings-tab").forEach(function(item){item.classList.remove("active");});
+            document.querySelectorAll(".settings-panel").forEach(function(item){item.classList.remove("active");});
+            tab.classList.add("active");
+            const target=document.getElementById(panel);
+            if(target) target.classList.add("active");
+        });
+    });
 
     loadAdminSettings();
 
@@ -1434,7 +1433,8 @@ async function saveProfitSettings() {
     try {
 
         await ADMIN_API.updateSettings({
-            profit_rate: profit
+            profit_rate: profit,
+            currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3)
         });
 
         adminState.settings.profit_rate =
