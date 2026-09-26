@@ -145,7 +145,7 @@ async function loadSettings() {
       ? parsedDhikr.map(item => String(item || "").trim()).filter(Boolean).slice(0, 12)
       : ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"];
   } catch {
-    adminSettings.dhikr_items = ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+    adminSettings.dhikr_items = ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"];
   }
 }
 
