@@ -116,7 +116,7 @@ const adminState = {
     products: [],
     settings: {
         profit_rate: 10,
-        store_name: "متجر النبض الرقمي",
+        store_name: "Nabd-Store",
         currency: "USD",
         currency_decimals: 3,
         font_family: "Amasis MT Pro"
@@ -1326,7 +1326,7 @@ function updateSettingsUI() {
     setValue(
         "storeName",
         adminState.settings.store_name ??
-        "متجر النبض الرقمي"
+        "Nabd-Store"
     );
 
     setValue("storeCurrency", adminState.settings.currency ?? "USD");
