@@ -781,6 +781,7 @@ async function submitProductOrder(product) {
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر إنشاء الطلب");
         closeModal();
+        if (data.balance !== undefined) updateBalance(data.balance);
         showToast("تم إنشاء الطلب بنجاح.");
     } catch (error) {
         console.error("Order error:", error);
