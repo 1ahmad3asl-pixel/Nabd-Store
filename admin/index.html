@@ -550,211 +550,93 @@
         </section>
 
         <section id="settingsSection" class="admin-section">
-
-            <div class="page-heading">
-
-                <div>
-                    <span>إعدادات المتجر</span>
-                    <h1>الإعدادات</h1>
-                </div>
-
-            </div>
-
-            <div class="admin-card admin-settings-intro">
-  <div class="card-heading"><h2>إعدادات الواجهة</h2></div>
-  <div class="admin-settings-options">
-    <div><span>الخط</span><strong>Amasis MT Pro</strong><small>الخط الأساسي للوحة الإدارة</small></div>
-    <div><span>تنسيق الأسعار</span><strong>3 خانات عشرية</strong><small>مثال: $10.500</small></div>
-    <div><span>المظهر</span><strong id="adminThemeStatus">ليلي</strong><small>يمكن تغييره من الشريط العلوي</small></div>
+  <div class="page-heading">
+    <div>
+      <span>إعدادات المتجر</span>
+      <h1>الإعدادات الرئيسية</h1>
+    </div>
   </div>
-</div>
 
-<div class="admin-card admin-standards-card">
-                    <div class="card-heading"><h2>معايير المتجر الأساسية</h2></div>
-                    <div class="standards-grid">
-                        <div class="standard-item"><span>الواجهة</span><strong>عربي · RTL</strong></div>
-                        <div class="standard-item"><span>الخط</span><strong>Amasis MT Pro</strong></div>
-                        <div class="standard-item"><span>العملة</span><strong>USD ($)</strong></div>
-                        <div class="standard-item"><span>دقة المبالغ</span><strong>3 خانات عشرية</strong></div>
-                    </div>
-                    <p class="settings-note">تُعرض جميع المبالغ المالية في لوحة الإدارة بصيغة ثلاث خانات عشرية، مثل $1.250.</p>
-                </div>
+  <div class="settings-tabs" role="tablist" aria-label="إعدادات المتجر">
+    <button class="settings-tab active" type="button" data-settings-panel="storeSettingsPanel">🏪 المتجر</button>
+    <button class="settings-tab" type="button" data-settings-panel="pricingSettingsPanel">💰 التسعير</button>
+    <button class="settings-tab" type="button" data-settings-panel="appearanceSettingsPanel">🎨 المظهر</button>
+  </div>
 
-                <div class="settings-grid">
+  <div id="storeSettingsPanel" class="settings-panel active">
+    <div class="admin-card">
+      <div class="card-heading"><h2>هوية المتجر والعملة</h2></div>
+      <div class="settings-form-grid">
+        <div class="form-group">
+          <label for="storeName">اسم المتجر</label>
+          <input type="text" id="storeName" value="Nabd-Store" autocomplete="off">
+          <small>الاسم الذي يظهر في لوحة الإدارة والواجهة.</small>
+        </div>
+        <div class="form-group">
+          <label for="storeCurrency">العملة</label>
+          <select id="storeCurrency">
+            <option value="USD">USD - الدولار الأمريكي ($)</option>
+            <option value="EUR">EUR - اليورو (€)</option>
+            <option value="TRY">TRY - الليرة التركية (₺)</option>
+            <option value="SAR">SAR - الريال السعودي</option>
+            <option value="AED">AED - الدرهم الإماراتي</option>
+          </select>
+          <small>العملة المعتمدة لعرض الأسعار والأرصدة.</small>
+        </div>
+      </div>
+      <button id="saveStoreSettings" class="primary-button">حفظ إعدادات المتجر</button>
+    </div>
+  </div>
 
-                <div class="admin-card">
+  <div id="pricingSettingsPanel" class="settings-panel">
+    <div class="admin-card">
+      <div class="card-heading"><h2>التسعير وتنسيق النقود</h2></div>
+      <div class="settings-form-grid">
+        <div class="form-group">
+          <label for="profitRate">هامش الربح العام (%)</label>
+          <input type="number" id="profitRate" min="0" max="100" step="0.1" value="10">
+          <small>يضاف إلى سعر API قبل خصم العميل.</small>
+        </div>
+        <div class="form-group">
+          <label for="currencyDecimals">عدد الخانات العشرية</label>
+          <select id="currencyDecimals">
+            <option value="3" selected>3 خانات — 0.000</option>
+            <option value="2">خانتان — 0.00</option>
+          </select>
+          <small>الإعداد المتفق عليه حاليًا: <strong>3 خانات عشرية</strong>.</small>
+        </div>
+      </div>
+      <div class="price-standard">
+        <span>مثال العرض</span>
+        <strong>$10.500</strong>
+        <small>سيتم اعتماد نفس الدقة في الأرصدة والأسعار والمبيعات.</small>
+      </div>
+      <button id="saveProfitRate" class="primary-button">حفظ إعدادات التسعير</button>
+    </div>
+  </div>
 
-                    <div class="card-heading">
-                        <h2>التسعير</h2>
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            هامش الربح العام (%)
-                        </label>
-
-                        <input
-                            type="number"
-                            id="profitRate"
-                            min="0"
-                            max="100"
-                            step="0.1"
-                            value="10"
-                        >
-
-                        <small>
-                            يضاف هذا الهامش إلى سعر API قبل تطبيق خصم العميل.
-                        </small>
-
-                    </div>
-
-                    <button
-                        id="saveProfitRate"
-                        class="primary-button"
-                    >
-                        حفظ هامش الربح
-                    </button>
-
-                </div>
-
-                <div class="admin-card">
-
-                    <div class="card-heading">
-                        <h2>المظهر والتنسيق</h2>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="adminFontFamily">الخط</label>
-                        <select id="adminFontFamily">
-                            <option value="Amasis MT Pro">Amasis MT Pro</option>
-                            <option value="Tahoma">Tahoma</option>
-                            <option value="Arial">Arial</option>
-                        </select>
-                        <small>يتم تطبيق الخط على لوحة الإدارة بالكامل.</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>خانات العملة</label>
-                        <input type="text" value="3 خانات عشرية (0.000)" readonly>
-                        <small>سيظهر رصيد وأسعار المتجر بثلاث خانات عشرية.</small>
-                    </div>
-
-                    <button id="saveAppearanceSettings" class="primary-button">حفظ المظهر</button>
-
-                </div>
-
-                <div class="admin-card">
-
-                    <div class="card-heading">
-                        <h2>إعدادات المتجر</h2>
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            اسم المتجر
-                        </label>
-
-                        <input
-                            type="text"
-                            id="storeName"
-                            value="Nabd-Store"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            العملة
-                        </label>
-
-                        <select id="storeCurrency">
-                            <option value="USD">USD - الدولار الأمريكي ($)</option>
-                            <option value="EUR">EUR - اليورو (€)</option>
-                            <option value="TRY">TRY - الليرة التركية (₺)</option>
-                            <option value="SAR">SAR - الريال السعودي</option>
-                            <option value="AED">AED - الدرهم الإماراتي</option>
-                        </select>
-
-                        <label style="margin-top:14px;">
-                            عدد الخانات العشرية
-                        </label>
-
-                        <select id="currencyDecimals">
-                            <option value="3" selected>3 خانات — $0.000</option>
-                            <option value="2">2 خانتان — $0.00</option>
-                        </select>
-
-                        <label style="margin-top:14px;">
-                            خط لوحة الإدارة
-                        </label>
-
-                        <select id="adminFont">
-                            <option value="Amasis MT Pro">Amasis MT Pro</option>
-                            <option value="Tahoma">Tahoma</option>
-                            <option value="Arial">Arial</option>
-                        </select>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>عدد الخانات العشرية للأسعار</label>
-
-                        <select id="currencyDecimals">
-                            <option value="0">0 خانات</option>
-                            <option value="1">1 خانة</option>
-                            <option value="2">2 خانتان</option>
-                            <option value="3" selected>3 خانات</option>
-                        </select>
-
-                        <small>سيتم عرض جميع مبالغ المتجر بنفس عدد الخانات المحدد.</small>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>خط لوحة الإدارة</label>
-
-                        <select id="adminFont">
-                            <option value="Amasis MT Pro">Amasis MT Pro</option>
-                            <option value="Tahoma">Tahoma</option>
-                            <option value="Arial">Arial</option>
-                        </select>
-
-                        <small>الخط الافتراضي للوحة هو Amasis MT Pro.</small>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>الخط المعتمد</label>
-                        <div class="setting-value-box">Amasis MT Pro Black للعربية · ERAS Bold ITC للإنجليزية</div>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>تنسيق الأسعار</label>
-                        <div class="setting-value-box price-preview">$0.000 — ثلاث خانات عشرية ثابتة</div>
-                        <small>سيظهر رصيد العملاء والأسعار والمبيعات بثلاث خانات عشرية.</small>
-
-                    </div>
-
-                    <button
-                        id="saveStoreSettings"
-                        class="primary-button"
-                    >
-                        حفظ الإعدادات
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
+  <div id="appearanceSettingsPanel" class="settings-panel">
+    <div class="admin-card">
+      <div class="card-heading"><h2>المظهر والخط</h2></div>
+      <div class="settings-form-grid">
+        <div class="form-group">
+          <label for="adminFont">خط لوحة الإدارة</label>
+          <select id="adminFont">
+            <option value="Amasis MT Pro">Amasis MT Pro</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Arial">Arial</option>
+          </select>
+          <small>الخط الافتراضي للوحة الإدارة هو Amasis MT Pro.</small>
+        </div>
+        <div class="form-group">
+          <label>الوضع</label>
+          <div class="setting-value-box">يمكن التبديل بين الوضع الليلي والفاتح من الشريط العلوي.</div>
+        </div>
+      </div>
+      <button id="saveAppearanceSettings" class="primary-button" type="button">حفظ المظهر</button>
+    </div>
+  </div>
+</section>
 
     </main>
 </div>
