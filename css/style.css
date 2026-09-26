@@ -1,7 +1,7 @@
 *{ box-sizing:border-box; margin:0; padding:0;
 /* الخط العربي المعتمد للمشروع: Dubai Medium */
 
-font-family:"Dubai Medium","Dubai",Arial,Tahoma,sans-serif;
+font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif;
 }
 :root{ --primary:#f5c400; --primary-dark:#c99f00; --primary-light:#fff8d6; --background:#090909; --text:#f5f5f5; --muted:#a8a8a8; --white:#141414; --border:#292929; --success:#22c55e; --danger:#ef4444; --shadow:0 4px 18px rgba(0,0,0,.45); }
 html{ scroll-behavior:smooth; }
