@@ -768,3 +768,59 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
     .admin-balance strong{font-size:15px!important;}
     .admin-menu-button{flex-basis:38px!important;width:38px!important;height:38px!important;}
 }
+
+
+/* ===== الشريط العلوي النهائي: المتجر + الرصيد + قائمة الإدارة ===== */
+.admin-header{
+    direction:ltr !important;
+    height:70px !important;
+    padding:0 14px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:14px !important;
+}
+.admin-brand{
+    order:1 !important;
+    margin:0 !important;
+    white-space:nowrap !important;
+}
+.admin-header-actions{
+    order:2 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:14px !important;
+    margin-left:auto !important;
+}
+.admin-balance{
+    direction:rtl !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:5px !important;
+    white-space:nowrap !important;
+    margin:0 !important;
+}
+.admin-balance strong{margin:0 !important;}
+.admin-menu-button{
+    position:static !important;
+    order:2 !important;
+    flex:0 0 42px !important;
+    width:42px !important;
+    height:42px !important;
+    margin:0 !important;
+    background:transparent !important;
+    color:#080808 !important;
+    font-size:28px !important;
+}
+.admin-menu-button:hover{background:rgba(0,0,0,.10) !important;}
+.admin-layout{padding-top:70px !important;}
+@media(max-width:600px){
+    .admin-header{height:62px !important;padding:0 10px !important;gap:8px !important;}
+    .admin-brand{font-size:17px !important;}
+    .admin-header-actions{gap:8px !important;}
+    .admin-balance{font-size:11px !important;}
+    .admin-balance strong{font-size:17px !important;}
+    .admin-menu-button{flex-basis:40px !important;width:40px !important;height:40px !important;font-size:26px !important;}
+    .admin-layout{padding-top:62px !important;}
+}
