@@ -916,8 +916,11 @@ function renderGameProductPicker(gameTitle, group) {
     const image = isPubgGame(gameTitle)
         ? "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480"
         : (isRoblox ? robloxImage : (group.image || (firstProduct && firstProduct.category_img) || ""));
-    const imageHtml = image
-        ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
+    const imageSource = image
+        ? (String(image).startsWith("http") ? image : BACKEND_URL + image)
+        : "";
+    const imageHtml = imageSource
+        ? '<img src="' + escapeHtml(imageSource) + '" alt="" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
 
     content.innerHTML =
@@ -1119,11 +1122,12 @@ function openGameProductGroup(gameTitle, groupKey) {
             const price = Number(product.price) || 0;
             const robloxProductImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
             const image = product.category_img || "";
-            const imageHtml = isRoblox
-                ? '<img src="' + robloxProductImage + '" alt="Roblox" loading="lazy" onerror="this.onerror=null;this.src=' + JSON.stringify(image || robloxProductImage) + ';">'
-                : (image
-                    ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
-                    : '<span class="game-product-fallback">🛍️</span>');
+            const imageSource = isRoblox
+                ? (image ? (String(image).startsWith("http") ? image : BACKEND_URL + image) : robloxProductImage)
+                : image;
+            const imageHtml = imageSource
+                ? '<img src="' + escapeHtml(imageSource) + '" alt="' + (isRoblox ? 'Roblox' : '') + '" loading="lazy">'
+                : '<span class="game-product-fallback">🛍️</span>';
 
             return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
                 '<div class="product-icon">' + imageHtml + '</div>' +
