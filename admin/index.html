@@ -14,92 +14,34 @@
 <header class="admin-header">
 
     <div class="admin-brand">
-        <span>⚡</span>
-        <strong>Nabd-Store</strong>
+        <span>⚡</span><strong>Nabd-Store</strong>
     </div>
 
     <div class="admin-header-actions">
-
         <div class="admin-balance">
             رصيد API:
             <strong id="apiBalance">$0.000</strong>
         </div>
 
-        <button id="menuButton" class="admin-menu-button">
-            ☰
-        </button>
+        <button id="logoutButtonHeader" class="admin-menu-button" title="تسجيل الخروج">🚪</button>
 
     </div>
 
 </header>
 
+<nav class="admin-tabs" id="adminTabs">
+    <button class="admin-nav-item active" data-section="dashboard"><span>📊</span><span>الرئيسية</span></button>
+    <button class="admin-nav-item" data-section="customers"><span>👥</span><span>العملاء</span></button>
+    <button class="admin-nav-item" data-section="orders"><span>📦</span><span>الطلبات</span></button>
+    <button class="admin-nav-item" data-section="products"><span>🛍️</span><span>المنتجات</span></button>
+    <button class="admin-nav-item" data-section="wallet"><span>💰</span><span>المحفظة</span></button>
+    <button class="admin-nav-item" data-section="notifications"><span>🔔</span><span>الإشعارات</span></button>
+    <button class="admin-nav-item" data-section="settings"><span>⚙️</span><span>الإعدادات</span></button>
+    <button id="logoutButton" class="admin-nav-logout"><span>🚪</span><span>خروج</span></button>
+</nav>
+
 <div class="admin-layout">
-
-    <aside class="admin-sidebar" id="sidebar">
-
-        <div class="admin-profile">
-
-            <div class="admin-avatar">
-                👑
-            </div>
-
-            <div>
-                <strong>المدير</strong>
-                <small>Administrator</small>
-            </div>
-
-        </div>
-
-        <nav class="admin-nav">
-
-            <button class="admin-nav-item active" data-section="dashboard">
-                <span>📊</span>
-                <span>الرئيسية</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="customers">
-                <span>👥</span>
-                <span>العملاء</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="orders">
-                <span>📦</span>
-                <span>الطلبات</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="products">
-                <span>🛍️</span>
-                <span>المنتجات</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="wallet">
-                <span>💰</span>
-                <span>المحفظة</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="notifications">
-                <span>🔔</span>
-                <span>الإشعارات</span>
-            </button>
-
-            <button class="admin-nav-item" data-section="settings">
-                <span>⚙️</span>
-                <span>الإعدادات</span>
-            </button>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <button id="logoutButton" class="logout-button">
-                🚪 تسجيل الخروج
-            </button>
-
-        </div>
-
-    </aside>
-
-    <main class="admin-main">
+<main class="admin-main">
 
         <section id="dashboardSection" class="admin-section active">
 
@@ -707,7 +649,6 @@
         </section>
 
     </main>
-
 </div>
 
 <div class="admin-toast" id="adminToast"></div>
