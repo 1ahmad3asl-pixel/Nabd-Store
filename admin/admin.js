@@ -117,7 +117,9 @@ const adminState = {
     settings: {
         profit_rate: 10,
         store_name: "متجر النبض الرقمي",
-        currency: "USD"
+        currency: "USD",
+        currency_decimals: 3,
+        font_family: "Amasis MT Pro"
     }
 };
 
@@ -157,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 function initializeAdminNavigation() {
 
     document
-        .querySelectorAll(".admin-nav-item")
+        .querySelectorAll(".admin-nav-item, .admin-tab")
         .forEach(function (button) {
 
             button.addEventListener("click", function () {
@@ -198,7 +200,7 @@ function showAdminSection(section) {
         });
 
     document
-        .querySelectorAll(".admin-nav-item")
+        .querySelectorAll(".admin-nav-item, .admin-tab")
         .forEach(function (item) {
 
             item.classList.remove("active");
@@ -212,14 +214,11 @@ function showAdminSection(section) {
         sectionElement.classList.add("active");
     }
 
-    const navigationButton =
-        document.querySelector(
-            `.admin-nav-item[data-section="${section}"]`
-        );
-
-    if (navigationButton) {
-        navigationButton.classList.add("active");
-    }
+    document
+        .querySelectorAll(`.admin-nav-item[data-section="${section}"], .admin-tab[data-section="${section}"]`)
+        .forEach(function (item) {
+            item.classList.add("active");
+        });
 
     const sidebar =
         document.getElementById("sidebar");
@@ -1330,22 +1329,24 @@ function updateSettingsUI() {
         "متجر النبض الرقمي"
     );
 
-    setValue(
-        "storeCurrency",
-        adminState.settings.currency ??
-        "USD"
-    );
+    setValue("storeCurrency", adminState.settings.currency ?? "USD");
+    setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
+    setValue("adminFont", adminState.settings.font_family ?? "Amasis MT Pro");
+    applyAdminFont(adminState.settings.font_family ?? "Amasis MT Pro");
 
     setText(
         "profitRatePreview",
         profit + "%"
     );
 
-    setText(
-        "productProfitRate",
-        profit + "%"
-    );
+    setText("productProfitRate", profit + "%");
 
+}
+
+function applyAdminFont(font) {
+    const allowed = ["Amasis MT Pro", "Tahoma", "Arial"];
+    const selected = allowed.includes(String(font)) ? String(font) : "Amasis MT Pro";
+    document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
 }
 
 async function saveProfitSettings() {
@@ -1423,10 +1424,9 @@ async function saveStoreSettings() {
                     ? name.value.trim()
                     : adminState.settings.store_name,
 
-            currency:
-                currency
-                    ? currency.value
-                    : "USD"
+            currency: currency ? currency.value : "USD",
+            currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3),
+            font_family: document.getElementById("adminFont")?.value || "Amasis MT Pro"
 
         });
 
@@ -1745,7 +1745,10 @@ function getStatusHtml(status) {
 
 function formatAdminPrice(value) {
     const number = Number(value) || 0;
-    return "$" + number.toFixed(3);
+    const decimals = Math.max(0, Math.min(3, Number(adminState.settings.currency_decimals ?? 3)));
+    const currency = String(adminState.settings.currency || "USD");
+    const symbols = {USD:"$",EUR:"€",TRY:"₺",SAR:"﷼",AED:"د.إ"};
+    return (symbols[currency] || currency + " ") + number.toFixed(decimals);
 }
 
 function setText(id, value) {
