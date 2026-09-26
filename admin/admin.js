@@ -249,7 +249,7 @@ function showAdminSection(section) {
 }
 
 function initializeAdminTheme() {
-    const toggle = document.getElementById("themeToggleNav");
+    const toggle = document.getElementById("themeToggle");
     const saved = localStorage.getItem("nabd-admin-theme") || "dark";
     document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
     updateAdminThemeButton();
@@ -262,7 +262,7 @@ function initializeAdminTheme() {
     });
 }
 function updateAdminThemeButton() {
-    const toggle = document.getElementById("themeToggleNav");
+    const toggle = document.getElementById("themeToggle");
     if (!toggle) return;
     const dark = document.documentElement.dataset.theme !== "light";
     toggle.innerHTML = dark ? "<span>☀️</span><span>الوضع النهاري</span>" : "<span>🌙</span><span>الوضع الليلي</span>";
