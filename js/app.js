@@ -886,7 +886,7 @@ function getPubgProductPrice(product) {
     return Number.isFinite(original) && original >= 0 ? original : 0;
 }
 
-function renderPubgProductPicker(gameTitle, group) {
+function renderGameProductPicker(gameTitle, group) {
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
@@ -912,23 +912,24 @@ function renderPubgProductPicker(gameTitle, group) {
             '</button>';
     }).join("");
 
+    const robloxImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
     const image = isPubgGame(gameTitle)
         ? "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480"
-        : (group.image || (firstProduct && firstProduct.category_img) || "");
+        : (isRoblox ? robloxImage : (group.image || (firstProduct && firstProduct.category_img) || ""));
     const imageHtml = image
         ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
 
     content.innerHTML =
         '<div class="pubg-picker">' +
-            '<button class="pubg-back" type="button" id="pubgBackToGroups">← العودة إلى تصنيفات ببجي</button>' +
+            '<button class="pubg-back" type="button" id="pubgBackToGroups">← العودة إلى التصنيفات</button>' +
             '<div class="pubg-picker-head">' +
                 '<div class="pubg-picker-image">' + imageHtml + '</div>' +
                 '<h2>' + escapeHtml(group.title) + '</h2>' +
                 '<span>' + products.length + ' منتج</span>' +
             '</div>' +
             '<div id="pubgParamFields">' +
-                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
+                (firstProduct ? renderGameParamFields(firstProduct) : '') +
             '</div>' +
             '<div class="pubg-field-label">اختر المنتج</div>' +
             '<div class="pubg-select" id="pubgSelect">' +
@@ -963,7 +964,7 @@ function renderPubgProductPicker(gameTitle, group) {
 
         if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
         if (selectedPrice) selectedPrice.textContent = formatMoney(getPubgProductPrice(product));
-        if (fields) fields.innerHTML = renderPubgParamFields(product);
+        if (fields) fields.innerHTML = renderGameParamFields(product);
 
         if (submit) {
             submit.disabled = product.available === false || product.available === 0;
@@ -998,7 +999,7 @@ function renderPubgProductPicker(gameTitle, group) {
         });
     }
 
-    document.addEventListener("click", function closePubgDropdown(event) {
+    document.addEventListener("click", function closeGameDropdown(event) {
         if (!select || select.contains(event.target)) return;
         if (options && !options.hidden) {
             options.hidden = true;
@@ -1007,7 +1008,7 @@ function renderPubgProductPicker(gameTitle, group) {
                 trigger.classList.remove("is-open");
             }
         }
-        document.removeEventListener("click", closePubgDropdown);
+        document.removeEventListener("click", closeGameDropdown);
     });
 
     const submit = document.getElementById("pubgSubmitOrder");
@@ -1025,13 +1026,25 @@ function renderPubgProductPicker(gameTitle, group) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
+function renderGameParamFields(product) {
+    const params = getUsableProductParams(product);
+    if (!params.length) return "";
+    return params.map(function(label, index) {
+        const safeLabel = escapeHtml(getDisplayParamLabel(label));
+        return '<div class="pubg-field">' +
+            '<label for="gameParam_' + index + '">' + safeLabel + '</label>' +
+            '<input id="gameParam_' + index + '" data-game-param="' + escapeHtml(label) + '" type="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '" required aria-required="true">' +
+            '</div>';
+    }).join("");
+}
+
 async function submitGamePickerOrder(product, root) {
     const params = {};
-    const inputs = root ? root.querySelectorAll("[data-pubg-param]") : [];
+    const inputs = root ? root.querySelectorAll("[data-game-param]") : [];
     let invalid = false;
 
     inputs.forEach(function(input) {
-        const label = input.getAttribute("data-pubg-param") || "";
+        const label = input.getAttribute("data-game-param") || "";
         const value = String(input.value || "").trim();
         if (!value) {
             invalid = true;
@@ -1087,8 +1100,8 @@ function openGameProductGroup(gameTitle, groupKey) {
 
     if (!group) return;
 
-    if (isPubgGame(gameTitle)) {
-        renderPubgProductPicker(gameTitle, group);
+    if (isPubgGame(gameTitle) || isRoblox) {
+        renderGameProductPicker(gameTitle, group);
         return;
     }
 
@@ -1107,7 +1120,7 @@ function openGameProductGroup(gameTitle, groupKey) {
             const robloxProductImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
             const image = product.category_img || "";
             const imageHtml = isRoblox
-                ? '<img src="' + robloxProductImage + '" alt="Roblox" loading="lazy">'
+                ? '<img src="' + robloxProductImage + '" alt="Roblox" loading="lazy" onerror="this.onerror=null;this.src=' + JSON.stringify(image || robloxProductImage) + ';">'
                 : (image
                     ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
                     : '<span class="game-product-fallback">🛍️</span>');
