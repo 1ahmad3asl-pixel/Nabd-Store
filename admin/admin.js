@@ -1270,13 +1270,22 @@ function initializeAppearanceSettings() {
     const saveAppearance=document.getElementById("saveAppearanceSettings");
     if(saveAppearance) saveAppearance.addEventListener("click",async function(){
         try{
-            const font=getValue("adminFontFamily")||"Amasis MT Pro";
-            await ADMIN_API.updateSettings({font_family:font,currency_decimals:3});
+            const font=getValue("adminFont")||"Amasis MT Pro";
+            await ADMIN_API.updateSettings({font_family:font});
             adminState.settings.font_family=font;
-            adminState.settings.currency_decimals=3;
             applyAdminFont();
-            showAdminToast("تم حفظ المظهر والتنسيق.");
+            showAdminToast("تم حفظ المظهر والخط.");
         }catch(error){showAdminToast(error.message||"تعذر حفظ المظهر.");}
+    });
+
+    document.querySelectorAll(".settings-tab").forEach(tab=>{
+        tab.addEventListener("click",()=>{
+            document.querySelectorAll(".settings-tab").forEach(item=>item.classList.remove("active"));
+            document.querySelectorAll(".settings-panel").forEach(panel=>panel.classList.remove("active"));
+            tab.classList.add("active");
+            const panel=document.getElementById(tab.dataset.settingsPanel);
+            if(panel) panel.classList.add("active");
+        });
     });
 }
 
