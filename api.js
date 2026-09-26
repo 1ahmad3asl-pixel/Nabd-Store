@@ -1,10 +1,15 @@
 const NEMER_API_BASE = "https://nemer-card.com";
 
 async function nemerRequest(endpoint, options = {}) {
-    const response = await fetch(
-        NEMER_API_BASE + endpoint,
-        {
-            method: options.method || "GET",
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 15000);
+
+    let response;
+    try {
+        response = await fetch(
+            NEMER_API_BASE + endpoint,
+            {
+                method: options.method || "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -12,9 +17,18 @@ async function nemerRequest(endpoint, options = {}) {
             },
             body: options.body
                 ? JSON.stringify(options.body)
-                : undefined
+                : undefined,
+                signal: controller.signal
+            }
+        );
+    } catch (error) {
+        if (error && error.name === "AbortError") {
+            throw new Error("انتهت مهلة الاتصال بخدمة Nemer Card.");
         }
-    );
+        throw error;
+    } finally {
+        clearTimeout(timeout);
+    }
 
     let data;
 
