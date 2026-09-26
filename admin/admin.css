@@ -530,3 +530,19 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
     .admin-menu-button{top:10px!important;right:10px!important;}
     .admin-header{padding-right:60px!important;}
 }
+
+
+/* ===== FINAL ADMIN DRAWER: no horizontal tabs; right-side drawer like store UI ===== */
+.admin-header{padding-right:68px!important;}
+.admin-menu-button{position:fixed!important;top:14px!important;right:14px!important;left:auto!important;display:flex!important;width:42px!important;height:42px!important;z-index:1300!important;background:transparent!important;color:#080808!important;font-size:28px!important;line-height:1!important;}
+.admin-tabs{position:fixed!important;top:0!important;right:0!important;left:auto!important;width:290px!important;max-width:86vw!important;height:100vh!important;margin:0!important;padding:0 0 18px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;overflow-y:auto!important;overflow-x:hidden!important;background:var(--white)!important;border:0!important;border-left:1px solid var(--border)!important;box-shadow:-5px 0 20px rgba(0,0,0,.25)!important;z-index:1250!important;transform:translateX(105%)!important;visibility:hidden!important;transition:transform .3s ease,visibility .3s ease!important;}
+.admin-tabs.open{transform:translateX(0)!important;visibility:visible!important;}
+.admin-drawer-header{position:sticky!important;top:0!important;flex:0 0 85px!important;height:85px!important;padding:0 18px!important;background:var(--primary)!important;color:#080808!important;border-bottom:1px solid var(--primary-dark)!important;display:flex!important;align-items:center!important;justify-content:space-between!important;z-index:2!important;}
+.admin-drawer-header strong{font-size:20px!important;font-weight:900!important;}
+.admin-tabs .admin-nav-item{width:calc(100% - 36px)!important;height:48px!important;min-height:48px!important;margin:0 18px!important;padding:0 16px!important;flex:0 0 auto!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:13px!important;border:0!important;border-radius:10px!important;background:transparent!important;color:var(--text)!important;font-size:14px!important;font-weight:800!important;text-align:right!important;}
+.admin-tabs .admin-nav-item:hover,.admin-tabs .admin-nav-item.active{background:var(--primary-light)!important;color:var(--primary)!important;box-shadow:none!important;}
+.admin-tabs .admin-nav-logout{width:calc(100% - 36px)!important;height:48px!important;margin:10px 18px 0!important;padding:0 16px!important;flex:0 0 auto!important;border:0!important;border-radius:10px!important;background:transparent!important;color:var(--danger)!important;text-align:right!important;font-size:14px!important;font-weight:800!important;}
+.admin-menu-overlay{position:fixed!important;inset:0!important;background:rgba(0,0,0,.45)!important;z-index:1200!important;opacity:0!important;visibility:hidden!important;transition:.25s!important;}
+.admin-menu-overlay.open{opacity:1!important;visibility:visible!important;}
+.admin-menu-close{width:38px!important;height:38px!important;border:0!important;border-radius:10px!important;background:rgba(0,0,0,.10)!important;color:#080808!important;font-size:28px!important;line-height:1!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+@media(max-width:700px){.admin-header{padding-right:60px!important;}.admin-menu-button{top:10px!important;right:10px!important;width:40px!important;height:40px!important;}.admin-tabs{width:min(290px,86vw)!important;}}
