@@ -12,6 +12,7 @@ const {
 
 const {
   query,
+  withTransaction,
   initDb,
   getSetting,
   setSetting,
@@ -638,8 +639,95 @@ app.put("/api/admin/settings", async (req, res) => {
 });
 
 app.get("/api/admin/transactions", async (req, res) => {
-  const result = await query("SELECT * FROM transactions ORDER BY created_at DESC");
+  const result = await query(
+    `SELECT t.*, c.customer_number, c.name AS customer_name
+     FROM transactions t
+     LEFT JOIN customers c ON c.customer_id=t.customer_id
+     ORDER BY t.created_at DESC
+     LIMIT 500`
+  );
   res.json({ status: "OK", transactions: result.rows });
+});
+
+app.get("/api/admin/customers/:id/wallet", async (req, res) => {
+  const result = await query(
+    `SELECT c.customer_id,c.customer_number,c.name,c.email,c.balance,
+            COALESCE(json_agg(t ORDER BY t.created_at DESC) FILTER (WHERE t.id IS NOT NULL),'[]') AS transactions
+     FROM customers c
+     LEFT JOIN LATERAL (
+       SELECT id,amount,type,balance_before,balance_after,reference_type,reference_id,note,created_at
+       FROM transactions
+       WHERE customer_id=c.customer_id
+       ORDER BY created_at DESC
+       LIMIT 100
+     ) t ON TRUE
+     WHERE c.customer_id=$1
+     GROUP BY c.customer_id,c.customer_number,c.name,c.email,c.balance`,
+    [String(req.params.id)]
+  );
+  if (!result.rows[0]) {
+    return res.status(404).json({status:"ERROR",message:"العميل غير موجود."});
+  }
+  res.json({status:"OK",wallet:result.rows[0]});
+});
+
+app.post("/api/admin/customers/:id/wallet", async (req, res) => {
+  const action = String(req.body?.action || "").trim().toLowerCase();
+  const amount = Number(req.body?.amount);
+  const note = String(req.body?.note || "").trim().slice(0,500);
+
+  if (!["credit","debit"].includes(action)) {
+    return res.status(400).json({status:"ERROR",message:"نوع العملية غير صالح."});
+  }
+  if (!Number.isFinite(amount) || amount <= 0 || amount > 1000000) {
+    return res.status(400).json({status:"ERROR",message:"المبلغ يجب أن يكون أكبر من صفر."});
+  }
+
+  try {
+    const result = await withTransaction(async (client) => {
+      const customerResult = await client.query(
+        "SELECT customer_id,customer_number,name,balance FROM customers WHERE customer_id=$1 FOR UPDATE",
+        [String(req.params.id)]
+      );
+      const customer = customerResult.rows[0];
+      if (!customer) {
+        const error = new Error("العميل غير موجود.");
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const before = Number(customer.balance || 0);
+      const delta = action === "credit" ? amount : -amount;
+      const after = before + delta;
+
+      if (after < 0) {
+        const error = new Error("لا يمكن خصم مبلغ أكبر من رصيد العميل.");
+        error.statusCode = 400;
+        throw error;
+      }
+
+      await client.query(
+        "UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",
+        [after.toFixed(4), customer.customer_id]
+      );
+
+      const transactionId = "TXN-" + crypto.randomUUID();
+      const type = action === "credit" ? "admin_credit" : "admin_debit";
+      await client.query(
+        `INSERT INTO transactions
+          (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note)
+         VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        [transactionId,customer.customer_id,delta.toFixed(4),type,before.toFixed(4),after.toFixed(4),"admin",transactionId,note || (action === "credit" ? "إضافة رصيد من الإدارة" : "خصم رصيد من الإدارة")]
+      );
+
+      return {customer_id:String(customer.customer_number),customer_number:Number(customer.customer_number),name:customer.name,balance:after,transaction_id:transactionId};
+    });
+
+    res.json({status:"OK",wallet:result});
+  } catch (error) {
+    console.error("Admin wallet error:",error);
+    res.status(error.statusCode || 500).json({status:"ERROR",message:error.message || "تعذر تعديل رصيد العميل."});
+  }
 });
 
 app.post("/api/admin/notifications", async (req, res) => {
