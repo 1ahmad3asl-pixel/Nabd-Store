@@ -401,7 +401,7 @@ function removeAllCategory() {
 ========================= */
 
 const GAME_CATALOG = [
-    { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"] },
+    { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"], image:"https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480" },
     { title:"Roblox Game", aliases:["roblox"] },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
@@ -542,7 +542,7 @@ function getGameTiles() {
     return GAME_CATALOG.map(function(game) {
         return {
             title: game.title,
-            image: "",
+            image: game.image || "",
             productCount: 0
         };
     });
@@ -582,6 +582,14 @@ function cleanGameCategoryName(value) {
 
 function getGameProducts(gameTitle) {
     return state.products.filter(function(product) {
+        if (isPubgGame(gameTitle)) {
+            const text = normalizeGameText(
+                String(product.category_name || "") + " " +
+                String(product.name || "")
+            );
+            return text.includes("ببجي") || text.includes("pubg");
+        }
+
         const match = findGameMatch(product);
         return match && match.title === gameTitle;
     });
@@ -637,7 +645,9 @@ function openGamesPage() {
             return '<button class="game-category-tile" type="button" data-game-title="' +
                 escapeHtml(tile.title) + '">' +
                 '<span class="game-tile-image">' +
-                    '<span class="game-placeholder">🎮</span>' +
+                    (tile.image
+                        ? '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">'
+                        : '<span class="game-placeholder">🎮</span>') +
                 '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
                 '</button>';
@@ -682,9 +692,12 @@ function openGamePlaceholder(gameTitle) {
         '</div>' +
         '<div class="game-category-grid game-product-groups-grid">' +
         groups.map(function(group) {
-            const imageHtml = group.image
-                ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
-                : '<span class="game-placeholder">🎮</span>';
+            const pubgImage = "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480";
+            const imageHtml = isPubgGame(gameTitle)
+                ? '<img src="' + pubgImage + '" alt="PUBG MOBILE" loading="lazy">'
+                : (group.image
+                    ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
+                    : '<span class="game-placeholder">🎮</span>');
 
             return '<button class="game-category-tile game-product-group-card" type="button" data-game-group="' +
                 escapeHtml(group.key) + '">' +
@@ -764,7 +777,9 @@ function renderPubgProductPicker(gameTitle, group) {
             '</button>';
     }).join("");
 
-    const image = group.image || (firstProduct && firstProduct.category_img) || "";
+    const image = isPubgGame(gameTitle)
+        ? "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480"
+        : (group.image || (firstProduct && firstProduct.category_img) || "");
     const imageHtml = image
         ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
