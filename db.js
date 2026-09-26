@@ -7,38 +7,84 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
 
-async function query(text, params = []) { return pool.query(text, params); }
+async function query(text, params = []) {
+  return pool.query(text, params);
+}
 
 async function initDb() {
   await query(`
-    CREATE TABLE IF NOT EXISTS admin_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS admin_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    );
+
     CREATE TABLE IF NOT EXISTS admin_sessions (
-      token TEXT PRIMARY KEY, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      token TEXT PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       expires_at TIMESTAMPTZ NOT NULL
     );
+
     CREATE TABLE IF NOT EXISTS customers (
-      customer_id TEXT PRIMARY KEY, name TEXT NOT NULL DEFAULT 'عميل',
-      balance NUMERIC(18,4) NOT NULL DEFAULT 0, orders_count INTEGER NOT NULL DEFAULT 0,
-      discount NUMERIC(5,2) NOT NULL DEFAULT 0, active BOOLEAN NOT NULL DEFAULT TRUE,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      customer_id TEXT PRIMARY KEY,
+      name TEXT NOT NULL DEFAULT 'عميل',
+      email TEXT,
+      password_hash TEXT,
+      balance NUMERIC(18,4) NOT NULL DEFAULT 0,
+      orders_count INTEGER NOT NULL DEFAULT 0,
+      discount NUMERIC(5,2) NOT NULL DEFAULT 0,
+      active BOOLEAN NOT NULL DEFAULT TRUE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
+
+    ALTER TABLE customers ADD COLUMN IF NOT EXISTS email TEXT;
+    ALTER TABLE customers ADD COLUMN IF NOT EXISTS password_hash TEXT;
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_email_unique
+      ON customers(LOWER(email)) WHERE email IS NOT NULL;
+
+    CREATE TABLE IF NOT EXISTS customer_sessions (
+      token TEXT PRIMARY KEY,
+      customer_id TEXT NOT NULL REFERENCES customers(customer_id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      expires_at TIMESTAMPTZ NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_customer_sessions_customer
+      ON customer_sessions(customer_id);
+    CREATE INDEX IF NOT EXISTS idx_customer_sessions_expires
+      ON customer_sessions(expires_at);
+
     CREATE TABLE IF NOT EXISTS orders (
-      id TEXT PRIMARY KEY, order_id TEXT NOT NULL, customer_id TEXT NOT NULL,
-      product_id TEXT NOT NULL, product_name TEXT NOT NULL DEFAULT '',
-      api_price NUMERIC(18,4) NOT NULL DEFAULT 0, price NUMERIC(18,4) NOT NULL DEFAULT 0,
-      profit NUMERIC(18,4) NOT NULL DEFAULT 0, discount NUMERIC(5,2) NOT NULL DEFAULT 0,
-      status TEXT NOT NULL DEFAULT 'pending', created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
-    CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
-    CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
-    CREATE TABLE IF NOT EXISTS transactions (
-      id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,
-      amount NUMERIC(18,4) NOT NULL DEFAULT 0, type TEXT NOT NULL DEFAULT '',
+      id TEXT PRIMARY KEY,
+      order_id TEXT NOT NULL,
+      customer_id TEXT NOT NULL,
+      product_id TEXT NOT NULL,
+      product_name TEXT NOT NULL DEFAULT '',
+      api_price NUMERIC(18,4) NOT NULL DEFAULT 0,
+      price NUMERIC(18,4) NOT NULL DEFAULT 0,
+      profit NUMERIC(18,4) NOT NULL DEFAULT 0,
+      discount NUMERIC(5,2) NOT NULL DEFAULT 0,
+      status TEXT NOT NULL DEFAULT 'pending',
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
+
+    CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
+    CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
+
+    CREATE TABLE IF NOT EXISTS transactions (
+      id TEXT PRIMARY KEY,
+      customer_id TEXT NOT NULL,
+      amount NUMERIC(18,4) NOT NULL DEFAULT 0,
+      type TEXT NOT NULL DEFAULT '',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+
     CREATE TABLE IF NOT EXISTS notifications (
-      id BIGSERIAL PRIMARY KEY, target TEXT NOT NULL DEFAULT 'all',
-      customer_id TEXT, title TEXT NOT NULL, message TEXT NOT NULL,
+      id BIGSERIAL PRIMARY KEY,
+      target TEXT NOT NULL DEFAULT 'all',
+      customer_id TEXT,
+      title TEXT NOT NULL,
+      message TEXT NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `);
@@ -48,18 +94,62 @@ async function getSetting(key, fallback) {
   const r = await query("SELECT value FROM admin_settings WHERE key=$1", [key]);
   return r.rows[0]?.value ?? fallback;
 }
+
 async function setSetting(key, value) {
   await query(`INSERT INTO admin_settings(key,value) VALUES($1,$2)
     ON CONFLICT(key) DO UPDATE SET value=EXCLUDED.value`, [key, String(value)]);
 }
+
 async function createSession(token, expiresAt) {
   await query("INSERT INTO admin_sessions(token,expires_at) VALUES($1,$2)", [token, expiresAt]);
 }
+
 async function getSession(token) {
-  const r = await query("SELECT token,created_at,expires_at FROM admin_sessions WHERE token=$1 AND expires_at>NOW()", [token]);
+  const r = await query(
+    "SELECT token,created_at,expires_at FROM admin_sessions WHERE token=$1 AND expires_at>NOW()",
+    [token]
+  );
   return r.rows[0] || null;
 }
-async function deleteSession(token) { await query("DELETE FROM admin_sessions WHERE token=$1", [token]); }
-async function cleanupSessions() { await query("DELETE FROM admin_sessions WHERE expires_at<=NOW()"); }
 
-module.exports = { query, initDb, getSetting, setSetting, createSession, getSession, deleteSession, cleanupSessions };
+async function deleteSession(token) {
+  await query("DELETE FROM admin_sessions WHERE token=$1", [token]);
+}
+
+async function createCustomerSession(token, customerId, expiresAt) {
+  await query(
+    "INSERT INTO customer_sessions(token,customer_id,expires_at) VALUES($1,$2,$3)",
+    [token, customerId, expiresAt]
+  );
+}
+
+async function getCustomerSession(token) {
+  const r = await query(
+    "SELECT token,customer_id,created_at,expires_at FROM customer_sessions WHERE token=$1 AND expires_at>NOW()",
+    [token]
+  );
+  return r.rows[0] || null;
+}
+
+async function deleteCustomerSession(token) {
+  await query("DELETE FROM customer_sessions WHERE token=$1", [token]);
+}
+
+async function cleanupSessions() {
+  await query("DELETE FROM admin_sessions WHERE expires_at<=NOW()");
+  await query("DELETE FROM customer_sessions WHERE expires_at<=NOW()");
+}
+
+module.exports = {
+  query,
+  initDb,
+  getSetting,
+  setSetting,
+  createSession,
+  getSession,
+  deleteSession,
+  createCustomerSession,
+  getCustomerSession,
+  deleteCustomerSession,
+  cleanupSessions
+};
