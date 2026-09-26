@@ -1552,16 +1552,17 @@ function initializeNotifications() {
 
 function initializeLogout() {
 
-    const button =
-        document.getElementById(
-            "logoutButton"
-        );
+    const buttons = [
+        document.getElementById("logoutButton"),
+        document.getElementById("logoutButtonHeader")
+    ].filter(Boolean);
 
-    if (!button) return;
+    if (!buttons.length) return;
 
-    button.addEventListener(
-        "click",
-        async function () {
+    buttons.forEach(function(button){
+        button.addEventListener(
+            "click",
+            async function () {
 
             try {
 
@@ -1573,11 +1574,12 @@ function initializeLogout() {
 
             }
 
-            window.location.href =
-                "../index.html";
+                window.location.href =
+                    "../index.html";
 
-        }
-    );
+            }
+        );
+    });
 
 }
 
