@@ -1848,7 +1848,9 @@ function getStatusHtml(status) {
 
 function formatNemerBalance(value) {
     const number = Number(value);
-    return "$" + (Number.isFinite(number) ? number : 0).toFixed(3);
+    // Nemer balance may contain three decimal places (e.g. 0.003).
+    // Keep four decimals in the UI so small balances are never rounded to zero.
+    return "$" + (Number.isFinite(number) ? number : 0).toFixed(4);
 }
 
 function formatAdminPrice(value) {
