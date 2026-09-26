@@ -415,3 +415,118 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-layout{padding-top:70px!important}
 .admin-main{width:100%!important;margin:0!important;padding:24px 22px 30px!important}
 @media(max-width:600px){.admin-menu-button{top:10px;right:10px;width:42px;height:42px}.admin-tabs{width:290px!important}.admin-layout{padding-top:62px!important}.admin-main{padding:18px 12px 25px!important}}
+
+
+/* ===== الإدارة: قائمة جانبية مثل واجهة المتجر ===== */
+.admin-menu-button{
+    position:fixed!important;
+    top:12px!important;
+    right:12px!important;
+    left:auto!important;
+    z-index:1300!important;
+    width:40px!important;
+    height:40px!important;
+    border-radius:10px!important;
+    background:rgba(0,0,0,.12)!important;
+    color:#080808!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:28px!important;
+    line-height:1!important;
+    font-weight:900!important;
+}
+.admin-header{
+    padding-right:64px!important;
+}
+.admin-tabs{
+    top:0!important;
+    right:auto!important;
+    left:auto!important;
+    width:min(290px,85vw)!important;
+    height:100vh!important;
+    background:var(--white)!important;
+    border:0!important;
+    border-left:1px solid var(--border)!important;
+    box-shadow:-8px 0 30px rgba(0,0,0,.22)!important;
+    z-index:1250!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:7px!important;
+    padding:0 10px 12px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    transform:translateX(110%)!important;
+    transition:transform .25s ease!important;
+}
+.admin-tabs.open{transform:translateX(0)!important;}
+.admin-drawer-header{
+    position:sticky!important;
+    top:0!important;
+    right:auto!important;
+    left:auto!important;
+    flex:0 0 62px!important;
+    width:100%!important;
+    height:62px!important;
+    padding:0 8px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    border-bottom:1px solid var(--border)!important;
+    color:var(--text)!important;
+    background:var(--white)!important;
+    z-index:2!important;
+}
+.admin-tabs .admin-nav-item{
+    width:100%!important;
+    min-width:0!important;
+    height:48px!important;
+    flex:0 0 48px!important;
+    justify-content:flex-start!important;
+    text-align:right!important;
+    gap:11px!important;
+    padding:0 14px!important;
+    border:0!important;
+    border-radius:10px!important;
+    color:var(--text)!important;
+    font-size:14px!important;
+    font-weight:800!important;
+}
+.admin-tabs .admin-nav-item:hover,
+.admin-tabs .admin-nav-item.active{
+    background:var(--primary-light)!important;
+    color:var(--primary)!important;
+    box-shadow:none!important;
+}
+.admin-tabs .admin-nav-logout{
+    width:100%!important;
+    margin-top:auto!important;
+    height:48px!important;
+    flex:0 0 48px!important;
+    border:0!important;
+    border-radius:10px!important;
+    background:transparent!important;
+    color:var(--danger)!important;
+    text-align:right!important;
+    padding:0 14px!important;
+    cursor:pointer!important;
+    font-size:14px!important;
+    font-weight:800!important;
+}
+.admin-menu-overlay{
+    position:fixed!important;
+    inset:0!important;
+    background:rgba(0,0,0,.45)!important;
+    z-index:1200!important;
+    opacity:0!important;
+    visibility:hidden!important;
+    transition:.25s!important;
+}
+.admin-menu-overlay.open{opacity:1!important;visibility:visible!important;}
+.admin-layout{padding-top:70px!important;}
+.admin-main{padding-top:22px!important;}
+@media(max-width:700px){
+    .admin-menu-button{top:10px!important;right:10px!important;}
+    .admin-header{padding-right:60px!important;}
+}
