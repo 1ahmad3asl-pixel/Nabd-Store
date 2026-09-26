@@ -1479,3 +1479,6 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
   .reference-category-grid .category-title{font-size:15px!important;}
 }
 @media(min-width:700px){.reference-category-grid{grid-template-columns:repeat(3,190px)!important;justify-content:center!important;gap:24px!important;}}
+
+.reference-category-grid .category-tile.active{background:transparent!important;border:0!important;box-shadow:none!important;}
+#servicesSection > .products{display:none!important;}
