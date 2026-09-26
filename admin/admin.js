@@ -145,6 +145,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     initializeSettings();
     initializeNotifications();
     initializeLogout();
+    initializeAdminTheme();
+    initializeAppearanceSettings();
 
     loadAdminDashboard();
     loadCustomers();
@@ -1248,6 +1250,51 @@ function renderAdminProducts(products) {
 
         }).join("");
 
+}
+
+function initializeAppearanceSettings() {
+    const toggle=document.getElementById("adminThemeToggle");
+    const headerLogout=document.getElementById("logoutButtonHeader");
+    const saved=localStorage.getItem("nabd-admin-theme")||"dark";
+    document.documentElement.dataset.theme=saved==="light"?"light":"dark";
+    if(toggle){
+        toggle.textContent=saved==="light"?"🌙":"☀️";
+        toggle.addEventListener("click",function(){
+            const next=document.documentElement.dataset.theme==="dark"?"light":"dark";
+            document.documentElement.dataset.theme=next;
+            localStorage.setItem("nabd-admin-theme",next);
+            toggle.textContent=next==="light"?"🌙":"☀️";
+        });
+    }
+    if(headerLogout) headerLogout.addEventListener("click",performAdminLogout);
+    const saveAppearance=document.getElementById("saveAppearanceSettings");
+    if(saveAppearance) saveAppearance.addEventListener("click",async function(){
+        try{
+            const font=getValue("adminFontFamily")||"Amasis MT Pro";
+            await ADMIN_API.updateSettings({font_family:font,currency_decimals:3});
+            adminState.settings.font_family=font;
+            adminState.settings.currency_decimals=3;
+            applyAdminFont();
+            showAdminToast("تم حفظ المظهر والتنسيق.");
+        }catch(error){showAdminToast(error.message||"تعذر حفظ المظهر.");}
+    });
+}
+
+function initializeAdminTheme(){
+    const saved=localStorage.getItem("nabd-admin-theme")||"dark";
+    document.documentElement.dataset.theme=saved==="light"?"light":"dark";
+}
+
+function applyAdminFont(){
+    const font=adminState.settings.font_family||"Amasis MT Pro";
+    const stack=font==="Tahoma"?'"Tahoma",Arial,sans-serif':font==="Arial"?'"Arial",Tahoma,sans-serif':'"Amasis MT Pro Black","Amasis MT Pro","ERAS BOLD ITC",Tahoma,Arial,sans-serif';
+    document.documentElement.style.setProperty("--admin-font-family",stack);
+    document.body.style.fontFamily=stack;
+}
+
+async function performAdminLogout(){
+    try{await ADMIN_API.logout();}catch(error){console.error(error);}
+    window.location.href="login.html";
 }
 
 function initializeSettings() {
