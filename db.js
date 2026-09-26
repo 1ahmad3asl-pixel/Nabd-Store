@@ -11,6 +11,21 @@ async function query(text, params = []) {
   return pool.query(text, params);
 }
 
+async function withTransaction(callback) {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const result = await callback(client);
+    await client.query("COMMIT");
+    return result;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
 async function initDb() {
   await query(`
     CREATE TABLE IF NOT EXISTS admin_settings (
@@ -91,6 +106,14 @@ async function initDb() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
 
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_before NUMERIC(18,4) NOT NULL DEFAULT 0;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_after NUMERIC(18,4) NOT NULL DEFAULT 0;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS reference_type TEXT;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS reference_id TEXT;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS note TEXT;
+    CREATE INDEX IF NOT EXISTS idx_transactions_customer_created
+      ON transactions(customer_id, created_at DESC);
+
     CREATE TABLE IF NOT EXISTS notifications (
       id BIGSERIAL PRIMARY KEY,
       target TEXT NOT NULL DEFAULT 'all',
@@ -160,6 +183,7 @@ async function cleanupSessions() {
 
 module.exports = {
   query,
+  withTransaction,
   initDb,
   getSetting,
   setSetting,
