@@ -14,7 +14,12 @@ document.addEventListener("click",function(event){
         const customer=data.customer||{};
         const name=document.getElementById("menuUserName");
         const id=document.getElementById("menuCustomerId");
-        if(name) name.textContent=(customer.name||"عميل") + (customer.phone_country ? " · "+customer.phone_country : "");
+        if(name) {
+            const flag = customer.phone_country_code
+                ? String(customer.phone_country_code).toUpperCase().replace(/[A-Z]/g,c=>String.fromCodePoint(c.charCodeAt(0)+127397))
+                : "";
+            name.textContent=(customer.name||"عميل") + (flag ? " · "+flag : "");
+        }
         if(id) id.textContent=customer.customer_id ? "ID: "+customer.customer_id : "";
     }catch(e){}
 })();
