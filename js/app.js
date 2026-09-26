@@ -661,6 +661,8 @@ async function loadCachedGameImages(tiles) {
             imageBox.innerHTML =
                 '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
         });
+    } catch (error) {
+        console.warn("تعذر تحميل صور الألعاب المحلية:", error);
     }
 }
 
