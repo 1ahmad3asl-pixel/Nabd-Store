@@ -922,7 +922,7 @@ function renderPubgProductPicker(gameTitle, group) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-async function submitGamePickerOrder(product, root) {
+async async function submitGamePickerOrder(product, root) {
     const params = {};
     const inputs = root ? root.querySelectorAll("[data-pubg-param]") : [];
     let invalid = false;
