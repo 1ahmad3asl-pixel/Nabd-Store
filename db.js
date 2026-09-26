@@ -100,39 +100,45 @@ async function setSetting(key, value) {
     ON CONFLICT(key) DO UPDATE SET value=EXCLUDED.value`, [key, String(value)]);
 }
 
+const crypto = require("crypto");
+
+function sessionHash(token) {
+  return crypto.createHash("sha256").update(String(token)).digest("hex");
+}
+
 async function createSession(token, expiresAt) {
-  await query("INSERT INTO admin_sessions(token,expires_at) VALUES($1,$2)", [token, expiresAt]);
+  await query("INSERT INTO admin_sessions(token,expires_at) VALUES($1,$2)", [sessionHash(token), expiresAt]);
 }
 
 async function getSession(token) {
   const r = await query(
     "SELECT token,created_at,expires_at FROM admin_sessions WHERE token=$1 AND expires_at>NOW()",
-    [token]
+    [sessionHash(token)]
   );
   return r.rows[0] || null;
 }
 
 async function deleteSession(token) {
-  await query("DELETE FROM admin_sessions WHERE token=$1", [token]);
+  await query("DELETE FROM admin_sessions WHERE token=$1", [sessionHash(token)]);
 }
 
 async function createCustomerSession(token, customerId, expiresAt) {
   await query(
     "INSERT INTO customer_sessions(token,customer_id,expires_at) VALUES($1,$2,$3)",
-    [token, customerId, expiresAt]
+    [sessionHash(token), customerId, expiresAt]
   );
 }
 
 async function getCustomerSession(token) {
   const r = await query(
     "SELECT token,customer_id,created_at,expires_at FROM customer_sessions WHERE token=$1 AND expires_at>NOW()",
-    [token]
+    [sessionHash(token)]
   );
   return r.rows[0] || null;
 }
 
 async function deleteCustomerSession(token) {
-  await query("DELETE FROM customer_sessions WHERE token=$1", [token]);
+  await query("DELETE FROM customer_sessions WHERE token=$1", [sessionHash(token)]);
 }
 
 async function cleanupSessions() {
