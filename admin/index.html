@@ -19,16 +19,15 @@
 
     <div class="admin-header-actions">
         <div class="admin-balance">
-            رصيد API:
+            رصيد Nemer Card:
             <strong id="apiBalance">$0.000</strong>
         </div>
-        <button id="adminThemeToggle" class="admin-theme-toggle" type="button" title="تبديل الوضع الليلي">☀️</button>
         <button id="logoutButtonHeader" class="admin-theme-toggle" type="button" title="تسجيل الخروج">🚪</button>
     </div>
 
 </header>
 
-<button id="menuButton" class="admin-menu-button" type="button" aria-label="فتح قائمة الإدارة" aria-expanded="false">☰</button>
+<button id="menuButton" class="admin-menu-button" type="button" aria-label="فتح قائمة الإدارة" aria-expanded="false">⋮</button>
 <div id="adminMenuOverlay" class="admin-menu-overlay"></div>
 <nav class="admin-tabs" id="adminTabs" aria-label="قائمة الإدارة">
     <div class="admin-drawer-header">
@@ -42,6 +41,7 @@
     <button class="admin-nav-item" data-section="wallet"><span>💰</span><span>المحفظة</span></button>
     <button class="admin-nav-item" data-section="notifications"><span>🔔</span><span>الإشعارات</span></button>
     <button class="admin-nav-item" data-section="settings"><span>⚙️</span><span>الإعدادات</span></button>
+    <button id="adminThemeToggle" class="admin-nav-item admin-theme-nav-item" type="button"><span id="adminThemeIcon">☀️</span><span>الوضع <span id="adminThemeStatus">ليلي</span></span></button>
     <button id="logoutButton" class="admin-nav-logout"><span>🚪</span><span>خروج</span></button>
 </nav>
 
@@ -635,7 +635,7 @@
         </div>
         <div class="form-group">
           <label>الوضع</label>
-          <div class="setting-value-box">يمكن التبديل بين الوضع الليلي والفاتح من الشريط العلوي.</div>
+          <div class="setting-value-box">يمكن التبديل بين الوضع الليلي والنهاري من قائمة الإدارة الجانبية.</div>
         </div>
       </div>
       <button id="saveAppearanceSettings" class="primary-button" type="button">حفظ المظهر</button>
