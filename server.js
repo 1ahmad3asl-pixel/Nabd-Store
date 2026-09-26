@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const crypto = require("crypto");
+const { parsePhoneNumberFromString } = require("libphonenumber-js");
 
 const {
   getNemerProducts,
@@ -44,6 +45,7 @@ const customerLoginAttempts = new Map();
 const googleOAuthStates = new Map();
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
+const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store-1.onrender.com").replace(/\\/$/, "");
 
 app.use(express.json({ limit: "1mb" }));
 
@@ -131,6 +133,21 @@ async function adminAuth(req) {
   if (!token) return null;
   const session = await getSession(token);
   return session ? { token, session } : null;
+}
+
+function googleRedirectUri() {
+  return PUBLIC_BASE_URL + "/api/customer/google/callback";
+}
+
+function parseCustomerPhone(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return { phone: "", country: "" };
+  const parsed = parsePhoneNumberFromString(raw);
+  if (!parsed || !parsed.isValid()) return null;
+  return {
+    phone: parsed.number,
+    country: parsed.country ? parsed.country : ""
+  };
 }
 
 async function customerAuth(req) {
@@ -378,9 +395,30 @@ app.post("/api/customer/login", async (req, res) => {
   }
 });
 
+app.put("/api/customer/profile", requireCustomer, async (req, res) => {
+  const phoneData = parseCustomerPhone(req.body?.phone);
+  if (!phoneData) {
+    return res.status(400).json({ status: "ERROR", message: "رقم الهاتف غير صحيح. استخدم الرقم بصيغة دولية مثل +963..." });
+  }
+  const name = String(req.body?.name || "").trim();
+  if (name.length < 2 || name.length > 80) {
+    return res.status(400).json({ status: "ERROR", message: "الاسم غير صالح." });
+  }
+  const result = await query(
+    "UPDATE customers SET name=$1,phone=$2,phone_country=$3,updated_at=NOW() WHERE customer_id=$4 RETURNING customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,created_at",
+    [name, phoneData.phone, phoneData.country, req.customer.customer_id]
+  );
+  if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+  const customer = result.rows[0];
+  customer.customer_id = String(customer.customer_number);
+  customer.customer_number = Number(customer.customer_number);
+  customer.profile_complete = true;
+  res.json({ status: "OK", customer });
+});
+
 app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
   const result = await query(
-    "SELECT customer_id,customer_number,name,email,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
     [req.customer.customer_id]
   );
   if (!result.rows[0]) {
@@ -396,7 +434,7 @@ app.get("/api/customer/google", (req, res) => {
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(503).send("تسجيل الدخول عبر Google غير مهيأ بعد.");
   const state = crypto.randomBytes(24).toString("hex");
   googleOAuthStates.set(state, Date.now() + 10 * 60 * 1000);
-  const redirectUri = req.protocol + "://" + req.get("host") + "/api/customer/google/callback";
+  const redirectUri = googleRedirectUri();
   const params = new URLSearchParams({client_id:GOOGLE_CLIENT_ID,redirect_uri:redirectUri,response_type:"code",scope:"openid email profile",state,access_type:"online",prompt:"select_account"});
   res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString());
 });
@@ -407,7 +445,7 @@ app.get("/api/customer/google/callback", async (req, res) => {
   googleOAuthStates.delete(state);
   if (!expires || expires < Date.now() || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(400).send("جلسة Google غير صالحة أو تسجيل الدخول غير مهيأ.");
   try {
-    const redirectUri = req.protocol + "://" + req.get("host") + "/api/customer/google/callback";
+    const redirectUri = googleRedirectUri();
     const tokenResponse = await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code:String(req.query.code||""),client_id:GOOGLE_CLIENT_ID,client_secret:GOOGLE_CLIENT_SECRET,redirect_uri:redirectUri,grant_type:"authorization_code"})});
     const tokens = await tokenResponse.json();
     if (!tokenResponse.ok || !tokens.access_token) throw new Error("تعذر الحصول على رمز Google.");
@@ -426,7 +464,7 @@ app.get("/api/customer/google/callback", async (req, res) => {
     const token = crypto.randomBytes(32).toString("hex");
     await createCustomerSession(token, customer.customer_id, new Date(Date.now()+30*24*60*60*1000));
     res.setHeader("Set-Cookie","nabd_customer_session="+token+"; HttpOnly; Path=/; SameSite=Lax; Max-Age=2592000"+(process.env.NODE_ENV==="production"?"; Secure":""));
-    res.redirect("/");
+    res.redirect("/customer-profile.html");
   } catch (error) {
     console.error("Google login error:", error);
     res.status(500).send("تعذر تسجيل الدخول عبر Google.");
