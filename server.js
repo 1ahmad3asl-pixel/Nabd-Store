@@ -180,31 +180,30 @@ app.get("/api/admin/dashboard", async (req, res) => {
     let apiBalance = 0;
     try {
         const profile = await getNemerProfile();
-        apiBalance = Number(
-            profile?.balance ??
-            profile?.data?.balance ??
-            profile?.wallet ??
-            0
-        );
+        apiBalance = Number(profile?.balance ?? profile?.data?.balance ?? profile?.wallet ?? 0);
     } catch (error) {
         console.error("Admin profile error:", error.message);
     }
 
-    const totalSales = adminOrders.reduce(
-        (sum, order) => sum + Number(order.price || 0), 0
-    );
-    const totalProfit = adminOrders.reduce(
-        (sum, order) => sum + Number(order.profit || 0), 0
-    );
+    await loadSettings();
+    const stats = await query(`
+        SELECT
+            (SELECT COUNT(*) FROM customers) AS customers,
+            (SELECT COUNT(*) FROM orders) AS orders,
+            COALESCE((SELECT SUM(price) FROM orders),0) AS sales,
+            COALESCE((SELECT SUM(profit) FROM orders),0) AS profit
+    `);
+    const recent = await query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8");
+    const row = stats.rows[0];
 
     res.json({
         status: "OK",
-        total_customers: adminCustomers.length,
-        total_orders: adminOrders.length,
-        total_sales: Number(totalSales.toFixed(4)),
-        total_profit: Number(totalProfit.toFixed(4)),
+        total_customers: Number(row.customers),
+        total_orders: Number(row.orders),
+        total_sales: Number(Number(row.sales).toFixed(4)),
+        total_profit: Number(Number(row.profit).toFixed(4)),
         api_balance: Number(apiBalance.toFixed(4)),
-        recent_orders: adminOrders.slice(-8).reverse(),
+        recent_orders: recent.rows,
         settings: adminSettings
     });
 });
