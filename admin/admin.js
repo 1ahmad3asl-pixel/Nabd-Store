@@ -571,7 +571,7 @@ function renderCustomers(customers) {
                         </button>
                         <button
                             class="small-button"
-                            data-customer-id="${escapeAdminHtml(String(id))}"
+                            data-customer-id="${escapeAdminHtml(String(internalId))}"
                             data-action="discount"
                         >
                             تعديل الخصم
