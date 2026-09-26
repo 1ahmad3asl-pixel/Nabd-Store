@@ -383,3 +383,12 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
  .admin-header{padding-right:62px!important}
  .admin-tabs{width:min(290px,86vw)!important}
 }
+
+/* ===== إدارة: قائمة جانبية مثل واجهة المتجر ===== */
+.admin-header{padding-right:68px;}
+.admin-menu-button{right:14px;left:auto;top:14px;width:42px;height:42px;border-radius:10px;background:rgba(0,0,0,.10);font-size:27px;}
+.admin-tabs{width:290px!important;max-width:86vw;right:0!important;left:auto!important;transform:translateX(110%)!important;border-left:1px solid var(--border)!important;border-right:0!important;border-radius:0!important;}
+.admin-tabs.open{transform:translateX(0)!important;}
+.admin-menu-overlay{z-index:1100;}
+.admin-tabs{z-index:1150!important;}
+@media(max-width:700px){.admin-header{padding-right:62px!important}.admin-menu-button{right:10px;top:10px;}}
