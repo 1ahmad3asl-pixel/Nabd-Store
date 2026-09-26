@@ -230,3 +230,19 @@ html[data-theme="light"] .admin-theme-toggle{background:rgba(255,255,255,.42);}
   .settings-form-grid{grid-template-columns:1fr}
   .settings-tab{padding:10px 13px;font-size:12px}
 }
+
+
+/* Main settings tabs */
+.settings-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px;scrollbar-width:none;}
+.settings-tabs::-webkit-scrollbar{display:none;}
+.settings-tab{flex:0 0 auto;border:1px solid var(--border);background:var(--white);color:var(--text);border-radius:10px;padding:11px 16px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;}
+.settings-tab.active{background:var(--primary);color:#080808;border-color:var(--primary);}
+.settings-panel{display:none;}
+.settings-panel.active{display:block;}
+.settings-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.price-standard{background:var(--background);border:1px solid var(--border);border-radius:12px;padding:14px;margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.price-standard span{color:var(--muted);font-size:12px;}
+.price-standard strong{font-size:20px;direction:ltr;}
+.setting-value-box{background:var(--background);border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);font-size:12px;line-height:1.7;}
+*{font-family:var(--admin-font-family,"Amasis MT Pro Black","Amasis MT Pro","ERAS BOLD ITC",Tahoma,Arial,sans-serif);}
+@media(max-width:700px){.settings-form-grid{grid-template-columns:1fr;}}
