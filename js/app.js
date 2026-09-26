@@ -944,7 +944,7 @@ async function submitGamePickerOrder(product, root) {
         const response = await fetch(BACKEND_URL + "/api/orders", {
             method: "POST",
             headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+            body: JSON.stringify({product_id: product.id, params: params})
         });
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") {
@@ -1394,7 +1394,7 @@ async function submitProductOrder(product) {
         const response = await fetch(BACKEND_URL + "/api/orders", {
             method: "POST",
             headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params})
+            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
         });
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر إنشاء الطلب");
