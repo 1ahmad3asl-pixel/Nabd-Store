@@ -512,3 +512,42 @@ th{background:#1b1b1b;color:#f5c400;}
 input,select,textarea{background:var(--white);color:var(--text);}
 @media(max-width:800px){.admin-menu-button{display:none}.admin-tabs{height:54px;padding:6px 8px}.admin-tabs .admin-nav-item{min-width:78px;padding:8px 10px;font-size:11px}.admin-main{padding:132px 15px 20px}.admin-brand{font-size:17px}.admin-balance{display:block;padding:6px 9px}.admin-balance strong{font-size:16px}}
 @media(max-width:600px){.admin-header{height:60px;padding:0 12px}.admin-tabs{top:60px}.admin-main{padding-top:128px}.admin-brand{font-size:15px}.admin-balance{font-size:10px}.admin-balance strong{font-size:15px}}
+
+
+/* ===== لوحة الإدارة الجديدة: شريط علوي + تبويبات ===== */
+.admin-header{height:68px;background:var(--primary);color:#080808;border-bottom:1px solid var(--primary-dark);}
+.admin-brand{color:#080808;}
+.admin-balance{background:rgba(0,0,0,.08);color:#080808;border:1px solid rgba(0,0,0,.08);}
+.admin-balance strong{font-size:16px;color:#080808;}
+.admin-menu-button{background:rgba(0,0,0,.10);color:#080808;}
+.admin-layout{display:block;padding-top:126px;}
+.admin-sidebar{position:fixed;top:68px;right:0;left:0;bottom:auto;width:100%;height:58px;background:var(--white);border-left:0;border-bottom:1px solid var(--border);box-shadow:0 3px 12px rgba(0,0,0,.08);z-index:900;display:block;overflow-x:auto;overflow-y:hidden;}
+.admin-profile,.sidebar-bottom{display:none;}
+.admin-nav{height:100%;padding:0 10px;display:flex;align-items:stretch;justify-content:center;gap:4px;white-space:nowrap;}
+.admin-nav-item{width:auto;flex:0 0 auto;gap:7px;padding:0 17px;justify-content:center;text-align:center;font-size:13px;border-right:0;border-bottom:3px solid transparent;}
+.admin-nav-item.active{border-right:0;border-bottom:3px solid var(--primary);}
+.admin-main{width:100%;margin-right:0;padding:24px;}
+.admin-menu-button{display:none;}
+.admin-standards-card{margin-bottom:18px;}
+.standards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.standard-item{background:var(--background);border:1px solid var(--border);border-radius:11px;padding:13px;}
+.standard-item span,.standard-item strong{display:block;}
+.standard-item span{font-size:11px;color:var(--muted);margin-bottom:5px;}
+.standard-item strong{font-size:14px;color:var(--text);}
+.settings-note{margin-top:12px;color:var(--muted);font-size:11px;}
+input,select,textarea{background:var(--white);}
+.stat-card,.admin-card{background:var(--white);}
+@media(max-width:800px){
+    .admin-layout{padding-top:118px;}
+    .admin-sidebar{height:50px;}
+    .admin-nav{justify-content:flex-start;overflow-x:auto;}
+    .admin-nav-item{padding:0 13px;font-size:12px;}
+    .admin-main{padding:18px 14px;}
+}
+@media(max-width:600px){
+    .admin-header{padding:0 12px;}
+    .admin-brand{font-size:16px;}
+    .admin-balance{display:block;padding:7px 9px;font-size:11px;}
+    .admin-balance strong{font-size:14px;}
+    .standards-grid{grid-template-columns:1fr 1fr;}
+}
