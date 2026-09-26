@@ -7,7 +7,7 @@ font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif;
 html{ scroll-behavior:smooth; }
 body{ background:var(--background); color:var(--text); min-height:100vh; overflow-x:hidden;
 /*
- * العربية تعتمد على Amasis
+ * الخط العربي الموحد للمشروع: Dubai Medium
  */
 font-family:
     "Dubai Medium","Dubai",Tahoma,
