@@ -6,7 +6,8 @@ const crypto = require("crypto");
 const {
     getNemerProducts,
     createNemerOrder,
-    checkNemerOrders
+    checkNemerOrders,
+    getNemerProfile
 } = require("./api");
 
 const app = express();
@@ -29,6 +30,18 @@ const ADMIN_SESSION_SECRET = String(
 );
 
 const adminSessions = new Map();
+const adminLoginAttempts = new Map();
+
+function markAdminSecurityHeaders(res) {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+}
+
+function getClientIp(req) {
+    return String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "")
+        .split(",")[0].trim();
+}
 const adminSettings = {
     profit_rate: PROFIT_RATE,
     store_name: STORE_NAME,
@@ -68,6 +81,7 @@ function getAdminSession(req) {
 }
 
 function requireAdmin(req, res, next) {
+    markAdminSecurityHeaders(res);
     if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
         return res.status(503).json({
             status: "ERROR",
@@ -99,6 +113,15 @@ function adminSameSecret(a, b) {
 }
 
 app.post("/api/admin/login", (req, res) => {
+    markAdminSecurityHeaders(res);
+    const ip = getClientIp(req);
+    const attempt = adminLoginAttempts.get(ip) || { count: 0, blockedUntil: 0 };
+    if (attempt.blockedUntil > Date.now()) {
+        return res.status(429).json({
+            status: "ERROR",
+            message: "محاولات تسجيل الدخول كثيرة. حاول لاحقًا."
+        });
+    }
     const email = String(req.body?.email || "").trim().toLowerCase();
     const password = String(req.body?.password || "");
 
@@ -111,12 +134,19 @@ app.post("/api/admin/login", (req, res) => {
 
     if (!adminSameSecret(email, ADMIN_EMAIL) ||
         !adminSameSecret(password, ADMIN_PASSWORD)) {
+        attempt.count += 1;
+        if (attempt.count >= 5) {
+            attempt.blockedUntil = Date.now() + 15 * 60 * 1000;
+            attempt.count = 0;
+        }
+        adminLoginAttempts.set(ip, attempt);
         return res.status(401).json({
             status: "ERROR",
             message: "البريد الإلكتروني أو كلمة المرور غير صحيحة."
         });
     }
 
+    adminLoginAttempts.delete(ip);
     const token = createAdminSession();
 
     res.setHeader(
@@ -277,20 +307,15 @@ app.put("/api/admin/customers/:id/discount", (req, res) => {
         });
     }
 
-    let customer = adminCustomers.find(
+    const customer = adminCustomers.find(
         item => String(item.customer_id) === String(req.params.id)
     );
 
     if (!customer) {
-        customer = {
-            customer_id: String(req.params.id),
-            name: "عميل",
-            balance: 0,
-            orders_count: 0,
-            discount: 0,
-            active: true
-        };
-        adminCustomers.push(customer);
+        return res.status(404).json({
+            status: "ERROR",
+            message: "لا يمكن إنشاء عميل من خلال هذا المسار."
+        });
     }
 
     customer.discount = discount;
