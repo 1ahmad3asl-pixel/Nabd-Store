@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeModal();
     initializeSounds();
     initializeSearch();
+    initializeTheme();
 
     removeAllCategory();
 
@@ -794,4 +795,24 @@ function showToast(message) {
     elements.toast.classList.add("show");
     clearTimeout(showToast.timer);
     showToast.timer = setTimeout(function() { elements.toast.classList.remove("show"); }, 3000);
+}
+
+function initializeTheme() {
+    const button = document.getElementById("themeToggle");
+    const icon = document.getElementById("themeIcon");
+    const text = document.getElementById("themeText");
+    const saved = localStorage.getItem("nabd-theme") || "dark";
+    document.documentElement.dataset.theme = saved;
+    function render() {
+        const light = document.documentElement.dataset.theme === "light";
+        if (icon) icon.textContent = light ? "🌙" : "☀️";
+        if (text) text.textContent = light ? "المظهر الليلي" : "المظهر الفاتح";
+    }
+    render();
+    if (button) button.addEventListener("click", function() {
+        const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem("nabd-theme", next);
+        render();
+    });
 }
