@@ -536,37 +536,15 @@ function getProductsForGame(gameTitle) {
 }
 
 function getGameTiles() {
-    const tiles = [];
-    const used = new Set();
-
-    GAME_CATALOG.forEach(function(game) {
-        const products = state.products.filter(function(product) {
-            return findGameMatch(product)?.title === game.title;
-        });
-        if (!products.length) return;
-
-        const imageProduct = products.find(function(product) {
-            return product.category_img;
-        }) || products[0];
-
-        tiles.push({
+    // المستوى الثاني مستقل عن المنتجات: اعرض كل الألعاب الموجودة في الكتالوج
+    // حتى لو لم يتم ربط منتجاتها بعد.
+    return GAME_CATALOG.map(function(game) {
+        return {
             title: game.title,
-            image: imageProduct?.category_img || "",
-            productCount: products.length
-        });
-        used.add(game.title);
+            image: "",
+            productCount: 0
+        };
     });
-
-    // إضافة أي ألعاب جديدة من الـAPI لم تكن ضمن القائمة المصورة.
-    state.products.forEach(function(product) {
-        const match = findGameMatch(product);
-        if (!match || used.has(match.title)) return;
-        const image = product.category_img || "";
-        tiles.push({title: match.title, image: image, productCount: 1});
-        used.add(match.title);
-    });
-
-    return tiles;
 }
 
 function initializeCategories() {
@@ -605,36 +583,24 @@ function openGamesPage() {
 
     services.hidden = true;
     internal.hidden = false;
+
     if (title) title.textContent = "الألعاب";
     if (icon) icon.textContent = "🎮";
 
     const tiles = getGameTiles();
 
-    if (!tiles.length) {
-        content.innerHTML = '<div class="game-empty"><strong>لم يتم تحميل ألعاب بعد</strong><p>سيتم إظهار الألعاب هنا تلقائيًا بعد تحميل بيانات الخدمات.</p></div>';
-        return;
-    }
-
     content.innerHTML =
-        '<div class="game-page-note">اختر اللعبة للدخول إلى المستوى التالي.</div>' +
+        '<div class="game-page-note">الألعاب</div>' +
         '<div class="game-category-grid">' +
         tiles.map(function(tile) {
-            const image = tile.image
-                ? '<img src="' + escapeHtml(tile.image) + '" alt="' + escapeHtml(tile.title) + '" loading="lazy">'
-                : '<span class="game-placeholder">🎮</span>';
-            return '<button class="game-category-tile" type="button" data-game-title="' +
-                escapeHtml(tile.title) + '">' +
-                '<span class="game-tile-image">' + image + '</span>' +
+            return '<div class="game-category-tile game-category-tile-static">' +
+                '<span class="game-tile-image">' +
+                    '<span class="game-placeholder">🎮</span>' +
+                '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
-                '</button>';
+                '</div>';
         }).join("") +
         '</div>';
-
-    content.querySelectorAll(".game-category-tile").forEach(function(tile) {
-        tile.addEventListener("click", function() {
-            openGamePlaceholder(tile.getAttribute("data-game-title") || "اللعبة");
-        });
-    });
 
     window.scrollTo({top: 0, behavior: "smooth"});
 }
