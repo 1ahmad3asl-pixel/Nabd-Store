@@ -859,7 +859,11 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const failed = ["failed","rejected","cancelled","canceled","error"].includes(apiStatus);
     if (failed) await refundWalletAfterFailedOrder(reservation);
 
-    await query("UPDATE orders SET status=$1 WHERE id=$2",[failed ? "failed" : apiStatus,reservation.order_id]);
+    const externalOrderId = String(order?.id ?? order?.order_id ?? reservation.order_uuid);
+    await query(
+      "UPDATE orders SET order_id=$1,status=$2 WHERE id=$3",
+      [externalOrderId, failed ? "failed" : apiStatus, reservation.order_id]
+    );
     if (!failed) await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
 
     res.json({status:failed?"ERROR":"OK",store:STORE_NAME,order,charged:failed?0:reservation.total_price,balance:failed?Number(reservation.before.toFixed(4)):Number(reservation.after.toFixed(4))});
