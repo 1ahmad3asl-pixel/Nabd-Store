@@ -651,3 +651,49 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
     .admin-menu-button{width:38px!important;height:38px!important;font-size:25px!important;}
     .admin-layout{padding-top:62px!important;}
 }
+
+
+/* ===== شريط الإدارة العلوي: Nabd-Store | الرصيد | قائمة الثلاث خطوط ===== */
+.admin-header{
+    direction:ltr !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:16px !important;
+    height:70px !important;
+    padding:0 16px !important;
+}
+.admin-brand{order:1 !important;margin-right:auto !important;}
+.admin-balance{
+    order:2 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:6px !important;
+    direction:rtl !important;
+    margin:0 auto !important;
+    white-space:nowrap !important;
+}
+.admin-balance span{font-size:13px !important;font-weight:800 !important;}
+.admin-balance strong{margin:0 !important;font-size:21px !important;}
+.admin-menu-button{
+    order:3 !important;
+    position:static !important;
+    flex:0 0 42px !important;
+    width:42px !important;
+    height:42px !important;
+    margin:0 !important;
+    padding:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    color:#080808 !important;
+}
+.admin-menu-button:hover{background:rgba(0,0,0,.10) !important;}
+@media(max-width:600px){
+    .admin-header{height:62px !important;padding:0 10px !important;gap:8px !important;}
+    .admin-brand{font-size:17px !important;}
+    .admin-balance{gap:4px !important;}
+    .admin-balance span{font-size:10px !important;}
+    .admin-balance strong{font-size:16px !important;}
+    .admin-menu-button{flex-basis:40px !important;width:40px !important;height:40px !important;}
+}
