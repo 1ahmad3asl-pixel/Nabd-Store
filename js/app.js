@@ -758,6 +758,9 @@ function openGamesPage() {
         }).join("") +
         '</div>';
 
+    // استبدل الصور الخارجية بالصور المحلية التي يتم توليدها أثناء بناء المشروع.
+    loadCachedGameImages(tiles);
+
     content.querySelectorAll(".game-category-tile").forEach(function(tile) {
         tile.addEventListener("click", async function() {
             const gameTitle = tile.getAttribute("data-game-title") || "اللعبة";
