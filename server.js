@@ -542,18 +542,18 @@ app.get("/api/admin/customers", async (req, res) => {
   const search = String(req.query.search || "").trim();
   const result = search
     ? await query(
-        "SELECT customer_id,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id ILIKE $1 OR name ILIKE $1 OR email ILIKE $1 ORDER BY created_at DESC",
+        "SELECT customer_id,customer_number,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id ILIKE $1 OR name ILIKE $1 OR email ILIKE $1 OR CAST(customer_number AS TEXT) ILIKE $1 ORDER BY created_at DESC",
         [`%${search}%`]
       )
     : await query(
-        "SELECT customer_id,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers ORDER BY created_at DESC"
+        "SELECT customer_id,customer_number,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers ORDER BY created_at DESC"
       );
   res.json({ status: "OK", customers: result.rows });
 });
 
 app.get("/api/admin/customers/:id", async (req, res) => {
   const result = await query(
-    "SELECT customer_id,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id=$1",
     [String(req.params.id)]
   );
   if (!result.rows[0]) {
