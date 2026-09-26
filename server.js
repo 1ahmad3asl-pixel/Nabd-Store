@@ -42,7 +42,8 @@ const adminSettings = {
   store_name: STORE_NAME,
   currency: process.env.CURRENCY || "USD",
   currency_decimals: 3,
-  font_family: "Amasis MT Pro"
+  font_family: "Amasis MT Pro",
+  dhikr_items: ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"]
 };
 
 const adminLoginAttempts = new Map();
@@ -137,6 +138,15 @@ async function loadSettings() {
   if (![2,3].includes(adminSettings.currency_decimals)) adminSettings.currency_decimals = 3;
   adminSettings.font_family = await getSetting("font_family", "Amasis MT Pro");
   if (!["Amasis MT Pro","Tahoma","Arial"].includes(adminSettings.font_family)) adminSettings.font_family = "Amasis MT Pro";
+  const savedDhikr = await getSetting("dhikr_items", adminSettings.dhikr_items);
+  try {
+    const parsedDhikr = typeof savedDhikr === "string" ? JSON.parse(savedDhikr) : savedDhikr;
+    adminSettings.dhikr_items = Array.isArray(parsedDhikr) && parsedDhikr.length
+      ? parsedDhikr.map(item => String(item || "").trim()).filter(Boolean).slice(0, 12)
+      : ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+  } catch {
+    adminSettings.dhikr_items = ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+  }
 }
 
 function adminToken() {
@@ -644,6 +654,11 @@ app.get("/api/admin/products", async (req, res) => {
   }
 });
 
+app.get("/api/store-settings", async (req, res) => {
+  await loadSettings();
+  res.json({ status: "OK", dhikr_items: adminSettings.dhikr_items });
+});
+
 app.get("/api/admin/settings", async (req, res) => {
   await loadSettings();
   res.json({ status: "OK", settings: adminSettings });
@@ -691,6 +706,21 @@ app.put("/api/admin/settings", async (req, res) => {
     }
     adminSettings.font_family = font;
     await setSetting("font_family", font);
+  }
+
+  if (req.body?.dhikr_items !== undefined) {
+    if (!Array.isArray(req.body.dhikr_items)) {
+      return res.status(400).json({ status: "ERROR", message: "قائمة الأذكار غير صالحة." });
+    }
+    const items = req.body.dhikr_items
+      .map(item => String(item || "").trim())
+      .filter(Boolean)
+      .slice(0, 12);
+    if (!items.length || items.some(item => item.length > 80)) {
+      return res.status(400).json({ status: "ERROR", message: "أدخل ذكرًا واحدًا على الأقل، وبحد أقصى 80 حرفًا لكل ذكر." });
+    }
+    adminSettings.dhikr_items = items;
+    await setSetting("dhikr_items", JSON.stringify(items));
   }
 
   res.json({ status: "OK", settings: adminSettings });
