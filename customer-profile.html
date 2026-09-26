@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>إكمال الملف الشخصي - Nabd-Store</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{min-height:100vh;display:grid;place-items:center;padding:20px}
+.profile-card{width:min(500px,100%);background:var(--white);color:var(--text);border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+.profile-card h1{margin-bottom:8px}.profile-card p{color:var(--muted);line-height:1.8}
+.profile-form label{display:block;font-weight:900;margin:16px 0 7px}
+.profile-form input{width:100%;box-sizing:border-box;padding:13px;border:1px solid var(--border);background:var(--background);color:var(--text);border-radius:10px;font-size:16px;outline:0}
+.profile-form input:focus{border-color:var(--primary)}
+.save-btn{width:100%;margin-top:20px;padding:13px;border:0;border-radius:10px;background:var(--primary);color:#fff;font-weight:900;font-size:16px;cursor:pointer}
+.error{display:none;margin-top:14px;padding:11px;border-radius:10px;background:#ffe8e8;color:#a00}
+.country-preview{margin-top:10px;padding:10px;border-radius:10px;background:var(--primary-light);color:var(--text);font-weight:900}
+.skip{display:block;text-align:center;margin-top:14px;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<main class="profile-card">
+<div style="font-size:42px">📱</div>
+<h1>إكمال ملفك الشخصي</h1>
+<p>أدخل رقم هاتفك. سيحدد النظام الدولة تلقائيًا من مفتاح الدولة ويضيفها إلى ملفك الشخصي.</p>
+<form id="profileForm" class="profile-form">
+<label for="name">الاسم</label>
+<input id="name" type="text" autocomplete="name" required>
+<label for="phone">رقم الهاتف</label>
+<input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+963 9XX XXX XXX" required>
+<div id="countryPreview" class="country-preview">الدولة: سيتم التعرف عليها تلقائيًا</div>
+<button class="save-btn" id="saveBtn" type="submit">حفظ ومتابعة إلى المتجر</button>
+<div id="error" class="error"></div>
+</form>
+<a class="skip" href="/">العودة إلى المتجر</a>
+</main>
+<script>
+const form=document.getElementById("profileForm");
+const nameInput=document.getElementById("name");
+const phoneInput=document.getElementById("phone");
+const preview=document.getElementById("countryPreview");
+const error=document.getElementById("error");
+const saveBtn=document.getElementById("saveBtn");
+let countryTimer;
+async function loadProfile(){
+ try{
+  const r=await fetch("/api/customer/auth/me",{headers:{Accept:"application/json"}});
+  if(!r.ok){location.href="/customer-login.html";return;}
+  const data=await r.json(), c=data.customer||{};
+  nameInput.value=c.name||"";
+  phoneInput.value=c.phone||"";
+  if(c.phone_country) preview.textContent="الدولة: "+c.phone_country;
+ }catch(e){error.textContent="تعذر تحميل بيانات الحساب.";error.style.display="block";}
+}
+async function detectCountry(){
+ const value=phoneInput.value.trim();
+ if(!value.startsWith("+")){preview.textContent="الدولة: اكتب الرقم مع مفتاح الدولة، مثل +963";return;}
+ try{
+  const r=await fetch("/api/customer/phone-country?phone="+encodeURIComponent(value),{headers:{Accept:"application/json"}});
+  const data=await r.json();
+  preview.textContent=data.country ? "الدولة: "+data.country : "الدولة: لم يتم التعرف عليها";
+ }catch(e){}
+}
+phoneInput.addEventListener("input",()=>{clearTimeout(countryTimer);countryTimer=setTimeout(detectCountry,350);});
+form.addEventListener("submit",async e=>{
+ e.preventDefault(); error.style.display="none"; saveBtn.disabled=true;
+ try{
+  const r=await fetch("/api/customer/profile",{method:"PUT",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({name:nameInput.value.trim(),phone:phoneInput.value.trim()})});
+  const data=await r.json();
+  if(!r.ok) throw new Error(data.message||"تعذر حفظ الملف الشخصي.");
+  location.href="/";
+ }catch(err){error.textContent=err.message;error.style.display="block";}finally{saveBtn.disabled=false;}
+});
+loadProfile();
+</script>
+</body>
+</html>
