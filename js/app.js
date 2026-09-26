@@ -537,13 +537,21 @@ function getProductsForGame(gameTitle) {
 }
 
 function getGameTiles() {
-    // المستوى الثاني مستقل عن المنتجات: اعرض كل الألعاب الموجودة في الكتالوج
-    // حتى لو لم يتم ربط منتجاتها بعد.
+    // استخدم صورة اللعبة الرسمية المرفقة مع منتجاتها أولًا،
+    // مع الاحتفاظ بصورة الكتالوج كبديل عند عدم وجود صورة من الـAPI.
     return GAME_CATALOG.map(function(game) {
+        const products = state.products.filter(function(product) {
+            const match = findGameMatch(product);
+            return match && match.title === game.title;
+        });
+        const productWithImage = products.find(function(product) {
+            return String(product.category_img || "").trim();
+        });
+
         return {
             title: game.title,
-            image: game.image || "",
-            productCount: 0
+            image: (productWithImage && productWithImage.category_img) || game.image || "",
+            productCount: products.length
         };
     });
 }
@@ -932,7 +940,7 @@ async function submitGamePickerOrder(product, root) {
         const response = await fetch(BACKEND_URL + "/api/orders", {
             method: "POST",
             headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params})
+            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
         });
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") {
@@ -1341,12 +1349,18 @@ function openProductModal(product) {
             '</div>';
     }).join("");
 
+    const minQty = Number(product.qty_values?.min || 1);
+    const maxQty = Number(product.qty_values?.max || 999999999);
     const price = Number(product.price) || 0;
 
     showModal("تأكيد عملية الشراء",
         '<div class="order-form">' +
             '<div class="order-product-name">' + escapeHtml(product.name || "منتج") + '</div>' +
             fields +
+            '<div class="order-field">' +
+                '<label for="orderQty">الكمية</label>' +
+                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" value="' + minQty + '" inputmode="numeric">' +
+            '</div>' +
             '<div class="order-price-row">' +
                 '<span>السعر</span>' +
                 '<strong id="orderPrice">' + formatMoney(price) + '</strong>' +
@@ -1367,6 +1381,8 @@ async function submitProductOrder(product) {
         const input = document.getElementById("param_" + index);
         if (input && input.value.trim()) params[label] = input.value.trim();
     });
+    const qtyInput = document.getElementById("orderQty");
+    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
     const confirm = document.getElementById("confirmProductOrder");
     if (confirm) confirm.disabled = true;
 
