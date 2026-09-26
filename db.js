@@ -42,6 +42,7 @@ async function initDb() {
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS email TEXT;
     CREATE SEQUENCE IF NOT EXISTS customer_number_seq;
     ALTER SEQUENCE customer_number_seq OWNED BY NONE;
+    ALTER TABLE customers ALTER COLUMN customer_number SET DEFAULT nextval('customer_number_seq');
     UPDATE customers SET customer_number=nextval('customer_number_seq') WHERE customer_number IS NULL;
     SELECT setval('customer_number_seq', GREATEST(COALESCE((SELECT MAX(customer_number) FROM customers),0),1), true);
 
