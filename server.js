@@ -146,7 +146,7 @@ function parseCustomerPhone(value) {
   if (!parsed || !parsed.isValid()) return null;
   return {
     phone: parsed.number,
-    country: parsed.country ? parsed.country : ""
+    country: parsed.country ? (new Intl.DisplayNames(["ar"], {type:"region"}).of(parsed.country) || parsed.country) : ""
   };
 }
 
@@ -393,6 +393,12 @@ app.post("/api/customer/login", async (req, res) => {
     console.error("Customer login error:", error);
     res.status(500).json({ status: "ERROR", message: "تعذر تسجيل الدخول." });
   }
+});
+
+app.get("/api/customer/phone-country", requireCustomer, (req, res) => {
+  const phoneData = parseCustomerPhone(req.query?.phone);
+  if (!phoneData) return res.status(400).json({ status: "ERROR", message: "رقم الهاتف غير صحيح." });
+  res.json({ status: "OK", country: phoneData.country });
 });
 
 app.put("/api/customer/profile", requireCustomer, async (req, res) => {
