@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /* =========================
    DHIKR TICKER
 ========================= */
-const DEFAULT_DHIKR_ITEMS = ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+const DEFAULT_DHIKR_ITEMS = ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"];
 
 function renderDhikrTicker(items) {
     const track = document.getElementById("dhikrTrack");
