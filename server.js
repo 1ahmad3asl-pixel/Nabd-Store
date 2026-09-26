@@ -43,7 +43,7 @@ const adminSettings = {
   currency: process.env.CURRENCY || "USD",
   currency_decimals: 3,
   font_family: "Amasis MT Pro",
-  dhikr_items: ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"]
+  dhikr_items: ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"]
 };
 
 const adminLoginAttempts = new Map();
@@ -143,7 +143,7 @@ async function loadSettings() {
     const parsedDhikr = typeof savedDhikr === "string" ? JSON.parse(savedDhikr) : savedDhikr;
     adminSettings.dhikr_items = Array.isArray(parsedDhikr) && parsedDhikr.length
       ? parsedDhikr.map(item => String(item || "").trim()).filter(Boolean).slice(0, 12)
-      : ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+      : ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"];
   } catch {
     adminSettings.dhikr_items = ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
   }
