@@ -21,5 +21,6 @@ document.addEventListener("click",function(event){
             name.textContent=(customer.name||"عميل") + (flag ? " · "+flag : "");
         }
         if(id) id.textContent=customer.customer_id ? "ID: "+customer.customer_id : "";
+        if(typeof updateBalance==="function") updateBalance(customer.balance || 0);
     }catch(e){}
 })();
