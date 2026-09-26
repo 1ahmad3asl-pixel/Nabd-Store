@@ -1482,3 +1482,159 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 
 .reference-category-grid .category-tile.active{background:transparent!important;border:0!important;box-shadow:none!important;}
 #servicesSection > .products{display:none!important;}
+
+
+/* =========================
+   GAMES — المستوى الثاني
+========================= */
+#internalPage[hidden]{display:none!important;}
+#internalPage{
+    width:100%;
+    min-height:calc(100vh - 90px);
+    background:#fff;
+    color:#111;
+    border-radius:0;
+    padding:18px 14px 40px;
+    box-sizing:border-box;
+}
+.internal-page-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+    padding:4px 0 12px;
+    border-bottom:1px solid #e7e7e7;
+}
+.internal-back{
+    width:48px;
+    height:48px;
+    border:1px solid #d7d7d7;
+    border-radius:12px;
+    background:#fff;
+    color:#111;
+    font-size:28px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+.internal-page-header > div:last-child{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+.internal-page-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+#internalPageTitle{
+    margin:0;
+    font-size:22px;
+    font-weight:900;
+    color:#111;
+}
+.internal-page-content{
+    width:100%;
+}
+.game-page-note{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin:0 0 16px;
+}
+.game-category-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px 18px;
+    align-items:start;
+}
+.game-category-tile{
+    width:100%;
+    min-width:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:#111;
+    cursor:pointer;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    touch-action:manipulation;
+}
+.game-category-tile:active{
+    transform:scale(.97);
+}
+.game-tile-image{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:18px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f3f3f3;
+    box-shadow:0 2px 7px rgba(0,0,0,.10);
+}
+.game-tile-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.game-placeholder{
+    font-size:48px;
+}
+.game-tile-title{
+    width:100%;
+    min-height:22px;
+    font-size:15px;
+    line-height:1.25;
+    font-weight:900;
+    color:#111;
+    overflow-wrap:anywhere;
+}
+.game-empty,
+.game-products-placeholder{
+    background:#fff;
+    border:1px solid #e3e3e3;
+    border-radius:18px;
+    padding:40px 18px;
+    text-align:center;
+    color:#555;
+}
+.game-products-placeholder-icon{
+    font-size:48px;
+    margin-bottom:8px;
+}
+.game-products-placeholder h3{
+    margin:0 0 8px;
+    color:#111;
+    font-size:21px;
+}
+.game-products-placeholder p,
+.game-empty p{
+    margin:0;
+    line-height:1.7;
+}
+
+@media(max-width:600px){
+    #internalPage{
+        padding:14px 12px 32px;
+    }
+    .game-category-grid{
+        gap:22px 14px;
+    }
+    .game-tile-image{
+        border-radius:16px;
+    }
+    .game-tile-title{
+        font-size:14px;
+    }
+}
