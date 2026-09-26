@@ -224,7 +224,7 @@ function showAdminSection(section) {
         });
 
     const sidebar =
-        document.getElementById("sidebar");
+        document.getElementById("adminTabs");
 
     if (sidebar) {
         sidebar.classList.remove("active");
@@ -249,7 +249,7 @@ function showAdminSection(section) {
 }
 
 function initializeAdminTheme() {
-    const toggle = document.getElementById("adminThemeToggle");
+    const toggle = document.getElementById("themeToggleNav");
     const saved = localStorage.getItem("nabd-admin-theme") || "dark";
     document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
     updateAdminThemeButton();
@@ -262,12 +262,10 @@ function initializeAdminTheme() {
     });
 }
 function updateAdminThemeButton() {
-    const toggle = document.getElementById("adminThemeToggle");
+    const toggle = document.getElementById("themeToggleNav");
     if (!toggle) return;
     const dark = document.documentElement.dataset.theme !== "light";
-    const icon = document.getElementById("adminThemeIcon");
-    if (icon) icon.textContent = dark ? "☀️" : "🌙";
-    toggle.textContent = dark ? "☀️" : "🌙";
+    toggle.innerHTML = dark ? "<span>☀️</span><span>الوضع النهاري</span>" : "<span>🌙</span><span>الوضع الليلي</span>";
     toggle.title = dark ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي";
     setText("adminThemeStatus", dark ? "ليلي" : "نهاري");
 }
@@ -283,7 +281,7 @@ function initializeAdminMenu() {
         sidebar.classList.toggle("open", open);
         if (overlay) overlay.classList.toggle("open", open);
         button.setAttribute("aria-expanded", open ? "true" : "false");
-        button.textContent = open ? "×" : "⋮";
+        button.textContent = open ? "×" : "☰";
     }
 
     button.addEventListener("click", function () {
