@@ -613,3 +613,12 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-header-actions{display:none!important;}
 .admin-layout{padding-top:70px!important;}
 @media(max-width:600px){.admin-header{height:62px!important;padding:0 10px!important;gap:8px!important;}.admin-brand{font-size:17px!important;}.admin-balance{gap:4px!important;}.admin-balance span{font-size:10px!important;}.admin-balance strong{font-size:16px!important;}.admin-menu-button{width:40px!important;height:40px!important;font-size:26px!important;}.admin-layout{padding-top:62px!important;}}
+
+/* ===== الشريط العلوي: الاسم يسار، الرصيد وسط، القائمة يمين ===== */
+.admin-header{direction:ltr!important;display:grid!important;grid-template-columns:1fr auto 1fr!important;align-items:center!important;width:100%!important;}
+.admin-brand{grid-column:1!important;justify-self:start!important;}
+.admin-balance{grid-column:2!important;justify-self:center!important;text-align:center!important;}
+.admin-menu-button{grid-column:3!important;justify-self:end!important;background:transparent!important;border:0!important;box-shadow:none!important;font-size:0!important;position:static!important;}
+.admin-menu-button::before{content:"☰";font-size:28px;line-height:1;font-weight:900;color:#080808;}
+.admin-menu-button:hover{background:transparent!important;}
+@media(max-width:600px){.admin-menu-button::before{font-size:26px;}}
