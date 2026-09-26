@@ -853,8 +853,7 @@ app.get("/api/products", async (req, res) => {
             category_name: product.category_name || "",
             category_img: product.category_img || "",
             parent_id: product.parent_id ?? null,
-            params: Array.isArray(product.params) ? product.params : [],
-            qty_values: product.qty_values ?? null
+            params: Array.isArray(product.params) ? product.params : []
           };
         })
       : [];
@@ -879,9 +878,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const rawParams = req.body?.params && typeof req.body.params === "object" && !Array.isArray(req.body.params)
       ? req.body.params
       : {};
-    const qty = Number(req.body?.qty || 1);
     if (!productId || productId.length > 120) return res.status(400).json({status:"ERROR",message:"معرّف المنتج غير صالح."});
-    if (!Number.isInteger(qty) || qty < 1 || qty > 1000000) return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
 
     const now = Date.now();
     const previousOrderAt = orderRateLimits.get(req.customer.customer_id) || 0;
@@ -897,11 +894,6 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
     const apiPrice = Number(product.price || 0);
     if (!Number.isFinite(apiPrice) || apiPrice < 0) return res.status(400).json({status:"ERROR",message:"سعر المنتج غير صالح."});
-
-    const minQty = Number(product.qty_values?.min);
-    const maxQty = Number(product.qty_values?.max);
-    if (Number.isFinite(minQty) && qty < minQty) return res.status(400).json({status:"ERROR",message:"الكمية أقل من الحد الأدنى للمنتج."});
-    if (Number.isFinite(maxQty) && qty > maxQty) return res.status(400).json({status:"ERROR",message:"الكمية أكبر من الحد الأقصى للمنتج."});
 
     const allowedParams = Array.isArray(product.params) ? new Set(product.params.map(String)) : null;
     const params = {};
@@ -929,7 +921,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
       const discount = Math.min(100, Math.max(0, Number(customer.discount || 0)));
       const unitPrice = baseSalePrice * (1 - discount / 100);
-      const totalPrice = unitPrice * qty;
+      const totalPrice = unitPrice;
       const before = Number(customer.balance || 0);
       if (!Number.isFinite(totalPrice) || totalPrice < 0) {
         const error = new Error("تعذر حساب سعر الطلب."); error.statusCode = 400; throw error;
@@ -945,7 +937,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(4),customer.customer_id]);
       await client.query(
         "INSERT INTO orders (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'processing')",
-        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(4)),Number(totalPrice.toFixed(4)),Number((totalPrice-apiPrice*qty).toFixed(4)),Number(discount.toFixed(2))]
+        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number(apiPrice.toFixed(4)),Number(totalPrice.toFixed(4)),Number((totalPrice-apiPrice).toFixed(4)),Number(discount.toFixed(2))]
       );
       const transactionId = "TXN-" + crypto.randomUUID();
       await client.query(
@@ -957,7 +949,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
     let order;
     try {
-      order = await createNemerOrder(productId,{...params,qty,order_uuid:reservation.order_uuid});
+      order = await createNemerOrder(productId,{...params,order_uuid:reservation.order_uuid});
     } catch (error) {
       await refundWalletAfterFailedOrder(reservation);
       throw error;
