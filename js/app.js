@@ -1,5 +1,7 @@
 const state = {
     products: [],
+    productsLoaded: false,
+    productsLoadingPromise: null,
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -630,6 +632,21 @@ function getGameGroups(gameTitle) {
 }
 
 function openGamesPage() {
+    if (!state.productsLoaded) {
+        const content = document.getElementById("internalPageContent");
+        const services = document.getElementById("servicesSection");
+        const internal = document.getElementById("internalPage");
+        if (services) services.hidden = true;
+        if (internal) internal.hidden = false;
+        if (content) {
+            content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات الألعاب...</p></div>';
+        }
+        loadProducts().then(function() {
+            openGamesPage();
+        }).catch(function() {});
+        return;
+    }
+
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
@@ -922,7 +939,7 @@ function renderPubgProductPicker(gameTitle, group) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-async async function submitGamePickerOrder(product, root) {
+async function submitGamePickerOrder(product, root) {
     const params = {};
     const inputs = root ? root.querySelectorAll("[data-pubg-param]") : [];
     let invalid = false;
@@ -1301,23 +1318,43 @@ function getProductCategory(product) {
 }
 
 async function loadProducts() {
+    if (state.productsLoadingPromise) return state.productsLoadingPromise;
+
     if (elements.products) {
         elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>جاري تحميل الخدمات...</p></div>";
     }
-    try {
-        const response = await fetch(BACKEND_URL + "/api/products", {headers:{Accept:"application/json"}});
-        const data = await response.json();
-        if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر تحميل المنتجات");
-        state.products = Array.isArray(data.products) ? data.products : [];
-        renderProducts();
-    } catch (error) {
-        console.error("Products load error:", error);
-        if (elements.products) {
-            elements.products.innerHTML = "<div class=\"products-loading\"><p>تعذر تحميل المنتجات حاليًا.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">إعادة المحاولة</button></div>";
-            const retry = document.getElementById("retryProducts");
-            if (retry) retry.addEventListener("click", loadProducts);
+
+    state.productsLoaded = false;
+    state.productsLoadingPromise = (async function() {
+        try {
+            const response = await fetch(BACKEND_URL + "/api/products", {
+                headers:{Accept:"application/json"},
+                cache:"no-store"
+            });
+            const data = await response.json();
+            if (!response.ok || data.status === "ERROR") {
+                throw new Error(data.message || "تعذر تحميل المنتجات");
+            }
+
+            state.products = Array.isArray(data.products) ? data.products : [];
+            state.productsLoaded = true;
+            renderProducts();
+            return state.products;
+        } catch (error) {
+            state.productsLoaded = false;
+            console.error("Products load error:", error);
+            if (elements.products) {
+                elements.products.innerHTML = "<div class=\"products-loading\"><p>تعذر تحميل المنتجات حاليًا.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">إعادة المحاولة</button></div>";
+                const retry = document.getElementById("retryProducts");
+                if (retry) retry.addEventListener("click", loadProducts, {once:true});
+            }
+            throw error;
+        } finally {
+            state.productsLoadingPromise = null;
         }
-    }
+    })();
+
+    return state.productsLoadingPromise;
 }
 
 function renderProducts() {
