@@ -41,6 +41,9 @@ const adminSettings = {
 
 const adminLoginAttempts = new Map();
 const customerLoginAttempts = new Map();
+const googleOAuthStates = new Map();
+const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
+const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
 
 app.use(express.json({ limit: "1mb" }));
 
@@ -282,10 +285,11 @@ app.post("/api/customer/register", async (req, res) => {
     }
 
     const customerId = "CUS-" + crypto.randomUUID();
-    await query(
-      "INSERT INTO customers(customer_id,name,email,password_hash) VALUES($1,$2,$3,$4)",
+    const inserted = await query(
+      "INSERT INTO customers(customer_id,name,email,password_hash) VALUES($1,$2,$3,$4) RETURNING customer_number",
       [customerId, name, email, hashPassword(password)]
     );
+    const customerNumber = inserted.rows[0].customer_number;
 
     const token = crypto.randomBytes(32).toString("hex");
     await createCustomerSession(
@@ -303,7 +307,7 @@ app.post("/api/customer/register", async (req, res) => {
 
     res.status(201).json({
       status: "OK",
-      customer: { customer_id: customerId, name, email }
+      customer: { customer_id: String(customerNumber), customer_number: Number(customerNumber), name, email }
     });
   } catch (error) {
     console.error("Customer register error:", error);
@@ -326,7 +330,7 @@ app.post("/api/customer/login", async (req, res) => {
     const email = String(req.body?.email || "").trim().toLowerCase();
     const password = String(req.body?.password || "");
     const result = await query(
-      "SELECT customer_id,name,email,password_hash,active FROM customers WHERE LOWER(email)=LOWER($1)",
+      "SELECT customer_id,customer_number,name,email,password_hash,active FROM customers WHERE LOWER(email)=LOWER($1)",
       [email]
     );
     const customer = result.rows[0];
@@ -362,7 +366,8 @@ app.post("/api/customer/login", async (req, res) => {
     res.json({
       status: "OK",
       customer: {
-        customer_id: customer.customer_id,
+        customer_id: String(customer.customer_number),
+        customer_number: Number(customer.customer_number),
         name: customer.name,
         email: customer.email
       }
@@ -375,13 +380,57 @@ app.post("/api/customer/login", async (req, res) => {
 
 app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
   const result = await query(
-    "SELECT customer_id,name,email,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
     [req.customer.customer_id]
   );
   if (!result.rows[0]) {
     return res.status(401).json({ status: "ERROR", message: "الحساب غير موجود." });
   }
-  res.json({ status: "OK", customer: result.rows[0] });
+  const customer = result.rows[0];
+  customer.customer_id = String(customer.customer_number);
+  customer.customer_number = Number(customer.customer_number);
+  res.json({ status: "OK", customer });
+});
+
+app.get("/api/customer/google", (req, res) => {
+  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(503).send("تسجيل الدخول عبر Google غير مهيأ بعد.");
+  const state = crypto.randomBytes(24).toString("hex");
+  googleOAuthStates.set(state, Date.now() + 10 * 60 * 1000);
+  const redirectUri = req.protocol + "://" + req.get("host") + "/api/customer/google/callback";
+  const params = new URLSearchParams({client_id:GOOGLE_CLIENT_ID,redirect_uri:redirectUri,response_type:"code",scope:"openid email profile",state,access_type:"online",prompt:"select_account"});
+  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString());
+});
+
+app.get("/api/customer/google/callback", async (req, res) => {
+  const state = String(req.query.state || "");
+  const expires = googleOAuthStates.get(state);
+  googleOAuthStates.delete(state);
+  if (!expires || expires < Date.now() || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(400).send("جلسة Google غير صالحة أو تسجيل الدخول غير مهيأ.");
+  try {
+    const redirectUri = req.protocol + "://" + req.get("host") + "/api/customer/google/callback";
+    const tokenResponse = await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code:String(req.query.code||""),client_id:GOOGLE_CLIENT_ID,client_secret:GOOGLE_CLIENT_SECRET,redirect_uri:redirectUri,grant_type:"authorization_code"})});
+    const tokens = await tokenResponse.json();
+    if (!tokenResponse.ok || !tokens.access_token) throw new Error("تعذر الحصول على رمز Google.");
+    const userResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo",{headers:{Authorization:"Bearer "+tokens.access_token}});
+    const googleUser = await userResponse.json();
+    if (!userResponse.ok || !googleUser.email) throw new Error("تعذر قراءة حساب Google.");
+    const email = String(googleUser.email).trim().toLowerCase();
+    let result = await query("SELECT customer_id,customer_number,name,email,active FROM customers WHERE LOWER(email)=LOWER($1)",[email]);
+    let customer = result.rows[0];
+    if (customer && !customer.active) return res.status(403).send("هذا الحساب غير فعال.");
+    if (!customer) {
+      const internalId = "CUS-" + crypto.randomUUID();
+      result = await query("INSERT INTO customers(customer_id,name,email,password_hash) VALUES($1,$2,$3,NULL) RETURNING customer_id,customer_number,name,email,active",[internalId,String(googleUser.name||"عميل").slice(0,80),email]);
+      customer = result.rows[0];
+    }
+    const token = crypto.randomBytes(32).toString("hex");
+    await createCustomerSession(token, customer.customer_id, new Date(Date.now()+30*24*60*60*1000));
+    res.setHeader("Set-Cookie","nabd_customer_session="+token+"; HttpOnly; Path=/; SameSite=Lax; Max-Age=2592000"+(process.env.NODE_ENV==="production"?"; Secure":""));
+    res.redirect("/");
+  } catch (error) {
+    console.error("Google login error:", error);
+    res.status(500).send("تعذر تسجيل الدخول عبر Google.");
+  }
 });
 
 app.post("/api/customer/logout", requireCustomer, async (req, res) => {
