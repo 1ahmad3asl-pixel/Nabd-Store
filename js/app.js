@@ -9,7 +9,7 @@ const state = {
     searchQuery: ""
 };
 
-const BACKEND_URL = "https://nabd-store-1.onrender.com";
+const BACKEND_URL = "";
 
 const elements = {
     products: document.getElementById("products"),
