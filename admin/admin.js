@@ -1733,13 +1733,8 @@ function getStatusHtml(status) {
 }
 
 function formatAdminPrice(value) {
-
-    const number =
-        Number(value) || 0;
-
-    return "$" +
-        number.toFixed(2);
-
+    const number = Number(value) || 0;
+    return "$" + number.toFixed(3);
 }
 
 function setText(id, value) {
