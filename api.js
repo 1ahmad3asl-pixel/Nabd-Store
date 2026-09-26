@@ -36,7 +36,19 @@ async function nemerRequest(endpoint, options = {}) {
 }
 
 async function getNemerProducts() {
-    return await nemerRequest("/client/api/products");
+    const response = await nemerRequest("/client/api/products");
+
+    // Nemer may return the product array directly or wrap it in
+    // data/products/results. Normalize it here so every local endpoint
+    // receives the same array shape.
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.products)) return response.products;
+    if (Array.isArray(response?.data)) return response.data;
+    if (Array.isArray(response?.results)) return response.results;
+    if (Array.isArray(response?.data?.products)) return response.data.products;
+    if (Array.isArray(response?.data?.results)) return response.data.results;
+
+    return [];
 }
 
 async function getNemerProfile() {
