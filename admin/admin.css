@@ -313,3 +313,9 @@ html[data-theme="light"] th{background:#fff8df;color:#8f6900}
     .admin-tabs{width:min(290px,86vw)!important;}
     .admin-header{padding-right:62px!important;}
 }
+
+/* ===== تحسين قائمة الإدارة الجانبية ===== */
+.admin-menu-button{font-size:28px;line-height:1;font-weight:900;}
+.admin-theme-nav-item{cursor:pointer!important;}
+.admin-theme-nav-item span:first-child{width:22px;text-align:center;flex:0 0 22px;}
+.admin-theme-nav-item span:last-child{display:inline-flex;gap:4px;align-items:center;}
