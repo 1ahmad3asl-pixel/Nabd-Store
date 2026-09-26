@@ -431,7 +431,12 @@ app.post("/api/orders", async (req, res) => {
             order_uuid: crypto.randomUUID()
         };
 
-        const order = await createNemerOrder(
+                const customerAuth = await getCustomerAuth(req);
+        if (!customerAuth) {
+            return res.status(401).json({ status: "ERROR", message: "يجب تسجيل الدخول قبل الشراء." });
+        }
+
+const order = await createNemerOrder(
             product_id,
             orderParams
         );
