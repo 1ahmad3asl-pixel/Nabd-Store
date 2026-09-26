@@ -119,7 +119,7 @@ const adminState = {
         store_name: "Nabd-Store",
         currency: "USD",
         currency_decimals: 3,
-        font_family: "Amasis MT Pro"
+        font_family: "Dubai Medium"
     }
 };
 
@@ -1303,7 +1303,7 @@ function initializeAppearanceSettings() {
     const saveAppearance=document.getElementById("saveAppearanceSettings");
     if(saveAppearance) saveAppearance.addEventListener("click",async function(){
         try{
-            const font=getValue("adminFont")||"Amasis MT Pro";
+            const font=getValue("adminFont")||"Dubai Medium";
             await ADMIN_API.updateSettings({font_family:font});
             adminState.settings.font_family=font;
             applyAdminFont();
@@ -1417,9 +1417,9 @@ function updateSettingsUI() {
 
     setValue("storeCurrency", adminState.settings.currency ?? "USD");
     setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
-    setValue("adminFont", adminState.settings.font_family ?? "Amasis MT Pro");
-    applyAdminFont(adminState.settings.font_family ?? "Amasis MT Pro");
-    setText("adminFontPreview", adminState.settings.font_family ?? "Amasis MT Pro");
+    setValue("adminFont", adminState.settings.font_family ?? "Dubai Medium");
+    applyAdminFont(adminState.settings.font_family ?? "Dubai Medium");
+    setText("adminFontPreview", adminState.settings.font_family ?? "Dubai Medium");
     setText("adminDecimalsPreview", (Number(adminState.settings.currency_decimals ?? 3) === 2 ? "2 خانتان عشريتان" : "3 خانات عشرية"));
 
     setText(
@@ -1428,7 +1428,7 @@ function updateSettingsUI() {
     );
 
     setText("productProfitRate", profit + "%");
-    setText("adminFontPreview", adminState.settings.font_family ?? "Amasis MT Pro");
+    setText("adminFontPreview", adminState.settings.font_family ?? "Dubai Medium");
     const currency = String(adminState.settings.currency || "USD");
     const currencyNames = {USD:"USD ($)",EUR:"EUR (€)",TRY:"TRY (₺)",SAR:"SAR",AED:"AED"};
     setText("adminCurrencyPreview", currencyNames[currency] || currency);
@@ -1436,8 +1436,8 @@ function updateSettingsUI() {
 }
 
 function applyAdminFont(font) {
-    const allowed = ["Amasis MT Pro", "Tahoma", "Arial"];
-    const selected = allowed.includes(String(font)) ? String(font) : "Amasis MT Pro";
+    const allowed = ["Dubai Medium", "Tahoma", "Arial"];
+    const selected = allowed.includes(String(font)) ? String(font) : "Dubai Medium";
     document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
 }
 
@@ -1519,7 +1519,7 @@ async function saveStoreSettings() {
 
             currency: currency ? currency.value : "USD",
             currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3),
-            font_family: document.getElementById("adminFont")?.value || "Amasis MT Pro"
+            font_family: document.getElementById("adminFont")?.value || "Dubai Medium"
 
         });
 
@@ -1528,7 +1528,7 @@ async function saveStoreSettings() {
             store_name: name ? name.value.trim() : adminState.settings.store_name,
             currency: currency ? currency.value : "USD",
             currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3),
-            font_family: document.getElementById("adminFont")?.value || "Amasis MT Pro"
+            font_family: document.getElementById("adminFont")?.value || "Dubai Medium"
         };
         updateSettingsUI();
 
