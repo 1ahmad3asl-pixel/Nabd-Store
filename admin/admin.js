@@ -1422,7 +1422,7 @@ function updateSettingsUI() {
     setValue("storeCurrency", adminState.settings.currency ?? "USD");
     setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
     setValue("adminFont", adminState.settings.font_family ?? "Dubai Medium");
-    setValue("dhikrItems", Array.isArray(adminState.settings.dhikr_items) ? adminState.settings.dhikr_items.join("\n") : "لا إله إلا الله\nالله أكبر\nسبحان الله\nالحمد لله");
+    setValue("dhikrItems", Array.isArray(adminState.settings.dhikr_items) ? adminState.settings.dhikr_items.join("\n") : "سبحان اللّٰه\nالحمد للّٰه\nلا إله إلا اللّٰه\nاللّٰه أكبر");
     applyAdminFont(adminState.settings.font_family ?? "Dubai Medium");
     setText("adminFontPreview", adminState.settings.font_family ?? "Dubai Medium");
     setText("adminDecimalsPreview", (Number(adminState.settings.currency_decimals ?? 3) === 2 ? "2 خانتان عشريتان" : "3 خانات عشرية"));
@@ -1466,7 +1466,7 @@ async function saveDhikrSettings() {
         const data = await ADMIN_API.updateSettings({dhikr_items: items});
         adminState.settings = {...adminState.settings, ...(data.settings || {}), dhikr_items: items};
         updateSettingsUI();
-        showAdminToast("تم حفظ شريط الأذكار.");
+        showAdminToast("تم حفظ شريط الإعلانات.");
     } catch (error) {
         console.error(error);
         showAdminToast(error.message || "تعذر حفظ شريط الأذكار.");
