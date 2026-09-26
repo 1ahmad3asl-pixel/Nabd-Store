@@ -1001,15 +1001,36 @@ function openProductModal(product) {
     const params = Array.isArray(product.params) ? product.params : [];
     const fields = params.map(function(label, index) {
         const safeLabel = escapeHtml(String(label || "البيانات"));
-        return "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">" + safeLabel + "</label><input id=\"param_" + index + "\" type=\"text\" placeholder=\"" + safeLabel + "\" autocomplete=\"off\">";
+        return '<div class="order-field">' +
+            '<label for="param_' + index + '">' + safeLabel + '</label>' +
+            '<input id="param_' + index + '" type="text" placeholder="أدخل ' + safeLabel + '" autocomplete="off">' +
+            '</div>';
     }).join("");
 
-    showModal("شراء المنتج",
-        "<div><h3 style=\"margin-bottom:8px;\">" + escapeHtml(product.name || "منتج") + "</h3><p style=\"margin-bottom:12px;\">السعر: <strong>" + formatMoney(product.price) + "</strong></p>" + fields + "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">الكمية</label><input id=\"orderQty\" type=\"number\" min=\"" + Number(product.qty_values?.min || 1) + "\" max=\"" + Number(product.qty_values?.max || 999999999) + "\" value=\"" + Number(product.qty_values?.min || 1) + "\"><button class=\"buy-btn\" id=\"confirmProductOrder\" type=\"button\" style=\"margin-top:16px;\">تأكيد الطلب</button></div>"
+    const minQty = Number(product.qty_values?.min || 1);
+    const maxQty = Number(product.qty_values?.max || 999999999);
+    const price = Number(product.price) || 0;
+
+    showModal("تأكيد عملية الشراء",
+        '<div class="order-form">' +
+            '<div class="order-product-name">' + escapeHtml(product.name || "منتج") + '</div>' +
+            fields +
+            '<div class="order-field">' +
+                '<label for="orderQty">الكمية</label>' +
+                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" value="' + minQty + '" inputmode="numeric">' +
+            '</div>' +
+            '<div class="order-price-row">' +
+                '<span>السعر</span>' +
+                '<strong id="orderPrice">' + formatMoney(price) + '</strong>' +
+            '</div>' +
+            '<button class="buy-btn order-confirm-btn" id="confirmProductOrder" type="button">تأكيد عملية الشراء</button>' +
+        '</div>'
     );
 
     const confirm = document.getElementById("confirmProductOrder");
-    if (confirm) confirm.addEventListener("click", function() { submitProductOrder(product); });
+    if (confirm) confirm.addEventListener("click", function() {
+        submitProductOrder(product);
+    });
 }
 
 async function submitProductOrder(product) {
