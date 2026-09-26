@@ -672,7 +672,15 @@ function openGamesPage() {
         }
         loadProducts().then(function() {
             openGamesPage();
-        }).catch(function() {});
+        }).catch(function() {
+            if (content) {
+                content.innerHTML = '<div class="products-loading"><p>تعذر تحميل ألعاب المتجر حاليًا.</p><button class="buy-btn" type="button" id="retryGamesProducts">إعادة المحاولة</button></div>';
+                const retry = document.getElementById("retryGamesProducts");
+                if (retry) retry.addEventListener("click", function() {
+                    loadProducts().then(openGamesPage).catch(function() {});
+                }, {once:true});
+            }
+        });
         return;
     }
 
@@ -1358,10 +1366,23 @@ async function loadProducts() {
     state.productsLoaded = false;
     state.productsLoadingPromise = (async function() {
         try {
-            const response = await fetch(BACKEND_URL + "/api/products", {
-                headers:{Accept:"application/json"},
-                cache:"no-store"
-            });
+            const controller = new AbortController();
+            const timeout = setTimeout(function() { controller.abort(); }, 15000);
+            let response;
+            try {
+                response = await fetch(BACKEND_URL + "/api/products", {
+                    headers:{Accept:"application/json"},
+                    cache:"no-store",
+                    signal: controller.signal
+                });
+            } catch (error) {
+                if (error && error.name === "AbortError") {
+                    throw new Error("انتهت مهلة تحميل منتجات المتجر.");
+                }
+                throw error;
+            } finally {
+                clearTimeout(timeout);
+            }
             const data = await response.json();
             if (!response.ok || data.status === "ERROR") {
                 throw new Error(data.message || "تعذر تحميل المنتجات");
