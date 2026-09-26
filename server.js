@@ -47,6 +47,7 @@ const adminSettings = {
 
 const adminLoginAttempts = new Map();
 const customerLoginAttempts = new Map();
+const orderRateLimits = new Map();
 const googleOAuthStates = new Map();
 const COOKIE_SECURE = process.env.COOKIE_SECURE !== "false";
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
@@ -869,19 +870,46 @@ app.get("/api/products", async (req, res) => {
 
 app.post("/api/orders", requireCustomer, async (req, res) => {
   try {
-    const productId = req.body?.product_id;
-    const params = req.body?.params && typeof req.body.params === "object" ? req.body.params : {};
+    const productId = String(req.body?.product_id || "").trim();
+    const rawParams = req.body?.params && typeof req.body.params === "object" && !Array.isArray(req.body.params)
+      ? req.body.params
+      : {};
     const qty = Number(req.body?.qty || 1);
-    if (!productId) return res.status(400).json({status:"ERROR",message:"product_id مطلوب."});
+    if (!productId || productId.length > 120) return res.status(400).json({status:"ERROR",message:"معرّف المنتج غير صالح."});
     if (!Number.isInteger(qty) || qty < 1 || qty > 1000000) return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
+
+    const now = Date.now();
+    const previousOrderAt = orderRateLimits.get(req.customer.customer_id) || 0;
+    if (now - previousOrderAt < 2000) {
+      return res.status(429).json({status:"ERROR",message:"تم إرسال طلب آخر للتو. انتظر لحظات ثم حاول مجددًا."});
+    }
+    orderRateLimits.set(req.customer.customer_id, now);
 
     const products = await getNemerProducts();
     const product = Array.isArray(products) ? products.find(item => String(item.id) === String(productId)) : null;
     if (!product) return res.status(404).json({status:"ERROR",message:"المنتج غير موجود."});
     if (product.available === false || product.available === 0) return res.status(400).json({status:"ERROR",message:"المنتج غير متاح حاليًا."});
 
-    await loadSettings();
     const apiPrice = Number(product.price || 0);
+    if (!Number.isFinite(apiPrice) || apiPrice < 0) return res.status(400).json({status:"ERROR",message:"سعر المنتج غير صالح."});
+
+    const minQty = Number(product.qty_values?.min);
+    const maxQty = Number(product.qty_values?.max);
+    if (Number.isFinite(minQty) && qty < minQty) return res.status(400).json({status:"ERROR",message:"الكمية أقل من الحد الأدنى للمنتج."});
+    if (Number.isFinite(maxQty) && qty > maxQty) return res.status(400).json({status:"ERROR",message:"الكمية أكبر من الحد الأقصى للمنتج."});
+
+    const allowedParams = Array.isArray(product.params) ? new Set(product.params.map(String)) : null;
+    const params = {};
+    const entries = Object.entries(rawParams);
+    if (entries.length > 20) return res.status(400).json({status:"ERROR",message:"عدد بيانات الطلب كبير جدًا."});
+    for (const [key, value] of entries) {
+      if (allowedParams && !allowedParams.has(String(key))) continue;
+      const textValue = String(value ?? "").trim();
+      if (textValue.length > 500) return res.status(400).json({status:"ERROR",message:"إحدى بيانات الطلب طويلة جدًا."});
+      if (textValue) params[String(key)] = textValue;
+    }
+
+    await loadSettings();
     const baseSalePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
 
     const reservation = await withTransaction(async (client) => {
