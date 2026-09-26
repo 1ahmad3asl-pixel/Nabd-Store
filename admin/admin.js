@@ -1745,7 +1745,7 @@ function getStatusHtml(status) {
 
 function formatAdminPrice(value) {
     const number = Number(value) || 0;
-    const decimals = Math.max(0, Math.min(3, Number(adminState.settings.currency_decimals ?? 3)));
+    const decimals = 3;
     const currency = String(adminState.settings.currency || "USD");
     const symbols = {USD:"$",EUR:"€",TRY:"₺",SAR:"﷼",AED:"د.إ"};
     return (symbols[currency] || currency + " ") + number.toFixed(decimals);
