@@ -1320,6 +1320,8 @@ html[data-theme="light"] .drawer .theme-toggle{color:var(--text);}
 html[data-theme="dark"] .drawer .theme-toggle{color:var(--text);}
 
 
+}
+
 /* ========================= FULL STORE THEME OVERRIDES ========================= */
 /* Light = white + gold, Dark = black + gold. All store surfaces follow the selected theme. */
 html[data-theme="light"]{
