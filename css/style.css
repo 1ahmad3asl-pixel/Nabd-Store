@@ -2493,3 +2493,61 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
   color:rgba(143,105,0,.62);
   text-shadow:0 0 8px rgba(184,134,11,.35);
 }
+
+/* ===== شريط الأذكار المتحرك ===== */
+.dhikr-bar{
+    width:100%;
+    height:72px;
+    margin:0 auto 18px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    align-items:center;
+    background:var(--card-bg,#111);
+    border:1px solid rgba(245,196,0,.28);
+    border-radius:14px;
+    box-shadow:0 5px 18px rgba(0,0,0,.12);
+    direction:ltr;
+}
+.dhikr-track{
+    display:flex;
+    align-items:center;
+    width:max-content;
+    flex:0 0 auto;
+    animation:dhikrTicker 22s linear infinite;
+    will-change:transform;
+}
+.dhikr-group{
+    display:flex;
+    align-items:center;
+    flex:0 0 auto;
+    gap:72px;
+    padding:0 36px;
+    white-space:nowrap;
+}
+.dhikr-group span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text-color,#f5f5f5);
+    font-size:clamp(22px,3vw,32px);
+    font-weight:800;
+    line-height:1;
+    white-space:nowrap;
+}
+.dhikr-group span::after{
+    content:"•";
+    margin-inline-start:72px;
+    color:#f5c400;
+}
+@keyframes dhikrTicker{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+}
+.dhikr-bar:hover .dhikr-track{animation-play-state:paused}
+@media(max-width:700px){
+    .dhikr-bar{height:62px;margin-bottom:14px;border-radius:11px}
+    .dhikr-group{gap:42px;padding:0 22px}
+    .dhikr-group span{font-size:21px}
+    .dhikr-group span::after{margin-inline-start:42px}
+}
