@@ -955,7 +955,7 @@ function renderGameProductPicker(gameTitle, group) {
                     listHtml +
                 '</div>' +
             '</div>' +
-            '<div class="pubg-selected-summary">'
+            '<div class="pubg-selected-summary">' +
                 '<span>السعر</span>' +
                 '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
             '</div>' +
