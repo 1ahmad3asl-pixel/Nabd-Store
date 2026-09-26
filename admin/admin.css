@@ -622,3 +622,10 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-menu-button::before{content:"☰";font-size:28px;line-height:1;font-weight:900;color:#080808;}
 .admin-menu-button:hover{background:transparent!important;}
 @media(max-width:600px){.admin-menu-button::before{font-size:26px;}}
+
+/* إزالة أدوات البحث الافتراضية من جميع حقول البحث */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration{display:none;-webkit-appearance:none;appearance:none;}
+input[type="search"]{-webkit-appearance:none;appearance:none;}
