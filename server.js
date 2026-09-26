@@ -44,6 +44,28 @@ const customerLoginAttempts = new Map();
 
 app.use(express.json({ limit: "1mb" }));
 
+function requireSameOrigin(req, res, next) {
+  if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
+
+  const origin = req.headers.origin;
+  if (!origin) return next();
+
+  try {
+    const originUrl = new URL(origin);
+    const forwardedHost = String(req.headers["x-forwarded-host"] || "").split(",")[0].trim();
+    const host = forwardedHost || String(req.headers.host || "").split(",")[0].trim();
+    if (!host || originUrl.host !== host || !["http:", "https:"].includes(originUrl.protocol)) {
+      return res.status(403).json({ status: "ERROR", message: "مصدر الطلب غير مسموح." });
+    }
+  } catch {
+    return res.status(403).json({ status: "ERROR", message: "مصدر الطلب غير صالح." });
+  }
+
+  next();
+}
+
+app.use(requireSameOrigin);
+
 function securityHeaders(res) {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
