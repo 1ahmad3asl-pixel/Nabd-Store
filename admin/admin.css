@@ -600,3 +600,54 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-layout{padding-top:70px !important;}
 .admin-main{width:100% !important;margin:0 !important;}
 @media(max-width:700px){.admin-header{padding-right:62px !important;}.admin-menu-button{top:10px !important;right:10px !important;width:40px !important;height:40px !important;}.admin-tabs.admin-drawer{width:min(290px,86vw) !important;}}
+
+
+/* ===== شريط الإدارة العلوي: اسم المتجر + الرصيد + قائمة ☰ ===== */
+.admin-header{
+    height:64px!important;
+    padding:0 14px!important;
+    display:grid!important;
+    grid-template-columns:1fr auto 1fr!important;
+    align-items:center!important;
+    gap:12px!important;
+}
+.admin-brand{
+    grid-column:1!important;
+    justify-self:start!important;
+    font-size:21px!important;
+    line-height:1!important;
+}
+.admin-balance{
+    grid-column:2!important;
+    justify-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:6px!important;
+    margin:0!important;
+    font-size:13px!important;
+    font-weight:800!important;
+}
+.admin-balance strong{font-size:20px!important;margin:0!important;}
+.admin-menu-button{
+    position:static!important;
+    grid-column:3!important;
+    justify-self:end!important;
+    width:40px!important;
+    height:40px!important;
+    margin:0!important;
+    background:rgba(0,0,0,.10)!important;
+    border:0!important;
+    border-radius:9px!important;
+    font-size:27px!important;
+    line-height:1!important;
+}
+.admin-header-actions{display:none!important;}
+.admin-layout{padding-top:64px!important;}
+@media(max-width:600px){
+    .admin-header{height:62px!important;padding:0 10px!important;grid-template-columns:1fr auto 1fr!important;gap:7px!important;}
+    .admin-brand{font-size:17px!important;}
+    .admin-balance{font-size:10px!important;gap:4px!important;}
+    .admin-balance strong{font-size:16px!important;}
+    .admin-menu-button{width:38px!important;height:38px!important;font-size:25px!important;}
+    .admin-layout{padding-top:62px!important;}
+}
