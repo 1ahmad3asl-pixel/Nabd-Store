@@ -192,17 +192,14 @@ font-size:15px;
 font-weight:bold;
 }
 .search-box input::placeholder{ color:#8a93a2; }
-.search-icon{ width:52px; min-width:52px;
-height:100%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-color:var(--primary);
-
-font-size:21px;
-}
+.search-icon{display:none;}
+/* إخفاء أدوات البحث الافتراضية والاكتفاء بحقل الكتابة */
+.search-box input[type="search"]::-webkit-search-decoration,
+.search-box input[type="search"]::-webkit-search-cancel-button,
+.search-box input[type="search"]::-webkit-search-results-button,
+.search-box input[type="search"]::-webkit-search-results-decoration{display:none;-webkit-appearance:none;appearance:none;}
+.search-box input[type="search"]{-webkit-appearance:none;appearance:none;}
+.clear-search{display:none!important;}
 /* ========================= OVERLAY ========================= */
 .overlay{ position:fixed; inset:0;
 background:rgba(0,0,0,.45);
