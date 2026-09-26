@@ -110,7 +110,18 @@ const adminState = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+
+    try {
+        const response = await fetch("/api/admin/auth/me", { headers: { "Accept": "application/json" } });
+        if (!response.ok) {
+            window.location.href = "login.html";
+            return;
+        }
+    } catch (error) {
+        window.location.href = "login.html";
+        return;
+    }
 
     initializeAdminNavigation();
     initializeAdminMenu();
