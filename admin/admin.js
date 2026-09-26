@@ -270,23 +270,32 @@ function updateAdminThemeButton() {
     setText("adminThemeStatus", dark ? "ليلي" : "نهاري");
 }
 function initializeAdminMenu() {
+    const button = document.getElementById("menuButton");
+    const sidebar = document.getElementById("adminTabs");
+    const overlay = document.getElementById("adminMenuOverlay");
+    const closeButton = document.getElementById("closeMenuButton");
 
-    const button =
-        document.getElementById("menuButton");
+    if (!button || !sidebar) return;
 
-    const sidebar =
-        document.getElementById("sidebar");
-
-    if (button && sidebar) {
-
-        button.addEventListener("click", function () {
-
-            sidebar.classList.toggle("active");
-
-        });
-
+    function setMenu(open) {
+        sidebar.classList.toggle("open", open);
+        if (overlay) overlay.classList.toggle("open", open);
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+        button.textContent = open ? "×" : "☰";
     }
 
+    button.addEventListener("click", function () {
+        setMenu(!sidebar.classList.contains("open"));
+    });
+
+    if (closeButton) closeButton.addEventListener("click", () => setMenu(false));
+    if (overlay) overlay.addEventListener("click", () => setMenu(false));
+
+    sidebar.querySelectorAll(".admin-nav-item").forEach(function(item) {
+        item.addEventListener("click", function() {
+            setMenu(false);
+        });
+    });
 }
 
 function initializeDashboard() {
