@@ -456,6 +456,26 @@ app.post("/api/orders", async (req, res) => {
             orderParams
         );
 
+        const apiPrice = Number(product.price || 0);
+        const salePrice = apiPrice * (
+            1 + Number(adminSettings.profit_rate || 0) / 100
+        );
+        const orderRecord = {
+            id: order?.id ?? order?.order_id ?? orderParams.order_uuid,
+            order_id: order?.id ?? order?.order_id ?? orderParams.order_uuid,
+            customer_id: req.body.customer_id || "guest",
+            product_id: product.id,
+            product_name: product.name || "",
+            api_price: Number(apiPrice.toFixed(4)),
+            price: Number(salePrice.toFixed(4)),
+            profit: Number((salePrice - apiPrice).toFixed(4)),
+            discount: 0,
+            status: order?.status || "pending",
+            created_at: new Date().toISOString()
+        };
+
+        adminOrders.push(orderRecord);
+
         res.json({
             status: "OK",
             store: STORE_NAME,
