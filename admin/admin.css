@@ -492,3 +492,23 @@ th{background:#1b1b1b;color:#f5c400;}
     .admin-nav{padding:0 7px;}
     .admin-nav-item{padding:12px 11px;font-size:11px;}
 }
+
+/* Admin unified header and tabs */
+.admin-header{height:64px;background:var(--primary);color:#080808;border-bottom:1px solid var(--primary-dark);box-shadow:0 2px 12px rgba(0,0,0,.18);padding:0 18px;}
+.admin-brand{color:#080808;font-size:21px;}
+.admin-balance{background:rgba(0,0,0,.10);color:#080808;border:1px solid rgba(0,0,0,.12);border-radius:10px;padding:8px 12px;font-size:12px;}
+.admin-balance strong{font-size:18px;color:#080808;}
+.admin-layout{display:block;min-height:calc(100vh - 64px);padding-top:0;}
+.admin-sidebar{display:none;}
+.admin-tabs{position:fixed;top:64px;right:0;left:0;z-index:950;height:58px;display:flex;align-items:stretch;gap:4px;padding:7px 12px;overflow-x:auto;background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 3px 14px rgba(0,0,0,.12);scrollbar-width:none;}
+.admin-tabs::-webkit-scrollbar{display:none;}
+.admin-tabs .admin-nav-item{flex:0 0 auto;width:auto;min-width:88px;justify-content:center;text-align:center;gap:6px;padding:9px 13px;border-radius:9px;border:0;font-size:12px;white-space:nowrap;}
+.admin-tabs .admin-nav-item.active{background:var(--primary);color:#080808;border-right:0;box-shadow:none;}
+.admin-tabs .admin-nav-item:hover{background:var(--primary-light);color:var(--primary);}
+.admin-nav-logout{flex:0 0 auto;margin-right:auto;min-width:72px;border:0;border-radius:9px;background:transparent;color:var(--danger);font-family:inherit;cursor:pointer;padding:9px 12px;font-size:12px;}
+.admin-nav-logout:hover{background:#2a1111;}
+.admin-main{width:100%;margin:0;padding:148px 22px 28px;}
+.stat-card,.admin-card{background:var(--white);}
+input,select,textarea{background:var(--white);color:var(--text);}
+@media(max-width:800px){.admin-menu-button{display:none}.admin-tabs{height:54px;padding:6px 8px}.admin-tabs .admin-nav-item{min-width:78px;padding:8px 10px;font-size:11px}.admin-main{padding:132px 15px 20px}.admin-brand{font-size:17px}.admin-balance{display:block;padding:6px 9px}.admin-balance strong{font-size:16px}}
+@media(max-width:600px){.admin-header{height:60px;padding:0 12px}.admin-tabs{top:60px}.admin-main{padding-top:128px}.admin-brand{font-size:15px}.admin-balance{font-size:10px}.admin-balance strong{font-size:15px}}
