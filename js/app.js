@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeModal();
     initializeSounds();
     initializeSearch();
+    initializeDhikrTicker();
     initializeTheme();
     initializeWhatsAppHitArea();
 
@@ -53,6 +54,37 @@ document.addEventListener("DOMContentLoaded", function () {
     // وتُحمّل بيانات المنتجات فقط عند الحاجة.
 });
 
+
+/* =========================
+   DHIKR TICKER
+========================= */
+const DEFAULT_DHIKR_ITEMS = ["لا إله إلا الله","الله أكبر","سبحان الله","الحمد لله"];
+
+function renderDhikrTicker(items) {
+    const track = document.getElementById("dhikrTrack");
+    if (!track) return;
+    const safeItems = (Array.isArray(items) ? items : DEFAULT_DHIKR_ITEMS)
+        .map(function(item){ return String(item || "").trim(); })
+        .filter(Boolean)
+        .slice(0, 12);
+    const finalItems = safeItems.length ? safeItems : DEFAULT_DHIKR_ITEMS;
+    const group = finalItems.map(function(item){
+        return "<span>" + escapeHtml(item) + "</span>";
+    }).join("");
+    track.innerHTML = '<div class="dhikr-group">' + group + '</div><div class="dhikr-group" aria-hidden="true">' + group + '</div>';
+}
+
+async function initializeDhikrTicker() {
+    renderDhikrTicker(DEFAULT_DHIKR_ITEMS);
+    try {
+        const response = await fetch(BACKEND_URL + "/api/store-settings", {headers:{Accept:"application/json"}, cache:"no-store"});
+        if (!response.ok) return;
+        const data = await response.json();
+        if (Array.isArray(data.dhikr_items)) renderDhikrTicker(data.dhikr_items);
+    } catch (error) {
+        console.warn("Dhikr settings load skipped:", error);
+    }
+}
 
 /* =========================
    SOUNDS
