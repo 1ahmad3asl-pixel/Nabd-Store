@@ -659,7 +659,6 @@ app.get("/api/admin/customers/:id/wallet", async (req, res) => {
        FROM transactions
        WHERE customer_id=c.customer_id
        ORDER BY created_at DESC
-       LIMIT 100
      ) t ON TRUE
      WHERE c.customer_id=$1
      GROUP BY c.customer_id,c.customer_number,c.name,c.email,c.balance`,
