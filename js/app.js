@@ -631,34 +631,40 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
-async function loadOfficialGameImages(tiles) {
+async function loadCachedGameImages(tiles) {
     const list = Array.isArray(tiles) ? tiles : [];
-    const titles = list.map(function(tile) { return String(tile.title || "").trim(); }).filter(Boolean);
-    if (!titles.length) return;
+    if (!list.length) return;
 
     try {
-        const response = await fetch(
-            BACKEND_URL + "/api/game-icons?titles=" + encodeURIComponent(titles.join("|")),
-            {headers:{Accept:"application/json"}, cache:"no-store"}
-        );
-        const data = await response.json();
-        if (!response.ok || data.status === "ERROR" || !data.icons) return;
+        const response = await fetch("/assets/games/index.json", {
+            headers: {Accept: "application/json"},
+            cache: "force-cache"
+        });
+        if (!response.ok) return;
+
+        const manifest = await response.json();
+        if (!manifest || typeof manifest !== "object") return;
 
         list.forEach(function(tile) {
-            const image = data.icons[tile.title];
+            const image = manifest[tile.title];
             if (!image) return;
+
             const card = document.querySelector(
                 '.game-category-tile[data-game-title="' + CSS.escape(tile.title) + '"]'
             );
             if (!card) return;
+
             const imageBox = card.querySelector(".game-tile-image");
             if (!imageBox) return;
-            imageBox.innerHTML = '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
+
+            imageBox.innerHTML =
+                '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
         });
     } catch (error) {
-        console.warn("Official game images unavailable:", error);
+        console.warn("Cached game images unavailable:", error);
     }
 }
+
 
 function openGamesPage() {
     if (!state.productsLoaded) {
