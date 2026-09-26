@@ -14,7 +14,7 @@ document.addEventListener("click",function(event){
         const customer=data.customer||{};
         const name=document.getElementById("menuUserName");
         const id=document.getElementById("menuCustomerId");
-        if(name) name.textContent=customer.name||"عميل";
-        if(id) id.textContent=customer.customer_id||"";
+        if(name) name.textContent=(customer.name||"عميل") + (customer.phone_country ? " · "+customer.phone_country : "");
+        if(id) id.textContent=customer.customer_id ? "ID: "+customer.customer_id : "";
     }catch(e){}
 })();
