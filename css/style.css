@@ -8,13 +8,7 @@
  * أو نضيف ملفات الخطوط لاحقًا داخل المشروع.
  */
 
-font-family:
-    "Amasis MT Pro Black",
-    "Amasis MT Pro",
-    "ERAS BOLD ITC",
-    Arial,
-    Tahoma,
-    sans-serif;
+font-family:"Dubai Medium","Dubai",Arial,Tahoma,sans-serif;
 }
 :root{ --primary:#f5c400; --primary-dark:#c99f00; --primary-light:#fff8d6; --background:#090909; --text:#f5f5f5; --muted:#a8a8a8; --white:#141414; --border:#292929; --success:#22c55e; --danger:#ef4444; --shadow:0 4px 18px rgba(0,0,0,.45); }
 html{ scroll-behavior:smooth; }
@@ -23,9 +17,7 @@ body{ background:var(--background); color:var(--text); min-height:100vh; overflo
  * العربية تعتمد على Amasis
  */
 font-family:
-    "Amasis MT Pro Black",
-    "Amasis MT Pro",
-    Tahoma,
+    "Dubai Medium","Dubai",Tahoma,
     Arial,
     sans-serif;
 }
@@ -33,7 +25,7 @@ button, input, textarea, select{ font-family:inherit; }
 button, a{ -webkit-tap-highlight-color:transparent; }
 button{ touch-action:manipulation; }
 /* ========================= ENGLISH FONT ========================= */
-.header-logo, .drawer-logo, .hero h1, .footer-logo{ font-family: "ERAS BOLD ITC", "Eras Bold ITC", "Amasis MT Pro Black", Arial, sans-serif;
+.header-logo, .drawer-logo, .hero h1, .footer-logo{ font-family:inherit;
 font-weight:900;
 letter-spacing:.2px;
 }
@@ -84,11 +76,7 @@ min-width:82px;
 user-select:none;
 }
 .wallet strong{ direction:ltr; display:inline-block;
-font-family:
-    "ERAS BOLD ITC",
-    "Eras Bold ITC",
-    Arial,
-    sans-serif;
+font-family:inherit;
 
 font-size:19px;
 font-weight:900;
@@ -406,11 +394,7 @@ opacity:.9;
 .hero-balance strong{ direction:ltr;
 display:block;
 
-font-family:
-    "ERAS BOLD ITC",
-    "Eras Bold ITC",
-    Arial,
-    sans-serif;
+font-family:inherit;
 
 font-size:23px;
 
@@ -617,11 +601,7 @@ min-height:42px;
 margin-bottom:13px;
 }
 .price{ color:var(--primary);
-font-family:
-    "ERAS BOLD ITC",
-    "Eras Bold ITC",
-    Arial,
-    sans-serif;
+font-family:inherit;
 
 font-size:18px;
 
@@ -865,11 +845,7 @@ box-shadow:var(--shadow);
 }
 /* ========================= CURRENCY ========================= */
 .currency-usd{ direction:ltr;
-font-family:
-    "ERAS BOLD ITC",
-    "Eras Bold ITC",
-    Arial,
-    sans-serif;
+font-family:inherit;
 
 font-weight:900;
 
@@ -878,9 +854,7 @@ font-variant-numeric:
 }
 .currency-syp{ direction:rtl;
 font-family:
-    "Amasis MT Pro Black",
-    "Amasis MT Pro",
-    Tahoma,
+    "Dubai Medium","Dubai",Tahoma,
     Arial,
     sans-serif;
 
@@ -1424,3 +1398,7 @@ html[data-theme="dark"] .settings-header{border-bottom-color:#292929;}
 html[data-theme="light"] .slider{background:#d9d9d9;}
 html[data-theme="dark"] .slider{background:#333;}
 
+
+/* الخط الموحد للمشروع: Dubai Medium */
+@font-face{font-family:"Dubai Medium";src:local("Dubai Medium"),local("Dubai");font-style:normal;font-weight:500;font-display:swap}
+*{font-family:"Dubai Medium","Dubai",Arial,Tahoma,sans-serif!important}
