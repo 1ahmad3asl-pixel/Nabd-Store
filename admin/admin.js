@@ -1434,7 +1434,7 @@ function updateSettingsUI() {
 }
 
 function applyAdminFont(font) {
-    const allowed = ["Dubai Medium", "Tahoma", "Arial"];
+    const allowed = ["Dubai Medium"];
     const selected = allowed.includes(String(font)) ? String(font) : "Dubai Medium";
     document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
 }
