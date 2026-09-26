@@ -915,7 +915,9 @@ function renderGameProductPicker(gameTitle, group) {
     const robloxImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
     const image = isPubgGame(gameTitle)
         ? "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480"
-        : (isRoblox ? robloxImage : (group.image || (firstProduct && firstProduct.category_img) || ""));
+        : (isRoblox
+            ? ((firstProduct && firstProduct.category_img) || robloxImage)
+            : (group.image || (firstProduct && firstProduct.category_img) || ""));
     const imageSource = image
         ? (String(image).startsWith("http") ? image : BACKEND_URL + image)
         : "";
