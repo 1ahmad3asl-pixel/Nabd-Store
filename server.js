@@ -49,6 +49,7 @@ const adminLoginAttempts = new Map();
 const customerLoginAttempts = new Map();
 const orderRateLimits = new Map();
 const googleOAuthStates = new Map();
+const gameIconCache = new Map();
 const COOKIE_SECURE = process.env.COOKIE_SECURE !== "false";
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
@@ -833,6 +834,67 @@ app.get("/api/store", (req, res) => {
     currency: adminSettings.currency,
     profit_rate: Number(adminSettings.profit_rate)
   });
+});
+
+app.get("/api/game-icons", async (req, res) => {
+  try {
+    const raw = String(req.query.titles || "");
+    const titles = Array.from(new Set(
+      raw.split("|")
+        .map(value => String(value || "").trim())
+        .filter(Boolean)
+        .slice(0, 120)
+    ));
+
+    const icons = {};
+    await Promise.all(titles.map(async title => {
+      const cached = gameIconCache.get(title);
+      if (cached && cached.expiresAt > Date.now()) {
+        icons[title] = cached.url;
+        return;
+      }
+
+      try {
+        const url = "https://play.google.com/store/search?q=" +
+          encodeURIComponent(title) + "&c=apps&hl=en&gl=US";
+        const response = await fetch(url, {
+          headers: {
+            "Accept": "text/html,application/xhtml+xml",
+            "User-Agent": "Mozilla/5.0 (Android 14; Mobile) AppleWebKit/537.36 Chrome/140 Safari/537.36"
+          },
+          signal: AbortSignal.timeout(8000)
+        });
+        if (!response.ok) return;
+
+        const html = await response.text();
+        const matches = [];
+        const regex = /https:\/\/play-lh\.googleusercontent\.com\/[^"'\\\s<]+/g;
+        let match;
+        while ((match = regex.exec(html)) && matches.length < 20) {
+          const imageUrl = match[0]
+            .replace(/\\u003d/g, "=")
+            .replace(/\\u0026/g, "&");
+          if (!matches.includes(imageUrl)) matches.push(imageUrl);
+        }
+
+        const image = matches[0] || "";
+        if (image) {
+          gameIconCache.set(title, {
+            url: image,
+            expiresAt: Date.now() + 24 * 60 * 60 * 1000
+          });
+          icons[title] = image;
+        }
+      } catch (error) {
+        console.warn("Game icon lookup failed:", title, error.message);
+      }
+    }));
+
+    res.json({status:"OK", icons});
+  } catch (error) {
+    console.error("Game icons error:", error);
+    res.status(500).json({status:"ERROR", message:"تعذر تحميل صور الألعاب الرسمية"});
+  }
 });
 
 app.get("/api/products", async (req, res) => {
