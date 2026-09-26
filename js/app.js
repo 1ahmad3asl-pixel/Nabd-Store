@@ -648,3 +648,145 @@ function handleAction(action) {
 
                 </div>
                 `
+
+            );
+
+            break;
+
+        default:
+            showModal("نبض ستور", "<div class=\"empty-state\"><h3>القسم غير متاح حاليًا</h3><p>سيتم تفعيل هذه الخدمة قريبًا.</p></div>");
+    }
+}
+
+function updateBalance(value) {
+    const amount = Number(value) || 0;
+    state.balance = amount;
+    if (elements.balance) elements.balance.textContent = amount.toFixed(2);
+    if (elements.heroBalance) elements.heroBalance.textContent = amount.toFixed(2);
+}
+
+function showModal(title, body) {
+    if (!elements.modal || !elements.modalBody) return;
+    elements.modalBody.innerHTML = "<h2 style=\"margin-bottom:18px;\">" + escapeHtml(title) + "</h2>" + body;
+    elements.modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+    if (!elements.modal) return;
+    elements.modal.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function escapeHtml(value) {
+    return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+function getProductCategory(product) {
+    const text = String(product.category_name || product.name || "").toLowerCase();
+    if (/جواكر|فري فاير|free fire|ببجي|pubg|لودو|blood strike|روبلوكس|roblox|كلاش|clash|فالورانت|valorant|minecraft|ماينكرافت|fifa|فورتنايت|fortnite/.test(text)) return "games";
+    if (/انستغرام|instagram|فيس بوك|facebook|تيك توك|tiktok|تلجرام|telegram|وتساب|whatsapp|واتساب|سناب|snapchat|كواي|kwai|يوتيوب|youtube|تويتر|twitter/.test(text)) return "social";
+    if (/رقم|وحدات|رصيد|شحن|استرداد رصيد|mtn|syriatel|زين|شامنا/.test(text)) return "numbers";
+    return "other";
+}
+
+async function loadProducts() {
+    if (elements.products) {
+        elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>جاري تحميل الخدمات...</p></div>";
+    }
+    try {
+        const response = await fetch(BACKEND_URL + "/api/products", {headers:{Accept:"application/json"}});
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر تحميل المنتجات");
+        state.products = Array.isArray(data.products) ? data.products : [];
+        renderProducts();
+    } catch (error) {
+        console.error("Products load error:", error);
+        if (elements.products) {
+            elements.products.innerHTML = "<div class=\"products-loading\"><p>تعذر تحميل المنتجات حاليًا.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">إعادة المحاولة</button></div>";
+            const retry = document.getElementById("retryProducts");
+            if (retry) retry.addEventListener("click", loadProducts);
+        }
+    }
+}
+
+function renderProducts() {
+    if (!elements.products) return;
+    const query = state.searchQuery;
+    const filtered = state.products.filter(function(product) {
+        const categoryMatch = state.selectedCategory === "all" || getProductCategory(product) === state.selectedCategory;
+        const searchable = (String(product.name || "") + " " + String(product.category_name || "")).toLowerCase();
+        return categoryMatch && (!query || searchable.includes(query));
+    });
+
+    if (!filtered.length) {
+        elements.products.innerHTML = "<div class=\"products-loading\"><p>لا توجد منتجات مطابقة.</p></div>";
+        return;
+    }
+
+    elements.products.innerHTML = filtered.map(function(product) {
+        const available = product.available !== false && product.available !== 0;
+        const price = Number(product.price) || 0;
+        const image = product.category_img || "";
+        const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
+        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">$" + price.toFixed(4) + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (available ? "" : "disabled") + ">" + (available ? "شراء الآن" : "غير متوفر") + "</button></article>";
+    }).join("");
+
+    elements.products.querySelectorAll(".buy-btn[data-product-id]").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const product = state.products.find(function(item) { return String(item.id) === String(button.getAttribute("data-product-id")); });
+            if (product) openProductModal(product);
+        });
+    });
+}
+
+function openProductModal(product) {
+    const params = Array.isArray(product.params) ? product.params : [];
+    const fields = params.map(function(label, index) {
+        const safeLabel = escapeHtml(String(label || "البيانات"));
+        return "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">" + safeLabel + "</label><input id=\"param_" + index + "\" type=\"text\" placeholder=\"" + safeLabel + "\" autocomplete=\"off\">";
+    }).join("");
+
+    showModal("شراء المنتج",
+        "<div><h3 style=\"margin-bottom:8px;\">" + escapeHtml(product.name || "منتج") + "</h3><p style=\"margin-bottom:12px;\">السعر: <strong>$" + (Number(product.price) || 0).toFixed(4) + "</strong></p>" + fields + "<label style=\"display:block;margin:12px 0 6px;font-weight:bold;\">الكمية</label><input id=\"orderQty\" type=\"number\" min=\"" + Number(product.qty_values?.min || 1) + "\" max=\"" + Number(product.qty_values?.max || 999999999) + "\" value=\"" + Number(product.qty_values?.min || 1) + "\"><button class=\"buy-btn\" id=\"confirmProductOrder\" type=\"button\" style=\"margin-top:16px;\">تأكيد الطلب</button></div>"
+    );
+
+    const confirm = document.getElementById("confirmProductOrder");
+    if (confirm) confirm.addEventListener("click", function() { submitProductOrder(product); });
+}
+
+async function submitProductOrder(product) {
+    const params = {};
+    (Array.isArray(product.params) ? product.params : []).forEach(function(label, index) {
+        const input = document.getElementById("param_" + index);
+        if (input && input.value.trim()) params[label] = input.value.trim();
+    });
+    const qtyInput = document.getElementById("orderQty");
+    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
+    const confirm = document.getElementById("confirmProductOrder");
+    if (confirm) confirm.disabled = true;
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/orders", {
+            method: "POST",
+            headers: {"Accept":"application/json","Content-Type":"application/json"},
+            body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+        });
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR") throw new Error(data.message || "تعذر إنشاء الطلب");
+        closeModal();
+        showToast("تم إنشاء الطلب بنجاح.");
+    } catch (error) {
+        console.error("Order error:", error);
+        showToast(error.message || "تعذر إنشاء الطلب.");
+        if (confirm) confirm.disabled = false;
+    }
+}
+
+function showToast(message) {
+    if (!elements.toast) return;
+    elements.toast.textContent = message;
+    elements.toast.classList.add("show");
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(function() { elements.toast.classList.remove("show"); }, 3000);
+}
