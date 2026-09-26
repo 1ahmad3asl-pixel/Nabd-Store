@@ -759,10 +759,13 @@ function renderPubgParamFields(product) {
     }
 
     return params.map(function(label, index) {
-        const safeLabel = escapeHtml(getDisplayParamLabel(label));
+        const normalized = normalizeGameText(label);
+        const isFighterId = normalized.includes("ايدي") || normalized.includes("الايدي") || normalized.includes("id");
+        const displayLabel = isFighterId ? "ID المقاتل" : getDisplayParamLabel(label);
+        const safeLabel = escapeHtml(displayLabel);
         return '<div class="pubg-field">' +
             '<label for="pubg_param_' + index + '">' + safeLabel + '</label>' +
-            '<input id="pubg_param_' + index + '" data-pubg-param="' + escapeHtml(label) + '" type="text" inputmode="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '">' +
+            '<input id="pubg_param_' + index + '" data-pubg-param="' + escapeHtml(label) + '" type="text" inputmode="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '" required aria-required="true">' +
             '</div>';
     }).join("");
 }
@@ -812,20 +815,21 @@ function renderPubgProductPicker(gameTitle, group) {
                 '<h2>' + escapeHtml(group.title) + '</h2>' +
                 '<span>' + products.length + ' منتج</span>' +
             '</div>' +
-            '<div class="pubg-field-label">البيانات المطلوبة</div>' +
-            '<div id="pubgParamFields">' +
-                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
-            '</div>' +
-            '<div class="pubg-field-label">اختر الباقة</div>' +
+            '<div class="pubg-field-label">اختر المنتج</div>' +
             '<div class="pubg-select" id="pubgSelect">' +
                 '<button class="pubg-select-trigger" type="button" aria-expanded="false" aria-controls="pubgOptions">' +
-                    '<span id="pubgSelectedName">' + escapeHtml(firstProduct ? (firstProduct.name || "اختر الباقة") : "اختر الباقة") + '</span>' +
+                    '<span id="pubgSelectedName">' + escapeHtml(firstProduct ? (firstProduct.name || "اختر المنتج") : "اختر المنتج") + '</span>' +
                     '<span class="pubg-select-arrow">▼</span>' +
                 '</button>' +
                 '<div class="pubg-options" id="pubgOptions" hidden>' +
                     listHtml +
                 '</div>' +
             '</div>' +
+            '<div class="pubg-field-label">البيانات المطلوبة</div>' +
+            '<div id="pubgParamFields">' +
+                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
+            '</div>' +
+            '<div class="pubg-field-label">اختر الباقة</div>' +
             '<div class="pubg-selected-summary">' +
                 '<span>السعر</span>' +
                 '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
