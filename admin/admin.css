@@ -327,3 +327,59 @@ html[data-theme="light"] th{background:#fff8df;color:#8f6900}
 /* ===== الخط الموحد للمشروع: Dubai Medium ===== */
 @font-face{font-family:"Dubai Medium";src:local("Dubai Medium"),local("Dubai");font-style:normal;font-weight:500;font-display:swap}
 html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif !important;}
+
+
+/* ===== الإدارة: قائمة جانبية يمين مثل واجهة المتجر ===== */
+.admin-menu-button{
+ position:fixed;top:14px;right:14px;z-index:1200;width:42px;height:42px;
+ border:0;border-radius:10px;background:transparent;color:#080808;font-size:28px;line-height:1;
+ font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.admin-menu-button:hover{background:rgba(0,0,0,.10)}
+.admin-tabs{
+ position:fixed!important;top:0!important;right:0!important;left:auto!important;
+ width:290px!important;max-width:86vw!important;height:100vh!important;
+ padding:0 0 18px!important;margin:0!important;
+ background:var(--white)!important;border:0!important;border-left:1px solid var(--border)!important;
+ box-shadow:-8px 0 28px rgba(0,0,0,.22)!important;z-index:1150!important;
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;
+ overflow-y:auto!important;overflow-x:hidden!important;transform:translateX(110%)!important;
+ transition:transform .25s ease!important;visibility:hidden;
+}
+.admin-tabs.open{transform:translateX(0)!important;visibility:visible}
+.admin-drawer-header{
+ position:sticky!important;top:0!important;right:auto!important;left:auto!important;
+ flex:0 0 78px!important;height:78px!important;padding:0 18px!important;
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ background:var(--primary)!important;color:#080808!important;border-bottom:1px solid var(--primary-dark)!important;
+ z-index:2;
+}
+.admin-drawer-header strong{font-size:20px;font-weight:900}
+.admin-menu-close{
+ width:38px;height:38px;border:0;border-radius:10px;background:rgba(0,0,0,.10);
+ color:#080808;font-size:27px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.admin-menu-close:hover{background:rgba(0,0,0,.16)}
+.admin-tabs .admin-nav-item{
+ width:calc(100% - 20px)!important;min-width:0!important;height:50px!important;flex:0 0 auto!important;
+ margin:0 10px!important;justify-content:flex-start!important;text-align:right!important;gap:12px!important;
+ padding:0 16px!important;border:0!important;border-radius:10px!important;background:transparent!important;
+ color:var(--text)!important;font-size:14px!important;font-weight:800!important;
+}
+.admin-tabs .admin-nav-item:hover{background:var(--primary-light)!important;color:var(--primary)!important}
+.admin-tabs .admin-nav-item.active{background:var(--primary-light)!important;color:var(--primary)!important;box-shadow:none!important}
+.admin-tabs .admin-nav-logout{
+ width:calc(100% - 20px)!important;margin:10px 10px 0!important;height:48px!important;
+ border:0!important;border-radius:10px!important;background:transparent!important;color:var(--danger)!important;
+ text-align:right;padding:0 16px!important;cursor:pointer;font-size:14px;font-weight:800;
+}
+.admin-tabs .admin-nav-logout:hover{background:#2a1111!important}
+.admin-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1100;opacity:0;visibility:hidden;transition:.2s}
+.admin-menu-overlay.open{opacity:1;visibility:visible}
+.admin-layout{padding-top:70px!important}
+.admin-main{padding-top:22px}
+@media(max-width:700px){
+ .admin-menu-button{top:10px;right:10px;width:40px;height:40px}
+ .admin-header{padding-right:62px!important}
+ .admin-tabs{width:min(290px,86vw)!important}
+}
