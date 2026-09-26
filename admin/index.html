@@ -28,7 +28,13 @@
 
 </header>
 
-<nav class="admin-tabs" id="adminTabs">
+<button id="menuButton" class="admin-menu-button" type="button" aria-label="فتح قائمة الإدارة" aria-expanded="false">☰</button>
+<div id="adminMenuOverlay" class="admin-menu-overlay"></div>
+<nav class="admin-tabs" id="adminTabs" aria-label="قائمة الإدارة">
+    <div class="admin-drawer-header">
+        <strong>قائمة الإدارة</strong>
+        <button id="closeMenuButton" class="admin-menu-close" type="button" aria-label="إغلاق القائمة">×</button>
+    </div>
     <button class="admin-nav-item active" data-section="dashboard"><span>📊</span><span>الرئيسية</span></button>
     <button class="admin-nav-item" data-section="customers"><span>👥</span><span>العملاء</span></button>
     <button class="admin-nav-item" data-section="orders"><span>📦</span><span>الطلبات</span></button>
