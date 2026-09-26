@@ -38,7 +38,9 @@ const ADMIN_SESSION_SECRET = String(
 const adminSettings = {
   profit_rate: PROFIT_RATE,
   store_name: STORE_NAME,
-  currency: process.env.CURRENCY || "USD"
+  currency: process.env.CURRENCY || "USD",
+  currency_decimals: 3,
+  font_family: "Amasis MT Pro"
 };
 
 const adminLoginAttempts = new Map();
@@ -117,10 +119,11 @@ function cookieValue(req, name) {
 async function loadSettings() {
   adminSettings.profit_rate = Number(await getSetting("profit_rate", PROFIT_RATE));
   adminSettings.store_name = await getSetting("store_name", STORE_NAME);
-  adminSettings.currency = await getSetting(
-    "currency",
-    process.env.CURRENCY || "USD"
-  );
+  adminSettings.currency = await getSetting("currency", process.env.CURRENCY || "USD");
+  adminSettings.currency_decimals = Number(await getSetting("currency_decimals", 3));
+  if (![2,3].includes(adminSettings.currency_decimals)) adminSettings.currency_decimals = 3;
+  adminSettings.font_family = await getSetting("font_family", "Amasis MT Pro");
+  if (!["Amasis MT Pro","Tahoma","Arial"].includes(adminSettings.font_family)) adminSettings.font_family = "Amasis MT Pro";
 }
 
 function adminToken() {
@@ -648,6 +651,24 @@ app.put("/api/admin/settings", async (req, res) => {
   if (req.body?.currency !== undefined) {
     adminSettings.currency = String(req.body.currency).trim() || "USD";
     await setSetting("currency", adminSettings.currency);
+  }
+
+  if (req.body?.currency_decimals !== undefined) {
+    const decimals = Number(req.body.currency_decimals);
+    if (![2,3].includes(decimals)) {
+      return res.status(400).json({ status: "ERROR", message: "عدد الخانات العشرية يجب أن يكون 2 أو 3." });
+    }
+    adminSettings.currency_decimals = decimals;
+    await setSetting("currency_decimals", decimals);
+  }
+
+  if (req.body?.font_family !== undefined) {
+    const font = String(req.body.font_family).trim();
+    if (!["Amasis MT Pro","Tahoma","Arial"].includes(font)) {
+      return res.status(400).json({ status: "ERROR", message: "الخط المحدد غير مدعوم." });
+    }
+    adminSettings.font_family = font;
+    await setSetting("font_family", font);
   }
 
   res.json({ status: "OK", settings: adminSettings });
