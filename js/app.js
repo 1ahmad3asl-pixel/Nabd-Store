@@ -405,10 +405,10 @@ function removeAllCategory() {
 
 const GAME_CATALOG = [
     { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"], image:"https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480" },
-    { title:"Roblox Game", aliases:["roblox"] },
+    { title:"Roblox Game", aliases:["roblox"], image:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png" },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
-    { title:"Clash of Clans", aliases:["clash of clans","clash"] },
+    { title:"Clash of Clans", aliases:["clash of clans","clash"], image:"https://static.wikia.nocookie.net/logopedia/images/c/cc/Clash_of_Clans_%28App_Icon%29.png/revision/latest?cb=20220625115343" },
     { title:"فري فاير", aliases:["free fire","فري فاير"] },
     { title:"Yalla Ludo Gold", aliases:["yalla ludo gold"] },
     { title:"Lords mobile", aliases:["lords mobile"] },
