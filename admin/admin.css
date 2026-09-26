@@ -1,1 +1,9 @@
 /* test */
+
+/* ===== HEADER FINAL ALIGNMENT ===== */
+.admin-header .admin-brand > span{display:none!important;}
+.admin-header{height:70px!important;padding:0 16px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;direction:ltr!important;}
+.admin-brand{order:1!important;flex:0 0 auto!important;margin:0!important;white-space:nowrap!important;}
+.admin-balance{order:2!important;flex:1 1 auto!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:0!important;gap:6px!important;white-space:nowrap!important;direction:rtl!important;}
+.admin-menu-button{order:3!important;position:static!important;flex:0 0 42px!important;width:42px!important;height:42px!important;margin:0!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;border-radius:10px!important;background:transparent!important;font-size:28px!important;line-height:1!important;}
+@media(max-width:600px){.admin-header{height:62px!important;padding:0 10px!important;gap:8px!important}.admin-brand{font-size:17px!important}.admin-balance{font-size:11px!important;gap:4px!important}.admin-balance strong{font-size:17px!important}.admin-menu-button{flex-basis:40px!important;width:40px!important;height:40px!important;font-size:26px!important}}
