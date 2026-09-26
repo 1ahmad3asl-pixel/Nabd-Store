@@ -322,3 +322,8 @@ html[data-theme="light"] th{background:#fff8df;color:#8f6900}
 
 /* Arabic font: Dubai Medium */
 @font-face{font-family:"Dubai Medium";src:local("Dubai Medium"),local("Dubai");font-style:normal;font-weight:500;font-display:swap}
+
+
+/* ===== الخط الموحد للمشروع: Dubai Medium ===== */
+@font-face{font-family:"Dubai Medium";src:local("Dubai Medium"),local("Dubai");font-style:normal;font-weight:500;font-display:swap}
+html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif !important;}
