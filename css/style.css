@@ -1255,3 +1255,66 @@ html[data-theme="light"] .drawer-link{color:var(--text);border-bottom-color:var(
 html[data-theme="light"] .hero{background:linear-gradient(135deg,#fff8d6,#f0d77a,#fffaf0);color:#171717;}
 html[data-theme="light"] .hero p,html[data-theme="light"] .section-heading h2{color:var(--text);}
 html[data-theme="light"] .search-box input{color:var(--text);}
+
+
+/* ========================= COMPLETE THEME SYSTEM ========================= */
+html[data-theme="light"]{
+    --primary:#b8860b;
+    --primary-dark:#8f6a08;
+    --primary-light:#fff4c2;
+    --background:#f7f7f5;
+    --text:#171717;
+    --muted:#666666;
+    --white:#ffffff;
+    --border:#dedbd2;
+    --shadow:0 4px 18px rgba(0,0,0,.10);
+}
+html[data-theme="dark"]{
+    --primary:#f5c400;
+    --primary-dark:#c99f00;
+    --primary-light:#2a250b;
+    --background:#090909;
+    --text:#f5f5f5;
+    --muted:#a8a8a8;
+    --white:#141414;
+    --border:#292929;
+    --shadow:0 4px 18px rgba(0,0,0,.45);
+}
+
+/* كل عناصر الواجهة تتبع المظهر المختار */
+body{background:var(--background);color:var(--text);transition:background .25s ease,color .25s ease;}
+.main-header{background:var(--background);color:var(--text);border-bottom-color:rgba(184,134,11,.35);}
+html[data-theme="dark"] .main-header{background:#080808;border-bottom-color:rgba(245,196,0,.35);}
+.menu-btn{color:var(--text);}
+.dhikr-bar{background:var(--white);border-bottom-color:var(--border);}
+.search-box{background:var(--white);border-color:var(--border);}
+.search-box input{color:var(--text);}
+.drawer{background:var(--white);}
+.drawer-link{color:var(--text);border-bottom-color:var(--border);}
+.drawer-link:hover,.drawer-link.active{background:var(--primary-light);color:var(--primary);}
+.hero{background:linear-gradient(135deg,#fff8d8 0%,#ffffff 55%,#fff5c9 100%);border-color:rgba(184,134,11,.30);color:#171717;box-shadow:0 8px 28px rgba(184,134,11,.10);}
+html[data-theme="dark"] .hero{background:linear-gradient(135deg,#191600 0%,#0d0d0d 55%,#171300 100%);border-color:rgba(245,196,0,.30);color:white;box-shadow:0 8px 28px rgba(245,196,0,.10);}
+.hero p{color:rgba(23,23,23,.78);}
+html[data-theme="dark"] .hero p{color:rgba(255,255,255,.9);}
+.hero-balance{background:rgba(0,0,0,.06);}
+html[data-theme="dark"] .hero-balance{background:rgba(255,255,255,.14);}
+.quick-item,.category,.product,.products-loading,.empty-state{background:var(--white);color:var(--text);}
+.category,.product{border-color:var(--border);}
+.product-icon,.category-page-icon,.user-avatar{background:var(--primary-light);}
+.product p,.drawer-user small,.main-footer,.empty-state{color:var(--muted);}
+.product:hover{border-color:rgba(184,134,11,.45);}
+html[data-theme="dark"] .product:hover{border-color:rgba(245,196,0,.45);}
+.loading-spinner{border-color:#e5e5e5;border-top-color:var(--primary);}
+html[data-theme="dark"] .loading-spinner{border-color:#343434;border-top-color:var(--primary);}
+.search-no-results,.category-page{background:var(--white);color:var(--text);}
+.modal-content{background:var(--white);color:var(--text);}
+.modal-close{background:var(--primary-light);color:var(--text);}
+.modal-content input,.modal-content textarea,.modal-content select{background:var(--background);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:10px;outline:none;}
+.modal-content input:focus,.modal-content textarea:focus,.modal-content select:focus{border-color:var(--primary);}
+.toast{background:var(--text);color:var(--background);}
+.drawer-header{background:var(--primary);color:#fff;}
+
+/* في المظهر الفاتح يكون النص الداكن واضحًا، وفي الداكن تعود الألوان السوداء/الذهبية */
+html[data-theme="light"] .buy-btn{color:#fff;}
+html[data-theme="light"] .drawer .theme-toggle{color:var(--text);}
+html[data-theme="dark"] .drawer .theme-toggle{color:var(--text);}
