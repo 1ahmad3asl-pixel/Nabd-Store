@@ -89,3 +89,98 @@ html[data-theme="light"] .admin-theme-toggle{background:rgba(255,255,255,.42);}
 .admin-header-actions{gap:8px;}
 .admin-balance{white-space:nowrap;}
 @media(max-width:600px){.admin-theme-toggle{width:34px;height:34px;font-size:15px;}.admin-balance{display:block!important;}}
+
+
+/* ========================= لوحة الإدارة المبسطة ========================= */
+.admin-header{
+    height:70px;
+    background:var(--primary);
+    color:#080808;
+    border-bottom:1px solid var(--primary-dark);
+    box-shadow:0 2px 12px rgba(0,0,0,.18);
+}
+.admin-brand{color:#080808;font-size:22px;}
+.admin-header-actions{gap:10px;}
+.admin-balance{
+    background:transparent;
+    color:#080808;
+    padding:0;
+    border-radius:0;
+    font-size:14px;
+}
+.admin-balance strong{font-size:22px;color:#080808;margin-right:4px;}
+.admin-menu-button{background:rgba(0,0,0,.10);color:#080808;}
+.admin-layout{display:block;padding-top:70px;}
+.admin-sidebar.admin-tabs{
+    position:sticky;
+    top:70px;
+    right:auto;
+    bottom:auto;
+    width:100%;
+    height:58px;
+    background:var(--white);
+    border:0;
+    border-bottom:1px solid var(--border);
+    z-index:900;
+    display:block;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+.admin-tabs .admin-profile,
+.admin-tabs .sidebar-bottom{display:none;}
+.admin-tabs .admin-nav{
+    height:100%;
+    padding:0 12px;
+    display:flex;
+    align-items:stretch;
+    justify-content:center;
+    gap:4px;
+    min-width:max-content;
+}
+.admin-tabs .admin-nav-item{
+    width:auto;
+    min-width:92px;
+    justify-content:center;
+    text-align:center;
+    gap:7px;
+    padding:10px 14px;
+    border:0;
+    border-bottom:3px solid transparent;
+    border-radius:0;
+}
+.admin-tabs .admin-nav-item.active{
+    border:0;
+    border-bottom:3px solid var(--primary);
+    box-shadow:none;
+}
+.admin-main{
+    width:100%;
+    margin-right:0;
+    padding:22px;
+}
+.admin-card,.stat-card{background:var(--white);}
+.stat-card{color:var(--text);}
+.setting-value-box{
+    border:1px solid var(--border);
+    background:var(--background);
+    color:var(--text);
+    border-radius:9px;
+    padding:11px 12px;
+    font-size:12px;
+    line-height:1.7;
+}
+.price-preview{direction:ltr;text-align:left;font-weight:800;}
+@media(max-width:800px){
+    .admin-menu-button{display:none;}
+    .admin-sidebar.admin-tabs{
+        position:sticky;
+        top:70px;
+    }
+    .admin-main{width:100%;margin-right:0;padding:18px 12px;}
+    .admin-tabs .admin-nav{justify-content:flex-start;overflow-x:auto;}
+}
+@media(max-width:600px){
+    .admin-brand{font-size:17px;}
+    .admin-balance{display:block;font-size:11px;}
+    .admin-balance strong{font-size:17px;}
+}
