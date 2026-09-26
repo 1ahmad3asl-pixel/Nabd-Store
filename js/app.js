@@ -671,15 +671,34 @@ function openGamePlaceholder(gameTitle) {
             const available = product.available !== false && product.available !== 0;
             const price = Number(product.price) || 0;
             const image = product.category_img || "";
-            const iconHtml = image
-                ? '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">'
-                : '<span class="game-product-fallback">🛍️</span>';
+            const imageHtml = image
+                ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name || gameTitle) + '" loading="lazy">'
+                : '<span>🛍️</span>';
 
-            return '<article class="product game-product-card ' + (available ? "" : "product-unavailable") + '">' +
-                '<div class="product-icon">' + iconHtml + '</div>' +
+            return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
+                '<div class="product-icon">' + imageHtml + '</div>' +
                 '<h3>' + escapeHtml(product.name || "منتج") + '</h3>' +
                 '<p>' + escapeHtml(product.category_name || "") + '</p>' +
-                '<div class="price">
+                '<div class="price">$' + price.toFixed(4) + '</div>' +
+                '<button class="buy-btn" type="button" data-game-product-id="' + escapeHtml(String(product.id)) + '" ' +
+                (available ? "" : "disabled") + '>' +
+                (available ? "شراء الآن" : "غير متوفر") +
+                '</button>' +
+                '</article>';
+        }).join("") +
+        '</div>';
+
+    content.querySelectorAll(".buy-btn[data-game-product-id]").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const product = state.products.find(function(item) {
+                return String(item.id) === String(button.getAttribute("data-game-product-id"));
+            });
+            if (product) openProductModal(product);
+        });
+    });
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
 
 function closeInternalPage() {
     const services = document.getElementById("servicesSection");
