@@ -671,11 +671,30 @@
                         </label>
 
                         <select id="storeCurrency">
+                            <option value="USD">USD - الدولار الأمريكي ($)</option>
+                            <option value="EUR">EUR - اليورو (€)</option>
+                            <option value="TRY">TRY - الليرة التركية (₺)</option>
+                            <option value="SAR">SAR - الريال السعودي</option>
+                            <option value="AED">AED - الدرهم الإماراتي</option>
+                        </select>
 
-                            <option value="USD">
-                                USD - الدولار الأمريكي
-                            </option>
+                        <label style="margin-top:14px;">
+                            عدد الخانات العشرية
+                        </label>
 
+                        <select id="currencyDecimals">
+                            <option value="3" selected>3 خانات — $0.000</option>
+                            <option value="2">2 خانتان — $0.00</option>
+                        </select>
+
+                        <label style="margin-top:14px;">
+                            خط لوحة الإدارة
+                        </label>
+
+                        <select id="adminFont">
+                            <option value="Amasis MT Pro">Amasis MT Pro</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Arial">Arial</option>
                         </select>
 
                     </div>
