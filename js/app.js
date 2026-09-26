@@ -1118,7 +1118,7 @@ function initializeSearch() {
         searchBox.innerHTML = `
             <input
                 id="productSearch"
-                type="search"
+                type="text"
                 placeholder="ابحث عن خدمة أو منتج..."
                 autocomplete="off"
             >
