@@ -439,3 +439,56 @@ td{color:var(--text);}
     .admin-nav-item{padding:0 9px;font-size:11px;}
     .admin-main{padding-top:126px;}
 }
+
+
+/* ========================= ADMIN STORE-STYLE HEADER & TABS ========================= */
+.admin-header{
+    background:var(--primary);
+    color:#090909;
+    border-bottom:1px solid var(--primary-dark);
+    box-shadow:0 2px 12px rgba(0,0,0,.18);
+}
+.admin-brand{color:#090909;}
+.admin-header-actions{gap:14px;}
+.admin-balance{background:transparent;color:#090909;padding:0;border-radius:0;font-size:13px;}
+.admin-balance strong{font-size:20px;color:#090909;margin-right:3px;}
+.admin-menu-button{display:none;background:rgba(0,0,0,.10);color:#090909;}
+.admin-layout{display:block;min-height:100vh;padding-top:68px;}
+.admin-sidebar{
+    position:sticky;top:68px;right:auto;bottom:auto;width:100%;height:auto;min-height:0;
+    background:var(--white);border-left:0;border-bottom:1px solid var(--border);z-index:800;
+    display:block;overflow:hidden;
+}
+.admin-profile,.sidebar-bottom{display:none;}
+.admin-nav{
+    width:100%;padding:0 12px;display:flex;align-items:stretch;gap:4px;overflow-x:auto;scrollbar-width:none;
+}
+.admin-nav::-webkit-scrollbar{display:none;}
+.admin-nav-item{
+    width:auto;min-width:max-content;flex:0 0 auto;justify-content:center;text-align:center;gap:7px;
+    padding:13px 15px;border-bottom:3px solid transparent;border-right:0;border-radius:0;font-size:13px;font-weight:800;
+}
+.admin-nav-item:hover,.admin-nav-item.active{
+    background:var(--primary-light);color:var(--primary);border-right:0;border-bottom-color:var(--primary);box-shadow:none;
+}
+.admin-main{width:100%;margin-right:0;padding:22px;}
+.admin-card,.stat-card,.refresh-button,.small-button{background:var(--white);}
+input,select,textarea{background:var(--white);color:var(--text);}
+input::placeholder,textarea::placeholder{color:var(--muted);}
+th{background:#1b1b1b;color:#f5c400;}
+.stat-card{color:var(--text);}
+@media(max-width:800px){
+    .admin-menu-button{display:none;}
+    .admin-sidebar{position:sticky;top:68px;right:auto;width:100%;box-shadow:none;}
+    .admin-main{width:100%;margin-right:0;padding:18px 14px;}
+}
+@media(max-width:600px){
+    .admin-header{height:62px;padding:0 12px;}
+    .admin-layout{padding-top:62px;}
+    .admin-sidebar{top:62px;}
+    .admin-brand{font-size:16px;}
+    .admin-balance{display:block;font-size:11px;}
+    .admin-balance strong{font-size:17px;}
+    .admin-nav{padding:0 7px;}
+    .admin-nav-item{padding:12px 11px;font-size:11px;}
+}
