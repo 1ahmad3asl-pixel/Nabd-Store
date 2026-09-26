@@ -660,7 +660,11 @@ async function loadCachedGameImages(tiles) {
 
             imageBox.innerHTML =
                 '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
-        })function openGamesPage() {
+        });
+    }
+}
+
+function openGamesPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
