@@ -631,6 +631,35 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
+async function loadOfficialGameImages(tiles) {
+    const list = Array.isArray(tiles) ? tiles : [];
+    const titles = list.map(function(tile) { return String(tile.title || "").trim(); }).filter(Boolean);
+    if (!titles.length) return;
+
+    try {
+        const response = await fetch(
+            BACKEND_URL + "/api/game-icons?titles=" + encodeURIComponent(titles.join("|")),
+            {headers:{Accept:"application/json"}, cache:"no-store"}
+        );
+        const data = await response.json();
+        if (!response.ok || data.status === "ERROR" || !data.icons) return;
+
+        list.forEach(function(tile) {
+            const image = data.icons[tile.title];
+            if (!image) return;
+            const card = document.querySelector(
+                '.game-category-tile[data-game-title="' + CSS.escape(tile.title) + '"]'
+            );
+            if (!card) return;
+            const imageBox = card.querySelector(".game-tile-image");
+            if (!imageBox) return;
+            imageBox.innerHTML = '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
+        });
+    } catch (error) {
+        console.warn("Official game images unavailable:", error);
+    }
+}
+
 function openGamesPage() {
     if (!state.productsLoaded) {
         const content = document.getElementById("internalPageContent");
@@ -685,6 +714,8 @@ function openGamesPage() {
         });
     });
 
+    // نعرض الصور الاحتياطية فورًا، ثم نستبدلها بصور الألعاب الرسمية من Google Play.
+    loadOfficialGameImages(tiles);
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
