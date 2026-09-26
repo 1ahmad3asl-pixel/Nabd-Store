@@ -481,10 +481,14 @@ function renderCustomers(customers) {
     table.innerHTML =
         customers.map(function (customer) {
 
-            const id =
+            const internalId =
                 customer.customer_id ??
                 customer.id ??
                 "";
+            const id =
+                customer.customer_number ??
+                customer.number ??
+                internalId;
 
             const name =
                 customer.name ??
@@ -553,7 +557,7 @@ function renderCustomers(customers) {
                     <td>
                         <button
                             class="small-button"
-                            data-customer-id="${escapeAdminHtml(String(id))}"
+                            data-customer-id="${escapeAdminHtml(String(internalId))}"
                             data-action="wallet"
                         >
                             💰 المحفظة
