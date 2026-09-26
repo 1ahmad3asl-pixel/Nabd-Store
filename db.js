@@ -26,6 +26,7 @@ async function initDb() {
 
     CREATE TABLE IF NOT EXISTS customers (
       customer_id TEXT PRIMARY KEY,
+      customer_number BIGSERIAL UNIQUE,
       name TEXT NOT NULL DEFAULT 'عميل',
       email TEXT,
       password_hash TEXT,
@@ -37,7 +38,13 @@ async function initDb() {
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
 
+    ALTER TABLE customers ADD COLUMN IF NOT EXISTS customer_number BIGINT;
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS email TEXT;
+    CREATE SEQUENCE IF NOT EXISTS customer_number_seq;
+    ALTER SEQUENCE customer_number_seq OWNED BY NONE;
+    UPDATE customers SET customer_number=nextval('customer_number_seq') WHERE customer_number IS NULL;
+    SELECT setval('customer_number_seq', GREATEST(COALESCE((SELECT MAX(customer_number) FROM customers),0),1), true);
+
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS password_hash TEXT;
     CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_email_unique
       ON customers(LOWER(email)) WHERE email IS NOT NULL;
