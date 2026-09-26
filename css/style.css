@@ -1395,3 +1395,87 @@ html[data-theme="dark"] .slider{background:#333;}
 /* الخط الموحد للمشروع: Dubai Medium */
 @font-face{font-family:"Dubai Medium";src:local("Dubai Medium"),local("Dubai");font-style:normal;font-weight:500;font-display:swap}
 *{font-family:"Dubai Medium","Dubai",Arial,Tahoma,sans-serif!important}
+
+
+/* ===== Nabd-Store main category grid: Nemer-style reference layout ===== */
+.reference-category-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px 18px!important;
+  direction:rtl!important;
+  align-items:start!important;
+  padding:6px 2px 28px!important;
+}
+.reference-category-grid .category-tile{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  color:var(--text)!important;
+}
+.reference-category-grid .category-art{
+  width:100%!important;
+  aspect-ratio:1/1!important;
+  max-width:190px!important;
+  border-radius:28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  position:relative!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(35,145,255,.48) 0,rgba(9,71,145,.34) 30%,rgba(0,12,38,.98) 72%),
+    linear-gradient(145deg,#062f70,#020b1f)!important;
+  border:3px solid #0795ff!important;
+  box-shadow:inset 0 0 0 2px rgba(93,196,255,.24),inset 0 0 26px rgba(0,137,255,.55),0 0 14px rgba(0,137,255,.34)!important;
+}
+.reference-category-grid .category-art::before{
+  content:"";position:absolute;inset:7px;border:1px solid rgba(94,196,255,.7);border-radius:22px;box-shadow:inset 0 0 18px rgba(0,174,255,.28);pointer-events:none;
+}
+.reference-category-grid .category-art::after{
+  content:"N";position:absolute;top:7px;left:10px;font-weight:900;font-size:30px;font-style:italic;color:rgba(89,191,255,.75);text-shadow:0 0 8px #008dff;pointer-events:none;
+}
+.reference-category-grid .category-art>span{
+  position:relative!important;z-index:2!important;
+  font-size:clamp(38px,9vw,68px)!important;
+  line-height:1!important;
+  filter:drop-shadow(0 0 9px rgba(0,170,255,.85))!important;
+}
+.reference-category-grid .category-title{
+  display:block!important;
+  width:100%!important;
+  min-height:2.3em!important;
+  text-align:center!important;
+  font-size:clamp(14px,3.6vw,20px)!important;
+  line-height:1.25!important;
+  font-weight:800!important;
+  color:var(--text)!important;
+  padding:0 2px!important;
+}
+.reference-heading{margin-bottom:10px!important;text-align:center!important;}
+.reference-heading .section-label{display:none!important;}
+.reference-heading h2{font-size:21px!important;margin:0!important;}
+#servicesSection{padding-top:8px!important;}
+.category-placeholder{padding:34px 18px;text-align:center;background:var(--white);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);}
+.category-placeholder-icon{font-size:64px;line-height:1;margin-bottom:16px;filter:drop-shadow(0 0 10px rgba(0,149,255,.55));}
+.category-placeholder h3{font-size:24px;margin:0 0 8px;}
+.category-placeholder p{margin:0;color:var(--muted);font-size:16px;line-height:1.7;}
+/* Match the reference homepage structure: search + category tiles. */
+.dhikr-bar,.hero,.quick-menu,.main-footer{display:none!important;}
+.search-section{margin-top:14px!important;margin-bottom:20px!important;}
+.search-box{border:2px solid #101010!important;border-radius:40px!important;min-height:72px!important;box-shadow:0 3px 12px rgba(0,0,0,.08)!important;}
+html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
+@media(max-width:600px){
+  .reference-category-grid{gap:16px 12px!important;padding-left:4px!important;padding-right:4px!important;}
+  .reference-category-grid .category-art{border-radius:24px!important;}
+  .reference-category-grid .category-art::before{border-radius:19px!important;}
+  .reference-category-grid .category-title{font-size:15px!important;}
+}
+@media(min-width:700px){.reference-category-grid{grid-template-columns:repeat(3,190px)!important;justify-content:center!important;gap:24px!important;}}
