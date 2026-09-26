@@ -265,7 +265,9 @@ function updateAdminThemeButton() {
     const toggle = document.getElementById("adminThemeToggle");
     if (!toggle) return;
     const dark = document.documentElement.dataset.theme !== "light";
-    toggle.textContent = dark ? "☀" : "☾";
+    const icon = document.getElementById("adminThemeIcon");
+    if (icon) icon.textContent = dark ? "☀️" : "🌙";
+    toggle.textContent = dark ? "☀️" : "🌙";
     toggle.title = dark ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي";
     setText("adminThemeStatus", dark ? "ليلي" : "نهاري");
 }
@@ -281,7 +283,7 @@ function initializeAdminMenu() {
         sidebar.classList.toggle("open", open);
         if (overlay) overlay.classList.toggle("open", open);
         button.setAttribute("aria-expanded", open ? "true" : "false");
-        button.textContent = open ? "×" : "☰";
+        button.textContent = open ? "×" : "⋮";
     }
 
     button.addEventListener("click", function () {
@@ -373,7 +375,7 @@ function updateDashboard(data) {
 
     setText(
         "apiBalance",
-        formatAdminPrice(
+        formatNemerBalance(
             data.api_balance ??
             data.balance ??
             0
@@ -1843,6 +1845,11 @@ function getStatusHtml(status) {
         </span>
     `;
 
+}
+
+function formatNemerBalance(value) {
+    const number = Number(value);
+    return "$" + (Number.isFinite(number) ? number : 0).toFixed(3);
 }
 
 function formatAdminPrice(value) {
