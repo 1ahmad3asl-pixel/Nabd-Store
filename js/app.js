@@ -817,7 +817,7 @@ function openGamePlaceholder(gameTitle) {
                     ? '<img src="' + robloxImage + '" alt="Roblox" loading="lazy">'
                     : (group.image
                     ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
-                    : '<span class="game-placeholder">🎮</span>');
+                    : '<span class="game-placeholder">🎮</span>'));
 
             return '<button class="game-category-tile game-product-group-card" type="button" data-game-group="' +
                 escapeHtml(group.key) + '">' +
