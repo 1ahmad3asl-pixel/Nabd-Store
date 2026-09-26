@@ -1638,3 +1638,85 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
         font-size:14px;
     }
 }
+
+
+/* ===== Game products — المستوى الثالث ===== */
+.game-products-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin:0 0 16px;
+    padding:0 2px 12px;
+    border-bottom:1px solid #e7e7e7;
+    color:#111;
+}
+.game-products-heading strong{
+    color:#8f6900;
+    font-size:14px;
+}
+.game-products-heading span{
+    font-size:18px;
+    font-weight:900;
+}
+.game-products-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+}
+.game-product-card{
+    margin:0!important;
+    min-width:0;
+    padding:12px!important;
+    border-radius:16px!important;
+}
+.game-product-card .product-icon{
+    width:100%;
+    height:auto;
+    aspect-ratio:1/1;
+    margin-bottom:9px;
+    border-radius:12px;
+    overflow:hidden;
+}
+.game-product-card .product-icon img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+.game-product-fallback{
+    font-size:42px;
+}
+.game-product-card h3{
+    font-size:14px!important;
+    line-height:1.35;
+    margin:0 0 5px!important;
+    overflow-wrap:anywhere;
+}
+.game-product-card p{
+    font-size:12px!important;
+    line-height:1.35;
+    min-height:2.7em;
+    overflow-wrap:anywhere;
+}
+.game-product-card .price{
+    font-size:15px!important;
+    margin:8px 0;
+}
+.game-product-card .buy-btn{
+    width:100%;
+}
+@media(max-width:600px){
+    .game-products-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+    }
+    .game-products-heading span{
+        font-size:16px;
+    }
+}
+@media(min-width:700px){
+    .game-products-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
