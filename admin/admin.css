@@ -546,3 +546,12 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-menu-overlay.open{opacity:1!important;visibility:visible!important;}
 .admin-menu-close{width:38px!important;height:38px!important;border:0!important;border-radius:10px!important;background:rgba(0,0,0,.10)!important;color:#080808!important;font-size:28px!important;line-height:1!important;display:flex!important;align-items:center!important;justify-content:center!important;}
 @media(max-width:700px){.admin-header{padding-right:60px!important;}.admin-menu-button{top:10px!important;right:10px!important;width:40px!important;height:40px!important;}.admin-tabs{width:min(290px,86vw)!important;}}
+
+
+/* ===== لوحة الإدارة: قائمة جانبية مثل واجهة المتجر ===== */
+.admin-drawer{position:fixed!important;top:0!important;right:-310px!important;left:auto!important;width:290px!important;max-width:86vw!important;height:100vh!important;padding:76px 14px 20px!important;margin:0!important;background:var(--white)!important;border:0!important;border-left:1px solid var(--border)!important;border-radius:0!important;box-shadow:-8px 0 30px rgba(0,0,0,.22)!important;z-index:1150!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;overflow-y:auto!important;transform:none!important;transition:right .28s ease!important}
+.admin-drawer.open{right:0!important;transform:none!important}
+.admin-menu-button{position:fixed!important;top:14px!important;right:14px!important;left:auto!important;z-index:1200!important;width:44px!important;height:44px!important;border:1px solid rgba(0,0,0,.18)!important;border-radius:11px!important;background:var(--white)!important;color:var(--text)!important;font-size:28px!important;line-height:1!important;font-weight:900!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 3px 12px rgba(0,0,0,.14)!important}
+.admin-menu-button:hover{background:var(--primary-light)!important;color:var(--primary)!important}
+.admin-drawer .admin-nav-item,.admin-drawer .admin-nav-logout{width:100%!important}
+@media(max-width:700px){.admin-menu-button{top:9px!important;right:9px!important;width:42px!important;height:42px!important}.admin-drawer{width:min(290px,86vw)!important}.admin-header{padding-right:62px!important}}
