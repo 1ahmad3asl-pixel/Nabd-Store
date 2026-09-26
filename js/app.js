@@ -829,7 +829,6 @@ function renderPubgProductPicker(gameTitle, group) {
             '<div id="pubgParamFields">' +
                 (firstProduct ? renderPubgParamFields(firstProduct) : '') +
             '</div>' +
-            '<div class="pubg-field-label">اختر الباقة</div>' +
             '<div class="pubg-selected-summary">' +
                 '<span>السعر</span>' +
                 '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
@@ -851,7 +850,7 @@ function renderPubgProductPicker(gameTitle, group) {
         const fields = document.getElementById("pubgParamFields");
         const submit = document.getElementById("pubgSubmitOrder");
 
-        if (selectedName) selectedName.textContent = product.name || "اختر الباقة";
+        if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
         if (selectedPrice) selectedPrice.textContent = formatMoney(getPubgProductPrice(product));
         if (fields) fields.innerHTML = renderPubgParamFields(product);
 
