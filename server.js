@@ -18,7 +18,6 @@ const PORT = process.env.PORT || 3000;
 const PROFIT_RATE = Number(process.env.PROFIT_RATE || 10);
 const STORE_NAME = process.env.STORE_NAME || "Nabd-Store";
 
-app.use(cors());
 app.use(express.json());
 
 /* =========================
@@ -32,6 +31,7 @@ const ADMIN_SESSION_SECRET = String(
 );
 
 const adminLoginAttempts = new Map();
+const customerLoginAttempts = new Map();
 
 function markAdminSecurityHeaders(res) {
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
@@ -489,7 +489,7 @@ const order = await createNemerOrder(
    CHECK ORDERS
 ========================= */
 
-app.get("/api/orders/check", async (req, res) => {
+app.get("/api/orders/check", requireCustomer, async (req, res) => {
     try {
         let orders = req.query.orders;
 
@@ -514,7 +514,13 @@ app.get("/api/orders/check", async (req, res) => {
             });
         }
 
-        const result = await checkNemerOrders(orders);
+        const owned = await query(
+            "SELECT order_id FROM orders WHERE customer_id=$1 AND order_id = ANY($2::text[])",
+            [req.customer.customer_id, orders.map(String)]
+        );
+        const allowed = owned.rows.map(row => String(row.order_id));
+        if (!allowed.length) return res.status(404).json({ status: "ERROR", message: "لا توجد طلبات تخص هذا الحساب." });
+        const result = await checkNemerOrders(allowed);
 
         res.json(result);
 
