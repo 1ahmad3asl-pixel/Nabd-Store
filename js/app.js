@@ -754,24 +754,33 @@ function getDisplayParamLabel(label) {
 function renderPubgParamFields(product) {
     const params = getUsableProductParams(product);
 
-    if (!params.length) {
-        return '<div class="pubg-no-params">لا توجد بيانات إضافية مطلوبة لهذا المنتج.</div>';
-    }
-
-    return params.map(function(label, index) {
+    // ببجي تحتاج حقلًا واضحًا وثابتًا للـID، ولا نعرض اسمًا داخليًا
+    // قادمًا من الكتالوج مثل "ناتج البيانات في كتالوج" للمستخدم.
+    // نستخدم مفتاح الـID الفعلي من API إن كان معروفًا، وإلا نستخدم
+    // أول باراميتر للمنتج حتى يبقى الإرسال متوافقًا مع API.
+    const idKey = params.find(function(label) {
         const normalized = normalizeGameText(label);
-        const isFighterId = normalized.includes("ايدي") || normalized.includes("الايدي") || normalized.includes("id");
-        const displayLabel = isFighterId ? "ID المقاتل" : getDisplayParamLabel(label);
-        const safeLabel = escapeHtml(displayLabel);
-        return '<div class="pubg-field">' +
-            '<label for="pubg_param_' + index + '">' + safeLabel + '</label>' +
-            '<input id="pubg_param_' + index + '" data-pubg-param="' + escapeHtml(label) + '" type="text" inputmode="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '" required aria-required="true">' +
-            '</div>';
-    }).join("");
+        return normalized.includes("ايدي") ||
+            normalized.includes("الايدي") ||
+            normalized.includes("playerid") ||
+            normalized.includes("player id") ||
+            normalized === "player";
+    }) || params[0] || "playerId";
+
+    const safeKey = escapeHtml(idKey);
+
+    return '<div class="pubg-field pubg-fighter-id-field">' +
+        '<label for="pubgFighterId">ID المقاتل</label>' +
+        '<input id="pubgFighterId" name="fighter_id" data-pubg-param="' + safeKey + '" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="أدخل ID المقاتل" required aria-required="true">' +
+        '</div>';
 }
 
 function getPubgProductPrice(product) {
-    return Number(product && product.price) || 0;
+    const value = Number(product && product.price);
+    if (Number.isFinite(value) && value >= 0) return value;
+
+    const original = Number(product && product.original_price);
+    return Number.isFinite(original) && original >= 0 ? original : 0;
 }
 
 function renderPubgProductPicker(gameTitle, group) {
