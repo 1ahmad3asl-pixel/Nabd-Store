@@ -815,6 +815,9 @@ function renderPubgProductPicker(gameTitle, group) {
                 '<h2>' + escapeHtml(group.title) + '</h2>' +
                 '<span>' + products.length + ' منتج</span>' +
             '</div>' +
+            '<div id="pubgParamFields">' +
+                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
+            '</div>' +
             '<div class="pubg-field-label">اختر المنتج</div>' +
             '<div class="pubg-select" id="pubgSelect">' +
                 '<button class="pubg-select-trigger" type="button" aria-expanded="false" aria-controls="pubgOptions">' +
@@ -825,11 +828,7 @@ function renderPubgProductPicker(gameTitle, group) {
                     listHtml +
                 '</div>' +
             '</div>' +
-            '<div class="pubg-field-label">البيانات المطلوبة</div>' +
-            '<div id="pubgParamFields">' +
-                (firstProduct ? renderPubgParamFields(firstProduct) : '') +
-            '</div>' +
-            '<div class="pubg-selected-summary">' +
+            '<div class="pubg-selected-summary">'
                 '<span>السعر</span>' +
                 '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
             '</div>' +
