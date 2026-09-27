@@ -537,10 +537,10 @@ const GAME_CATALOG = [
     { title:"Genshin Impact", aliases:["genshin impact"] },
     { title:"Super SUS", aliases:["super sus"] },
     { title:"Stumble Guys", aliases:["stumble guys"] },
-    { title:"Honkai : Star Rail", aliases:["honkai","star rail"] },
+    { title:"Honkai: Star Rail", aliases:["honkai","honkai star rail","star rail","honkai : star rail","هونكاي ستار ريل"] },
     { title:"Yalla Ludo Gold Codes", aliases:["yalla ludo gold codes"] },
     { title:"Yalla Ludo Diamonds Codes", aliases:["yalla ludo diamonds codes"] },
-    { title:"Mobile Legends Turkish", aliases:["mobile legends","mobile legends turkish"] },
+    { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mlbb","موبايل ليجندز"] },
     { title:"Hero Clash", aliases:["hero clash"] },
     { title:"Oxide : Survival Island", aliases:["oxide","survival island"] },
     { title:"King Shot", aliases:["king shot"] },
@@ -1181,8 +1181,9 @@ function renderGameParamFields(product, gameTitle) {
     const isEightBallPool = normalizedGameTitle.includes("8ball pool") || normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
     const isGenshinImpact = normalizedGameTitle.includes("genshin impact");
     const isSuperSus = normalizedGameTitle.includes("super sus");
+    const isHonkaiStarRail = normalizedGameTitle.includes("honkai") || normalizedGameTitle.includes("star rail") || normalizedGameTitle.includes("هونكاي");
     const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus;
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
