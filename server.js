@@ -1251,8 +1251,10 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
       const discount = Math.min(100, Math.max(0, Number(customer.discount || 0)));
       const priceDecimals = getPriceDecimalPlaces(product.price);
-      const unitPrice = ceilPrice(baseSalePrice * (1 - discount / 100), priceDecimals);
-      const totalPrice = unitPrice * qty;
+      // احسب السعر النهائي كاملًا مع الكمية أولًا، ثم قرّبه للأعلى.
+      // نفس totalPrice هو المبلغ الظاهر/المعتمد للخصم من المحفظة.
+      const discountedUnitPrice = baseSalePrice * (1 - discount / 100);
+      const totalPrice = ceilPrice(discountedUnitPrice * qty, priceDecimals);
       const before = Number(customer.balance || 0);
       if (!Number.isFinite(totalPrice) || totalPrice < 0) {
         const error = new Error("تعذر حساب سعر الطلب."); error.statusCode = 400; throw error;
