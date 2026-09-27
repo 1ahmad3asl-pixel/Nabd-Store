@@ -684,12 +684,14 @@ app.get("/api/admin/products", async (req, res) => {
     const products = await getNemerProducts();
     const result = Array.isArray(products)
       ? products.map(product => {
-          const apiPrice = Number(product.price || 0);
-          const salePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
+          const apiPrice = normalizeNemerPrice(product.price);
+          const salePrice = apiPrice === null
+            ? null
+            : Number((apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100)).toFixed(4));
           return {
             ...product,
-            api_price: Number(apiPrice.toFixed(4)),
-            price: Number(salePrice.toFixed(4)),
+            api_price: apiPrice,
+            price: salePrice,
             category: product.category_name || ""
           };
         })
@@ -947,6 +949,12 @@ app.post("/api/admin/notifications", async (req, res) => {
   res.json({ status: "OK", notification: result.rows[0] });
 });
 
+function normalizeNemerPrice(value) {
+  if (value === null || value === undefined || String(value).trim() === "") return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? Number(parsed.toFixed(4)) : null;
+}
+
 /* =========================
    PUBLIC STORE
 ========================= */
@@ -967,16 +975,26 @@ app.get("/api/products", async (req, res) => {
   try {
     await loadSettings();
     const products = await getNemerProducts();
+    const pricedCount = Array.isArray(products)
+      ? products.filter(product => normalizeNemerPrice(product.price) !== null).length
+      : 0;
+    console.info("Nemer products sync:", JSON.stringify({
+      total: Array.isArray(products) ? products.length : 0,
+      priced: pricedCount,
+      missing_price: Math.max(0, (Array.isArray(products) ? products.length : 0) - pricedCount)
+    }));
     const result = Array.isArray(products)
       ? products.map(product => {
-          const originalPrice = Number(product.price || 0);
-          const sellingPrice = originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
+          const originalPrice = normalizeNemerPrice(product.price);
+          const sellingPrice = originalPrice === null
+            ? null
+            : Number((originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100)).toFixed(4));
           return {
             id: product.id,
             product_id: product.product_id,
             name: product.name,
-            price: Number(sellingPrice.toFixed(4)),
-            original_price: Number(originalPrice.toFixed(4)),
+            price: sellingPrice,
+            original_price: originalPrice,
             available: product.available,
             category_name: product.category_name || "",
             category_img: product.category_img || "",
@@ -1025,8 +1043,8 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     if (!product) return res.status(404).json({status:"ERROR",message:"المنتج غير موجود."});
     if (product.available === false || product.available === 0) return res.status(400).json({status:"ERROR",message:"المنتج غير متاح حاليًا."});
 
-    const apiPrice = Number(product.price || 0);
-    if (!Number.isFinite(apiPrice) || apiPrice < 0) return res.status(400).json({status:"ERROR",message:"سعر المنتج غير صالح."});
+    const apiPrice = normalizeNemerPrice(product.price);
+    if (apiPrice === null) return res.status(400).json({status:"400",message:"سعر المنتج غير متاح حاليًا من Nemer Card."});
 
     // ببجي موبايل لا تستخدم حقل كمية: الطلب دائمًا لمنتج واحد.
     const productText = String(product.category_name || "") + " " + String(product.name || "");
