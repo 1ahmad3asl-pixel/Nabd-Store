@@ -773,6 +773,16 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("idol party")) return BACKEND_URL + "/api/game-images/idol-party";
     if (text.includes("hyper front")) return BACKEND_URL + "/api/game-images/hyper-front";
     if (text.includes("infinite lagrange")) return BACKEND_URL + "/api/game-images/infinite-lagrange";
+    if (text.includes("clash of plants")) return BACKEND_URL + "/api/game-images/clash-of-plants";
+    if (text.includes("journey renewed") || text.includes("fate fantasy")) return BACKEND_URL + "/api/game-images/journey-renewed";
+    if (text.includes("civilization") || text.includes("eras & allies")) return BACKEND_URL + "/api/game-images/civilization-eras-allies";
+    if (text.includes("kuroko street rivals") || text.includes("kuroko")) return BACKEND_URL + "/api/game-images/kuroko-street-rivals";
+    if (text.includes("cloud song") || text.includes("skywalkers")) return BACKEND_URL + "/api/game-images/cloud-song";
+    if (text.includes("king's choice") || text.includes("kings choice")) return BACKEND_URL + "/api/game-images/kings-choice-sea";
+    if (text.includes("crossfire legend")) return BACKEND_URL + "/api/game-images/crossfire-legend";
+    if (text.includes("legend of the phoenix")) return BACKEND_URL + "/api/game-images/legend-of-the-phoenix";
+    if (text.includes("legacy of discord") || text.includes("furiouswings")) return BACKEND_URL + "/api/game-images/legacy-of-discord";
+    if (text.includes("army dudes")) return BACKEND_URL + "/api/game-images/army-dudes";
     if (text.includes("hero clash") || text.includes("هيرو كلاش")) return BACKEND_URL + "/api/game-images/hero-clash";
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
