@@ -739,6 +739,9 @@ function getStoredGameImageUrl(gameTitle) {
     }
     if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return BACKEND_URL + "/api/game-images/honkai-star-rail";
     if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return BACKEND_URL + "/api/game-images/mobile-legends";
+    if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return BACKEND_URL + "/api/game-images/age-of-empires-mobile";
+    if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return BACKEND_URL + "/api/game-images/nikke";
+    if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return BACKEND_URL + "/api/game-images/division-resurgence";
     if (text.includes("whiteout survival")) {
         return BACKEND_URL + "/api/game-images/whiteout-survival";
     }
@@ -1201,6 +1204,9 @@ function renderGameParamFields(product, gameTitle) {
     const isRiseofKingdomsLostCrusade = normalizedGameTitle.includes("rise of kingdoms") || normalizedGameTitle.includes("rise of kingdoms lost crusade") || normalizedGameTitle.includes("رايز أوف كينغدومز");
     const isTopWarBattleGame = normalizedGameTitle.includes("top war") || normalizedGameTitle.includes("top war battle game") || normalizedGameTitle.includes("توب وور");
     const isTheAntsUndergroundKingdom = normalizedGameTitle.includes("the ants") || normalizedGameTitle.includes("the ants underground kingdom") || normalizedGameTitle.includes("النمل: المملكة تحت الأرض");
+    const isDivisionResurgence = normalizedGameTitle.includes("division resurgence") || normalizedGameTitle.includes("the division resurgence") || normalizedGameTitle.includes("ذا ديفيجن ريزرجنس");
+    const isGoddessofVictoryNIKKE = normalizedGameTitle.includes("goddess of victory") || normalizedGameTitle.includes("goddess of victory nikke") || normalizedGameTitle.includes("nikke") || normalizedGameTitle.includes("نيكي");
+    const isAgeOfEmpiresMobile = normalizedGameTitle.includes("age of empires mobile") || normalizedGameTitle.includes("age of empires") || normalizedGameTitle.includes("عصر الامبراطوريات موبايل");
     const isKingdomGuardTowerDefense = normalizedGameTitle.includes("kingdom guard") || normalizedGameTitle.includes("kingdom guard tower defense") || normalizedGameTitle.includes("كينغدوم غارد");
     const isWhiteoutSurvival = normalizedGameTitle.includes("whiteout survival") || normalizedGameTitle.includes("وايت أوت سيرفايفل");
     const isCallofDragons = normalizedGameTitle.includes("call of dragons") || normalizedGameTitle.includes("call of dragons: total war") || normalizedGameTitle.includes("كول أوف دراغونز");
@@ -1212,7 +1218,7 @@ function renderGameParamFields(product, gameTitle) {
     const isAFKJourney = normalizedGameTitle.includes("afk journey");
     const isZepeto = normalizedGameTitle.includes("zepeto");
     const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isRiseofKingdomsLostCrusade || isTopWarBattleGame || isTheAntsUndergroundKingdom || isKingdomGuardTowerDefense || isWhiteoutSurvival || isCallofDragons || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isRiseofKingdomsLostCrusade || isTopWarBattleGame || isTheAntsUndergroundKingdom || isDivisionResurgence || isGoddessofVictoryNIKKE || isAgeOfEmpiresMobile || isKingdomGuardTowerDefense || isWhiteoutSurvival || isCallofDragons || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
