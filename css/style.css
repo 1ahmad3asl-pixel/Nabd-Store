@@ -2791,3 +2791,144 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
         font-size:13px;
     }
 }
+
+/* =========================
+   NUMBERS — المستوى الثاني والثالث
+========================= */
+.numbers-page-note{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin:0 0 16px;
+}
+.numbers-category-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px 14px;
+    max-width:680px;
+    margin:0 auto;
+}
+.numbers-category-tile .game-tile-image{
+    border-radius:16px;
+}
+.numbers-category-tile .game-tile-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.numbers-placeholder,
+.numbers-product-placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+    font-size:38px;
+}
+.numbers-count{
+    display:block;
+    font-size:10px;
+    color:#777;
+    margin-top:2px;
+}
+.numbers-category-tile.is-disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+.numbers-product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px 12px;
+    width:100%;
+}
+.numbers-product-card{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:10px;
+    border:1px solid rgba(0,0,0,.12);
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.numbers-product-image{
+    width:100%;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:13px;
+    background:#f3f3f3;
+    margin-bottom:8px;
+}
+.numbers-product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.numbers-product-card h3{
+    width:100%;
+    margin:2px 0 4px;
+    font-size:13px;
+    line-height:1.3;
+}
+.numbers-product-card p{
+    width:100%;
+    min-height:30px;
+    margin:0 0 7px;
+    font-size:10px;
+    color:#777;
+    line-height:1.3;
+}
+.numbers-product-card .price{
+    margin-bottom:8px;
+    font-weight:700;
+}
+.numbers-product-card .buy-btn{
+    width:100%;
+}
+@media(max-width:600px){
+    .numbers-category-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:18px 9px;
+        max-width:none;
+    }
+    .numbers-category-tile .game-tile-image{
+        border-radius:12px;
+    }
+    .numbers-category-tile .game-tile-title{
+        font-size:11px;
+        line-height:1.2;
+    }
+    .numbers-count{
+        font-size:9px;
+    }
+    .numbers-product-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:14px 8px;
+    }
+    .numbers-product-card{
+        padding:6px;
+        border-radius:12px;
+    }
+    .numbers-product-image{
+        border-radius:10px;
+        margin-bottom:6px;
+    }
+    .numbers-product-card h3{
+        font-size:10px;
+        line-height:1.25;
+    }
+    .numbers-product-card p{
+        font-size:8px;
+        min-height:24px;
+    }
+    .numbers-product-card .buy-btn{
+        font-size:10px;
+        padding:7px 4px;
+    }
+}
