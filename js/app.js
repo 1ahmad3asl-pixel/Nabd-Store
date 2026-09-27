@@ -781,7 +781,7 @@ function getJawakerGroupTitle(product) {
         text.includes("s1") || text.includes("s 1") || text.includes("cum") ||
         text.includes("server") || text.includes("سيرفر") || text.includes("سرفر") ||
         text.includes("عداد جواكر سيرفر") || text.includes("jawaker server")
-    ) return "عداد جواكر سيرفر S1 وCum";
+    ) return "جواكر سيرفر S1";
 
     return "";
 }
@@ -790,7 +790,7 @@ function getJawakerGroupDefinitions() {
     return [
         { key: "jawaker|accelerator", title: "مسرع جواكر" },
         { key: "jawaker|counter-s2", title: "عداد جواكر S2" },
-        { key: "jawaker|server-s1-cum", title: "عداد جواكر سيرفر S1 وCum" }
+        { key: "jawaker|server-s1", title: "جواكر سيرفر S1" }
     ];
 }
 
@@ -1224,7 +1224,7 @@ function renderGameProductPicker(gameTitle, group) {
         holder.innerHTML =
             '<div class="pubg-field game-quantity-field">' +
                 '<label for="gameOrderQty">الكمية</label>' +
-                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required aria-required="true">' +
+                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" placeholder="10 آلاف - 1 مليون" inputmode="numeric" required aria-required="true">' +
             '</div>';
     }
 
