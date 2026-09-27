@@ -684,7 +684,9 @@ function getGameTiles() {
         });
         return {
             title: game.title,
-            image: game.image || (productWithImage && productWithImage.category_img) || "",
+            image: normalizeGameText(game.title).includes("ببجي") || normalizeGameText(game.title).includes("pubg")
+                ? BACKEND_URL + "/api/game-images/pubg-mobile"
+                : (game.image || (productWithImage && productWithImage.category_img) || ""),
             productCount: products.length
         };
     });
@@ -974,11 +976,15 @@ function renderGameParamFields(product) {
 }
 
 function getPubgProductPrice(product) {
-    const value = Number(product && product.price);
-    if (Number.isFinite(value) && value >= 0) return value;
-
-    const original = Number(product && product.original_price);
-    return Number.isFinite(original) && original >= 0 ? original : 0;
+    const value = product && product.price;
+    if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
+        return Number(value);
+    }
+    return null;
+}
+function formatProductPrice(product) {
+    const value = getPubgProductPrice(product);
+    return value === null ? "السعر غير متاح" : formatMoney(value);
 }
 
 function renderGameProductPicker(gameTitle, group) {
@@ -1022,11 +1028,11 @@ function renderGameProductPicker(gameTitle, group) {
 
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
-        const price = Number(product.price ?? product.original_price ?? product.api_price) || 0;
+        const price = getPubgProductPrice(product);
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
-            '<span class="pubg-option-price">' + formatMoney(price) + '</span>' +
+            '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatMoney(price)) + '</span>' +
             (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
         '</button>';
     }).join("");
@@ -1072,7 +1078,7 @@ function renderGameProductPicker(gameTitle, group) {
             '<div id="gameQuantityField"></div>' +
             '<div class="pubg-selected-summary">' +
                 '<span>السعر</span>' +
-                '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? (Number(firstProduct.price ?? firstProduct.original_price ?? firstProduct.api_price) || 0) : 0) + '</strong>' +
+                '<strong id="pubgSelectedPrice">' + (firstProduct ? formatProductPrice(firstProduct) : 'السعر غير متاح') + '</strong>' +
             '</div>' +
             '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
                 (!firstProduct || (firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
@@ -1116,7 +1122,7 @@ function renderGameProductPicker(gameTitle, group) {
         const submit = document.getElementById("pubgSubmitOrder");
 
         if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
-        if (selectedPrice) selectedPrice.textContent = formatMoney(Number(product.price ?? product.original_price ?? product.api_price) || 0);
+        if (selectedPrice) selectedPrice.textContent = formatProductPrice(product);
         if (fields) fields.innerHTML = (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
             ? renderPubgParamFields(product)
             : renderGameParamFields(product));
