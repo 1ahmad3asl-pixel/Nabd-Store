@@ -12,12 +12,11 @@
 <body>
 
 <header class="admin-header">
-    <div class="admin-brand"><strong>Nabd-Store</strong></div>
+    <button id="menuButton" class="admin-menu-button" type="button" aria-label="فتح قائمة الإدارة" aria-expanded="false">☰</button>
     <div class="admin-balance">
         <span>رصيد نمر</span>
-        <strong id="apiBalance">$0.000</strong>
+        <strong id="apiBalance">$0.0000</strong>
     </div>
-    <button id="menuButton" class="admin-menu-button" type="button" aria-label="فتح قائمة الإدارة" aria-expanded="false">☰</button>
 </header>
 <div id="adminMenuOverlay" class="admin-menu-overlay"></div>
 <nav class="admin-drawer" id="adminTabs" aria-label="قائمة الإدارة">
@@ -32,7 +31,6 @@
     <button class="admin-nav-item" data-section="wallet"><span>💰</span><span>المحفظة</span></button>
     <button class="admin-nav-item" data-section="notifications"><span>🔔</span><span>الإشعارات</span></button>
     <button class="admin-nav-item" data-section="settings"><span>⚙️</span><span>الإعدادات</span></button>
-    <button class="admin-nav-item admin-theme-nav-item" id="themeToggle" type="button"><span>🌙</span><span>الوضع الليلي</span></button>
     <button class="admin-nav-logout" id="logoutButton" type="button">🚪 تسجيل الخروج</button>
 </nav>
 
