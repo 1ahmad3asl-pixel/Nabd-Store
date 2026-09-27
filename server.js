@@ -30,6 +30,7 @@ app.disable("x-powered-by");
 app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
 const PROFIT_RATE = Number(process.env.PROFIT_RATE || 10);
+const NUMBER_PROFIT_RATE = Number(process.env.NUMBER_PROFIT_RATE || 10);
 const STORE_NAME = process.env.STORE_NAME || "Nabd-Store";
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || "").trim().toLowerCase();
 const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || "");
@@ -39,6 +40,7 @@ const ADMIN_SESSION_SECRET = String(
 
 const adminSettings = {
   profit_rate: PROFIT_RATE,
+  number_profit_rate: NUMBER_PROFIT_RATE,
   store_name: STORE_NAME,
   currency: process.env.CURRENCY || "USD",
   currency_decimals: 3,
@@ -134,6 +136,7 @@ function cookieValue(req, name) {
 
 async function loadSettings() {
   adminSettings.profit_rate = Number(await getSetting("profit_rate", PROFIT_RATE));
+  adminSettings.number_profit_rate = Number(await getSetting("number_profit_rate", NUMBER_PROFIT_RATE));
   adminSettings.store_name = await getSetting("store_name", STORE_NAME);
   adminSettings.currency = await getSetting("currency", process.env.CURRENCY || "USD");
   adminSettings.currency_decimals = Number(await getSetting("currency_decimals", 3));
@@ -149,6 +152,17 @@ async function loadSettings() {
   } catch {
     adminSettings.dhikr_items = ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"];
   }
+}
+
+function isNumberProduct(product) {
+  const text = String(product?.category_name || "") + " " + String(product?.name || "");
+  return /\b(numbers?|number|whatsapp|facebook|gmail|icloud|instagram|imo)\b|أرقام|رقم|واتساب|فيسبوك|جيميل|ايكلاود|آي كلاود|انستغرام|إنستغرام|ايمو/i.test(text);
+}
+
+function getProductProfitRate(product) {
+  return isNumberProduct(product)
+    ? Number(adminSettings.number_profit_rate || 0)
+    : Number(adminSettings.profit_rate || 0);
 }
 
 function adminToken() {
@@ -688,7 +702,7 @@ app.get("/api/admin/products", async (req, res) => {
           const salePrice = apiPrice === null
             ? null
             : ceilPrice(
-                apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100),
+                apiPrice * (1 + getProductProfitRate(product) / 100),
                 getPriceDecimalPlaces(product.price)
               );
           return {
@@ -726,6 +740,15 @@ app.put("/api/admin/settings", async (req, res) => {
     }
     adminSettings.profit_rate = profit;
     await setSetting("profit_rate", profit);
+  }
+
+  if (req.body?.number_profit_rate !== undefined) {
+    const profit = Number(req.body.number_profit_rate);
+    if (!Number.isFinite(profit) || profit < 0 || profit > 100) {
+      return res.status(400).json({ status: "ERROR", message: "نسبة ربح الأرقام يجب أن تكون بين 0 و100." });
+    }
+    adminSettings.number_profit_rate = profit;
+    await setSetting("number_profit_rate", profit);
   }
 
   if (req.body?.store_name !== undefined) {
@@ -1272,7 +1295,7 @@ app.get("/api/products", async (req, res) => {
           const sellingPrice = originalPrice === null
             ? null
             : ceilPrice(
-                originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100),
+                originalPrice * (1 + getProductProfitRate(product) / 100),
                 getPriceDecimalPlaces(product.price)
               );
           return {
@@ -1294,6 +1317,7 @@ app.get("/api/products", async (req, res) => {
     res.json({
       status: "OK",
       profit_rate: Number(adminSettings.profit_rate),
+      number_profit_rate: Number(adminSettings.number_profit_rate),
       products: result
     });
   } catch (error) {
