@@ -55,7 +55,8 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || url.pathname.startsWith(API_PREFIX)) return;
+  // لوحة الإدارة وكل ملفاتها لا تستخدم Service Worker cache إطلاقًا.
+  if (url.origin !== self.location.origin || url.pathname.startsWith(API_PREFIX) || url.pathname.startsWith("/admin")) return;
 
   if (isPublicPage(request, url) || isAsset(url)) {
     event.respondWith((async () => {
