@@ -103,6 +103,13 @@ const ADMIN_API = {
         });
     },
 
+    sendEmailBroadcast(data) {
+        return this.request("/email-broadcast", {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+    },
+
     logout() {
         return this.request("/logout", {
             method: "POST"
@@ -144,6 +151,7 @@ initializeDashboard();
     initializeProducts();
     initializeSettings();
     initializeNotifications();
+    initializeEmailBroadcast();
     initializeLogout();
 initializeAppearanceSettings();
 
@@ -191,6 +199,14 @@ function initializeAdminNavigation() {
 }
 
 function showAdminSection(section) {
+    if (section === "announcementSettings") {
+        section = "settings";
+        setTimeout(function () {
+            const tab = document.querySelector('.settings-tab[data-settings-panel="dhikrSettingsPanel"]');
+            if (tab) tab.click();
+        }, 0);
+    }
+
 
     document
         .querySelectorAll(".admin-section")
@@ -1617,6 +1633,33 @@ async function saveStoreSettings() {
 
     }
 
+}
+
+function initializeEmailBroadcast() {
+    const button = document.getElementById("sendEmailBroadcast");
+    if (!button) return;
+    button.addEventListener("click", async function () {
+        const subject = getValue("broadcastEmailSubject");
+        const message = getValue("broadcastEmailMessage");
+        if (!subject || !message) return showAdminToast("أدخل عنوان الرسالة ونصها.");
+        if (subject.length > 150 || message.length > 10000) return showAdminToast("الرسالة تتجاوز الحد المسموح.");
+        if (!window.confirm("سيتم إرسال هذه الرسالة إلى جميع العملاء الذين لديهم بريد إلكتروني صالح. هل تريد المتابعة؟")) return;
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = "⏳ جارٍ الإرسال...";
+        try {
+            const data = await ADMIN_API.sendEmailBroadcast({subject, message});
+            showAdminToast(`تم الإرسال: ${Number(data.sent||0)} | بدون بريد/غير صالح: ${Number(data.skipped||0)} | فشل: ${Number(data.failed||0)}`);
+            setValue("broadcastEmailSubject", "");
+            setValue("broadcastEmailMessage", "");
+        } catch (error) {
+            console.error(error);
+            showAdminToast(error.message || "تعذر إرسال البريد.");
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+    });
 }
 
 function initializeNotifications() {
