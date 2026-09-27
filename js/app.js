@@ -1196,27 +1196,37 @@ function getNumberGroupDefinitions() {
 
 function getNumberGroupProducts(group) {
     const aliases=(group.aliases||[]).map(normalizeGameText).filter(Boolean);
+
+    function containsToken(text, token) {
+        const normalizedText = " " + normalizeGameText(text) + " ";
+        const normalizedToken = normalizeGameText(token);
+        return !!normalizedToken && normalizedText.includes(" " + normalizedToken + " ");
+    }
+
     return state.products.filter(function(product){
         const category=normalizeGameText(product && product.category_name);
         const name=normalizeGameText(product && product.name);
         const text=(category+" "+name).trim();
 
-        // WhatsApp S1/S2 are matched from the API's actual server identity.
-        // Accept Arabic/English spelling, S1/S2, Server 1/2 and Arabic digits.
+        // WhatsApp S1/S2: match the actual server identity without allowing
+        // S1 to accidentally match S10, or server 1 to match server 10.
         if(group.key==="whatsapp-s1" || group.key==="whatsapp-s2"){
             const serverNumber=group.key==="whatsapp-s1" ? "1" : "2";
-            const hasWhatsapp=text.includes("whatsapp") || text.includes("واتساب");
+            const hasWhatsapp=containsToken(text,"whatsapp") || containsToken(text,"واتساب");
             const serverPatterns=group.key==="whatsapp-s1"
                 ? ["s1","server 1","server1","سيرفر 1","سيرفر واحد","واتساب 1"]
                 : ["s2","server 2","server2","سيرفر 2","سيرفر اثنين","سيرفر اثنان","واتساب 2"];
             const hasServer=serverPatterns.some(function(pattern){
-                return text.includes(normalizeGameText(pattern));
-            }) || new RegExp("(^|\\s)"+serverNumber+"(\\s|$)").test(text);
+                return containsToken(text, pattern);
+            }) || containsToken(text, serverNumber);
             if(hasWhatsapp && hasServer) return true;
         }
 
+        // All other number groups use exact normalized token/phrase matching.
+        // Do not use reverse matching, which can attach an unrelated product
+        // merely because its text is shorter than an alias.
         return aliases.some(function(alias){
-            return alias && (text.includes(alias) || alias.includes(text));
+            return containsToken(text, alias);
         });
     });
 }
@@ -1917,8 +1927,13 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
         const price = getGameProductPrice(product);
+        const optionImage = getProductImage(product);
+        const optionImageHtml = optionImage
+            ? '<span class="pubg-option-image"><img src="' + escapeHtml(optionImage) + '" alt="" loading="lazy"></span>'
+            : '<span class="pubg-option-image pubg-option-image-placeholder">📲</span>';
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
+            optionImageHtml +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
             '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatProductMoney(product, price)) + '</span>' +
             (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
