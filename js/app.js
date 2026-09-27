@@ -683,6 +683,8 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("jawaker") || text.includes("جواكر")) return BACKEND_URL + "/api/game-images/jawaker";
     if (text.includes("free fire") || text.includes("فري فاير")) return BACKEND_URL + "/api/game-images/free-fire";
     if (text.includes("clash of clans") || text.includes("كلاش")) return BACKEND_URL + "/api/game-images/clash-of-clans";
+    if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return BACKEND_URL + "/api/game-images/dragonheir-silent-gods";
+    if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return BACKEND_URL + "/api/game-images/cloud-song";
     return "";
 }
 
@@ -840,6 +842,8 @@ function getGameGroups(gameTitle) {
     const isJawaker = normalizedGame.includes("jawaker") || normalizedGame.includes("جواكر");
     const isFreeFire = normalizedGame.includes("free fire") || normalizedGame.includes("فري فاير");
     const isClashOfClans = normalizedGame.includes("clash of clans") || normalizedGame.includes("كلاش");
+    const isDragonheir = normalizedGame.includes("dragonheir") || normalizedGame.includes("silent gods") || normalizedGame.includes("دراغون هير");
+    const isCloudSong = normalizedGame.includes("cloud song") || normalizedGame.includes("skywalkers") || normalizedGame.includes("كلاود سونغ");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -866,7 +870,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
@@ -1109,7 +1113,9 @@ function renderGameParamFields(product, gameTitle) {
     const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
     const isFreeFire = normalizedGameTitle.includes("free fire") || normalizedGameTitle.includes("فري فاير");
     const isClashOfClans = normalizedGameTitle.includes("clash of clans") || normalizedGameTitle.includes("كلاش");
-    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans;
+    const isDragonheir = normalizedGameTitle.includes("dragonheir") || normalizedGameTitle.includes("silent gods") || normalizedGameTitle.includes("دراغون هير");
+    const isCloudSong = normalizedGameTitle.includes("cloud song") || normalizedGameTitle.includes("skywalkers") || normalizedGameTitle.includes("كلاود سونغ");
+    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
