@@ -779,7 +779,7 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
-async function loadCachedGameImages(tiles) {
+async async function loadCachedGameImages(tiles) {
     const list = Array.isArray(tiles) ? tiles : [];
     if (!list.length) return;
 
