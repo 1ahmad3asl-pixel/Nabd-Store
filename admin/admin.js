@@ -576,7 +576,10 @@ function renderCustomers(customers) {
                     </td>
 
                     <td>
-                        ${escapeAdminHtml(String(name))}
+                        <div class="customer-table-user">
+                            <span class="customer-table-avatar">${customer.avatar_url ? '<img src="'+escapeAdminHtml(String(customer.avatar_url))+'" alt="صورة العميل">' : '👤'}</span>
+                            <span>${escapeAdminHtml(String(name))}</span>
+                        </div>
                     </td>
 
                     <td>
@@ -689,7 +692,8 @@ async function openCustomerInfo(customerId) {
         const name = String(customer.name || "عميل");
         const number = customer.customer_number ?? customer.customer_id ?? customerId;
         const created = customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر";
-        const html = "<div id='customerInfoDialog' class='customer-info-dialog'><div class='customer-info-card'><div class='card-heading'><div><span>بيانات العميل</span><h2>" + escapeAdminHtml(name) + "</h2></div><button class='small-button' id='closeCustomerInfo'>إغلاق</button></div><div class='customer-info-grid'>" +
+        const avatar = customer.avatar_url ? '<img src="'+escapeAdminHtml(String(customer.avatar_url))+'" alt="صورة العميل" class="customer-info-avatar">' : '<span class="customer-info-avatar placeholder">👤</span>';
+        const html = "<div id='customerInfoDialog' class='customer-info-dialog'><div class='customer-info-card'><div class='card-heading'><div class='customer-info-title'><div>" + avatar + "</div><div><span>بيانات العميل</span><h2>" + escapeAdminHtml(name) + "</h2></div></div><button class='small-button' id='closeCustomerInfo'>إغلاق</button></div><div class='customer-info-grid'>" +
             "<div><span>رقم العميل</span><strong>" + escapeAdminHtml(String(number)) + "</strong></div>" +
             "<div><span>رقم الهاتف</span><strong dir='ltr'>" + escapeAdminHtml(phone) + "</strong></div>" +
             "<div><span>الدولة</span><strong>" + escapeAdminHtml(country) + "</strong></div>" +
