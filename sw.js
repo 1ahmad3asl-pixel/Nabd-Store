@@ -1,4 +1,4 @@
-const CACHE_VERSION = "nabd-static-v24";
+const CACHE_VERSION = "nabd-static-v25";
 const CACHE_NAME = CACHE_VERSION;
 const PAGE_TTL = 0;
 const ASSET_TTL = 7 * 24 * 60 * 60 * 1000;
