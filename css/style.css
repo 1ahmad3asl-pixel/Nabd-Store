@@ -1676,6 +1676,45 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 }
 
 
+/* =========================
+   APPLICATIONS — المستوى الثاني
+========================= */
+.app-page-note{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin:0 0 16px;
+}
+.app-server-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:22px 14px;
+    max-width:680px;
+    margin:0 auto;
+}
+.app-server-tile .game-tile-image{
+    border-radius:18px;
+}
+.app-server-tile .game-tile-title{
+    font-size:14px;
+}
+.app-level-placeholder{margin-top:18px;}
+@media(max-width:600px){
+    .app-server-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:18px 8px;
+        max-width:none;
+    }
+    .app-server-tile{gap:7px;}
+    .app-server-tile .game-tile-image{
+        border-radius:13px;
+        border-width:2px;
+    }
+    .app-server-tile .game-tile-title{
+        font-size:11px;
+        line-height:1.2;
+    }
+}
+
 /* ===== Game products — المستوى الثالث ===== */
 .game-products-heading{
     display:flex;
