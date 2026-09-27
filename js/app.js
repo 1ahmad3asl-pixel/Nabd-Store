@@ -714,6 +714,12 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
         return BACKEND_URL + "/api/game-images/marvel-rivals";
     }
+    if (text.includes("genshin impact")) {
+        return BACKEND_URL + "/api/game-images/genshin-impact";
+    }
+    if (text.includes("super sus")) {
+        return BACKEND_URL + "/api/game-images/super-sus";
+    }
     return "";
 }
 
@@ -1157,7 +1163,9 @@ function renderGameParamFields(product, gameTitle) {
     const isYallaLudoGold = normalizedGameTitle.includes("yalla ludo gold") || normalizedGameTitle.includes("يلا لودو جولد") || normalizedGameTitle.includes("يلا لودو غولد");
     const isLordsMobile = normalizedGameTitle.includes("lords mobile") || normalizedGameTitle.includes("لوردز موبايل") || normalizedGameTitle.includes("لوردس موبايل");
     const isEightBallPool = normalizedGameTitle.includes("8ball pool") || normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
-    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals;
+    const isGenshinImpact = normalizedGameTitle.includes("genshin impact");
+    const isSuperSus = normalizedGameTitle.includes("super sus");
+    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
