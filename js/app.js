@@ -1090,7 +1090,9 @@ function renderGameProductPicker(gameTitle, group) {
             '</div>' +
             '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
             '<div id="pubgParamFields">' +
-                (firstProduct ? renderGameParamFields(firstProduct) : '') +
+                (firstProduct ? (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
+                    ? renderPubgParamFields(firstProduct)
+                    : renderGameParamFields(firstProduct)) : '') +
             '</div>' +
             '<div class="pubg-field-label">اختر المنتج</div>' +
             '<div class="pubg-select" id="pubgSelect">' +
@@ -1143,7 +1145,9 @@ function renderGameProductPicker(gameTitle, group) {
 
         if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
         if (selectedPrice) selectedPrice.textContent = formatMoney(Number(product.price ?? product.original_price ?? product.api_price) || 0);
-        if (fields) fields.innerHTML = renderGameParamFields(product);
+        if (fields) fields.innerHTML = (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
+            ? renderPubgParamFields(product)
+            : renderGameParamFields(product));
         renderQuantity(product);
 
         if (submit) {
