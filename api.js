@@ -49,8 +49,19 @@ async function nemerRequest(endpoint, options = {}) {
     return data;
 }
 
+let productsCache = null;
+let productsCacheAt = 0;
+let productsRequest = null;
+const PRODUCTS_CACHE_TTL = 60000;
+
 async function getNemerProducts() {
-    const response = await nemerRequest("/client/api/products");
+    const now = Date.now();
+    if (productsCache && now - productsCacheAt < PRODUCTS_CACHE_TTL) {
+        return productsCache;
+    }
+    if (productsRequest) return productsRequest;
+
+    productsRequest = nemerRequest("/client/api/products").then(response => {
 
     // Nemer may return the product array directly or wrap it in
     // data/products/results. Normalize it here so every local endpoint
@@ -62,7 +73,21 @@ async function getNemerProducts() {
     if (Array.isArray(response?.data?.products)) return response.data.products;
     if (Array.isArray(response?.data?.results)) return response.data.results;
 
-    return [];
+    const products = Array.isArray(response) ? response
+        : Array.isArray(response?.products) ? response.products
+        : Array.isArray(response?.data) ? response.data
+        : Array.isArray(response?.results) ? response.results
+        : Array.isArray(response?.data?.products) ? response.data.products
+        : Array.isArray(response?.data?.results) ? response.data.results
+        : [];
+    productsCache = products;
+    productsCacheAt = Date.now();
+    return products;
+    }).finally(() => {
+        productsRequest = null;
+    });
+
+    return productsRequest;
 }
 
 async function getNemerProfile() {
