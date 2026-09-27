@@ -1071,6 +1071,9 @@ async function ensureLordsMobileOfficialImage() {
 async function ensureEightBallPoolOfficialImage() {
   return ensureOfficialGameImage("8-ball-pool", "com.miniclip.eightballpool", "8 Ball Pool");
 }
+async function ensureGunsOfGloryOfficialImage() {
+  return ensureOfficialGameImage("guns-of-glory", "com.diandian.gog", "Guns of Glory");
+}
 async function ensureGangsOfGloryOfficialImage() {
   return ensureOfficialGameImage("gangs-of-glory", "com.sm.gog.hw.dygame", "Gangs of Glory");
 }
@@ -1132,6 +1135,7 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"],
       "lords-mobile": ["com.igg.android.lordsmobile", "Lords Mobile"],
       "8-ball-pool": ["com.miniclip.eightballpool", "8 Ball Pool"],
+      "guns-of-glory": ["com.diandian.gog", "Guns of Glory"],
       "gangs-of-glory": ["com.sm.gog.hw.dygame", "Gangs of Glory"],
       "project-entropy": ["com.entropy.global", "Project Entropy"],
       "farlight-84": ["com.miraclegames.farlight84", "Farlight 84"],
@@ -1250,11 +1254,12 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isYallaLudoGoldProduct = /yalla\s*ludo\s*gold|يلا\s*لودو\s*غولد|يلا\s*لودو\s*جولد/i.test(productText);
     const isLordsMobileProduct = /lords\s*mobile|لوردز\s*موبايل|لوردس\s*موبايل/i.test(productText);
     const isEightBallPoolProduct = /8\s*ball\s*pool|eight\s*ball\s*pool|ثمانية\s*بول|ثمنية\s*بول/i.test(productText);
+    const isGunsOfGloryProduct = /gun\s*of\s*glory|guns\s*of\s*glory|بندقية\s*المجد/i.test(productText);
     const isGangsOfGloryProduct = /gangs\s*of\s*glory|غانغز\s*او?ف\s*غلوري|غانجز\s*أوف\s*غلوري/i.test(productText);
     const isProjectEntropyProduct = /project\s*entropy|بروجكت\s*انتروبي|بروجيكت\s*انتروبي/i.test(productText);
     const isFarlight84Product = /farlight\s*84|farlight84|فارلايت\s*84/i.test(productText);
     const isMarvelRivalsProduct = /marvel\s*rivals|مارفل\s*ريفيلز|مارفل\s*رايفلز|مارفل\s*ريفالز/i.test(productText);
-    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGangsOfGloryProduct || isProjectEntropyProduct || isFarlight84Product || isMarvelRivalsProduct;
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGunsOfGloryProduct || isGangsOfGloryProduct || isProjectEntropyProduct || isFarlight84Product || isMarvelRivalsProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
@@ -1548,6 +1553,7 @@ initDb()
     await ensureYallaLudoOfficialImage();
     await ensureLordsMobileOfficialImage();
     await ensureEightBallPoolOfficialImage();
+    await ensureGunsOfGloryOfficialImage();
     await ensureGangsOfGloryOfficialImage();
     await ensureProjectEntropyOfficialImage();
     await ensureFarlight84OfficialImage();
