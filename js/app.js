@@ -907,44 +907,68 @@ function renderGameProductPicker(gameTitle, group) {
     if (title) title.textContent = group.title;
     if (icon) icon.textContent = "🎮";
 
-    const products = group.products || [];
+    const products = Array.isArray(group.products) ? group.products : [];
     const availableProducts = products.filter(function(product) {
         return product.available !== false && product.available !== 0;
     });
     const firstProduct = availableProducts[0] || products[0] || null;
 
+    function getProductQuantityConfig(product) {
+        const values = product && product.qty_values ? product.qty_values : {};
+        const minRaw = Number(values.min);
+        const maxRaw = Number(values.max);
+        const stepRaw = Number(values.step);
+        const hasQuantity =
+            Number.isFinite(minRaw) ||
+            Number.isFinite(maxRaw) ||
+            Number.isFinite(stepRaw) ||
+            !!(product && (product.qty || product.quantity));
+
+        return {
+            enabled: hasQuantity,
+            min: Number.isFinite(minRaw) && minRaw > 0 ? minRaw : 1,
+            max: Number.isFinite(maxRaw) && maxRaw > 0 ? maxRaw : 999999999,
+            step: Number.isFinite(stepRaw) && stepRaw > 0 ? stepRaw : 1
+        };
+    }
+
+    function getProductImage(product) {
+        const source = (product && product.category_img) || group.image || "";
+        return source ? (String(source).startsWith("http") ? source : BACKEND_URL + source) : "";
+    }
+
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
-        const price = formatMoney(getPubgProductPrice(product));
+        const price = Number(product.price ?? product.original_price ?? product.api_price) || 0;
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
-            '<span class="pubg-option-price">' + price + '</span>' +
+            '<span class="pubg-option-price">' + formatMoney(price) + '</span>' +
             (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
-            '</button>';
+        '</button>';
     }).join("");
 
-    const robloxImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
-    const image = isPubgGame(gameTitle)
-        ? "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480"
-        : (isRoblox
-            ? ((firstProduct && firstProduct.category_img) || robloxImage)
-            : (group.image || (firstProduct && firstProduct.category_img) || ""));
+    const gameImage = getGameTiles().find(function(tile) {
+        return tile.title === gameTitle;
+    });
+    const image = getProductImage(firstProduct) ||
+        (gameImage && gameImage.image ? gameImage.image : "");
     const imageSource = image
         ? (String(image).startsWith("http") ? image : BACKEND_URL + image)
         : "";
     const imageHtml = imageSource
-        ? '<img src="' + escapeHtml(imageSource) + '" alt="" loading="lazy">'
+        ? '<img src="' + escapeHtml(imageSource) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
 
     content.innerHTML =
-        '<div class="pubg-picker">' +
+        '<div class="pubg-picker universal-game-picker">' +
             '<button class="pubg-back" type="button" id="pubgBackToGroups">← العودة إلى التصنيفات</button>' +
             '<div class="pubg-picker-head">' +
                 '<div class="pubg-picker-image">' + imageHtml + '</div>' +
                 '<h2>' + escapeHtml(group.title) + '</h2>' +
                 '<span>' + products.length + ' منتج</span>' +
             '</div>' +
+            '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
             '<div id="pubgParamFields">' +
                 (firstProduct ? renderGameParamFields(firstProduct) : '') +
             '</div>' +
@@ -958,9 +982,10 @@ function renderGameProductPicker(gameTitle, group) {
                     listHtml +
                 '</div>' +
             '</div>' +
+            '<div id="gameQuantityField"></div>' +
             '<div class="pubg-selected-summary">' +
                 '<span>السعر</span>' +
-                '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? getPubgProductPrice(firstProduct) : 0) + '</strong>' +
+                '<strong id="pubgSelectedPrice">' + formatMoney(firstProduct ? (Number(firstProduct.price ?? firstProduct.original_price ?? firstProduct.api_price) || 0) : 0) + '</strong>' +
             '</div>' +
             '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
                 (!firstProduct || (firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
@@ -968,6 +993,23 @@ function renderGameProductPicker(gameTitle, group) {
         '</div>';
 
     let selectedIndex = firstProduct ? products.indexOf(firstProduct) : -1;
+
+    function renderQuantity(product) {
+        const holder = document.getElementById("gameQuantityField");
+        if (!holder) return;
+        const config = getProductQuantityConfig(product);
+
+        if (!config.enabled) {
+            holder.innerHTML = "";
+            return;
+        }
+
+        holder.innerHTML =
+            '<div class="pubg-field game-quantity-field">' +
+                '<label for="gameOrderQty">الكمية</label>' +
+                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required aria-required="true">' +
+            '</div>';
+    }
 
     function updateSelectedProduct(index) {
         const product = products[index];
@@ -980,13 +1022,16 @@ function renderGameProductPicker(gameTitle, group) {
         const submit = document.getElementById("pubgSubmitOrder");
 
         if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
-        if (selectedPrice) selectedPrice.textContent = formatMoney(getPubgProductPrice(product));
+        if (selectedPrice) selectedPrice.textContent = formatMoney(Number(product.price ?? product.original_price ?? product.api_price) || 0);
         if (fields) fields.innerHTML = renderGameParamFields(product);
+        renderQuantity(product);
 
         if (submit) {
             submit.disabled = product.available === false || product.available === 0;
         }
     }
+
+    renderQuantity(firstProduct);
 
     const back = document.getElementById("pubgBackToGroups");
     if (back) back.addEventListener("click", function() {
@@ -1016,7 +1061,7 @@ function renderGameProductPicker(gameTitle, group) {
         });
     }
 
-    document.addEventListener("click", function closeGameDropdown(event) {
+    function closeGameDropdown(event) {
         if (!select || select.contains(event.target)) return;
         if (options && !options.hidden) {
             options.hidden = true;
@@ -1026,36 +1071,22 @@ function renderGameProductPicker(gameTitle, group) {
             }
         }
         document.removeEventListener("click", closeGameDropdown);
-    });
+    }
+    document.addEventListener("click", closeGameDropdown);
 
     const submit = document.getElementById("pubgSubmitOrder");
     if (submit) {
         submit.addEventListener("click", function() {
             const product = products[selectedIndex];
             if (!product) return;
-            submitGamePickerOrder(product, document.getElementById("pubgPicker"));
+            submitGamePickerOrder(product, document.querySelector(".universal-game-picker"));
         });
     }
-
-    const picker = content.querySelector(".pubg-picker");
-    if (picker) picker.id = "pubgPicker";
 
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function renderGameParamFields(product) {
-    const params = getUsableProductParams(product);
-    if (!params.length) return "";
-    return params.map(function(label, index) {
-        const safeLabel = escapeHtml(getDisplayParamLabel(label));
-        return '<div class="pubg-field">' +
-            '<label for="gameParam_' + index + '">' + safeLabel + '</label>' +
-            '<input id="gameParam_' + index + '" data-game-param="' + escapeHtml(label) + '" type="text" autocomplete="off" placeholder="أدخل ' + safeLabel + '" required aria-required="true">' +
-            '</div>';
-    }).join("");
-}
-
-async function submitGamePickerOrder(product, root) {
+function submitGamePickerOrder(product, root) {
     const params = {};
     const inputs = root ? root.querySelectorAll("[data-game-param]") : [];
     let invalid = false;
@@ -1072,20 +1103,33 @@ async function submitGamePickerOrder(product, root) {
         }
     });
 
+    const qtyInput = root ? root.querySelector("#gameOrderQty") : null;
+    let qty = 1;
+    if (qtyInput) {
+        qty = Number(qtyInput.value);
+        const min = Number(qtyInput.min || 1);
+        const max = Number(qtyInput.max || 999999999);
+        if (!Number.isFinite(qty) || qty < min || qty > max) {
+            invalid = true;
+            qtyInput.classList.add("is-invalid");
+        } else {
+            qtyInput.classList.remove("is-invalid");
+        }
+    }
+
     if (invalid) {
-        showToast("يرجى إدخال البيانات المطلوبة أولًا.");
+        showToast("يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");
         return;
     }
 
     const submit = root ? root.querySelector("#pubgSubmitOrder") : null;
     if (submit) submit.disabled = true;
 
-    try {
-        const response = await fetch(BACKEND_URL + "/api/orders", {
-            method: "POST",
-            headers: {"Accept":"application/json","Content-Type":"application/json"},
-            body: JSON.stringify({product_id: product.id, params: params})
-        });
+    fetch(BACKEND_URL + "/api/orders", {
+        method: "POST",
+        headers: {"Accept":"application/json","Content-Type":"application/json"},
+        body: JSON.stringify({product_id: product.id, params: params, qty: qty})
+    }).then(async function(response) {
         const data = await response.json();
         if (!response.ok || data.status === "ERROR") {
             throw new Error(data.message || "تعذر إنشاء الطلب");
@@ -1093,20 +1137,18 @@ async function submitGamePickerOrder(product, root) {
         if (data.balance !== undefined) updateBalance(data.balance);
         showToast("تم إرسال الطلب بنجاح.");
         if (root) {
-            const inputsAfter = root.querySelectorAll("input");
-            inputsAfter.forEach(function(input) { input.value = ""; });
+            root.querySelectorAll("input").forEach(function(input) { input.value = ""; });
         }
-    } catch (error) {
-        console.error("PUBG order error:", error);
+    }).catch(function(error) {
+        console.error("Game order error:", error);
         showToast(error.message || "تعذر إنشاء الطلب.");
-    } finally {
+    }).finally(function() {
         if (submit) submit.disabled = false;
-    }
+    });
 }
 
 function openGameProductGroup(gameTitle, groupKey) {
     const content = document.getElementById("internalPageContent");
-    const isRoblox = normalizeGameText(gameTitle).includes("roblox");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
     if (!content) return;
@@ -1117,56 +1159,12 @@ function openGameProductGroup(gameTitle, groupKey) {
 
     if (!group) return;
 
-    if (isPubgGame(gameTitle) || isRoblox) {
-        renderGameProductPicker(gameTitle, group);
-        return;
-    }
-
-    if (title) title.textContent = group.title;
-    if (icon) icon.textContent = "🎮";
-
-    content.innerHTML =
-        '<div class="game-products-heading">' +
-            '<strong>' + group.products.length + ' منتج</strong>' +
-            '<span>' + escapeHtml(group.title) + '</span>' +
-        '</div>' +
-        '<div class="game-products-grid">' +
-        group.products.map(function(product, index) {
-            const available = product.available !== false && product.available !== 0;
-            const price = Number(product.price) || 0;
-            const robloxProductImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
-            const image = product.category_img || "";
-            const imageSource = isRoblox
-                ? (image ? (String(image).startsWith("http") ? image : BACKEND_URL + image) : robloxProductImage)
-                : image;
-            const imageHtml = imageSource
-                ? '<img src="' + escapeHtml(imageSource) + '" alt="' + (isRoblox ? 'Roblox' : '') + '" loading="lazy">'
-                : '<span class="game-product-fallback">🛍️</span>';
-
-            return '<article class="game-product-card ' + (available ? "" : "product-unavailable") + '">' +
-                '<div class="product-icon">' + imageHtml + '</div>' +
-                '<h3>' + escapeHtml(product.name || "منتج") + '</h3>' +
-                '<div class="price">' + formatMoney(price) + '</div>' +
-                '<button class="buy-btn game-product-buy" type="button" data-product-index="' + index + '"' +
-                    (available ? '' : ' disabled') + '>' +
-                    (available ? 'شراء' : 'غير متوفر') +
-                '</button>' +
-            '</article>';
-        }).join("") +
-        '</div>';
-
-    content.querySelectorAll(".game-product-buy").forEach(function(button) {
-        button.addEventListener("click", function() {
-            const index = Number(button.getAttribute("data-product-index"));
-            const product = group.products[index];
-            if (product && product.available !== false && product.available !== 0) {
-                openProductModal(product);
-            }
-        });
-    });
-
-    window.scrollTo({top: 0, behavior: "smooth"});
+    // جميع الألعاب تستخدم الآن نفس مسار PUBG:
+    // المستوى الثالث = تصنيف اللعبة، المستوى الرابع = قائمة المنتجات النهائية.
+    // المعلومات المطلوبة والكمية تظهر قبل اختيار/إرسال المنتج.
+    renderGameProductPicker(gameTitle, group);
 }
+
 
 function closeInternalPage() {
     const services = document.getElementById("servicesSection");
