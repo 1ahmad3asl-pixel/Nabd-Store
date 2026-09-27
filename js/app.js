@@ -153,20 +153,9 @@ function initializeWelcomeSplash() {
     const splash = document.getElementById("welcomeSplash");
     if (!splash) return;
 
-    // Show once per browser-tab session: a fresh visit to the site gets the greeting,
-    // while navigating between pages inside the site does not replay it.
-    let alreadyWelcomed = false;
-    try {
-        alreadyWelcomed = sessionStorage.getItem("nabd-welcome-shown") === "1";
-    } catch (error) {}
-
-    if (alreadyWelcomed) return;
-
-    try {
-        sessionStorage.setItem("nabd-welcome-shown", "1");
-    } catch (error) {}
-
+    // يظهر عند كل دخول/تحديث للصفحة الرئيسية، ويستمر لمدة ثانيتين.
     splash.hidden = false;
+    splash.classList.remove("is-hidden");
     splash.setAttribute("aria-hidden", "false");
 
     window.setTimeout(function () {
@@ -175,7 +164,7 @@ function initializeWelcomeSplash() {
             splash.hidden = true;
             splash.setAttribute("aria-hidden", "true");
         }, 380);
-    }, 1700);
+    }, 2000);
 }
 
 /* =========================
