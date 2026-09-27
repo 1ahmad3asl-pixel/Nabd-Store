@@ -1083,7 +1083,7 @@ async function ensureProjectEntropyOfficialImage() {
 async function ensureFarlight84OfficialImage() {
   return ensureOfficialGameImage("farlight-84", "com.miraclegames.farlight84", "Farlight 84");
 }
-async function ensureMarvelRivalsOfficialImage() {
+async function ensureCityOfCrimeGangWarOfficialImage() {\n  return ensureOfficialGameImage("city-of-crime-gang-war", "com.fingerfun.coc.gplay", "City of Crime: Gang Wars");\n}\nasync function ensureMarvelRivalsOfficialImage() {
   const gameKey = "marvel-rivals";
   const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
   if (existing.rows.length) return;
@@ -1139,7 +1139,7 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "gangs-of-glory": ["com.sm.gog.hw.dygame", "Gangs of Glory"],
       "project-entropy": ["com.entropy.global", "Project Entropy"],
       "farlight-84": ["com.miraclegames.farlight84", "Farlight 84"],
-      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"],
+      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"],\n      "city-of-crime-gang-war": ["com.fingerfun.coc.gplay", "City of Crime: Gang Wars"],
       "genshin-impact": ["com.miHoYo.GenshinImpact", "Genshin Impact"],
       "super-sus": ["com.je.supersus", "Super Sus"]
     };
