@@ -890,6 +890,28 @@ function renderPubgParamFields(product) {
         '</div>';
 }
 
+function renderGameParamFields(product) {
+    const params = getUsableProductParams(product);
+    if (!params.length) {
+        return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+    }
+
+    return params.map(function(label, index) {
+        const normalized = normalizeGameText(label);
+        const isId = normalized.includes("ايدي") ||
+            normalized.includes("الايدي") ||
+            normalized.includes("playerid") ||
+            normalized.includes("player id") ||
+            normalized === "player";
+        const displayLabel = isId ? "ID" : getDisplayParamLabel(label);
+        const inputId = "gameParam_" + index;
+        return '<div class="pubg-field game-required-field">' +
+            '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
+            '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(displayLabel) + '" autocomplete="off" required aria-required="true">' +
+            '</div>';
+    }).join("");
+}
+
 function getPubgProductPrice(product) {
     const value = Number(product && product.price);
     if (Number.isFinite(value) && value >= 0) return value;
