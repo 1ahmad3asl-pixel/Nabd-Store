@@ -1153,7 +1153,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "mobile-legends": ["com.mobile.legends", "Mobile Legends: Bang Bang"],
       "whiteout-survival": ["com.gof.global", "Whiteout Survival"],
       "blood-strike": ["com.netease.newspike", "Blood Strike"],
-      "acecraft": ["com.vizta.wefly", "ACECRAFT"]
+      "acecraft": ["com.vizta.wefly", "ACECRAFT"],
+      "arena-breakout": ["com.proximabeta.mf.uamo", "Arena Breakout"],
+      "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
