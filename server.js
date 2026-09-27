@@ -464,9 +464,56 @@ app.put("/api/customer/profile", requireCustomer, async (req, res) => {
   res.json({ status: "OK", customer });
 });
 
+app.put("/api/customer/avatar", requireCustomer, async (req, res) => {
+  try {
+    const avatar = String(req.body?.avatar_url || "").trim();
+    if (!avatar) return res.status(400).json({ status: "ERROR", message: "اختر صورة أولًا." });
+    if (avatar.length > 500000) return res.status(413).json({ status: "ERROR", message: "حجم الصورة كبير جدًا." });
+    if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/i.test(avatar)) {
+      return res.status(400).json({ status: "ERROR", message: "صيغة الصورة غير مدعومة." });
+    }
+    const base64 = avatar.slice(avatar.indexOf(",") + 1);
+    const bytes = Buffer.from(base64, "base64");
+    if (!bytes.length || bytes.length > 350000) {
+      return res.status(413).json({ status: "ERROR", message: "حجم الصورة كبير جدًا." });
+    }
+    const result = await query(
+      "UPDATE customers SET avatar_url=$1,updated_at=NOW() WHERE customer_id=$2 RETURNING customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at",
+      [avatar, req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const customer = result.rows[0];
+    const parsedPhone = parseCustomerPhone(customer.phone);
+    customer.phone_country_code = parsedPhone?.country_code || "";
+    customer.customer_id = String(customer.customer_number);
+    customer.customer_number = Number(customer.customer_number);
+    res.json({ status: "OK", customer });
+  } catch (error) {
+    console.error("Customer avatar error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر حفظ الصورة الشخصية." });
+  }
+});
+
+app.delete("/api/customer/avatar", requireCustomer, async (req, res) => {
+  try {
+    const result = await query(
+      "UPDATE customers SET avatar_url=NULL,updated_at=NOW() WHERE customer_id=$1 RETURNING customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at",
+      [req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const customer = result.rows[0];
+    customer.customer_id = String(customer.customer_number);
+    customer.customer_number = Number(customer.customer_number);
+    res.json({ status: "OK", customer });
+  } catch (error) {
+    console.error("Customer avatar delete error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر حذف الصورة الشخصية." });
+  }
+});
+
 app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
   const result = await query(
-    "SELECT customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
     [req.customer.customer_id]
   );
   if (!result.rows[0]) {
@@ -592,14 +639,14 @@ app.get("/api/admin/customers", async (req, res) => {
         [`%${search}%`]
       )
     : await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,active,created_at,updated_at FROM customers ORDER BY created_at DESC"
+        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers ORDER BY created_at DESC"
       );
   res.json({ status: "OK", customers: result.rows });
 });
 
 app.get("/api/admin/customers/:id", async (req, res) => {
   const result = await query(
-    "SELECT customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id=$1",
     [String(req.params.id)]
   );
   if (!result.rows[0]) {
