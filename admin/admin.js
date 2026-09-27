@@ -663,7 +663,7 @@ function renderCustomers(customers) {
 
 }
 
-async async function openCustomerInfo(customerId) {
+async function openCustomerInfo(customerId) {
     try {
         const data = await ADMIN_API.customer(customerId);
         const customer = data.customer || {};
@@ -686,7 +686,7 @@ async async function openCustomerInfo(customerId) {
         document.getElementById("closeCustomerInfo").onclick = function(){ document.getElementById("customerInfoDialog")?.remove(); };
     } catch (error) { showAdminToast(error.message || "تعذر تحميل معلومات العميل."); }
 }
-function openCustomerWallet(customerId) {
+async function openCustomerWallet(customerId) {
     try {
         const data = await ADMIN_API.customerWallet(customerId);
         const wallet = data.wallet || {};
