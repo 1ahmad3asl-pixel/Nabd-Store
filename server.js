@@ -1139,7 +1139,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "gangs-of-glory": ["com.sm.gog.hw.dygame", "Gangs of Glory"],
       "project-entropy": ["com.entropy.global", "Project Entropy"],
       "farlight-84": ["com.miraclegames.farlight84", "Farlight 84"],
-      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"]
+      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"],
+      "genshin-impact": ["com.miHoYo.GenshinImpact", "Genshin Impact"],
+      "super-sus": ["com.je.supersus", "Super Sus"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
@@ -1259,7 +1261,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isProjectEntropyProduct = /project\s*entropy|بروجكت\s*انتروبي|بروجيكت\s*انتروبي/i.test(productText);
     const isFarlight84Product = /farlight\s*84|farlight84|فارلايت\s*84/i.test(productText);
     const isMarvelRivalsProduct = /marvel\s*rivals|مارفل\s*ريفيلز|مارفل\s*رايفلز|مارفل\s*ريفالز/i.test(productText);
-    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGunsOfGloryProduct || isGangsOfGloryProduct || isProjectEntropyProduct || isFarlight84Product || isMarvelRivalsProduct;
+    const isGenshinImpactProduct = /genshin\s*impact|جينشن\s*امباكت|جينشين\s*إمباكت/i.test(productText);
+    const isSuperSusProduct = /super\s*sus|سوبر\s*سوس/i.test(productText);
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGunsOfGloryProduct || isGangsOfGloryProduct || isProjectEntropyProduct || isFarlight84Product || isMarvelRivalsProduct || isGenshinImpactProduct || isSuperSusProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
