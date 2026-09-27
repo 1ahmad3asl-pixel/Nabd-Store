@@ -750,9 +750,14 @@ function openGamesPage() {
     if (title) title.textContent = "الألعاب";
     if (icon) icon.textContent = "🎮";
 
-    // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك لا يوجد سبب لانتظار API.
-    // نعرضها فورًا، ثم نجلب المنتجات في الخلفية عند اختيار لعبة.
+    // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك تظهر فورًا.
+    // نبدأ تحميل المنتجات في الخلفية بدون حبس المستخدم داخل شاشة تحميل.
     const tiles = getGameTiles();
+    if (!state.productsLoaded && !state.productsLoadingPromise) {
+        loadProducts().catch(function(error) {
+            console.warn("Background products preload failed:", error);
+        });
+    }
 
     content.innerHTML =
         '<div class="game-page-note">اختر اللعبة للدخول إلى التصنيفات والمنتجات المتاحة.</div>' +
@@ -777,12 +782,14 @@ function openGamesPage() {
         tile.addEventListener("click", async function() {
             const gameTitle = tile.getAttribute("data-game-title") || "اللعبة";
 
+            // لا نعرض شاشة تحميل مزعجة عند الضغط على اللعبة.
+            // إذا كانت البيانات جاهزة نفتح المستوى الثالث مباشرة.
+            // وإذا لم تجهز بعد، ننتظر طلب الخلفية ثم نعرض النتيجة أو رسالة واضحة.
             if (!state.productsLoaded) {
-                content.innerHTML =
-                    '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات اللعبة...</p></div>';
                 try {
                     await loadProducts();
                 } catch (error) {
+                    openGamePlaceholder(gameTitle);
                     return;
                 }
             }
@@ -1483,7 +1490,8 @@ async function loadProducts() {
     state.productsLoadingPromise = (async function() {
         try {
             const controller = new AbortController();
-            const timeout = setTimeout(function() { controller.abort(); }, 15000);
+            // حد زمني قصير حتى لا يبقى الموقع عالقًا في "جاري التحميل".
+            const timeout = setTimeout(function() { controller.abort(); }, 8000);
             let response;
             try {
                 response = await fetch(BACKEND_URL + "/api/products", {
