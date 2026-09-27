@@ -739,6 +739,11 @@ function getStoredGameImageUrl(gameTitle) {
     }
     if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return BACKEND_URL + "/api/game-images/honkai-star-rail";
     if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return BACKEND_URL + "/api/game-images/mobile-legends";
+    if (text.includes("oxide") || text.includes("survival island")) return BACKEND_URL + "/api/game-images/oxide-survival-island";
+    if (text.includes("king shot") || text.includes("kingshot")) return BACKEND_URL + "/api/game-images/king-shot";
+    if (text.includes("zepeto")) return BACKEND_URL + "/api/game-images/zepeto";
+    if (text.includes("blood strike") || text.includes("bloodstrike")) return BACKEND_URL + "/api/game-images/blood-strike";
+    if (text.includes("acecraft") || text.includes("ace craft")) return BACKEND_URL + "/api/game-images/acecraft";
     if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return BACKEND_URL + "/api/game-images/age-of-empires-mobile";
     if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return BACKEND_URL + "/api/game-images/nikke";
     if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return BACKEND_URL + "/api/game-images/division-resurgence";
