@@ -550,8 +550,8 @@ const GAME_CATALOG = [
     { title:"Bullet Echo", aliases:["bullet echo","bullet echo pvp shooter","بوليت إيكو","بولت إيكو"] },
     { title:"Blood Strike", aliases:["blood strike","bloodstrike","بلود سترايك"] },
     { title:"Acecraft", aliases:["acecraft","ace craft","إيس كرافت","ايس كرافت"] },
-    { title:"Arena Breakout", aliases:["arena breakout"] },
-    { title:"Ludo Club", aliases:["ludo club"] },
+    { title:"Arena Breakout", aliases:["arena breakout","arena breakout mobile","أرينا بريك أوت"] },
+    { title:"Ludo Club", aliases:["ludo club","ludo club game","لودو كلوب"] },
     { title:"AFK Journey", aliases:["afk journey"] },
     { title:"Division Resurgence", aliases:["division resurgence"] },
     { title:"Age Of Empires Mobile", aliases:["age of empires"] },
@@ -1187,7 +1187,9 @@ function renderGameParamFields(product, gameTitle) {
     const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
     const isBloodStrike = normalizedGameTitle.includes("blood strike") || normalizedGameTitle.includes("bloodstrike") || normalizedGameTitle.includes("بلود سترايك");
     const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
+    const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
