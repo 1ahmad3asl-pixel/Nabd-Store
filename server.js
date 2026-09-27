@@ -736,7 +736,26 @@ app.get("/api/admin/transactions", async (req, res) => {
      ORDER BY t.created_at DESC
      LIMIT 500`
   );
-  res.json({ status: "OK", transactions: result.rows });
+  const totals = await query(
+    `SELECT
+       COALESCE(SUM(CASE WHEN type='purchase' THEN amount ELSE 0 END),0) AS sales,
+       COALESCE(SUM(CASE WHEN type IN ('admin_credit','refund') THEN amount ELSE 0 END),0) AS customer_outflows,
+       COALESCE(SUM(CASE WHEN type='admin_debit' THEN amount ELSE 0 END),0) AS admin_inflows,
+       COALESCE(SUM(amount),0) AS net_cash,
+       COALESCE((SELECT SUM(profit) FROM orders WHERE status NOT IN ('failed','rejected','cancelled','canceled','error')),0) AS net_profit
+     FROM transactions`
+  );
+  res.json({
+    status: "OK",
+    transactions: result.rows,
+    budget: {
+      sales: Number(Number(totals.rows[0].sales).toFixed(4)),
+      customer_outflows: Number(Number(totals.rows[0].customer_outflows).toFixed(4)),
+      admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(4)),
+      net_cash: Number(Number(totals.rows[0].net_cash).toFixed(4)),
+      net_profit: Number(Number(totals.rows[0].net_profit).toFixed(4))
+    }
+  });
 });
 
 app.get("/api/admin/customers/:id/wallet", async (req, res) => {
