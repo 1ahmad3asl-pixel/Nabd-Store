@@ -2,7 +2,10 @@ const state = {
     products: [],
     productsLoaded: false,
     productsLoadingPromise: null,
+    productsLive: false,
     productsCacheKey: "nabd-products-cache-v2",
+    gameProductsIndex: null,
+    gameProductsSource: null,
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -549,62 +552,68 @@ function normalizeGameText(value) {
         .trim();
 }
 
+const GAME_MATCH_CANDIDATES = GAME_CATALOG.slice().sort(function(a, b) {
+    const aLength = Math.max.apply(null, a.aliases.map(function(alias) { return normalizeGameText(alias).length; }));
+    const bLength = Math.max.apply(null, b.aliases.map(function(alias) { return normalizeGameText(alias).length; }));
+    return bLength - aLength;
+});
+
+const gameMatchCache = new WeakMap();
+
 function findGameMatch(product) {
+    if (product && typeof product === "object" && gameMatchCache.has(product)) return gameMatchCache.get(product);
+
     const categoryText = normalizeGameText(product && product.category_name);
     const productText = normalizeGameText(product && product.name);
     const combinedText = (categoryText + " " + productText).trim();
 
-    // نعتمد على تصنيف Nemer نفسه أولًا. اسم المنتج يُستخدم فقط كخطة
-    // احتياطية حتى لا تنتقل منتجات لعبة إلى لعبة أخرى بسبب كلمة مشتركة.
-    const candidates = GAME_CATALOG.slice().sort(function(a, b) {
-        const aLength = Math.max.apply(null, a.aliases.map(function(alias) {
-            return normalizeGameText(alias).length;
-        }));
-        const bLength = Math.max.apply(null, b.aliases.map(function(alias) {
-            return normalizeGameText(alias).length;
-        }));
-        return bLength - aLength;
-    });
-
     function matches(text, game) {
         if (!text) return false;
+        const padded = " " + text + " ";
         return game.aliases.some(function(alias) {
             const normalizedAlias = normalizeGameText(alias);
-            if (!normalizedAlias) return false;
-            const escaped = normalizedAlias.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
-            return new RegExp("(^|\\s)" + escaped + "(?=\\s|$)", "i").test(text);
+            return normalizedAlias && padded.includes(" " + normalizedAlias + " ");
         });
     }
 
-    return candidates.find(function(game) {
+    const match = GAME_MATCH_CANDIDATES.find(function(game) {
         return matches(categoryText, game);
-    }) || candidates.find(function(game) {
+    }) || GAME_MATCH_CANDIDATES.find(function(game) {
         return matches(combinedText, game);
     }) || null;
+
+    if (product && typeof product === "object") gameMatchCache.set(product, match);
+    return match;
 }
 
-function getProductsForGame(gameTitle) {
-    return state.products.filter(function(product) {
+function getGameProductsIndex() {
+    if (state.gameProductsSource === state.products && state.gameProductsIndex) return state.gameProductsIndex;
+
+    const index = new Map();
+    state.products.forEach(function(product) {
         const match = findGameMatch(product);
-        return match && match.title === gameTitle;
+        if (!match) return;
+        if (!index.has(match.title)) index.set(match.title, []);
+        index.get(match.title).push(product);
     });
+
+    state.gameProductsSource = state.products;
+    state.gameProductsIndex = index;
+    return index;
+}
+
+
+function getProductsForGame(gameTitle) {
+    return getGameProductsIndex().get(gameTitle) || [];
 }
 
 function getGameTiles() {
-    // استخدم صورة اللعبة الرسمية المرفقة مع منتجاتها أولًا،
-    // مع الاحتفاظ بصورة الكتالوج كبديل عند عدم وجود صورة من الـAPI.
+    const index = getGameProductsIndex();
     return GAME_CATALOG.map(function(game) {
-        const products = state.products.filter(function(product) {
-            const match = findGameMatch(product);
-            return match && match.title === game.title;
-        });
+        const products = index.get(game.title) || [];
         const productWithImage = products.find(function(product) {
             return String(product.category_img || "").trim();
         });
-
-        // صورة المستوى الثالث يجب أن تكون صورة اللعبة نفسها، لا صورة منتج
-        // من داخل التصنيف. إذا لم توجد صورة ثابتة للعبة، نستخدم صورة
-        // category_img القادمة مع منتجات اللعبة كبديل.
         return {
             title: game.title,
             image: game.image || (productWithImage && productWithImage.category_img) || "",
@@ -1530,6 +1539,9 @@ async function loadProducts(options) {
 
             state.products = Array.isArray(data.products) ? data.products : [];
             state.productsLoaded = true;
+            state.productsLive = true;
+            state.gameProductsIndex = null;
+            state.gameProductsSource = null;
             try {
                 localStorage.setItem(state.productsCacheKey, JSON.stringify({
                     savedAt: Date.now(),
@@ -1580,10 +1592,12 @@ function renderProducts() {
 
     elements.products.innerHTML = filtered.map(function(product) {
         const available = product.available !== false && product.available !== 0;
-        const price = Number(product.price) || 0;
+        const hasLivePrice = state.productsLive && Number.isFinite(Number(product.price));
+        const price = hasLivePrice ? Number(product.price) : 0;
         const image = product.category_img || "";
         const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
-        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">$" + price.toFixed(4) + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (available ? "" : "disabled") + ">" + (available ? "شراء الآن" : "غير متوفر") + "</button></article>";
+        const purchaseEnabled = available && hasLivePrice;
+        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">" + (hasLivePrice ? "$" + price.toFixed(4) : "جاري تحديث السعر…") + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (purchaseEnabled ? "" : "disabled") + ">" + (available ? (hasLivePrice ? "شراء الآن" : "جاري تحديث السعر") : "غير متوفر") + "</button></article>";
     }).join("");
 
     elements.products.querySelectorAll(".buy-btn[data-product-id]").forEach(function(button) {
