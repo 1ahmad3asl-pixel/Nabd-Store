@@ -797,7 +797,11 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
     if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return BACKEND_URL + "/api/game-images/my-singing-monsters";
-    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return BACKEND_URL + "/api/game-images/onmyoji-arena";
+
+    if (text.includes("garena speed drifters") || text.includes("speed drifters")) return BACKEND_URL + "/api/game-images/garena-speed-drifters";
+    if (text.includes("mongil star dive")) return BACKEND_URL + "/api/game-images/mongil-star-dive";
+    if (text.includes("modern strike online")) return BACKEND_URL + "/api/game-images/modern-strike-online";
+    if (text.includes("overmortal idle global") || text.includes("overmortal")) return BACKEND_URL + "/api/game-images/overmortal-idle-global";    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return BACKEND_URL + "/api/game-images/onmyoji-arena";
     if (text.includes("stormshot") || text.includes("storm shot") || text.includes("ستورمشوت")) return BACKEND_URL + "/api/game-images/stormshot";
     if (text.includes("crossout mobile") || text.includes("crossout") || text.includes("كروس أوت موبايل")) return BACKEND_URL + "/api/game-images/crossout-mobile";
     if (text.includes("dragon raja sea") || text.includes("dragon raja") || text.includes("دراغون راجا")) return BACKEND_URL + "/api/game-images/dragon-raja-sea";
