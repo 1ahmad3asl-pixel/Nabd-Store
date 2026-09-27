@@ -15,6 +15,12 @@ const state = {
 
 const BACKEND_URL = "";
 
+// سياسات التخزين المؤقت:
+// هيكل المنتجات/التصنيفات/الصور: 30 دقيقة كمدة تحديث قصوى.
+// الأسعار لا تُخزّن إطلاقًا، ويُجلب /api/products مباشرة في كل زيارة.
+// الملفات والصور الثابتة: 7 أيام مع تحديث في الخلفية.
+const PRODUCT_STRUCTURE_CACHE_TTL = 30 * 60 * 1000;
+
 const elements = {
     products: document.getElementById("products"),
     balance: document.getElementById("balance"),
@@ -43,12 +49,24 @@ document.addEventListener("click", function(event) {
     openGamesPage();
 });
 
+
+function registerNabdServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/sw.js", {scope:"/"})
+            .catch(function (error) {
+                console.warn("Service worker registration skipped:", error);
+            });
+    });
+}
+
 /* =========================
    START
 ========================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    registerNabdServiceWorker();
     initializeMenu();
     initializeCategories();
     initializeQuickMenu();
@@ -1560,9 +1578,16 @@ async function loadProducts(options) {
         try {
             const cached = JSON.parse(localStorage.getItem(state.productsCacheKey) || "null");
             if (cached && Array.isArray(cached.products) && cached.products.length) {
+                // الكاش مخصص للهيكل والتصنيفات والصور فقط. لا نستخدمه كسعر.
                 state.products = cached.products;
                 state.productsLoaded = true;
+                state.productsLive = false;
                 renderProducts();
+
+                const cacheAge = Date.now() - Number(cached.savedAt || 0);
+                if (cacheAge > PRODUCT_STRUCTURE_CACHE_TTL) {
+                    console.info("Product structure cache expired; refreshing from Nemer.");
+                }
             }
         } catch (error) {
             localStorage.removeItem(state.productsCacheKey);
