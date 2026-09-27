@@ -1077,6 +1077,30 @@ async function ensureGangsOfGloryOfficialImage() {
 async function ensureProjectEntropyOfficialImage() {
   return ensureOfficialGameImage("project-entropy", "com.entropy.global", "Project Entropy");
 }
+async function ensureFarlight84OfficialImage() {
+  return ensureOfficialGameImage("farlight-84", "com.miraclegames.farlight84", "Farlight 84");
+}
+async function ensureMarvelRivalsOfficialImage() {
+  const gameKey = "marvel-rivals";
+  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
+  if (existing.rows.length) return;
+  try {
+    const imageUrl = "https://www.marvelrivals.com/pc/gw/20241203010721/img/home_284984eb.jpg";
+    const imageResponse = await fetch(imageUrl, {headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game image fetcher)"}});
+    if (!imageResponse.ok) throw new Error("Official Marvel Rivals image returned " + imageResponse.status);
+    const mimeType = String(imageResponse.headers.get("content-type") || "image/jpeg").split(";")[0];
+    if (!mimeType.startsWith("image/")) throw new Error("Invalid official image type");
+    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) throw new Error("Official image size is invalid");
+    await query(
+      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
+      [gameKey, "marvel-rivals-official", imageBuffer, mimeType, imageUrl]
+    );
+    console.log("Official Marvel Rivals image saved to database.");
+  } catch (error) {
+    console.warn("Official Marvel Rivals image sync skipped:", error.message);
+  }
+}
 
 /* =========================
    PUBLIC STORE
@@ -1109,7 +1133,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "lords-mobile": ["com.igg.android.lordsmobile", "Lords Mobile"],
       "8-ball-pool": ["com.miniclip.eightballpool", "8 Ball Pool"],
       "gangs-of-glory": ["com.sm.gog.hw.dygame", "Gangs of Glory"],
-      "project-entropy": ["com.entropy.global", "Project Entropy"]
+      "project-entropy": ["com.entropy.global", "Project Entropy"],
+      "farlight-84": ["com.miraclegames.farlight84", "Farlight 84"],
+      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
@@ -1226,7 +1252,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isEightBallPoolProduct = /8\s*ball\s*pool|eight\s*ball\s*pool|ثمانية\s*بول|ثمنية\s*بول/i.test(productText);
     const isGangsOfGloryProduct = /gangs\s*of\s*glory|غانغز\s*او?ف\s*غلوري|غانجز\s*أوف\s*غلوري/i.test(productText);
     const isProjectEntropyProduct = /project\s*entropy|بروجكت\s*انتروبي|بروجيكت\s*انتروبي/i.test(productText);
-    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGangsOfGloryProduct || isProjectEntropyProduct;
+    const isFarlight84Product = /farlight\s*84|farlight84|فارلايت\s*84/i.test(productText);
+    const isMarvelRivalsProduct = /marvel\s*rivals|مارفل\s*ريفيلز|مارفل\s*رايفلز|مارفل\s*ريفالز/i.test(productText);
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct || isGangsOfGloryProduct || isProjectEntropyProduct || isFarlight84Product || isMarvelRivalsProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
@@ -1522,6 +1550,8 @@ initDb()
     await ensureEightBallPoolOfficialImage();
     await ensureGangsOfGloryOfficialImage();
     await ensureProjectEntropyOfficialImage();
+    await ensureFarlight84OfficialImage();
+    await ensureMarvelRivalsOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
