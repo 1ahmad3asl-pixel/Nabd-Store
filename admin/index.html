@@ -31,6 +31,8 @@
     <button class="admin-nav-item" data-section="products"><span>🛍️</span><span>المنتجات</span></button>
     <button class="admin-nav-item" data-section="wallet"><span>💰</span><span>المحفظة</span></button>
     <button class="admin-nav-item" data-section="notifications"><span>🔔</span><span>الإشعارات</span></button>
+    <button class="admin-nav-item" data-section="emailBroadcast"><span>✉️</span><span>إرسال البريد</span></button>
+    <button class="admin-nav-item" data-section="announcementSettings"><span>📢</span><span>شريط الإعلانات</span></button>
     <button class="admin-nav-item" data-section="settings"><span>⚙️</span><span>الإعدادات</span></button>
     <button class="admin-nav-logout" id="logoutButton" type="button">🚪 تسجيل الخروج</button>
 </nav>
@@ -543,6 +545,26 @@
 
             </div>
 
+        </section>
+
+        <section id="emailBroadcastSection" class="admin-section">
+            <div class="page-heading"><div><span>التواصل المباشر</span><h1>إرسال البريد</h1></div></div>
+            <div class="admin-card">
+                <div class="email-broadcast-info">
+                    <strong>إرسال رسالة إلى جميع العملاء</strong>
+                    <span>سيتم إرسال الرسالة كرسائل منفصلة إلى عناوين البريد المسجلة للعملاء، ولن تظهر عناوين العملاء لبعضهم.</span>
+                </div>
+                <div class="notification-form">
+                    <label for="broadcastEmailSubject">عنوان الرسالة</label>
+                    <input type="text" id="broadcastEmailSubject" maxlength="150" placeholder="عنوان البريد">
+                    <label for="broadcastEmailMessage">نص الرسالة</label>
+                    <textarea id="broadcastEmailMessage" rows="10" maxlength="10000" placeholder="اكتب الرسالة التي تريد إرسالها لكل عميل..."></textarea>
+                    <div class="email-broadcast-actions">
+                        <span>سيتم الإرسال إلى العملاء الذين لديهم بريد إلكتروني صالح.</span>
+                        <button id="sendEmailBroadcast" class="primary-button" type="button">✉️ إرسال للجميع</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="settingsSection" class="admin-section">
