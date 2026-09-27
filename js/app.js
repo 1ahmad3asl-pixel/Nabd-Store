@@ -692,6 +692,12 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("yalla ludo") || text.includes("يلا لودو")) {
         return BACKEND_URL + "/api/game-images/yalla-ludo";
     }
+    if (text.includes("lords mobile") || text.includes("لوردز موبايل") || text.includes("لوردس موبايل")) {
+        return BACKEND_URL + "/api/game-images/lords-mobile";
+    }
+    if (text.includes("8 ball pool") || text.includes("eight ball pool") || text.includes("ثمانية بول") || text.includes("ثمنية بول")) {
+        return BACKEND_URL + "/api/game-images/8-ball-pool";
+    }
     return "";
 }
 
@@ -853,6 +859,8 @@ function getGameGroups(gameTitle) {
     const isCloudSong = normalizedGame.includes("cloud song") || normalizedGame.includes("skywalkers") || normalizedGame.includes("كلاود سونغ");
     const isYallaLudo = normalizedGame.includes("yalla ludo") || normalizedGame.includes("يلا لودو");
     const isYallaLudoGold = normalizedGame.includes("yalla ludo gold") || normalizedGame.includes("يلا لودو جولد") || normalizedGame.includes("يلا لودو غولد");
+    const isLordsMobile = normalizedGame.includes("lords mobile") || normalizedGame.includes("لوردز موبايل") || normalizedGame.includes("لوردس موبايل");
+    const isEightBallPool = normalizedGame.includes("8 ball pool") || normalizedGame.includes("eight ball pool") || normalizedGame.includes("ثمانية بول") || normalizedGame.includes("ثمنية بول");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -879,7 +887,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
@@ -1126,7 +1134,9 @@ function renderGameParamFields(product, gameTitle) {
     const isCloudSong = normalizedGameTitle.includes("cloud song") || normalizedGameTitle.includes("skywalkers") || normalizedGameTitle.includes("كلاود سونغ");
     const isYallaLudo = normalizedGameTitle.includes("yalla ludo") || normalizedGameTitle.includes("يلا لودو");
     const isYallaLudoGold = normalizedGameTitle.includes("yalla ludo gold") || normalizedGameTitle.includes("يلا لودو جولد") || normalizedGameTitle.includes("يلا لودو غولد");
-    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold;
+    const isLordsMobile = normalizedGameTitle.includes("lords mobile") || normalizedGameTitle.includes("لوردز موبايل") || normalizedGameTitle.includes("لوردس موبايل");
+    const isEightBallPool = normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
+    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
