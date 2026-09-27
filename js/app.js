@@ -1185,157 +1185,23 @@ function renderPubgParamFields(product) {
 }
 
 function renderGameParamFields(product, gameTitle) {
-    // PUBG بكل تصنيفاتها ومنتجاتها: نقرأ params الخام قبل أي فلترة، حتى لا نحذف
-    // قيمًا صحيحة مثل "."، ونستخدم الاسم القادم من API حرفيًا كعنوان فقط.
-    if (isPubgGame(gameTitle)) {
-        return renderPubgParamFields(product);
-    }
+    // كل الألعاب: نستخدم params القادمة من API/الكتالوج حرفيًا.
+    // الاسم نفسه هو عنوان الحقل والـplaceholder، دون أي إعادة تسمية أو إضافة.
+    const params = Array.isArray(product && product.params)
+        ? product.params.map(function(label) { return String(label ?? "").trim(); })
+            .filter(function(label) { return label.length > 0; })
+        : [];
 
-    const params = getUsableProductParams(product);
-
-    // لا ننشئ أي حقل من عندنا: حقول الشراء تُشتق حصراً من product.params.
-    // إذا كانت params فارغة، فهذا المنتج لا يحتاج أي معلومة إضافية.
     if (!params.length) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
-    // Roblox وجواكر وفري فاير: نستخدم أسماء params القادمة من API/الكتالوج حرفيًا كعنوان فقط.
-    // لا نضيف "أدخل" ولا نعيد تسمية أي parameter ولا ننشئ playerId من عندنا.
-    const exactParamGame =
-        normalizeGameText(gameTitle).includes("roblox") ||
-        normalizeGameText(gameTitle).includes("روبلوكس") ||
-        normalizeGameText(gameTitle).includes("jawaker") ||
-        normalizeGameText(gameTitle).includes("جواكر") ||
-        normalizeGameText(gameTitle).includes("free fire") ||
-        normalizeGameText(gameTitle).includes("فري فاير");
-
-    if (exactParamGame) {
-        const exactParams = Array.isArray(product && product.params)
-            ? product.params.map(function(label) { return String(label ?? "").trim(); })
-                .filter(function(label) { return label.length > 0; })
-            : [];
-
-        if (!exactParams.length) {
-            return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
-        }
-
-        return exactParams.map(function(label, index) {
-            const displayLabel = escapeHtml(label);
-            const inputId = "exactGameParam_" + index;
-            const safeParamKey = escapeHtml(label);
-            return '<div class="pubg-field game-required-field">' +
-                '<label for="' + inputId + '">' + displayLabel + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="' + displayLabel + '" autocomplete="off" required aria-required="true">' +
-                '</div>';
-        }).join("");
-    }
-
-    const normalizedGameTitle = normalizeGameText(gameTitle || "");
-    const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
-    const isFreeFire = normalizedGameTitle.includes("free fire") || normalizedGameTitle.includes("فري فاير");
-    const isClashOfClans = normalizedGameTitle.includes("clash of clans") || normalizedGameTitle.includes("كلاش");
-    const isDragonheir = normalizedGameTitle.includes("dragonheir") || normalizedGameTitle.includes("silent gods") || normalizedGameTitle.includes("دراغون هير");
-    const isCloudSong = normalizedGameTitle.includes("cloud song") || normalizedGameTitle.includes("skywalkers") || normalizedGameTitle.includes("كلاود سونغ");
-    const isYallaLudo = normalizedGameTitle.includes("yalla ludo") || normalizedGameTitle.includes("يلا لودو");
-    const isYallaLudoGold = normalizedGameTitle.includes("yalla ludo gold") || normalizedGameTitle.includes("يلا لودو جولد") || normalizedGameTitle.includes("يلا لودو غولد");
-    const isLordsMobile = normalizedGameTitle.includes("lords mobile") || normalizedGameTitle.includes("لوردز موبايل") || normalizedGameTitle.includes("لوردس موبايل");
-    const isEightBallPool = normalizedGameTitle.includes("8ball pool") || normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
-    const isGenshinImpact = normalizedGameTitle.includes("genshin impact");
-    const isSuperSus = normalizedGameTitle.includes("super sus");
-    const isHonkaiStarRail = normalizedGameTitle.includes("honkai") || normalizedGameTitle.includes("star rail") || normalizedGameTitle.includes("هونكاي");
-    const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
-    const isBloodStrike = normalizedGameTitle.includes("blood strike") || normalizedGameTitle.includes("bloodstrike") || normalizedGameTitle.includes("بلود سترايك");
-    const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
-    const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
-    const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
-    const isBallisticHeroVNG = normalizedGameTitle.includes("ballistic hero vng") || normalizedGameTitle.includes("ballistic hero") || normalizedGameTitle.includes("بالستك هيرو");
-    const isHaikyuFlyHigh = normalizedGameTitle.includes("haikyu fly high") || normalizedGameTitle.includes("haikyu") || normalizedGameTitle.includes("هايكيو فلاي هاي");
-    const isArknightsEndfield = normalizedGameTitle.includes("arknights endfield") || normalizedGameTitle.includes("arknights") || normalizedGameTitle.includes("أركنايتس إندفيلد");
-    const isHeavenBurnsRed = normalizedGameTitle.includes("heaven burns red") || normalizedGameTitle.includes("هيفن برنز ريد");
-    const isRiseofKingdomsLostCrusade = normalizedGameTitle.includes("rise of kingdoms") || normalizedGameTitle.includes("rise of kingdoms lost crusade") || normalizedGameTitle.includes("رايز أوف كينغدومز");
-    const isTopWarBattleGame = normalizedGameTitle.includes("top war") || normalizedGameTitle.includes("top war battle game") || normalizedGameTitle.includes("توب وور");
-    const isTheAntsUndergroundKingdom = normalizedGameTitle.includes("the ants") || normalizedGameTitle.includes("the ants underground kingdom") || normalizedGameTitle.includes("النمل: المملكة تحت الأرض");
-    const isLifeMakeoverGlobal = normalizedGameTitle.includes("life makeover global") || normalizedGameTitle.includes("life makeover") || normalizedGameTitle.includes("لايف ميك أوفر");
-    const isDragonRajaSEA = normalizedGameTitle.includes("dragon raja sea") || normalizedGameTitle.includes("dragon raja") || normalizedGameTitle.includes("دراغون راجا");
-    const isCrossoutMobile = normalizedGameTitle.includes("crossout mobile") || normalizedGameTitle.includes("crossout") || normalizedGameTitle.includes("كروس أوت موبايل");
-    const isStormshot = normalizedGameTitle.includes("stormshot") || normalizedGameTitle.includes("storm shot") || normalizedGameTitle.includes("ستورمشوت");
-    const isOnmyojiArena = normalizedGameTitle.includes("onmyoji arena") || normalizedGameTitle.includes("onmyoji") || normalizedGameTitle.includes("أونميوجي أرينا");
-    const isMySingingMonsters = normalizedGameTitle.includes("my singing monsters") || normalizedGameTitle.includes("my singing") || normalizedGameTitle.includes("monsters") || normalizedGameTitle.includes("ماي سينغينغ مونسترز");
-    const isEggyParty = normalizedGameTitle.includes("eggy party") || normalizedGameTitle.includes("egg party") || normalizedGameTitle.includes("إيجي بارتي");
-    const isDevilMayCryPeakofCombat = normalizedGameTitle.includes("devil may cry") || normalizedGameTitle.includes("devil may cry peak of combat") || normalizedGameTitle.includes("peak of combat") || normalizedGameTitle.includes("ديفل ماي كراي");
-    const isHeroClash = normalizedGameTitle.includes("hero clash") || normalizedGameTitle.includes("هيرو كلاش");
-    const isDivisionResurgence = normalizedGameTitle.includes("division resurgence") || normalizedGameTitle.includes("the division resurgence") || normalizedGameTitle.includes("ذا ديفيجن ريزرجنس");
-    const isGoddessofVictoryNIKKE = normalizedGameTitle.includes("goddess of victory") || normalizedGameTitle.includes("goddess of victory nikke") || normalizedGameTitle.includes("nikke") || normalizedGameTitle.includes("نيكي");
-    const isAgeOfEmpiresMobile = normalizedGameTitle.includes("age of empires mobile") || normalizedGameTitle.includes("age of empires") || normalizedGameTitle.includes("عصر الامبراطوريات موبايل");
-    const isKingdomGuardTowerDefense = normalizedGameTitle.includes("kingdom guard") || normalizedGameTitle.includes("kingdom guard tower defense") || normalizedGameTitle.includes("كينغدوم غارد");
-    const isWhiteoutSurvival = normalizedGameTitle.includes("whiteout survival") || normalizedGameTitle.includes("وايت أوت سيرفايفل");
-    const isCallofDragons = normalizedGameTitle.includes("call of dragons") || normalizedGameTitle.includes("call of dragons: total war") || normalizedGameTitle.includes("كول أوف دراغونز");
-    const isHatsuneMikuColorfulStage = normalizedGameTitle.includes("hatsune miku") || normalizedGameTitle.includes("colorful stage") || normalizedGameTitle.includes("هتسوني ميكو");
-    const isGoldenSpatula = normalizedGameTitle.includes("golden spatula") || normalizedGameTitle.includes("غولدن سباتولا");
-    const isBlockmanGo = normalizedGameTitle.includes("blockman go") || normalizedGameTitle.includes("blockman go adventures") || normalizedGameTitle.includes("بلوكمان جو");
-    const isGrowtopia = normalizedGameTitle.includes("growtopia") || normalizedGameTitle.includes("غروتوبيا");
-    const isArenaofValorEU = normalizedGameTitle.includes("arena of valor") || normalizedGameTitle.includes("arena of valor eu") || normalizedGameTitle.includes("أرينا أوف فالور");
-    const isAFKJourney = normalizedGameTitle.includes("afk journey");
-    const isZepeto = normalizedGameTitle.includes("zepeto");
-    const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isRiseofKingdomsLostCrusade || isTopWarBattleGame || isTheAntsUndergroundKingdom || isLifeMakeoverGlobal || isDragonRajaSEA || isCrossoutMobile || isStormshot || isOnmyojiArena || isMySingingMonsters || isEggyParty || isDevilMayCryPeakofCombat || isHeroClash || isDivisionResurgence || isGoddessofVictoryNIKKE || isAgeOfEmpiresMobile || isKingdomGuardTowerDefense || isWhiteoutSurvival || isCallofDragons || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
-
-    if (isUnifiedPlayerIdGame) {
-        // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
-        const playerIdParam = params.find(function(label) {
-            const normalized = normalizeGameText(label);
-            return normalized.includes("ايدي") ||
-                normalized.includes("الايدي") ||
-                normalized.includes("playerid") ||
-                normalized.includes("player id") ||
-                normalized === "player";
-        });
-
-        // لا نفترض وجود ID للاعب إذا لم يرسله المنتج في params.
-        // هذا يمنع إضافة حقول غير مرتبطة بالمنتج أو بالـAPI.
-        if (!playerIdParam) {
-            return params.map(function(label, index) {
-                const displayLabel = getDisplayParamLabel(label);
-                const inputId = "gameParam_" + index;
-                return '<div class="pubg-field game-required-field">' +
-                    '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-                    '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
-                    '</div>';
-            }).join("");
-        }
-
-        const playerField =
-            '<div class="pubg-field game-required-field">' +
-                '<label for="gameParam_playerId">ID اللاعب</label>' +
-                '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdParam) + '" placeholder="' + escapeHtml(playerIdParam) + '" autocomplete="off" required aria-required="true">' +
-            '</div>';
-
-        // أي حقول أخرى مطلوبة تبقى كما هي في params، دون إضافة حقول جديدة.
-        const otherFields = params.filter(function(label) {
-            const normalized = normalizeGameText(label);
-            return !(normalized.includes("ايدي") ||
-                normalized.includes("الايدي") ||
-                normalized.includes("playerid") ||
-                normalized.includes("player id") ||
-                normalized === "player");
-        }).map(function(label, index) {
-            const displayLabel = getDisplayParamLabel(label);
-            const inputId = "gameParam_extra_" + index;
-            return '<div class="pubg-field game-required-field">' +
-                '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
-                '</div>';
-        }).join("");
-
-        return playerField + otherFields;
-    }
-
     return params.map(function(label, index) {
-        const displayLabel = getDisplayParamLabel(label);
+        const safeLabel = escapeHtml(label);
         const inputId = "gameParam_" + index;
         return '<div class="pubg-field game-required-field">' +
-            '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-            '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
+            '<label for="' + inputId + '">' + safeLabel + '</label>' +
+            '<input id="' + inputId + '" type="text" data-game-param="' + safeLabel + '" placeholder="' + safeLabel + '" autocomplete="off" required aria-required="true">' +
             '</div>';
     }).join("");
 }
@@ -2115,7 +1981,7 @@ function renderProducts() {
 function openProductModal(product) {
     const params = Array.isArray(product.params) ? product.params : [];
     const fields = params.map(function(label, index) {
-        const safeLabel = escapeHtml(getDisplayParamLabel(String(label || "البيانات")));
+        const safeLabel = escapeHtml(String(label || ""));
         return '<div class="order-field">' +
             '<label for="param_' + index + '">' + safeLabel + '</label>' +
             '<input id="param_' + index + '" type="text" placeholder="' + escapeHtml(String(label || "")) + '" autocomplete="off">' +
