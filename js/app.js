@@ -1179,7 +1179,7 @@ function renderPubgParamFields(product) {
         const inputId = "pubgParam_" + index;
         return '<div class="pubg-field game-required-field">' +
             '<label for="' + inputId + '">' + safeLabel + '</label>' +
-            '<input id="' + inputId + '" type="text" data-pubg-param="' + safeLabel + '" placeholder="أدخل ' + safeLabel + '" autocomplete="off" required aria-required="true">' +
+            '<input id="' + inputId + '" type="text" data-pubg-param="' + safeLabel + '" placeholder="' + safeLabel + '" autocomplete="off" required aria-required="true">' +
             '</div>';
     }).join("");
 }
