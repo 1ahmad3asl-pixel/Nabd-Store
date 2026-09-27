@@ -992,7 +992,7 @@ function renderGameParamFields(product) {
     }).join("");
 }
 
-function getPubgProductPrice(product) {
+function getGameProductPrice(product) {
     const value = product && product.price;
     if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
         return Number(value);
@@ -1000,7 +1000,7 @@ function getPubgProductPrice(product) {
     return null;
 }
 function formatProductPrice(product) {
-    const value = getPubgProductPrice(product);
+    const value = getGameProductPrice(product);
     return value === null ? "السعر غير متاح" : formatMoney(value);
 }
 
@@ -1045,7 +1045,7 @@ function renderGameProductPicker(gameTitle, group) {
 
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
-        const price = getPubgProductPrice(product);
+        const price = getGameProductPrice(product);
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
