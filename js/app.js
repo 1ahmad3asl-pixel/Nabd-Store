@@ -783,6 +783,16 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("legend of the phoenix")) return BACKEND_URL + "/api/game-images/legend-of-the-phoenix";
     if (text.includes("legacy of discord") || text.includes("furiouswings")) return BACKEND_URL + "/api/game-images/legacy-of-discord";
     if (text.includes("army dudes")) return BACKEND_URL + "/api/game-images/army-dudes";
+    if (text.includes("crystalfall")) return BACKEND_URL + "/api/game-images/crystalfall";
+    if (text.includes("crossout mobile") || text.includes("crossout")) return BACKEND_URL + "/api/game-images/crossout-mobile";
+    if (text.includes("dragon raja")) return BACKEND_URL + "/api/game-images/dragon-raja-sea";
+    if (text.includes("dragon nest m") || text.includes("dragon nest")) return BACKEND_URL + "/api/game-images/dragon-nest-m-sea";
+    if (text.includes("life makeover")) return BACKEND_URL + "/api/game-images/life-makeover-global";
+    if (text.includes("love nikki")) return BACKEND_URL + "/api/game-images/love-nikki";
+    if (text.includes("dragonheir") || text.includes("dragonheir silent gods")) return BACKEND_URL + "/api/game-images/dragonheir-silent-gods";
+    if (text.includes("dream and lethe") || text.includes("dream & lethe")) return BACKEND_URL + "/api/game-images/dream-and-lethe-record";
+    if (text.includes("eggy party")) return BACKEND_URL + "/api/game-images/eggy-party";
+    if (text.includes("echocalypse") || text.includes("scarlet covenant")) return BACKEND_URL + "/api/game-images/echocalypse-scarlet-covenant";
     if (text.includes("hero clash") || text.includes("هيرو كلاش")) return BACKEND_URL + "/api/game-images/hero-clash";
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
