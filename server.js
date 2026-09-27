@@ -1453,7 +1453,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     }
 
     await loadSettings();
-    const baseSalePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
+    const baseSalePrice = apiPrice * (1 + getProductProfitRate(product) / 100);
 
     const reservation = await withTransaction(async (client) => {
       const customerResult = await client.query(
