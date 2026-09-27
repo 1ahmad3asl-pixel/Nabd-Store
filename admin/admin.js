@@ -1503,6 +1503,9 @@ function applyAdminFont(font) {
 async function saveDhikrSettings() {
     const input = document.getElementById("dhikrItems");
     if (!input) return;
+    input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") event.stopPropagation();
+    });
     const items = input.value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
     if (!items.length) {
         showAdminToast("أدخل ذكرًا واحدًا على الأقل.");
