@@ -955,6 +955,41 @@ function normalizeNemerPrice(value) {
   return Number.isFinite(parsed) && parsed >= 0 ? Number(parsed.toFixed(4)) : null;
 }
 
+async function ensurePubgOfficialImage() {
+  const gameKey = "pubg-mobile";
+  const appId = "com.tencent.ig";
+  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
+  if (existing.rows.length) return;
+  try {
+    const pageUrl = "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=US";
+    const pageResponse = await fetch(pageUrl, {headers: {"Accept":"text/html,application/xhtml+xml","User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game icon fetcher)"}});
+    if (!pageResponse.ok) throw new Error("Google Play returned " + pageResponse.status);
+    const html = await pageResponse.text();
+    const metaRe = /<meta[^>]+(?:property|name)=["']([^"']+)["'][^>]+content=["']([^"']+)["'][^>]*>/gi;
+    let imageUrl = "", match;
+    while ((match = metaRe.exec(html))) {
+      if (String(match[1]).toLowerCase() === "og:image") {
+        imageUrl = match[2].replace(/&amp;/g, "&").replace(/&quot;/g, '"');
+        break;
+      }
+    }
+    if (!imageUrl) throw new Error("Official Google Play icon URL not found");
+    const imageResponse = await fetch(imageUrl, {headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game icon fetcher)"}});
+    if (!imageResponse.ok) throw new Error("Official image returned " + imageResponse.status);
+    const mimeType = String(imageResponse.headers.get("content-type") || "image/png").split(";")[0];
+    if (!mimeType.startsWith("image/")) throw new Error("Invalid official image type");
+    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) throw new Error("Official image size is invalid");
+    await query(
+      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
+      [gameKey, appId, imageBuffer, mimeType, imageUrl]
+    );
+    console.log("Official PUBG Mobile image saved to database.");
+  } catch (error) {
+    console.warn("Official PUBG image sync skipped:", error.message);
+  }
+}
+
 /* =========================
    PUBLIC STORE
 ========================= */
@@ -969,6 +1004,20 @@ app.get("/api/store", (req, res) => {
     currency: adminSettings.currency,
     profit_rate: Number(adminSettings.profit_rate)
   });
+});
+
+app.get("/api/game-images/:gameKey", async (req, res) => {
+  try {
+    const key = String(req.params.gameKey || "").trim().toLowerCase();
+    const result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
+    if (!result.rows.length) return res.status(404).end();
+    res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
+    res.type(result.rows[0].mime_type);
+    res.send(result.rows[0].image_data);
+  } catch (error) {
+    console.error("Game image error:", error);
+    res.status(500).end();
+  }
 });
 
 app.get("/api/products", async (req, res) => {
@@ -1307,6 +1356,7 @@ initDb()
   .then(async () => {
     await loadSettings();
     await cleanupSessions();
+    await ensurePubgOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
