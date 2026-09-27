@@ -558,8 +558,8 @@ const GAME_CATALOG = [
     { title:"Goddess of Victory: NIKKE", aliases:["goddess of victory","nikke"] },
     { title:"Age of Magic", aliases:["age of magic"] },
     { title:"Ghost Story Love Destiny", aliases:["ghost story love destiny"] },
-    { title:"Arena of Valor EU", aliases:["arena of valor"] },
-    { title:"Growtopia", aliases:["growtopia"] },
+        { title:"Arena of Valor EU", aliases:["arena of valor","arena of valor eu","أرينا أوف فالور"] },
+        { title:"Growtopia", aliases:["growtopia","غروتوبيا"] },
     { title:"Golden Spatula", aliases:["golden spatula"] },
     { title:"Hatsune Miku: Colorful Stage", aliases:["hatsune miku","colorful stage"] },
     { title:"Arknights Endfield", aliases:["arknights endfield"] },
@@ -568,7 +568,7 @@ const GAME_CATALOG = [
     { title:"Heaven Burns Red", aliases:["heaven burns red"] },
     { title:"Astral Guardians", aliases:["astral guardians"] },
     { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
-    { title:"Blockman Go", aliases:["blockman go"] },
+        { title:"Blockman Go", aliases:["blockman go","blockman go adventures","بلوكمان جو"] },
     { title:"Blade X Odyssey of Heroes", aliases:["blade x","odyssey of heroes"] },
     { title:"Be The King", aliases:["be the king"] },
     { title:"Captain Tsubasa: Ace", aliases:["captain tsubasa"] },
@@ -1189,10 +1189,13 @@ function renderGameParamFields(product, gameTitle) {
     const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
     const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
     const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
+    const isBlockmanGo = normalizedGameTitle.includes("blockman go") || normalizedGameTitle.includes("blockman go adventures") || normalizedGameTitle.includes("بلوكمان جو");
+    const isGrowtopia = normalizedGameTitle.includes("growtopia") || normalizedGameTitle.includes("غروتوبيا");
+    const isArenaofValorEU = normalizedGameTitle.includes("arena of valor") || normalizedGameTitle.includes("arena of valor eu") || normalizedGameTitle.includes("أرينا أوف فالور");
     const isAFKJourney = normalizedGameTitle.includes("afk journey");
     const isZepeto = normalizedGameTitle.includes("zepeto");
     const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
