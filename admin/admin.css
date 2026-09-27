@@ -802,3 +802,30 @@ td{color:#f5f5f5!important;}
     .admin-header{height:62px!important;}
     .admin-layout{padding-top:62px!important;}
 }
+
+
+/* ===== الخط والأرقام النهائيان للوحة الإدارة ===== */
+@font-face{
+    font-family:"Dubai Medium";
+    src:local("Dubai Medium"),local("Dubai");
+    font-style:normal;
+    font-weight:500;
+    font-display:swap;
+}
+html,body,button,input,select,textarea,*{
+    font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif!important;
+}
+.admin-balance strong,
+.stat-card strong,
+table td,
+table th,
+input[type="number"],
+input[inputmode="decimal"],
+.price,
+.amount,
+.balance,
+.total,
+.admin-number{
+    font-variant-numeric:tabular-nums!important;
+    font-feature-settings:"tnum"!important;
+}
