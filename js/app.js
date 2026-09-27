@@ -1185,6 +1185,12 @@ function renderPubgParamFields(product) {
 }
 
 function renderGameParamFields(product, gameTitle) {
+    // PUBG بكل تصنيفاتها ومنتجاتها: نقرأ params الخام قبل أي فلترة، حتى لا نحذف
+    // قيمًا صحيحة مثل "."، ونستخدم الاسم القادم من API حرفيًا كعنوان فقط.
+    if (isPubgGame(gameTitle)) {
+        return renderPubgParamFields(product);
+    }
+
     const params = getUsableProductParams(product);
 
     // لا ننشئ أي حقل من عندنا: حقول الشراء تُشتق حصراً من product.params.
@@ -1193,7 +1199,7 @@ function renderGameParamFields(product, gameTitle) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
-    // PUBG وRoblox وجواكر وفري فاير: نستخدم أسماء params القادمة من API/الكتالوج حرفيًا كعنوان فقط.
+    // Roblox وجواكر وفري فاير: نستخدم أسماء params القادمة من API/الكتالوج حرفيًا كعنوان فقط.
     // لا نضيف "أدخل" ولا نعيد تسمية أي parameter ولا ننشئ playerId من عندنا.
     const exactParamGame = isPubgGame(gameTitle) ||
         normalizeGameText(gameTitle).includes("roblox") ||
@@ -1220,27 +1226,6 @@ function renderGameParamFields(product, gameTitle) {
             return '<div class="pubg-field game-required-field">' +
                 '<label for="' + inputId + '">' + displayLabel + '</label>' +
                 '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
-                '</div>';
-        }).join("");
-    }
-
-    // PUBG: اعرض كل params كما وصلت من API/الكتالوج حرفيًا.
-    if (isPubgGame(gameTitle)) {
-        const exactParams = Array.isArray(product && product.params)
-            ? product.params.map(function(label) { return String(label ?? "").trim(); })
-                .filter(function(label) { return label.length > 0; })
-            : [];
-
-        if (!exactParams.length) {
-            return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
-        }
-
-        return exactParams.map(function(label, index) {
-            const displayLabel = escapeHtml(label);
-            const inputId = "pubgExactParam_" + index;
-            return '<div class="pubg-field game-required-field">' +
-                '<label for="' + inputId + '">' + displayLabel + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + displayLabel + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
                 '</div>';
         }).join("");
     }
@@ -1445,7 +1430,7 @@ function renderGameProductPicker(gameTitle, group) {
             '</div>' +
             '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
             '<div id="pubgParamFields">' +
-                (firstProduct ? (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
+                (firstProduct ? (isPubgGame(gameTitle)
                     ? renderPubgParamFields(firstProduct)
                     : renderGameParamFields(firstProduct, gameTitle)) : '') +
             '</div>' +
@@ -1527,7 +1512,7 @@ function renderGameProductPicker(gameTitle, group) {
 
         if (selectedName) selectedName.textContent = product.name || "اختر المنتج";
         if (selectedPrice) selectedPrice.textContent = formatProductPrice(product);
-        if (fields) fields.innerHTML = (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
+        if (fields) fields.innerHTML = (isPubgGame(gameTitle)
             ? renderPubgParamFields(product)
             : renderGameParamFields(product, gameTitle));
         renderQuantity(product);
