@@ -1034,6 +1034,12 @@ async function ensureRobloxOfficialImage() {
 async function ensureJawakerOfficialImage() {
   return ensureOfficialGameImage("jawaker", "com.boundless.jawaker", "Jawaker");
 }
+async function ensureFreeFireOfficialImage() {
+  return ensureOfficialGameImage("free-fire", "com.dts.freefireth", "Free Fire");
+}
+async function ensureClashOfClansOfficialImage() {
+  return ensureOfficialGameImage("clash-of-clans", "com.supercell.clashofclans", "Clash of Clans");
+}
 
 /* =========================
    PUBLIC STORE
@@ -1057,7 +1063,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
     const imageMap = {
       "pubg-mobile": ["com.tencent.ig", "PUBG Mobile"],
       "roblox": ["com.roblox.client", "Roblox"],
-      "jawaker": ["com.boundless.jawaker", "Jawaker"]
+      "jawaker": ["com.boundless.jawaker", "Jawaker"],
+      "free-fire": ["com.dts.freefireth", "Free Fire"],
+      "clash-of-clans": ["com.supercell.clashofclans", "Clash of Clans"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
@@ -1450,6 +1458,8 @@ initDb()
     await ensurePubgOfficialImage();
     await ensureRobloxOfficialImage();
     await ensureJawakerOfficialImage();
+    await ensureFreeFireOfficialImage();
+    await ensureClashOfClansOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
