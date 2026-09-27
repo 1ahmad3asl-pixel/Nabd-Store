@@ -971,6 +971,18 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       if (textValue) params[String(key)] = textValue;
     }
 
+    // كل المعلومات التي يعلنها كتالوج Nemer كـ params مطلوبة فعليًا،
+    // حتى لا يمر الطلب من الواجهة فقط دون البيانات اللازمة للمزود.
+    if (allowedParamList && allowedParamList.length) {
+      const missingParam = allowedParamList.find(key => !String(params[key] ?? "").trim());
+      if (missingParam) {
+        return res.status(400).json({
+          status:"ERROR",
+          message:"يرجى إدخال جميع المعلومات المطلوبة للمنتج."
+        });
+      }
+    }
+
     await loadSettings();
     const baseSalePrice = apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100);
 
