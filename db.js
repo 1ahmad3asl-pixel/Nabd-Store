@@ -27,15 +27,15 @@ async function withTransaction(callback) {
 }
 
 async function initDb() {
-  // Allow provider prices and quantity totals to retain up to 6 decimal places.
+  // Allow provider prices and quantity totals to retain high precision; final customer prices are rounded up to the product precision.
   for (const sql of [
-    "ALTER TABLE customers ALTER COLUMN balance TYPE NUMERIC(18,6)",
-    "ALTER TABLE orders ALTER COLUMN api_price TYPE NUMERIC(18,6)",
-    "ALTER TABLE orders ALTER COLUMN price TYPE NUMERIC(18,6)",
-    "ALTER TABLE orders ALTER COLUMN profit TYPE NUMERIC(18,6)",
-    "ALTER TABLE transactions ALTER COLUMN amount TYPE NUMERIC(18,6)",
-    "ALTER TABLE transactions ALTER COLUMN balance_before TYPE NUMERIC(18,6)",
-    "ALTER TABLE transactions ALTER COLUMN balance_after TYPE NUMERIC(18,6)"
+    "ALTER TABLE customers ALTER COLUMN balance TYPE NUMERIC(24,12)",
+    "ALTER TABLE orders ALTER COLUMN api_price TYPE NUMERIC(24,12)",
+    "ALTER TABLE orders ALTER COLUMN price TYPE NUMERIC(24,12)",
+    "ALTER TABLE orders ALTER COLUMN profit TYPE NUMERIC(24,12)",
+    "ALTER TABLE transactions ALTER COLUMN amount TYPE NUMERIC(24,12)",
+    "ALTER TABLE transactions ALTER COLUMN balance_before TYPE NUMERIC(24,12)",
+    "ALTER TABLE transactions ALTER COLUMN balance_after TYPE NUMERIC(24,12)"
   ]) {
     try { await query(sql); } catch (error) { console.warn("Money precision migration:", error.message); }
   }
@@ -61,7 +61,7 @@ async function initDb() {
       phone TEXT,
       phone_country TEXT,
       avatar_url TEXT,
-      balance NUMERIC(18,4) NOT NULL DEFAULT 0,
+      balance NUMERIC(24,12) NOT NULL DEFAULT 0,
       orders_count INTEGER NOT NULL DEFAULT 0,
       discount NUMERIC(5,2) NOT NULL DEFAULT 0,
       active BOOLEAN NOT NULL DEFAULT TRUE,
@@ -102,9 +102,9 @@ async function initDb() {
       customer_id TEXT NOT NULL,
       product_id TEXT NOT NULL,
       product_name TEXT NOT NULL DEFAULT '',
-      api_price NUMERIC(18,4) NOT NULL DEFAULT 0,
-      price NUMERIC(18,4) NOT NULL DEFAULT 0,
-      profit NUMERIC(18,4) NOT NULL DEFAULT 0,
+      api_price NUMERIC(24,12) NOT NULL DEFAULT 0,
+      price NUMERIC(24,12) NOT NULL DEFAULT 0,
+      profit NUMERIC(24,12) NOT NULL DEFAULT 0,
       discount NUMERIC(5,2) NOT NULL DEFAULT 0,
       status TEXT NOT NULL DEFAULT 'pending',
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -116,13 +116,13 @@ async function initDb() {
     CREATE TABLE IF NOT EXISTS transactions (
       id TEXT PRIMARY KEY,
       customer_id TEXT NOT NULL,
-      amount NUMERIC(18,4) NOT NULL DEFAULT 0,
+      amount NUMERIC(24,12) NOT NULL DEFAULT 0,
       type TEXT NOT NULL DEFAULT '',
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
 
-    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_before NUMERIC(18,4) NOT NULL DEFAULT 0;
-    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_after NUMERIC(18,4) NOT NULL DEFAULT 0;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_before NUMERIC(24,12) NOT NULL DEFAULT 0;
+    ALTER TABLE transactions ADD COLUMN IF NOT EXISTS balance_after NUMERIC(24,12) NOT NULL DEFAULT 0;
     ALTER TABLE transactions ADD COLUMN IF NOT EXISTS reference_type TEXT;
     ALTER TABLE transactions ADD COLUMN IF NOT EXISTS reference_id TEXT;
     ALTER TABLE transactions ADD COLUMN IF NOT EXISTS note TEXT;
