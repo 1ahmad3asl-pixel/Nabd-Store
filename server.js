@@ -1155,7 +1155,10 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "blood-strike": ["com.netease.newspike", "Blood Strike"],
       "acecraft": ["com.vizta.wefly", "ACECRAFT"],
       "arena-breakout": ["com.proximabeta.mf.uamo", "Arena Breakout"],
-      "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"]
+      "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"],
+      "afk-journey": ["com.farlightgames.igame.gp", "AFK Journey"],
+      "zepeto": ["com.naver.zepeto", "ZEPETO"],
+      "king-shot": ["com.fingerfun.kingshot", "King Shot"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
