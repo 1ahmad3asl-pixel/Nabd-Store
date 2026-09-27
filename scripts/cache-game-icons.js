@@ -5,6 +5,10 @@ const ROOT = path.resolve(__dirname, "..");
 const APP_FILE = path.join(ROOT, "js", "app.js");
 const OUT_DIR = path.join(ROOT, "assets", "games");
 const MANIFEST_FILE = path.join(OUT_DIR, "index.json");
+const CACHE_DIR = process.env.XDG_CACHE_HOME
+  ? path.join(process.env.XDG_CACHE_HOME, "nabd-store-game-icons")
+  : null;
+const CACHE_MANIFEST_FILE = CACHE_DIR ? path.join(CACHE_DIR, "index.json") : null;
 
 function slugify(value) {
   return String(value || "")
@@ -60,6 +64,44 @@ function extractCatalog(source) {
   }
 
   return catalog;
+}
+
+function copyCachedIcons() {
+  if (!CACHE_DIR || !fs.existsSync(CACHE_MANIFEST_FILE)) return {};
+  try {
+    fs.mkdirSync(OUT_DIR, {recursive: true});
+    const cached = JSON.parse(fs.readFileSync(CACHE_MANIFEST_FILE, "utf8"));
+    if (!cached || typeof cached !== "object") return {};
+    for (const url of Object.values(cached)) {
+      if (typeof url !== "string" || !url.startsWith("/assets/games/")) continue;
+      const filename = path.basename(url);
+      const source = path.join(CACHE_DIR, filename);
+      const target = path.join(OUT_DIR, filename);
+      if (fs.existsSync(source) && !fs.existsSync(target)) {
+        fs.copyFileSync(source, target);
+      }
+    }
+    return cached;
+  } catch (error) {
+    console.warn("[game-icon] cache restore failed:", error.message);
+    return {};
+  }
+}
+
+function saveIconCache(manifest) {
+  if (!CACHE_DIR) return;
+  try {
+    fs.mkdirSync(CACHE_DIR, {recursive: true});
+    fs.copyFileSync(MANIFEST_FILE, CACHE_MANIFEST_FILE);
+    for (const url of Object.values(manifest)) {
+      if (typeof url !== "string" || !url.startsWith("/assets/games/")) continue;
+      const filename = path.basename(url);
+      const source = path.join(OUT_DIR, filename);
+      if (fs.existsSync(source)) fs.copyFileSync(source, path.join(CACHE_DIR, filename));
+    }
+  } catch (error) {
+    console.warn("[game-icon] cache save failed:", error.message);
+  }
 }
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
@@ -199,7 +241,12 @@ async function main() {
 
   const source = fs.readFileSync(APP_FILE, "utf8");
   const catalog = extractCatalog(source);
-  const manifest = {};
+  const manifest = Object.assign({}, copyCachedIcons());
+  if (fs.existsSync(MANIFEST_FILE)) {
+    try {
+      Object.assign(manifest, JSON.parse(fs.readFileSync(MANIFEST_FILE, "utf8")));
+    } catch (_) {}
+  }
 
   console.log("Verifying official game icons:", catalog.length);
 
