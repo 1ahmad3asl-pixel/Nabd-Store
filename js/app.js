@@ -1193,8 +1193,17 @@ function renderGameParamFields(product, gameTitle) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
-    // PUBG: اعرض كل params كما وصلت من API/الكتالوج حرفيًا، بما فيها أي اسم غير معتاد.
-    if (isPubgGame(gameTitle)) {
+    // PUBG وRoblox وجواكر وفري فاير: نستخدم أسماء params القادمة من API/الكتالوج حرفيًا كعنوان فقط.
+    // لا نضيف "أدخل" ولا نعيد تسمية أي parameter ولا ننشئ playerId من عندنا.
+    const exactParamGame = isPubgGame(gameTitle) ||
+        normalizeGameText(gameTitle).includes("roblox") ||
+        normalizeGameText(gameTitle).includes("روبلوكس") ||
+        normalizeGameText(gameTitle).includes("jawaker") ||
+        normalizeGameText(gameTitle).includes("جواكر") ||
+        normalizeGameText(gameTitle).includes("free fire") ||
+        normalizeGameText(gameTitle).includes("فري فاير");
+
+    if (exactParamGame) {
         const exactParams = Array.isArray(product && product.params)
             ? product.params.map(function(label) { return String(label ?? "").trim(); })
                 .filter(function(label) { return label.length > 0; })
@@ -1206,10 +1215,10 @@ function renderGameParamFields(product, gameTitle) {
 
         return exactParams.map(function(label, index) {
             const displayLabel = escapeHtml(label);
-            const inputId = "pubgExactParam_" + index;
+            const inputId = "exactGameParam_" + index;
             const safeParamKey = escapeHtml(label);
             return '<div class="pubg-field game-required-field">' +
-                '<label for="' + inputId + '">أدخل ' + displayLabel + '</label>' +
+                '<label for="' + inputId + '">' + displayLabel + '</label>' +
                 '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
                 '</div>';
         }).join("");
