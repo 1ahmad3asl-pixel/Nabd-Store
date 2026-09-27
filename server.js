@@ -1155,6 +1155,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "whiteout-survival": ["com.gof.global", "Whiteout Survival"],
       "blood-strike": ["com.netease.newspike", "Blood Strike"],
       "acecraft": ["com.vizta.wefly", "ACECRAFT"],
+      "age-of-magic": ["com.playkot.ageofmagic", "Age of Magic"],
+      "ghost-story-love-destiny": ["com.netease.wxzcglobal", "Ghost Story: Love Destiny"],
       "arena-breakout": ["com.proximabeta.mf.uamo", "Arena Breakout"],
       "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"],
       "afk-journey": ["com.farlightgames.igame.gp", "AFK Journey"],
