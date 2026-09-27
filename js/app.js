@@ -562,9 +562,9 @@ const GAME_CATALOG = [
         { title:"Growtopia", aliases:["growtopia","غروتوبيا"] },
         { title:"Golden Spatula", aliases:["golden spatula","غولدن سباتولا"] },
         { title:"Hatsune Miku: Colorful Stage", aliases:["hatsune miku","colorful stage","هتسوني ميكو"] },
-    { title:"Arknights Endfield", aliases:["arknights endfield"] },
-    { title:"Haikyu Fly High", aliases:["haikyu fly high"] },
-    { title:"Ballistic Hero VNG", aliases:["ballistic hero vng"] },
+        { title:"Arknights Endfield", aliases:["arknights endfield","arknights","أركنايتس إندفيلد"] },
+        { title:"Haikyu Fly High", aliases:["haikyu fly high","haikyu","هايكيو فلاي هاي"] },
+        { title:"Ballistic Hero VNG", aliases:["ballistic hero vng","ballistic hero","بالستك هيرو"] },
         { title:"Heaven Burns Red", aliases:["heaven burns red","هيفن برنز ريد"] },
     { title:"Astral Guardians", aliases:["astral guardians"] },
     { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
@@ -1189,6 +1189,9 @@ function renderGameParamFields(product, gameTitle) {
     const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
     const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
     const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
+    const isBallisticHeroVNG = normalizedGameTitle.includes("ballistic hero vng") || normalizedGameTitle.includes("ballistic hero") || normalizedGameTitle.includes("بالستك هيرو");
+    const isHaikyuFlyHigh = normalizedGameTitle.includes("haikyu fly high") || normalizedGameTitle.includes("haikyu") || normalizedGameTitle.includes("هايكيو فلاي هاي");
+    const isArknightsEndfield = normalizedGameTitle.includes("arknights endfield") || normalizedGameTitle.includes("arknights") || normalizedGameTitle.includes("أركنايتس إندفيلد");
     const isHeavenBurnsRed = normalizedGameTitle.includes("heaven burns red") || normalizedGameTitle.includes("هيفن برنز ريد");
     const isHatsuneMikuColorfulStage = normalizedGameTitle.includes("hatsune miku") || normalizedGameTitle.includes("colorful stage") || normalizedGameTitle.includes("هتسوني ميكو");
     const isGoldenSpatula = normalizedGameTitle.includes("golden spatula") || normalizedGameTitle.includes("غولدن سباتولا");
@@ -1198,7 +1201,7 @@ function renderGameParamFields(product, gameTitle) {
     const isAFKJourney = normalizedGameTitle.includes("afk journey");
     const isZepeto = normalizedGameTitle.includes("zepeto");
     const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
