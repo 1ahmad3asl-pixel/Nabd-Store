@@ -616,11 +616,6 @@ const GAME_CATALOG = [
 function normalizeGameText(value) {
     return String(value || "")
         .toLowerCase()
-        .normalize("NFKD")
-        .replace(/[\u064B-\u065F\u0670]/g, "")
-        .replace(/[أإآٱ]/g, "ا")
-        .replace(/[ى]/g, "ي")
-        .replace(/[ة]/g, "ه")
         .replace(/[._:/\\-]+/g, " ")
         .replace(/\s+/g, " ")
         .trim();
