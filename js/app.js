@@ -779,40 +779,6 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
-async function loadCachedGameImages(tiles) {
-    const list = Array.isArray(tiles) ? tiles : [];
-    if (!list.length) return;
-
-    try {
-        const response = await fetch("/assets/games/index.json", {
-            headers: {Accept: "application/json"},
-            cache: "force-cache"
-        });
-        if (!response.ok) return;
-
-        const manifest = await response.json();
-        if (!manifest || typeof manifest !== "object") return;
-
-        list.forEach(function(tile) {
-            const image = manifest[tile.title];
-            if (!image) return;
-
-            const card = document.querySelector(
-                '.game-category-tile[data-game-title="' + CSS.escape(tile.title) + '"]'
-            );
-            if (!card) return;
-
-            const imageBox = card.querySelector(".game-tile-image");
-            if (!imageBox) return;
-
-            imageBox.innerHTML =
-                '<img src="' + escapeHtml(image) + '" alt="" loading="lazy">';
-        });
-    } catch (error) {
-        console.warn("تعذر تحميل صور الألعاب المحلية:", error);
-    }
-}
-
 function openGamesPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
@@ -852,9 +818,6 @@ function openGamesPage() {
             '</button>';
         }).join("") +
         '</div>';
-
-    // استبدل الصور الخارجية بالصور المحلية التي يتم توليدها أثناء بناء المشروع.
-    loadCachedGameImages(tiles);
 
     content.querySelectorAll(".game-category-tile").forEach(function(tile) {
         tile.addEventListener("click", async function() {
@@ -1680,8 +1643,9 @@ function renderProducts() {
 
     elements.products.innerHTML = filtered.map(function(product) {
         const available = product.available !== false && product.available !== 0;
-        const hasLivePrice = state.productsLive && Number.isFinite(Number(product.price));
-        const price = hasLivePrice ? Number(product.price) : 0;
+        const rawPrice = product.price;
+        const hasLivePrice = state.productsLive && rawPrice !== null && rawPrice !== undefined && String(rawPrice).trim() !== "" && Number.isFinite(Number(rawPrice)) && Number(rawPrice) >= 0;
+        const price = hasLivePrice ? Number(rawPrice) : 0;
         const image = product.category_img || "";
         const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
         const purchaseEnabled = available && hasLivePrice;
@@ -1708,7 +1672,9 @@ function openProductModal(product) {
 
     const minQty = Number(product.qty_values?.min || 1);
     const maxQty = Number(product.qty_values?.max || 999999999);
-    const price = Number(product.price) || 0;
+    const rawPrice = product.price;
+    const hasLivePrice = rawPrice !== null && rawPrice !== undefined && String(rawPrice).trim() !== "" && Number.isFinite(Number(rawPrice)) && Number(rawPrice) >= 0;
+    const price = hasLivePrice ? Number(rawPrice) : 0;
 
     showModal("تأكيد عملية الشراء",
         '<div class="order-form">' +
@@ -1720,9 +1686,9 @@ function openProductModal(product) {
             '</div>' +
             '<div class="order-price-row">' +
                 '<span>السعر</span>' +
-                '<strong id="orderPrice">' + formatMoney(price) + '</strong>' +
+                '<strong id="orderPrice">' + (hasLivePrice ? formatMoney(price) : 'السعر غير متاح') + '</strong>' +
             '</div>' +
-            '<button class="buy-btn order-confirm-btn" id="confirmProductOrder" type="button">تأكيد عملية الشراء</button>' +
+            '<button class="buy-btn order-confirm-btn" id="confirmProductOrder" type="button"' + (!hasLivePrice ? ' disabled' : '') + '>تأكيد عملية الشراء</button>' +
         '</div>'
     );
 
