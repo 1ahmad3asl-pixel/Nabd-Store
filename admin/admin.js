@@ -1415,7 +1415,13 @@ function initializeSettings() {
     }
     if (dhikrInput) {
         dhikrInput.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") event.stopPropagation();
+            if (event.key !== "Enter") return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            const start = dhikrInput.selectionStart ?? dhikrInput.value.length;
+            const end = dhikrInput.selectionEnd ?? start;
+            dhikrInput.setRangeText("\n", start, end, "end");
+            dhikrInput.dispatchEvent(new Event("input", {bubbles:true}));
         });
     }
 
@@ -1827,8 +1833,7 @@ async function loadTransactions() {
         };
         setWalletStat("totalDeposits", budget.sales ?? 0);
         setWalletStat("totalWithdrawals", budget.customer_outflows ?? 0);
-        setWalletStat("budgetNet", budget.net_cash ?? 0);
-        setWalletStat("netProfit", budget.net_profit ?? 0);
+        setWalletStat("budgetNet", budget.net_profit ?? 0);
 
     } catch (error) {
 
