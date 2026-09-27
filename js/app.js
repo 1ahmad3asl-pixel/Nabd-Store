@@ -566,6 +566,9 @@ const GAME_CATALOG = [
         { title:"Haikyu Fly High", aliases:["haikyu fly high","haikyu","هايكيو فلاي هاي"] },
         { title:"Ballistic Hero VNG", aliases:["ballistic hero vng","ballistic hero","بالستك هيرو"] },
         { title:"Heaven Burns Red", aliases:["heaven burns red","هيفن برنز ريد"] },
+    { title:"Rise of Kingdoms: Lost Crusade", aliases:["rise of kingdoms","rise of kingdoms lost crusade","رايز أوف كينغدومز"] },
+    { title:"Top War: Battle Game", aliases:["top war","top war battle game","توب وور"] },
+    { title:"The Ants: Underground Kingdom", aliases:["the ants","the ants underground kingdom","النمل: المملكة تحت الأرض"] },
     { title:"Astral Guardians", aliases:["astral guardians"] },
     { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
         { title:"Blockman Go", aliases:["blockman go","blockman go adventures","بلوكمان جو"] },
@@ -1193,6 +1196,9 @@ function renderGameParamFields(product, gameTitle) {
     const isHaikyuFlyHigh = normalizedGameTitle.includes("haikyu fly high") || normalizedGameTitle.includes("haikyu") || normalizedGameTitle.includes("هايكيو فلاي هاي");
     const isArknightsEndfield = normalizedGameTitle.includes("arknights endfield") || normalizedGameTitle.includes("arknights") || normalizedGameTitle.includes("أركنايتس إندفيلد");
     const isHeavenBurnsRed = normalizedGameTitle.includes("heaven burns red") || normalizedGameTitle.includes("هيفن برنز ريد");
+    const isRiseofKingdomsLostCrusade = normalizedGameTitle.includes("rise of kingdoms") || normalizedGameTitle.includes("rise of kingdoms lost crusade") || normalizedGameTitle.includes("رايز أوف كينغدومز");
+    const isTopWarBattleGame = normalizedGameTitle.includes("top war") || normalizedGameTitle.includes("top war battle game") || normalizedGameTitle.includes("توب وور");
+    const isTheAntsUndergroundKingdom = normalizedGameTitle.includes("the ants") || normalizedGameTitle.includes("the ants underground kingdom") || normalizedGameTitle.includes("النمل: المملكة تحت الأرض");
     const isHatsuneMikuColorfulStage = normalizedGameTitle.includes("hatsune miku") || normalizedGameTitle.includes("colorful stage") || normalizedGameTitle.includes("هتسوني ميكو");
     const isGoldenSpatula = normalizedGameTitle.includes("golden spatula") || normalizedGameTitle.includes("غولدن سباتولا");
     const isBlockmanGo = normalizedGameTitle.includes("blockman go") || normalizedGameTitle.includes("blockman go adventures") || normalizedGameTitle.includes("بلوكمان جو");
