@@ -1184,8 +1184,8 @@ function getNumberGroupDefinitions() {
     return [
         {key:"whatsapp-s1",title:"أرقام واتساب S1",aliases:["ارقام واتساب s1","أرقام واتساب s1","whatsapp s1","واتساب سيرفر 1","واتساب سيرفر واحد","ارقام واتساب 1","أرقام واتساب 1","whatsapp server 1","whatsapp server1","whatsapp 1"]},
         {key:"whatsapp-s2",title:"أرقام واتساب S2",aliases:["ارقام واتساب s2","أرقام واتساب s2","whatsapp s2","واتساب سيرفر 2","واتساب سيرفر اثنين","واتساب سيرفر اثنان","ارقام واتساب 2","أرقام واتساب 2","whatsapp server 2","whatsapp server2","whatsapp 2"]},
-        {key:"gmail",title:"أرقام جيميل",aliases:["ارقام جيميل","أرقام جيميل","gmail"]},
-        {key:"facebook",title:"أرقام فيسبوك",aliases:["ارقام فيسبوك","أرقام فيسبوك","facebook"]},
+        {key:"gmail",title:"أرقام جيميل",aliases:["ارقام جيميل","أرقام جيميل","gmail","google mail","جوجل ميل"]},
+        {key:"facebook",title:"أرقام فيسبوك",aliases:["ارقام فيسبوك","أرقام فيسبوك","facebook","fb","فيس بوك","فيسبوك"]},
         {key:"icloud",title:"أرقام آيكلاود",aliases:["ارقام ايكلاود","أرقام ايكلاود","icloud"]},
         {key:"imo",title:"أرقام ايمو",aliases:["ارقام ايمو","أرقام ايمو","imo"]},
         {key:"instagram",title:"أرقام انستغرام",aliases:["ارقام انستغرام","أرقام انستغرام","instagram"]},
@@ -1226,6 +1226,8 @@ function getNumberGroupImage(group) {
     if(group && (group.key==="whatsapp-s1" || group.key==="whatsapp-s2")){
         return BACKEND_URL + "/assets/whatsapp.svg";
     }
+    if(group && group.key==="facebook") return BACKEND_URL + "/assets/facebook.svg";
+    if(group && group.key==="gmail") return BACKEND_URL + "/assets/gmail.svg";
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
