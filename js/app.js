@@ -1201,7 +1201,7 @@ function renderGameParamFields(product, gameTitle) {
 
     // Roblox وجواكر وفري فاير: نستخدم أسماء params القادمة من API/الكتالوج حرفيًا كعنوان فقط.
     // لا نضيف "أدخل" ولا نعيد تسمية أي parameter ولا ننشئ playerId من عندنا.
-    const exactParamGame = isPubgGame(gameTitle) ||
+    const exactParamGame =
         normalizeGameText(gameTitle).includes("roblox") ||
         normalizeGameText(gameTitle).includes("روبلوكس") ||
         normalizeGameText(gameTitle).includes("jawaker") ||
