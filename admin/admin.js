@@ -138,16 +138,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     initializeAdminNavigation();
     initializeAdminMenu();
-    initializeAdminTheme();
-    initializeDashboard();
+initializeDashboard();
     initializeCustomers();
     initializeOrders();
     initializeProducts();
     initializeSettings();
     initializeNotifications();
     initializeLogout();
-    initializeAdminTheme();
-    initializeAppearanceSettings();
+initializeAppearanceSettings();
 
     loadAdminDashboard();
     loadCustomers();
