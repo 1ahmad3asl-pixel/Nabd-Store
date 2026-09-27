@@ -1186,8 +1186,8 @@ function getNumberGroupDefinitions() {
         {key:"whatsapp-s2",title:"أرقام واتساب S2",aliases:["ارقام واتساب s2","أرقام واتساب s2","whatsapp s2","واتساب سيرفر 2","واتساب سيرفر اثنين","واتساب سيرفر اثنان","ارقام واتساب 2","أرقام واتساب 2","whatsapp server 2","whatsapp server2","whatsapp 2"]},
         {key:"gmail",title:"أرقام جيميل",aliases:["ارقام جيميل","أرقام جيميل","gmail","google mail","جوجل ميل"]},
         {key:"facebook",title:"أرقام فيسبوك",aliases:["ارقام فيسبوك","أرقام فيسبوك","facebook","fb","فيس بوك","فيسبوك"]},
-        {key:"icloud",title:"أرقام آيكلاود",aliases:["ارقام ايكلاود","أرقام ايكلاود","icloud"]},
-        {key:"imo",title:"أرقام ايمو",aliases:["ارقام ايمو","أرقام ايمو","imo"]},
+        {key:"icloud",title:"أرقام آيكلاود",aliases:["ارقام ايكلاود","أرقام ايكلاود","ايكلاود","آيكلاود","اي كلاود","آي كلاود","icloud","icloud number","icloud numbers","icloud phone","apple icloud"]},
+        {key:"imo",title:"أرقام ايمو",aliases:["ارقام ايمو","أرقام ايمو","ايمو","إيمو","imo","imo number","imo numbers","imo phone"]},
         {key:"instagram",title:"أرقام انستغرام",aliases:["ارقام انستغرام","أرقام انستغرام","instagram"]},
         {key:"whatsapp-badawi",title:"رقم واتساب بدوي",aliases:["رقم واتساب بدوي","ارقام واتساب بدوي","أرقام واتساب بدوي","whatsapp badawi"]},
         {key:"whatsapp-ban",title:"حظر رقم واتساب",aliases:["حظر رقم واتساب","حظر ارقام واتساب","أرقام واتساب محظورة","whatsapp ban","banned whatsapp"]}
@@ -1228,6 +1228,8 @@ function getNumberGroupImage(group) {
     }
     if(group && group.key==="facebook") return BACKEND_URL + "/assets/facebook.svg";
     if(group && group.key==="gmail") return BACKEND_URL + "/assets/gmail.svg";
+    if(group && group.key==="icloud") return BACKEND_URL + "/assets/icloud.svg";
+    if(group && group.key==="imo") return BACKEND_URL + "/assets/imo.svg";
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
