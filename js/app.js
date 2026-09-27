@@ -759,25 +759,95 @@ function getRobloxGroupTitle(product) {
 }
 
 function getJawakerGroupTitle(product) {
-    const raw = cleanGameCategoryName(product && product.category_name || "جواكر");
+    const raw = cleanGameCategoryName(
+        String(product && product.category_name || "") + " " +
+        String(product && product.name || "")
+    );
     const text = normalizeGameText(raw);
-    if (!text || text === "jawaker" || text === "جواكر") return "جواكر";
-    return raw;
+
+    if (
+        text.includes("مسرع") ||
+        text.includes("accelerator") ||
+        text.includes("booster")
+    ) {
+        return "مسرع جواكر";
+    }
+
+    if (
+        text.includes("s2") ||
+        text.includes("عداد جواكر s2") ||
+        text.includes("jawaker counter s2") ||
+        text.includes("counter s2")
+    ) {
+        return "عداد جواكر S2";
+    }
+
+    if (
+        (text.includes("s1") && (text.includes("cum") || text.includes("server") || text.includes("سيرفر"))) ||
+        text.includes("عداد جواكر سيرفر s1") ||
+        text.includes("jawaker server s1")
+    ) {
+        return "عداد جواكر سيرفر S1 وCum";
+    }
+
+    return "";
+}
+
+function getJawakerGroupDefinitions() {
+    return [
+        { key: "jawaker|accelerator", title: "مسرع جواكر" },
+        { key: "jawaker|counter-s2", title: "عداد جواكر S2" },
+        { key: "jawaker|server-s1-cum", title: "عداد جواكر سيرفر S1 وCum" }
+    ];
+}
+
+function getJawakerProductSortValue(product) {
+    const price = getGameProductPrice(product);
+    return price === null ? Number.POSITIVE_INFINITY : price;
+}
+
+function sortJawakerProducts(products) {
+    return products.slice().sort(function(a, b) {
+        const priceDiff = getJawakerProductSortValue(a) - getJawakerProductSortValue(b);
+        if (priceDiff !== 0) return priceDiff;
+        return String(a.name || "").localeCompare(String(b.name || ""), "ar");
+    });
 }
 
 function getGameGroups(gameTitle) {
     const products = getGameProducts(gameTitle);
     const groups = [];
     const seen = new Map();
-    const isRoblox = normalizeGameText(gameTitle).includes("roblox");
+    const normalizedGame = normalizeGameText(gameTitle);
+    const isRoblox = normalizedGame.includes("roblox");
+    const isJawaker = normalizedGame.includes("jawaker") || normalizedGame.includes("جواكر");
+
+    if (isJawaker) {
+        const definitions = getJawakerGroupDefinitions();
+        definitions.forEach(function(definition) {
+            const groupProducts = sortJawakerProducts(
+                products.filter(function(product) {
+                    return getJawakerGroupTitle(product) === definition.title;
+                })
+            );
+
+            groups.push({
+                key: definition.key,
+                title: definition.title,
+                image: (groupProducts[0] && groupProducts[0].category_img) || "",
+                products: groupProducts
+            });
+        });
+
+        return groups;
+    }
 
     products.forEach(function(product) {
         const categoryName = isRoblox
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const isJawaker = normalizeGameText(gameTitle).includes("jawaker") || normalizeGameText(gameTitle).includes("جواكر");
-        const key = (isRoblox || isJawaker)
+        const key = isRoblox
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
@@ -945,7 +1015,7 @@ function getDisplayParamLabel(label) {
         text.includes("الايدي") ||
         text.includes("id")
     ) {
-        return "ID المقاتل";
+        return "ID اللاعب";
     }
     return String(label || "").trim();
 }
@@ -969,8 +1039,8 @@ function renderPubgParamFields(product) {
     const safeKey = escapeHtml(idKey);
 
     return '<div class="pubg-field pubg-fighter-id-field">' +
-        '<label for="pubgFighterId">ID المقاتل</label>' +
-        '<input id="pubgFighterId" name="fighter_id" data-pubg-param="' + safeKey + '" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="أدخل ID المقاتل" required aria-required="true">' +
+        '<label for="pubgFighterId">ID اللاعب</label>' +
+        '<input id="pubgFighterId" name="fighter_id" data-pubg-param="' + safeKey + '" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="أدخل ID اللاعب" required aria-required="true">' +
         '</div>';
 }
 
