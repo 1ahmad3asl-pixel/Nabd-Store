@@ -1065,6 +1065,12 @@ async function ensureCloudSongOfficialImage() {
 async function ensureYallaLudoOfficialImage() {
   return ensureOfficialGameImage("yalla-ludo", "com.yalla.yallagames", "Yalla Ludo");
 }
+async function ensureLordsMobileOfficialImage() {
+  return ensureOfficialGameImage("lords-mobile", "com.igg.android.lordsmobile", "Lords Mobile");
+}
+async function ensureEightBallPoolOfficialImage() {
+  return ensureOfficialGameImage("8-ball-pool", "com.miniclip.eightballpool", "8 Ball Pool");
+}
 
 /* =========================
    PUBLIC STORE
@@ -1093,7 +1099,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "clash-of-clans": ["com.supercell.clashofclans", "Clash of Clans"],
       "dragonheir-silent-gods": ["com.sgra.dragon", "Dragonheir: Silent Gods"],
       "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
-      "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"]
+      "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"],
+      "lords-mobile": ["com.igg.android.lordsmobile", "Lords Mobile"],
+      "8-ball-pool": ["com.miniclip.eightballpool", "8 Ball Pool"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
@@ -1206,7 +1214,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isCloudSongProduct = /cloud\s*song|skywalkers|كلاود\s*سونغ/i.test(productText);
     const isYallaLudoProduct = /yalla\s*ludo|يلا\s*لودو/i.test(productText);
     const isYallaLudoGoldProduct = /yalla\s*ludo\s*gold|يلا\s*لودو\s*غولد|يلا\s*لودو\s*جولد/i.test(productText);
-    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct;
+    const isLordsMobileProduct = /lords\s*mobile|لوردز\s*موبايل|لوردس\s*موبايل/i.test(productText);
+    const isEightBallPoolProduct = /8\s*ball\s*pool|eight\s*ball\s*pool|ثمانية\s*بول|ثمنية\s*بول/i.test(productText);
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct || isLordsMobileProduct || isEightBallPoolProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
@@ -1498,6 +1508,8 @@ initDb()
     await ensureDragonheirOfficialImage();
     await ensureCloudSongOfficialImage();
     await ensureYallaLudoOfficialImage();
+    await ensureLordsMobileOfficialImage();
+    await ensureEightBallPoolOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
