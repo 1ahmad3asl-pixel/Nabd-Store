@@ -908,9 +908,9 @@ function openGamesPage() {
             // لا نعرض شاشة تحميل مزعجة عند الضغط على اللعبة.
             // إذا كانت البيانات جاهزة نفتح المستوى الثالث مباشرة.
             // وإذا لم تجهز بعد، ننتظر طلب الخلفية ثم نعرض النتيجة أو رسالة واضحة.
-            if (!state.productsLoaded) {
+            if (!state.productsLive) {
                 try {
-                    await loadProducts();
+                    await loadProducts({force:true});
                 } catch (error) {
                     openGamePlaceholder(gameTitle);
                     return;
@@ -1225,7 +1225,6 @@ function renderGameProductPicker(gameTitle, group) {
             '<div class="pubg-field game-quantity-field">' +
                 '<label for="gameOrderQty">الكمية</label>' +
                 '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required aria-required="true">' +
-                '<small id="gameQuantityTotalPrice" class="quantity-total-price"></small>' +
             '</div>';
     }
 
@@ -1256,25 +1255,21 @@ function renderGameProductPicker(gameTitle, group) {
 
     function updateQuantityTotalPrice() {
         const qtyInput = document.getElementById("gameOrderQty");
-        const totalLabel = document.getElementById("gameQuantityTotalPrice");
         const selectedPrice = document.getElementById("pubgSelectedPrice");
         const product = products[selectedIndex];
-        if (!qtyInput || !product) return;
+        if (!selectedPrice || !product) return;
 
-        const qty = Number(qtyInput.value);
+        const qty = qtyInput ? Number(qtyInput.value) : 1;
         const unitPrice = getGameProductPrice(product);
         const decimals = getPriceDecimalPlaces(product.price);
 
         if (!Number.isFinite(qty) || unitPrice === null) {
-            if (totalLabel) totalLabel.textContent = "السعر الإجمالي: السعر غير متاح";
-            if (selectedPrice) selectedPrice.textContent = "السعر غير متاح";
+            selectedPrice.textContent = "السعر غير متاح";
             return;
         }
 
-        const totalPrice = unitPrice * qty;
-        const formattedTotal = formatMoney(totalPrice, decimals);
-        if (totalLabel) totalLabel.textContent = "السعر الإجمالي: " + formattedTotal;
-        if (selectedPrice) selectedPrice.textContent = formattedTotal;
+        // نفس قيمة السعر التي يعتمدها الخادم عند الخصم: سعر الوحدة × الكمية.
+        selectedPrice.textContent = formatMoney(unitPrice * qty, decimals);
     }
 
     const quantityField = document.getElementById("gameQuantityField");
@@ -1656,7 +1651,7 @@ function getPriceDecimalPlaces(value) {
     const dot = text.indexOf(".");
     if (dot < 0) return 3;
     const decimals = text.slice(dot + 1).replace(/0+$/, "").length;
-    return Math.max(3, Math.min(6, decimals));
+    return decimals > 0 ? Math.min(6, decimals) : 3;
 }
 
 function formatMoney(value, decimals) {
