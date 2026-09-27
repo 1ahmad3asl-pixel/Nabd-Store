@@ -955,9 +955,7 @@ function normalizeNemerPrice(value) {
   return Number.isFinite(parsed) && parsed >= 0 ? Number(parsed.toFixed(4)) : null;
 }
 
-async function ensurePubgOfficialImage() {
-  const gameKey = "pubg-mobile";
-  const appId = "com.tencent.ig";
+async function ensureOfficialGameImage(gameKey, appId, label) {
   const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
   if (existing.rows.length) return;
   try {
@@ -984,10 +982,22 @@ async function ensurePubgOfficialImage() {
       "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
       [gameKey, appId, imageBuffer, mimeType, imageUrl]
     );
-    console.log("Official PUBG Mobile image saved to database.");
+    console.log("Official " + label + " image saved to database.");
   } catch (error) {
-    console.warn("Official PUBG image sync skipped:", error.message);
+    console.warn("Official " + label + " image sync skipped:", error.message);
   }
+}
+
+async function ensurePubgOfficialImage() {
+  return ensureOfficialGameImage("pubg-mobile", "com.tencent.ig", "PUBG Mobile");
+}
+
+async function ensureRobloxOfficialImage() {
+  return ensureOfficialGameImage("roblox", "com.roblox.client", "Roblox");
+}
+
+async function ensureJawakerOfficialImage() {
+  return ensureOfficialGameImage("jawaker", "com.boundless.jawaker", "Jawaker");
 }
 
 /* =========================
@@ -1357,6 +1367,8 @@ initDb()
     await loadSettings();
     await cleanupSessions();
     await ensurePubgOfficialImage();
+    await ensureRobloxOfficialImage();
+    await ensureJawakerOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
