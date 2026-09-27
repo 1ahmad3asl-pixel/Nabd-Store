@@ -732,6 +732,8 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("stumble guys")) {
         return BACKEND_URL + "/api/game-images/stumble-guys";
     }
+    if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return BACKEND_URL + "/api/game-images/honkai-star-rail";
+    if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return BACKEND_URL + "/api/game-images/mobile-legends";
     if (text.includes("whiteout survival")) {
         return BACKEND_URL + "/api/game-images/whiteout-survival";
     }
