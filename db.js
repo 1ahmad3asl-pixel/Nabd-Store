@@ -27,6 +27,19 @@ async function withTransaction(callback) {
 }
 
 async function initDb() {
+  // Allow provider prices and quantity totals to retain up to 6 decimal places.
+  for (const sql of [
+    "ALTER TABLE customers ALTER COLUMN balance TYPE NUMERIC(18,6)",
+    "ALTER TABLE orders ALTER COLUMN api_price TYPE NUMERIC(18,6)",
+    "ALTER TABLE orders ALTER COLUMN price TYPE NUMERIC(18,6)",
+    "ALTER TABLE orders ALTER COLUMN profit TYPE NUMERIC(18,6)",
+    "ALTER TABLE transactions ALTER COLUMN amount TYPE NUMERIC(18,6)",
+    "ALTER TABLE transactions ALTER COLUMN balance_before TYPE NUMERIC(18,6)",
+    "ALTER TABLE transactions ALTER COLUMN balance_after TYPE NUMERIC(18,6)"
+  ]) {
+    try { await query(sql); } catch (error) { console.warn("Money precision migration:", error.message); }
+  }
+
   await query(`
     CREATE TABLE IF NOT EXISTS admin_settings (
       key TEXT PRIMARY KEY,
