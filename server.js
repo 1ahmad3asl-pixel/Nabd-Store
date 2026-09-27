@@ -1149,6 +1149,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "crystal-of-atlan": ["com.hermes.p6gameos", "Crystal of Atlan"],
       "bullet-echo": ["com.zeptolab.bulletecho.google", "Bullet Echo"],
       "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
+      "honkai-star-rail": ["com.HoYoverse.hkrpgoversea", "Honkai: Star Rail"],
+      "mobile-legends": ["com.mobile.legends", "Mobile Legends: Bang Bang"],
       "whiteout-survival": ["com.gof.global", "Whiteout Survival"]
     };
     const config = imageMap[key];
