@@ -616,6 +616,11 @@ const GAME_CATALOG = [
 function normalizeGameText(value) {
     return String(value || "")
         .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[\u064B-\u065F\u0670]/g, "")
+        .replace(/[أإآٱ]/g, "ا")
+        .replace(/[ى]/g, "ي")
+        .replace(/[ة]/g, "ه")
         .replace(/[._:/\\-]+/g, " ")
         .replace(/\s+/g, " ")
         .trim();
@@ -767,9 +772,12 @@ function getJawakerGroupTitle(product) {
     const text = normalizeGameText(raw);
 
     if (
-        text.includes("مسرع") || text.includes("مسرعات") || text.includes("مسرعة") ||
-        text.includes("تسريع") || text.includes("accelerator") || text.includes("accelerate") ||
-        text.includes("booster") || text.includes("boost")
+        text.includes("مسرع") || text.includes("مسرعات") || text.includes("مسرعه") ||
+        text.includes("تسريع") || text.includes("تسريعات") ||
+        text.includes("accelerator") || text.includes("accelerate") ||
+        text.includes("booster") || text.includes("boost") ||
+        text.includes("blue accelerator") || text.includes("red accelerator") ||
+        text.includes("yellow accelerator")
     ) return "مسرع جواكر";
 
     if (
@@ -1327,13 +1335,17 @@ function renderGameProductPicker(gameTitle, group) {
         const unitPrice = getGameProductPrice(product);
         const decimals = getPriceDecimalPlaces(product.price);
 
-        if (!Number.isFinite(qty) || unitPrice === null) {
+        if (!Number.isFinite(qty) || qty < 1 || unitPrice === null) {
             selectedPrice.textContent = "السعر غير متاح";
             return;
         }
 
-        // نفس قيمة السعر التي يعتمدها الخادم عند الخصم: سعر الوحدة × الكمية.
-        selectedPrice.textContent = formatMoney(unitPrice * qty, decimals);
+        // القاعدة الموحدة: نحسب السعر النهائي للوحدة × الكمية أولًا،
+        // ثم نقرّبه إلى الأعلى حسب دقة المنتج. هذه هي القيمة المعروضة.
+        const finalTotal = ceilPrice(unitPrice * qty, decimals);
+        selectedPrice.textContent = finalTotal === null
+            ? "السعر غير متاح"
+            : formatMoney(finalTotal, decimals);
     }
 
     const quantityField = document.getElementById("gameQuantityField");
@@ -1717,6 +1729,16 @@ function getPriceDecimalPlaces(value) {
     if (dot < 0) return 3;
     const decimals = text.slice(dot + 1).replace(/0+$/, "").length;
     return decimals > 0 ? Math.min(12, decimals) : 3;
+}
+
+function ceilPrice(value, decimals) {
+    const amount = Number(value);
+    const places = Number.isInteger(decimals) ? Math.max(0, Math.min(12, decimals)) : 3;
+    if (!Number.isFinite(amount)) return null;
+    const factor = 10 ** places;
+    const scaled = amount * factor;
+    const epsilon = Number.EPSILON * Math.max(1, Math.abs(scaled)) * 4;
+    return Math.ceil(scaled - epsilon) / factor;
 }
 
 function formatMoney(value, decimals) {
