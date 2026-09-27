@@ -675,6 +675,14 @@ function getProductsForGame(gameTitle) {
     return getGameProductsIndex().get(gameTitle) || [];
 }
 
+function getStoredGameImageUrl(gameTitle) {
+    const text = normalizeGameText(gameTitle);
+    if (text.includes("pubg") || text.includes("ببجي")) return BACKEND_URL + "/api/game-images/pubg-mobile";
+    if (text.includes("roblox") || text.includes("روبلوكس")) return BACKEND_URL + "/api/game-images/roblox";
+    if (text.includes("jawaker") || text.includes("جواكر")) return BACKEND_URL + "/api/game-images/jawaker";
+    return "";
+}
+
 function getGameTiles() {
     const index = getGameProductsIndex();
     return GAME_CATALOG.map(function(game) {
@@ -684,9 +692,10 @@ function getGameTiles() {
         });
         return {
             title: game.title,
-            image: normalizeGameText(game.title).includes("ببجي") || normalizeGameText(game.title).includes("pubg")
-                ? BACKEND_URL + "/api/game-images/pubg-mobile"
-                : (game.image || (productWithImage && productWithImage.category_img) || ""),
+            image: getStoredGameImageUrl(game.title) ||
+                game.image ||
+                (productWithImage && productWithImage.category_img) ||
+                "",
             productCount: products.length
         };
     });
