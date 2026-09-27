@@ -1107,8 +1107,9 @@ app.get("/admin/index.html", requireAdmin, (req, res) => {
 
 app.use(express.static(path.join(__dirname), {
   setHeaders: (res, filePath) => {
-    // Cache static assets aggressively; CSS/JS versions in HTML invalidate safely.
-    if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?)$/i.test(filePath)) {
+    // الملفات الثابتة: 7 أيام، مع تحديث في الخلفية.
+    // HTML: لا يملك المتصفح كاشه الخاص؛ Service Worker يدير كاش الصفحات لمدة 30 دقيقة.
+    if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|avif)$/i.test(filePath)) {
       res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
     } else if (/\.html$/i.test(filePath)) {
       res.setHeader("Cache-Control", "no-cache, must-revalidate");
