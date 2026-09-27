@@ -543,8 +543,8 @@ const GAME_CATALOG = [
     { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mlbb","موبايل ليجندز"] },
     { title:"Hero Clash", aliases:["hero clash"] },
     { title:"Oxide : Survival Island", aliases:["oxide","survival island"] },
-    { title:"King Shot", aliases:["king shot"] },
-    { title:"Zepeto", aliases:["zepeto"] },
+        { title:"King Shot", aliases:["king shot"] },
+        { title:"Zepeto", aliases:["zepeto"] },
     { title:"Devil May Cry: Peak of Combat", aliases:["devil may cry","peak of combat"] },
     { title:"Crystal of Atlan", aliases:["crystal of atlan","crystal atlan","كريستال اوف اتلان","كريستال أوف أتلان"] },
     { title:"Bullet Echo", aliases:["bullet echo","bullet echo pvp shooter","بوليت إيكو","بولت إيكو"] },
@@ -552,7 +552,7 @@ const GAME_CATALOG = [
     { title:"Acecraft", aliases:["acecraft","ace craft","إيس كرافت","ايس كرافت"] },
     { title:"Arena Breakout", aliases:["arena breakout","arena breakout mobile","أرينا بريك أوت"] },
     { title:"Ludo Club", aliases:["ludo club","ludo club game","لودو كلوب"] },
-    { title:"AFK Journey", aliases:["afk journey"] },
+        { title:"AFK Journey", aliases:["afk journey"] },
     { title:"Division Resurgence", aliases:["division resurgence"] },
     { title:"Age Of Empires Mobile", aliases:["age of empires"] },
     { title:"Goddess of Victory: NIKKE", aliases:["goddess of victory","nikke"] },
@@ -1189,7 +1189,10 @@ function renderGameParamFields(product, gameTitle) {
     const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
     const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
     const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isAFKJourney = normalizedGameTitle.includes("afk journey");
+    const isZepeto = normalizedGameTitle.includes("zepeto");
+    const isKingShot = normalizedGameTitle.includes("king shot");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
