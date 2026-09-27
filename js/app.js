@@ -1124,7 +1124,7 @@ function renderGameProductPicker(gameTitle, group) {
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
-            '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatMoney(price)) + '</span>' +
+            '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatProductMoney(product, price)) + '</span>' +
             (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
         '</button>';
     }).join("");
@@ -1599,9 +1599,25 @@ function handleAction(action) {
     }
 }
 
-function formatMoney(value) {
+function getPriceDecimalPlaces(value) {
+    const text = String(value ?? "").trim();
+    if (!text || !Number.isFinite(Number(value))) return 3;
+    const dot = text.indexOf(".");
+    if (dot < 0) return 3;
+    const decimals = text.slice(dot + 1).replace(/0+$/, "").length;
+    return Math.max(3, Math.min(6, decimals));
+}
+
+function formatMoney(value, decimals) {
     const amount = Number(value) || 0;
-    return "$" + amount.toFixed(3);
+    const places = Number.isInteger(decimals) ? Math.max(0, Math.min(6, decimals)) : 3;
+    return "$" + amount.toFixed(places);
+}
+
+function formatProductMoney(product, value) {
+    const amount = value === undefined ? getGameProductPrice(product) : value;
+    if (amount === null || amount === undefined || !Number.isFinite(Number(amount))) return "السعر غير متاح";
+    return formatMoney(amount, getPriceDecimalPlaces(product && product.price));
 }
 
 function updateBalance(value) {
@@ -1754,7 +1770,7 @@ function renderProducts() {
         const image = product.category_img || "";
         const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
         const purchaseEnabled = available && hasLivePrice;
-        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">" + (hasLivePrice ? "$" + price.toFixed(4) : "جاري تحديث السعر…") + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (purchaseEnabled ? "" : "disabled") + ">" + (available ? (hasLivePrice ? "شراء الآن" : "جاري تحديث السعر") : "غير متوفر") + "</button></article>";
+        return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">" + (hasLivePrice ? "formatProductMoney(product, price) : "جاري تحديث السعر…") + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (purchaseEnabled ? "" : "disabled") + ">" + (available ? (hasLivePrice ? "شراء الآن" : "جاري تحديث السعر") : "غير متوفر") + "</button></article>";
     }).join("");
 
     elements.products.querySelectorAll(".buy-btn[data-product-id]").forEach(function(button) {
@@ -1791,7 +1807,7 @@ function openProductModal(product) {
             '</div>' +
             '<div class="order-price-row">' +
                 '<span>السعر</span>' +
-                '<strong id="orderPrice">' + (hasLivePrice ? formatMoney(price) : 'السعر غير متاح') + '</strong>' +
+                '<strong id="orderPrice">' + (hasLivePrice ? formatProductMoney(product, price) : 'السعر غير متاح') + '</strong>' +
             '</div>' +
             '<button class="buy-btn order-confirm-btn" id="confirmProductOrder" type="button"' + (!hasLivePrice ? ' disabled' : '') + '>تأكيد عملية الشراء</button>' +
         '</div>'
