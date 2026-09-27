@@ -498,7 +498,6 @@ function removeAllCategory() {
         document
             .querySelectorAll(".category")
             .forEach(function (item) {
-
                 item.classList.remove("active");
 
             });
@@ -754,6 +753,16 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("ghost story love destiny")) return BACKEND_URL + "/api/game-images/ghost-story-love-destiny";
     if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return BACKEND_URL + "/api/game-images/arena-of-valor";
     if (text.includes("growtopia") || text.includes("غروتوبيا")) return BACKEND_URL + "/api/game-images/growtopia";
+    if (text.includes("golden spatula") || text.includes("غولدن سباتولا")) return BACKEND_URL + "/api/game-images/golden-spatula";
+    if (text.includes("hatsune miku") || text.includes("colorful stage") || text.includes("هتسوني ميكو")) return BACKEND_URL + "/api/game-images/hatsune-miku-colorful-stage";
+    if (text.includes("arknights endfield") || text.includes("arknights") || text.includes("أركنايتس إندفيلد")) return BACKEND_URL + "/api/game-images/arknights-endfield";
+    if (text.includes("haikyu fly high") || text.includes("haikyu") || text.includes("هايكيو فلاي هاي")) return BACKEND_URL + "/api/game-images/haikyu-fly-high";
+    if (text.includes("ballistic hero vng") || text.includes("ballistic hero") || text.includes("بالستك هيرو")) return BACKEND_URL + "/api/game-images/ballistic-hero-vng";
+    if (text.includes("heaven burns red") || text.includes("هيفن برنز ريد")) return BACKEND_URL + "/api/game-images/heaven-burns-red";
+    if (text.includes("rise of kingdoms") || text.includes("رايز أوف كينغدومز")) return BACKEND_URL + "/api/game-images/rise-of-kingdoms";
+    if (text.includes("top war") || text.includes("توب وور")) return BACKEND_URL + "/api/game-images/top-war";
+    if (text.includes("the ants") || text.includes("النمل: المملكة تحت الأرض")) return BACKEND_URL + "/api/game-images/the-ants";
+    if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return BACKEND_URL + "/api/game-images/kingdom-guard";
     if (text.includes("hero clash") || text.includes("هيرو كلاش")) return BACKEND_URL + "/api/game-images/hero-clash";
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
@@ -997,8 +1006,7 @@ function handleInternalHistoryState(state) {
     }
 
     if (state.view === "games") {
-        openGamesPage(true);
-        return;
+        openGamesPage(true);        return;
     }
 
     if (state.view === "game") {
@@ -1497,8 +1505,7 @@ function submitGamePickerOrder(product, root) {
         if (!value) {
             invalid = true;
             input.classList.add("is-invalid");
-        } else {
-            input.classList.remove("is-invalid");
+        } else {            input.classList.remove("is-invalid");
             params[label] = value;
         }
     });
@@ -1997,8 +2004,7 @@ function openProductModal(product) {
         return '<div class="order-field">' +
             '<label for="param_' + index + '">' + safeLabel + '</label>' +
             '<input id="param_' + index + '" type="text" placeholder="' + escapeHtml(String(label || "")) + '" autocomplete="off">' +
-            '</div>';
-    }).join("");
+            '</div>';    }).join("");
 
     const minQty = Number(product.qty_values?.min || 1);
     const maxQty = Number(product.qty_values?.max || 999999999);
