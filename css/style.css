@@ -1778,6 +1778,47 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 .app-product-missing{
     display:none;
 }
+.app-product-count{
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    line-height:1.2;
+    color:#777;
+    margin-top:-3px;
+}
+.app-no-image-tile{
+    min-height:92px;
+    padding:12px 8px;
+    border:1px solid rgba(0,0,0,.14);
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 2px 7px rgba(0,0,0,.08);
+    justify-content:center;
+}
+.app-no-image-tile .app-product-title{
+    min-height:0;
+    font-size:13px;
+}
+.app-no-image-tile:active{
+    transform:scale(.97);
+}
+.app-product-picker-no-image .app-product-picker-head{
+    padding-top:4px;
+}
+@media(max-width:600px){
+    .app-no-image-tile{
+        min-height:78px;
+        padding:10px 5px;
+        border-radius:11px;
+    }
+    .app-no-image-tile .app-product-title{
+        font-size:11px;
+        line-height:1.25;
+    }
+    .app-product-count{
+        font-size:9px;
+    }
+}
 .app-product-tile:active .app-product-image{
     transform:scale(.97);
 }
