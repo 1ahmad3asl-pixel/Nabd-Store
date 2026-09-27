@@ -623,9 +623,9 @@ app.get("/api/admin/dashboard", async (req, res) => {
     status: "OK",
     total_customers: Number(row.customers),
     total_orders: Number(row.orders),
-    total_sales: Number(Number(row.sales).toFixed(4)),
-    total_profit: Number(Number(row.profit).toFixed(4)),
-    api_balance: Number(apiBalance.toFixed(4)),
+    total_sales: Number(Number(row.sales).toFixed(6)),
+    total_profit: Number(Number(row.profit).toFixed(6)),
+    api_balance: Number(apiBalance.toFixed(6)),
     recent_orders: recent.rows,
     settings: adminSettings
   });
@@ -687,7 +687,7 @@ app.get("/api/admin/products", async (req, res) => {
           const apiPrice = normalizeNemerPrice(product.price);
           const salePrice = apiPrice === null
             ? null
-            : Number((apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100)).toFixed(4));
+            : Number((apiPrice * (1 + Number(adminSettings.profit_rate || 0) / 100)).toFixed(6));
           return {
             ...product,
             api_price: apiPrice,
@@ -798,11 +798,11 @@ app.get("/api/admin/transactions", async (req, res) => {
     status: "OK",
     transactions: result.rows,
     budget: {
-      sales: Number(Number(totals.rows[0].sales).toFixed(4)),
-      customer_outflows: Number(Number(totals.rows[0].customer_outflows).toFixed(4)),
-      admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(4)),
-      net_cash: Number(Number(totals.rows[0].net_cash).toFixed(4)),
-      net_profit: Number(Number(totals.rows[0].net_profit).toFixed(4))
+      sales: Number(Number(totals.rows[0].sales).toFixed(6)),
+      customer_outflows: Number(Number(totals.rows[0].customer_outflows).toFixed(6)),
+      admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(6)),
+      net_cash: Number(Number(totals.rows[0].net_cash).toFixed(6)),
+      net_profit: Number(Number(totals.rows[0].net_profit).toFixed(6))
     }
   });
 });
@@ -865,7 +865,7 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
 
       await client.query(
         "UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",
-        [after.toFixed(4), customer.customer_id]
+        [after.toFixed(6), customer.customer_id]
       );
 
       const transactionId = "TXN-" + crypto.randomUUID();
@@ -874,7 +874,7 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
         `INSERT INTO transactions
           (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note)
          VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-        [transactionId,customer.customer_id,delta.toFixed(4),type,before.toFixed(4),after.toFixed(4),"admin",transactionId,note || (action === "credit" ? "إضافة رصيد من الإدارة" : "خصم رصيد من الإدارة")]
+        [transactionId,customer.customer_id,delta.toFixed(6),type,before.toFixed(6),after.toFixed(6),"admin",transactionId,note || (action === "credit" ? "إضافة رصيد من الإدارة" : "خصم رصيد من الإدارة")]
       );
 
       return {customer_id:String(customer.customer_number),customer_number:Number(customer.customer_number),name:customer.name,balance:after,transaction_id:transactionId};
@@ -1197,17 +1197,17 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       const orderId = "ORD-" + orderUuid;
       const after = before - totalPrice;
 
-      await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(4),customer.customer_id]);
+      await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(6),customer.customer_id]);
       await client.query(
         "INSERT INTO orders (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'processing')",
-        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(4)),Number(totalPrice.toFixed(4)),Number((totalPrice-apiPrice*qty).toFixed(4)),Number(discount.toFixed(2))]
+        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(6)),Number(totalPrice.toFixed(6)),Number((totalPrice-apiPrice*qty).toFixed(6)),Number(discount.toFixed(2))]
       );
       const transactionId = "TXN-" + crypto.randomUUID();
       await client.query(
         "INSERT INTO transactions (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note) VALUES($1,$2,$3,'purchase',$4,$5,'order',$6,$7)",
-        [transactionId,customer.customer_id,Number((-totalPrice).toFixed(4)),Number(before.toFixed(4)),Number(after.toFixed(4)),orderId,"خصم تلقائي مقابل شراء "+String(product.name || "منتج")]
+        [transactionId,customer.customer_id,Number((-totalPrice).toFixed(6)),Number(before.toFixed(6)),Number(after.toFixed(6)),orderId,"خصم تلقائي مقابل شراء "+String(product.name || "منتج")]
       );
-      return {customer_id:customer.customer_id,order_id:orderId,order_uuid:orderUuid,total_price:Number(totalPrice.toFixed(4)),before,after};
+      return {customer_id:customer.customer_id,order_id:orderId,order_uuid:orderUuid,total_price:Number(totalPrice.toFixed(6)),before,after};
     });
 
     let order;
@@ -1229,7 +1229,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     );
     if (!failed) await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
 
-    res.json({status:failed?"ERROR":"OK",store:STORE_NAME,order,charged:failed?0:reservation.total_price,balance:failed?Number(reservation.before.toFixed(4)):Number(reservation.after.toFixed(4))});
+    res.json({status:failed?"ERROR":"OK",store:STORE_NAME,order,charged:failed?0:reservation.total_price,balance:failed?Number(reservation.before.toFixed(6)):Number(reservation.after.toFixed(6))});
   } catch (error) {
     console.error("Order error:",error);
     res.status(error.statusCode || 500).json({status:"ERROR",message:error.message || "تعذر إنشاء الطلب."});
@@ -1242,11 +1242,11 @@ async function refundWalletAfterFailedOrder(reservation) {
     if (!customerResult.rows[0]) throw new Error("تعذر العثور على حساب العميل لإعادة المبلغ.");
     const before = Number(customerResult.rows[0].balance || 0);
     const after = before + Number(reservation.total_price || 0);
-    await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(4),reservation.customer_id]);
+    await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(6),reservation.customer_id]);
     const transactionId = "TXN-" + crypto.randomUUID();
     await client.query(
       "INSERT INTO transactions (id,customer_id,amount,type,balance_before,balance_after,reference_type,reference_id,note) VALUES($1,$2,$3,'refund',$4,$5,'order',$6,$7)",
-      [transactionId,reservation.customer_id,Number(reservation.total_price.toFixed(4)),Number(before.toFixed(4)),Number(after.toFixed(4)),reservation.order_id,"إعادة مبلغ طلب فشل تنفيذه"]
+      [transactionId,reservation.customer_id,Number(reservation.total_price.toFixed(6)),Number(before.toFixed(6)),Number(after.toFixed(6)),reservation.order_id,"إعادة مبلغ طلب فشل تنفيذه"]
     );
     await client.query("UPDATE orders SET status='failed' WHERE id=$1",[reservation.order_id]);
   });
