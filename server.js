@@ -635,7 +635,7 @@ app.get("/api/admin/customers", async (req, res) => {
   const search = String(req.query.search || "").trim();
   const result = search
     ? await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id ILIKE $1 OR name ILIKE $1 OR email ILIKE $1 OR CAST(customer_number AS TEXT) ILIKE $1 ORDER BY created_at DESC",
+        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id ILIKE $1 OR name ILIKE $1 OR email ILIKE $1 OR CAST(customer_number AS TEXT) ILIKE $1 ORDER BY created_at DESC",
         [`%${search}%`]
       )
     : await query(
