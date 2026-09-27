@@ -1100,6 +1100,15 @@ function handleInternalHistoryState(state) {
         return;
     }
 
+    if (state.view === "app-products") {
+        const serverTitle = state.appServerKey === "server-2" ? "تطبيقات سيرفر 2" : "تطبيقات سيرفر 1";
+        const apps = state.appServerKey === "server-2" ? getServerTwoApps() : getServerOneApps();
+        const app = apps.find(function(item){ return item.title === state.appTitle; });
+        if (app) openAppProducts(app, state.appServerKey, true);
+        else openAppServerPlaceholder(serverTitle, state.appServerKey, true);
+        return;
+    }
+
     if (state.view === "balance") {
         openBalancePage(true);
         return;
@@ -1198,6 +1207,37 @@ function getServerOneApps() {
     });
 }
 
+
+function getServerTwoApps() {
+    const catalog = [["WeStar","WeStar"],["GoGoc","GoGoc"],["Toki Voice","Toki Voice"],["Helli","Helli"],["Ruffa","Ruffa"],["Ahlan","Ahlan"],["Soul Chill","Soul Chill"],["Taka Chat","Taka Chat"],["Oloo","Oloo"],["7Star","7Star"],["Likee","Likee"],["Xena Live","Xena Live"],["Party Star","Party Star"],["Honey Jar","Honey Jar"],["Soul Star","Soul Star"],["Pota Live","Pota Live"],["Cocco","Cocco"],["Amar Chat","Amar Chat"],["Yoho","Yoho"],["Ya","Ya"],["Lit Chat","Lit Chat"],["Tada Chat","Tada Chat"],["4Fun","4Fun"],["Saya","Saya"],["Poppo","Poppo"],["Nivi","Nivi"],["Migo Live","Migo Live"],["So Match","So Match"],["Lama Chat","Lama Chat"],["Soyo","Soyo"],["Roka Live","Roka Live"],["Tango","Tango"],["4Party","4Party"],["Mico Chat","Mico Chat"],["Hiya Chat","Hiya Chat"],["Talk Talk","Talk Talk"],["Fancy Live","Fancy Live"],["Kwai Live","Kwai Live"],["Binmo Chat","Binmo Chat"],["Salam Chat","Salam Chat"],["Zaffa Live","Zaffa Live"],["Hawa Chat","Hawa Chat"],["Habby Chat","Habby Chat"],["Super Live","Super Live"],["Wego","Wego"],["Olamet","Olamet"],["WYAK Chat","WYAK Chat"],["MR7BA Chat","MR7BA Chat"],["Lami Chat","Lami Chat"],["UP Live","UP Live"],["Hoby Chat","Hoby Chat"],["Hami Party","Hami Party"],["Layla Chat","Layla Chat"],["Tami Chat","Tami Chat"],["Soul Chat","Soul Chat"],["Hi Play Chat","Hi Play Chat"],["Lions Chat","Lions Chat"],["Pep Live","Pep Live"],["Hi Party","Hi Party"],["Allo Chat","Allo Chat"],["Yami Star","Yami Star"],["Junko Chat","Junko Chat"],["Party Hero","Party Hero"],["Layam","Layam"],["Amo","Amo"],["Saada Chat","Saada Chat"],["Dana Chat","Dana Chat"],["Nawa Live","Nawa Live"],["Sodfa Chat","Sodfa Chat"],["Jaco","Jaco"],["Up Fun","Up Fun"],["Yudo Chat","Yudo Chat"],["Fofo Chat","Fofo Chat"],["Pocket Chat","Pocket Chat"],["Mango Live","Mango Live"],["Maan Chat","Maan Chat"],["Pawa Live","Pawa Live"],["Mazyoun","Mazyoun"],["Sky Chat","Sky Chat"],["Chat Chill","Chat Chill"],["Lot Fun","Lot Fun"],["Leesky","Leesky"],["Laki Chat","Laki Chat"],["Sahra Chat","Sahra Chat"],["Gold Chat","Gold Chat"],["Halo Star","Halo Star"],["Hati","Hati"],["1Star Chat","1Star Chat"],["Hayi","Hayi"],["Rooka","Rooka"],["Nahki Chat","Nahki Chat"],["Yoparti","Yoparti"],["Boli Chat","Boli Chat"],["Lessmet Chat","Lessmet Chat"],["Waaw Chat","Waaw Chat"],["Baat","Baat"],["InFun","InFun"],["Mango Star","Mango Star"],["Hago","Hago"],["Yoso Farm","Yoso Farm"],["Masti Chat","Masti Chat"],["Waki Star","Waki Star"],["Vilaa Chat","Vilaa Chat"],["Maza","Maza"],["Hoob","Hoob"],["Will Chill","Will Chill"],["Doli Live","Doli Live"],["Hart Live","Hart Live"],["Rooh Chat","Rooh Chat"],["Dawa Chat","Dawa Chat"],["Yo2 App","Yo2 App"],["Our Talk","Our Talk"],["Hala Chat","Hala Chat"],["E-Party","E-Party"],["Zaar Chat","Zaar Chat"],["Tayyb Chat","Tayyb Chat"],["Hapi","Hapi"],["Mate Met","Mate Met"],["Chill Chat","Chill Chat"],["Yoki Chat","Yoki Chat"],["Yayya Chat","Yayya Chat"],["Hopi Star","Hopi Star"],["Yudo","Yudo"],["Super Meet","Super Meet"],["Ume","Ume"],["Shabab Chat","Shabab Chat"],["Vone","Vone"],["Ohla","Ohla"],["Karak Chat","Karak Chat"],["Dika Live","Dika Live"],["Arab Star","Arab Star"],["4Chat","4Chat"],["Sahi","Sahi"],["Woho Chat","Woho Chat"],["Best Live","Best Live"],["Taya Chat","Taya Chat"],["Bulala","Bulala"],["Niu Chat","Niu Chat"],["Mikoo","Mikoo"],["Crush","Crush"],["Hayuki","Hayuki"],["Fun Star","Fun Star"],["Yena","Yena"],["Nafass","Nafass"],["Ti Live","Ti Live"],["Litme","Litme"],["Fomi","Fomi"],["Wahda","Wahda"],["Amisu","Amisu"],["Rixo","Rixo"],["Yobi","Yobi"],["Shila","Shila"],["Hoki","Hoki"],["Kafu","Kafu"],["Winko","Winko"],["Laka","Laka"],["Fomi Party","Fomi Party"],["Wadi","Wadi"],["Yaza Chat","Yaza Chat"],["Vostar","Vostar"],["Carni Live","Carni Live"],["Yula","Yula"],["SillaGCC","SillaGCC"],["Sophia","Sophia"],["Wechill","Wechill"],["Hi Chat","Hi Chat"],["Chati","Chati"],["ChatA","ChatA"],["Sohha","Sohha"],["Moma","Moma"],["Chamoji","Chamoji"],["Lemi Live","Lemi Live"],["Toki","Toki"],["Nita","Nita"],["Shaghaf Chat","Shaghaf Chat"],["Faby Star","Faby Star"],["Yomee","Yomee"],["Nady Star","Nady Star"],["We Party","We Party"],["Sami","Sami"],["Chamet","Chamet"],["Dream Chat","Dream Chat"],["Sama Chat","Sama Chat"],["Bota Chat","Bota Chat"],["Funni","Funni"],["Nimo TV","Nimo TV"],["Falla","Falla"]];
+    const products = Array.isArray(state.products) ? state.products : [];
+    const normalize = function(value) {
+        return normalizeGameText(String(value || ""));
+    };
+    return catalog.map(function(item) {
+        const title = item[0];
+        const aliases = [item[0], item[1]].map(normalize).filter(Boolean);
+        const matches = products.filter(function(product) {
+            const category = normalize(product.category_name || "");
+            const name = normalize(product.name || "");
+            return aliases.some(function(alias) {
+                return category === alias ||
+                    category.includes(alias) ||
+                    alias.includes(category) ||
+                    name === alias ||
+                    name.includes(alias);
+            });
+        });
+        return {
+            title: title,
+            search: item[1],
+            image: "",
+            product: matches[0] || null,
+            products: matches
+        };
+    });
+}
+
 function renderAppImage(appItem) {
     if (appItem.image) {
         const src = String(appItem.image).startsWith("http") ? appItem.image : BACKEND_URL + appItem.image;
@@ -1205,6 +1245,7 @@ function renderAppImage(appItem) {
     }
     return '<span class="game-placeholder">📱</span>';
 }
+
 
 function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
     if (!fromHistory) pushInternalHistory("app-server", {appServerTitle:titleText, appServerKey:serverKey});
@@ -1215,7 +1256,21 @@ function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
     if (title) title.textContent = titleText;
     if (icon) icon.textContent = "📱";
 
-    if (serverKey !== "server-1") {
+    if (!state.productsLoaded && !state.productsLoadingPromise) {
+        loadProducts({force:true}).then(function(){ openAppServerPlaceholder(titleText, serverKey, true); }).catch(function(){
+            content.innerHTML = '<div class="game-products-placeholder app-level-placeholder"><div class="game-products-placeholder-icon">📱</div><h3>' + escapeHtml(titleText) + '</h3><p>تعذر تحميل المنتجات حاليًا.</p></div>';
+        });
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر...</p></div>';
+        return;
+    }
+
+    if (!state.productsLoaded && state.productsLoadingPromise) {
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر...</p></div>';
+        state.productsLoadingPromise.then(function(){ openAppServerPlaceholder(titleText, serverKey, true); });
+        return;
+    }
+
+    if (serverKey !== "server-2" && serverKey !== "server-1") {
         content.innerHTML =
             '<div class="game-products-placeholder app-level-placeholder">' +
                 '<div class="game-products-placeholder-icon">📱</div>' +
@@ -1226,28 +1281,23 @@ function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
         return;
     }
 
-    if (!state.productsLoaded && !state.productsLoadingPromise) {
-        loadProducts({force:true}).then(function(){ openAppServerPlaceholder(titleText, serverKey, true); }).catch(function(){});
-        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر 1...</p></div>';
-        return;
-    }
+    const apps = serverKey === "server-2" ? getServerTwoApps() : getServerOneApps();
+    const serverLabel = serverKey === "server-2" ? "تطبيقات سيرفر 2" : "تطبيقات سيرفر 1";
+    const hideImages = serverKey === "server-2";
 
-    if (!state.productsLoaded && state.productsLoadingPromise) {
-        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر 1...</p></div>';
-        state.productsLoadingPromise.then(function(){ openAppServerPlaceholder(titleText, serverKey, true); });
-        return;
-    }
-
-    const apps = getServerOneApps();
     content.innerHTML =
         '<div class="app-level-toolbar"><button class="pubg-back" type="button" id="appServerBack">← العودة إلى سيرفرات التطبيقات</button>' +
-        '<div class="game-products-heading"><strong>' + apps.length + ' تطبيق</strong><span>تطبيقات سيرفر 1</span></div></div>' +
+        '<div class="game-products-heading"><strong>' + apps.length + ' تطبيق</strong><span>' + serverLabel + '</span></div></div>' +
         '<div class="app-server-one-grid">' +
         apps.map(function(appItem, index) {
-            return '<button class="app-product-tile" type="button" data-app-index="' + index + '">' +
-                '<span class="app-product-image">' + renderAppImage(appItem) + '</span>' +
+            const imagePart = hideImages
+                ? ''
+                : '<span class="app-product-image">' + renderAppImage(appItem) + '</span>';
+            const count = Array.isArray(appItem.products) ? appItem.products.length : (appItem.product ? 1 : 0);
+            return '<button class="app-product-tile' + (hideImages ? ' app-no-image-tile' : '') + '" type="button" data-app-index="' + index + '">' +
+                imagePart +
                 '<span class="app-product-title">' + escapeHtml(appItem.title) + '</span>' +
-                (appItem.product ? '' : '<span class="app-product-missing">غير مرتبط بعد</span>') +
+                '<span class="app-product-count">' + count + ' منتج</span>' +
             '</button>';
         }).join("") +
         '</div>';
@@ -1260,9 +1310,206 @@ function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
             const index = Number(tile.getAttribute("data-app-index"));
             const selected = apps[index];
             if (!selected) return;
-            // المستوى الرابع سيُربط بالمنتجات بعد اعتماد حقول التطبيق.
-            showToast("تم اختيار " + selected.title + " — سيتم ربط منتجاته في المستوى الرابع.");
+            if (serverKey === "server-2") {
+                openAppProducts(selected, "server-2");
+            } else {
+                if (selected.product) {
+                    openAppProducts(selected, "server-1");
+                } else {
+                    showToast("لا توجد منتجات مرتبطة بهذا التطبيق حاليًا.");
+                }
+            }
         });
+    });
+
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function openAppProducts(appItem, serverKey, fromHistory) {
+    if (!appItem) return;
+    if (!fromHistory) {
+        pushInternalHistory("app-products", {
+            appServerKey: serverKey,
+            appTitle: appItem.title
+        });
+    }
+
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content) return;
+
+    const products = Array.isArray(appItem.products) ? appItem.products : [];
+    if (title) title.textContent = appItem.title;
+    if (icon) icon.textContent = "📱";
+
+    if (!products.length) {
+        content.innerHTML =
+            '<div class="game-products-placeholder app-level-placeholder">' +
+                '<div class="game-products-placeholder-icon">📱</div>' +
+                '<h3>' + escapeHtml(appItem.title) + '</h3>' +
+                '<p>لا توجد منتجات مرتبطة بهذا التطبيق حاليًا.</p>' +
+                '<button class="pubg-back" type="button" id="appProductsBack">← العودة إلى التطبيقات</button>' +
+            '</div>';
+        const emptyBack = document.getElementById("appProductsBack");
+        if (emptyBack) emptyBack.addEventListener("click", function(){ openAppServerPlaceholder(serverKey === "server-2" ? "تطبيقات سيرفر 2" : "تطبيقات سيرفر 1", serverKey, true); });
+        return;
+    }
+
+    const group = {
+        key: "app|" + serverKey + "|" + normalizeGameText(appItem.title),
+        title: appItem.title,
+        image: "",
+        products: products,
+        appServerKey: serverKey,
+        appTitle: appItem.title,
+        noImage: true
+    };
+
+    renderAppProductPicker(group);
+}
+
+function renderAppProductPicker(group) {
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content || !group) return;
+
+    if (title) title.textContent = group.title;
+    if (icon) icon.textContent = "📱";
+
+    const products = Array.isArray(group.products) ? group.products : [];
+    const availableProducts = products.filter(function(product) {
+        return product.available !== false && product.available !== 0;
+    });
+    const firstProduct = availableProducts[0] || products[0] || null;
+
+    function getProductQuantityConfig(product) {
+        const values = product && product.qty_values ? product.qty_values : {};
+        const minRaw = Number(values.min);
+        const maxRaw = Number(values.max);
+        const stepRaw = Number(values.step);
+        const hasQuantity = Number.isFinite(minRaw) || Number.isFinite(maxRaw) || Number.isFinite(stepRaw) || !!(product && (product.qty || product.quantity));
+        return {
+            enabled: hasQuantity,
+            min: Number.isFinite(minRaw) && minRaw > 0 ? minRaw : 1,
+            max: Number.isFinite(maxRaw) && maxRaw > 0 ? maxRaw : 999999999,
+            step: Number.isFinite(stepRaw) && stepRaw > 0 ? stepRaw : 1
+        };
+    }
+
+    const listHtml = products.map(function(product, index) {
+        const available = product.available !== false && product.available !== 0;
+        const price = getGameProductPrice(product);
+        return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-app-product-index="' + index + '"' + (available ? '' : ' disabled') + '>' +
+            '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
+            '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatProductMoney(product, price)) + '</span>' +
+            (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
+        '</button>';
+    }).join("");
+
+    content.innerHTML =
+        '<div class="pubg-picker universal-game-picker app-product-picker-no-image">' +
+            '<button class="pubg-back" type="button" id="appProductBack">← العودة إلى التطبيقات</button>' +
+            '<div class="pubg-picker-head app-product-picker-head">' +
+                '<h2>' + escapeHtml(group.title) + '</h2>' +
+                '<span>' + products.length + ' منتج</span>' +
+            '</div>' +
+            '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
+            '<div id="appParamFields">' + (firstProduct ? renderGameParamFields(firstProduct, group.title) : '') + '</div>' +
+            '<div class="pubg-field-label">اختر المنتج</div>' +
+            '<div class="pubg-select" id="appProductSelect">' +
+                '<button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="appSelectedName">' + escapeHtml(firstProduct ? (firstProduct.name || "اختر المنتج") : "اختر المنتج") + '</span><span class="pubg-select-arrow">▼</span></button>' +
+                '<div class="pubg-options" id="appProductOptions" hidden>' + listHtml + '</div>' +
+            '</div>' +
+            '<div id="appQuantityField"></div>' +
+            '<div class="pubg-selected-summary"><span>السعر</span><strong id="appSelectedPrice">' + (firstProduct ? formatProductPrice(firstProduct) : 'السعر غير متاح') + '</strong></div>' +
+            '<button class="buy-btn pubg-submit" id="appSubmitOrder" type="button"' +
+                (!firstProduct || firstProduct.available === false || firstProduct.available === 0 || getGameProductPrice(firstProduct) === null ? ' disabled' : '') +
+                '>إرسال الطلب <span>→</span></button>' +
+        '</div>';
+
+    let selectedIndex = firstProduct ? products.indexOf(firstProduct) : -1;
+
+    function renderQuantity(product) {
+        const holder = document.getElementById("appQuantityField");
+        if (!holder) return;
+        const config = getProductQuantityConfig(product);
+        if (!config.enabled) {
+            holder.innerHTML = "";
+            return;
+        }
+        holder.innerHTML =
+            '<div class="pubg-field game-quantity-field"><label for="appOrderQty">الكمية</label>' +
+            '<input id="appOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required></div>';
+    }
+
+    function updateTotal() {
+        const product = products[selectedIndex];
+        const priceEl = document.getElementById("appSelectedPrice");
+        const qtyInput = document.getElementById("appOrderQty");
+        if (!product || !priceEl) return;
+        const qty = qtyInput ? Number(qtyInput.value) : 1;
+        const unit = getGameProductPrice(product);
+        if (!Number.isFinite(qty) || qty < 1 || unit === null) {
+            priceEl.textContent = "السعر غير متاح";
+            return;
+        }
+        priceEl.textContent = formatMoney(ceilPrice(unit * qty, getPriceDecimalPlaces(product.price)), getPriceDecimalPlaces(product.price));
+    }
+
+    function updateProduct(index) {
+        const product = products[index];
+        if (!product) return;
+        selectedIndex = index;
+        const nameEl = document.getElementById("appSelectedName");
+        const priceEl = document.getElementById("appSelectedPrice");
+        const fields = document.getElementById("appParamFields");
+        const submit = document.getElementById("appSubmitOrder");
+        if (nameEl) nameEl.textContent = product.name || "اختر المنتج";
+        if (priceEl) priceEl.textContent = formatProductPrice(product);
+        if (fields) fields.innerHTML = renderGameParamFields(product, group.title);
+        renderQuantity(product);
+        updateTotal();
+        if (submit) submit.disabled = product.available === false || product.available === 0 || getGameProductPrice(product) === null;
+    }
+
+    renderQuantity(firstProduct);
+    updateTotal();
+
+    const q = document.getElementById("appQuantityField");
+    if (q) q.addEventListener("input", updateTotal);
+
+    const back = document.getElementById("appProductBack");
+    if (back) back.addEventListener("click", function() {
+        openAppServerPlaceholder(group.appServerKey === "server-2" ? "تطبيقات سيرفر 2" : "تطبيقات سيرفر 1", group.appServerKey, true);
+    });
+
+    const select = document.getElementById("appProductSelect");
+    const trigger = select ? select.querySelector(".pubg-select-trigger") : null;
+    const options = document.getElementById("appProductOptions");
+    if (trigger && options) {
+        trigger.addEventListener("click", function() {
+            const open = !options.hidden;
+            options.hidden = open;
+            trigger.setAttribute("aria-expanded", String(!open));
+            trigger.classList.toggle("is-open", !open);
+        });
+        options.querySelectorAll("[data-app-product-index]").forEach(function(option) {
+            option.addEventListener("click", function() {
+                updateProduct(Number(option.getAttribute("data-app-product-index")));
+                options.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+                trigger.classList.remove("is-open");
+            });
+        });
+    }
+
+    const submit = document.getElementById("appSubmitOrder");
+    if (submit) submit.addEventListener("click", function() {
+        const product = products[selectedIndex];
+        if (!product) return;
+        submitGamePickerOrder(product, document.querySelector(".app-product-picker-no-image"));
     });
 
     window.scrollTo({top:0, behavior:"smooth"});
