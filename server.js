@@ -1508,6 +1508,7 @@ initDb()
     await ensureDragonheirOfficialImage();
     await ensureCloudSongOfficialImage();
     await ensureYallaLudoOfficialImage();
+    await ensureYallaLudoGoldOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
