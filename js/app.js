@@ -1567,7 +1567,7 @@ async function loadProducts(options) {
         try {
             const controller = new AbortController();
             // مهلة قصيرة مع إبقاء الواجهة مستجيبة.
-            const timeout = setTimeout(function() { controller.abort(); }, 5000);
+            const timeout = setTimeout(function() { controller.abort(); }, 15000);
             let response;
             try {
                 response = await fetch(BACKEND_URL + "/api/products", {
@@ -1611,9 +1611,11 @@ async function loadProducts(options) {
             renderProducts();
             return state.products;
         } catch (error) {
-            state.productsLoaded = false;
-            console.error("Products load error:", error);
-            if (elements.products) {
+            // إذا كانت بنية المنتجات موجودة من الكاش، نحافظ عليها ولا نحذف الصفحة
+            // بسبب تعذر اتصال Nemer مؤقتًا. الأسعار تبقى غير قابلة للشراء حتى تصل نسخة حية.
+            if (!state.productsLive) state.productsLoaded = Array.isArray(state.products) && state.products.length > 0;
+            console.error("Products live refresh error:", error);
+            if (elements.products && !state.productsLoaded) {
                 elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>تعذر التحديث الآن.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">↻ إعادة التحميل</button></div>";
                 const retry = document.getElementById("retryProducts");
                 if (retry) retry.addEventListener("click", function() { loadProducts({force:true}).catch(function(){}); });
