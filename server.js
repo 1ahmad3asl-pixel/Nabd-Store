@@ -1098,17 +1098,33 @@ app.get("/api/orders/check", requireCustomer, async (req, res) => {
 ========================= */
 
 app.get("/admin", requireAdmin, (req, res) => {
+  // لوحة الإدارة يجب أن تصل دائمًا من النسخة الحالية، دون كاش HTML.
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
 app.get("/admin/index.html", requireAdmin, (req, res) => {
+  // نفس السياسة لصفحة الإدارة المباشرة.
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
 app.use(express.static(path.join(__dirname), {
   setHeaders: (res, filePath) => {
-    // الملفات الثابتة: 7 أيام، مع تحديث في الخلفية.
-    // HTML: لا يملك المتصفح كاشه الخاص؛ Service Worker يدير كاش الصفحات لمدة 30 دقيقة.
+    // لوحة الإدارة لا تُخزّن: CSS/JS والصور الخاصة بها يجب أن تتحدث فورًا.
+    if (filePath.includes(path.sep + "admin" + path.sep) || /[\\/]admin[\\/]/i.test(filePath)) {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
+      return;
+    }
+
+    // بقية الملفات الثابتة: 7 أيام، مع تحديث في الخلفية.
+    // HTML العام: لا يملك المتصفح كاشه الخاص؛ Service Worker يدير كاش الصفحات لمدة 30 دقيقة.
     if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|avif)$/i.test(filePath)) {
       res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
     } else if (/\.html$/i.test(filePath)) {
