@@ -530,6 +530,7 @@ const GAME_CATALOG = [
     { title:"8 Ball Pool", aliases:["8ball pool","8 ball pool","eight ball pool","ثمانية بول","ثمنية بول"] },
     { title:"Project entropy", aliases:["project entropy"] },
     { title:"Gun of Glory", aliases:["gun of glory","guns of glory"] },
+    { title:"Gangs of Glory", aliases:["gangs of glory"] },
     { title:"City Of Crime Gang War", aliases:["city of crime gang war"] },
     { title:"Marvel Rivals", aliases:["marvel rivals","marvel reveals","مارفل ريفيلز","مارفل رايفلز"] },
     { title:"Whiteout Survival", aliases:["whiteout survival"] },
@@ -698,7 +699,10 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("8ball pool") || text.includes("8 ball pool") || text.includes("eight ball pool") || text.includes("ثمانية بول") || text.includes("ثمنية بول")) {
         return BACKEND_URL + "/api/game-images/8-ball-pool";
     }
-    if (text.includes("gun of glory") || text.includes("guns of glory") || text.includes("غانغز اوف غلوري") || text.includes("غانجز أوف غلوري")) {
+    if (text.includes("gun of glory") || text.includes("guns of glory")) {
+        return BACKEND_URL + "/api/game-images/guns-of-glory";
+    }
+    if (text.includes("gangs of glory") || text.includes("غانغز اوف غلوري") || text.includes("غانجز أوف غلوري")) {
         return BACKEND_URL + "/api/game-images/gangs-of-glory";
     }
     if (text.includes("project entropy") || text.includes("بروجكت انتروبي") || text.includes("بروجيكت انتروبي")) {
@@ -873,7 +877,8 @@ function getGameGroups(gameTitle) {
     const isYallaLudoGold = normalizedGame.includes("yalla ludo gold") || normalizedGame.includes("يلا لودو جولد") || normalizedGame.includes("يلا لودو غولد");
     const isLordsMobile = normalizedGame.includes("lords mobile") || normalizedGame.includes("لوردز موبايل") || normalizedGame.includes("لوردس موبايل");
     const isEightBallPool = normalizedGame.includes("8ball pool") || normalizedGame.includes("8 ball pool") || normalizedGame.includes("eight ball pool") || normalizedGame.includes("ثمانية بول") || normalizedGame.includes("ثمنية بول");
-    const isGunsOfGlory = normalizedGame.includes("gun of glory") || normalizedGame.includes("guns of glory") || normalizedGame.includes("غانغز اوف غلوري") || normalizedGame.includes("غانجز أوف غلوري");
+    const isGunsOfGlory = normalizedGame.includes("gun of glory") || normalizedGame.includes("guns of glory");
+    const isGangsOfGlory = normalizedGame.includes("gangs of glory") || normalizedGame.includes("غانغز اوف غلوري") || normalizedGame.includes("غانجز أوف غلوري");
     const isProjectEntropy = normalizedGame.includes("project entropy") || normalizedGame.includes("بروجكت انتروبي") || normalizedGame.includes("بروجيكت انتروبي");
     const isFarlight84 = normalizedGame.includes("farlight 84") || normalizedGame.includes("farlight84") || normalizedGame.includes("فارلايت 84");
     const isMarvelRivals = normalizedGame.includes("marvel rivals") || normalizedGame.includes("marvel reveals") || normalizedGame.includes("مارفل ريفيلز") || normalizedGame.includes("مارفل رايفلز");
@@ -903,7 +908,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isGangsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
