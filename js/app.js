@@ -872,6 +872,9 @@ function openGamePlaceholder(gameTitle) {
 
     const groups = getGameGroups(gameTitle);
     const isRoblox = normalizeGameText(gameTitle).includes("roblox");
+    const robloxNotice = isRoblox
+        ? '<div class="game-page-note roblox-delivery-note"><strong>تنبيه لروبلوكس:</strong> عند الشراء سيصل الكود تلقائيًا، ويتضمن البطاقة الجديدة.</div>'
+        : '';
 
     if (!groups.length) {
         content.innerHTML =
@@ -885,6 +888,7 @@ function openGamePlaceholder(gameTitle) {
     }
 
     content.innerHTML =
+        robloxNotice +
         '<div class="game-products-heading">' +
             '<strong>' + groups.length + ' تصنيف</strong>' +
             '<span>تصنيفات ' + escapeHtml(gameTitle) + '</span>' +
@@ -1068,8 +1072,13 @@ function renderGameProductPicker(gameTitle, group) {
         ? '<img src="' + escapeHtml(imageSource) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
 
+    const robloxProductNotice = normalizeGameText(gameTitle).includes("roblox")
+        ? '<div class="game-page-note roblox-delivery-note"><strong>تنبيه لروبلوكس:</strong> عند الشراء سيصل الكود تلقائيًا، ويتضمن البطاقة الجديدة.</div>'
+        : '';
+
     content.innerHTML =
         '<div class="pubg-picker universal-game-picker">' +
+            robloxProductNotice +
             '<button class="pubg-back" type="button" id="pubgBackToGroups">← العودة إلى التصنيفات</button>' +
             '<div class="pubg-picker-head">' +
                 '<div class="pubg-picker-image">' + imageHtml + '</div>' +
