@@ -569,6 +569,8 @@ const GAME_CATALOG = [
     { title:"Rise of Kingdoms: Lost Crusade", aliases:["rise of kingdoms","rise of kingdoms lost crusade","رايز أوف كينغدومز"] },
     { title:"Top War: Battle Game", aliases:["top war","top war battle game","توب وور"] },
     { title:"The Ants: Underground Kingdom", aliases:["the ants","the ants underground kingdom","النمل: المملكة تحت الأرض"] },
+    { title:"Kingdom Guard: Tower Defense", aliases:["kingdom guard","kingdom guard tower defense","كينغدوم غارد"] },
+    { title:"Call of Dragons", aliases:["call of dragons","call of dragons: total war","كول أوف دراغونز"] },
     { title:"Astral Guardians", aliases:["astral guardians"] },
     { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
         { title:"Blockman Go", aliases:["blockman go","blockman go adventures","بلوكمان جو"] },
@@ -1199,6 +1201,9 @@ function renderGameParamFields(product, gameTitle) {
     const isRiseofKingdomsLostCrusade = normalizedGameTitle.includes("rise of kingdoms") || normalizedGameTitle.includes("rise of kingdoms lost crusade") || normalizedGameTitle.includes("رايز أوف كينغدومز");
     const isTopWarBattleGame = normalizedGameTitle.includes("top war") || normalizedGameTitle.includes("top war battle game") || normalizedGameTitle.includes("توب وور");
     const isTheAntsUndergroundKingdom = normalizedGameTitle.includes("the ants") || normalizedGameTitle.includes("the ants underground kingdom") || normalizedGameTitle.includes("النمل: المملكة تحت الأرض");
+    const isKingdomGuardTowerDefense = normalizedGameTitle.includes("kingdom guard") || normalizedGameTitle.includes("kingdom guard tower defense") || normalizedGameTitle.includes("كينغدوم غارد");
+    const isWhiteoutSurvival = normalizedGameTitle.includes("whiteout survival") || normalizedGameTitle.includes("وايت أوت سيرفايفل");
+    const isCallofDragons = normalizedGameTitle.includes("call of dragons") || normalizedGameTitle.includes("call of dragons: total war") || normalizedGameTitle.includes("كول أوف دراغونز");
     const isHatsuneMikuColorfulStage = normalizedGameTitle.includes("hatsune miku") || normalizedGameTitle.includes("colorful stage") || normalizedGameTitle.includes("هتسوني ميكو");
     const isGoldenSpatula = normalizedGameTitle.includes("golden spatula") || normalizedGameTitle.includes("غولدن سباتولا");
     const isBlockmanGo = normalizedGameTitle.includes("blockman go") || normalizedGameTitle.includes("blockman go adventures") || normalizedGameTitle.includes("بلوكمان جو");
@@ -1207,7 +1212,7 @@ function renderGameParamFields(product, gameTitle) {
     const isAFKJourney = normalizedGameTitle.includes("afk journey");
     const isZepeto = normalizedGameTitle.includes("zepeto");
     const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isRiseofKingdomsLostCrusade || isTopWarBattleGame || isTheAntsUndergroundKingdom || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBallisticHeroVNG || isHaikyuFlyHigh || isArknightsEndfield || isRiseofKingdomsLostCrusade || isTopWarBattleGame || isTheAntsUndergroundKingdom || isKingdomGuardTowerDefense || isWhiteoutSurvival || isCallofDragons || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
