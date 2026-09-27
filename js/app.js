@@ -518,7 +518,7 @@ function removeAllCategory() {
 ========================= */
 
 const GAME_CATALOG = [
-    { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"] },
+    { title:"PUBG Mobile", aliases:["pubg mobile","pubg","pubgmobile","ببجي","ببجي موبايل"] },
     { title:"Roblox", aliases:["roblox","roblox game","روبلوكس"] },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
@@ -529,7 +529,7 @@ const GAME_CATALOG = [
     { title:"Farlight 84", aliases:["farlight84","farlight 84","فارلايت 84"] },
     { title:"8 Ball Pool", aliases:["8ball pool","8 ball pool","eight ball pool","ثمانية بول","ثمنية بول"] },
     { title:"Project entropy", aliases:["project entropy"] },
-    { title:"Gun of Glory", aliases:["gun of glory","guns of glory"] },
+    { title:"Guns of Glory", aliases:["gun of glory","guns of glory","guns glory","غنز اوف غلوري","غنز أوف غلوري"] },
     { title:"Gangs of Glory", aliases:["gangs of glory"] },
     { title:"City Of Crime Gang War", aliases:["city of crime gang war","city of crime gang wars"] },
     { title:"Marvel Rivals", aliases:["marvel rivals","marvel reveals","مارفل ريفيلز","مارفل رايفلز"] },
@@ -1185,7 +1185,7 @@ function renderGameParamFields(product, gameTitle) {
     const isSuperSus = normalizedGameTitle.includes("super sus");
     const isHonkaiStarRail = normalizedGameTitle.includes("honkai") || normalizedGameTitle.includes("star rail") || normalizedGameTitle.includes("هونكاي");
     const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail;
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
