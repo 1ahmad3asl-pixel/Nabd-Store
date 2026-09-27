@@ -1215,7 +1215,11 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "crossfire-legend": ["com.vnggames.cfl.crossfirelegends", "Crossfire: Legends"],
       "legend-of-the-phoenix": ["com.duige.hzw.multilingual", "Legend of the Phoenix"],
       "legacy-of-discord": ["com.gtarcade.lod", "Legacy of Discord-FuriousWings"],
-      "army-dudes": ["com.netease.retrorampage", "Deadly Dudes"]
+      "army-dudes": ["com.netease.retrorampage", "Deadly Dudes"],
+      "garena-speed-drifters": ["com.garena.game.drift", "Garena Speed Drifters"],
+      "mongil-star-dive": ["com.cjenm.mongil", "Mongil: Star Dive"],
+      "modern-strike-online": ["com.gamedevlab.modernstrike", "Modern Strike Online"],
+      "overmortal-idle-global": ["com.xsupergame.overmortal", "Overmortal: Idle Global"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
