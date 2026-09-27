@@ -560,12 +560,12 @@ const GAME_CATALOG = [
     { title:"Ghost Story Love Destiny", aliases:["ghost story love destiny"] },
         { title:"Arena of Valor EU", aliases:["arena of valor","arena of valor eu","أرينا أوف فالور"] },
         { title:"Growtopia", aliases:["growtopia","غروتوبيا"] },
-    { title:"Golden Spatula", aliases:["golden spatula"] },
-    { title:"Hatsune Miku: Colorful Stage", aliases:["hatsune miku","colorful stage"] },
+        { title:"Golden Spatula", aliases:["golden spatula","غولدن سباتولا"] },
+        { title:"Hatsune Miku: Colorful Stage", aliases:["hatsune miku","colorful stage","هتسوني ميكو"] },
     { title:"Arknights Endfield", aliases:["arknights endfield"] },
     { title:"Haikyu Fly High", aliases:["haikyu fly high"] },
     { title:"Ballistic Hero VNG", aliases:["ballistic hero vng"] },
-    { title:"Heaven Burns Red", aliases:["heaven burns red"] },
+        { title:"Heaven Burns Red", aliases:["heaven burns red","هيفن برنز ريد"] },
     { title:"Astral Guardians", aliases:["astral guardians"] },
     { title:"Cyber Fantasy", aliases:["cyber fantasy"] },
         { title:"Blockman Go", aliases:["blockman go","blockman go adventures","بلوكمان جو"] },
@@ -1189,13 +1189,16 @@ function renderGameParamFields(product, gameTitle) {
     const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
     const isArenaBreakout = normalizedGameTitle.includes("arena breakout") || normalizedGameTitle.includes("أرينا بريك أوت");
     const isLudoClub = normalizedGameTitle.includes("ludo club") || normalizedGameTitle.includes("لودو كلوب");
+    const isHeavenBurnsRed = normalizedGameTitle.includes("heaven burns red") || normalizedGameTitle.includes("هيفن برنز ريد");
+    const isHatsuneMikuColorfulStage = normalizedGameTitle.includes("hatsune miku") || normalizedGameTitle.includes("colorful stage") || normalizedGameTitle.includes("هتسوني ميكو");
+    const isGoldenSpatula = normalizedGameTitle.includes("golden spatula") || normalizedGameTitle.includes("غولدن سباتولا");
     const isBlockmanGo = normalizedGameTitle.includes("blockman go") || normalizedGameTitle.includes("blockman go adventures") || normalizedGameTitle.includes("بلوكمان جو");
     const isGrowtopia = normalizedGameTitle.includes("growtopia") || normalizedGameTitle.includes("غروتوبيا");
     const isArenaofValorEU = normalizedGameTitle.includes("arena of valor") || normalizedGameTitle.includes("arena of valor eu") || normalizedGameTitle.includes("أرينا أوف فالور");
     const isAFKJourney = normalizedGameTitle.includes("afk journey");
     const isZepeto = normalizedGameTitle.includes("zepeto");
     const isKingShot = normalizedGameTitle.includes("king shot");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || isArenaBreakout || isLudoClub || isHeavenBurnsRed || isHatsuneMikuColorfulStage || isGoldenSpatula || isBlockmanGo || isGrowtopia || isArenaofValorEU || isAFKJourney || isZepeto || isKingShot || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
