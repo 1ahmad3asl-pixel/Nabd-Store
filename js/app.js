@@ -1920,23 +1920,62 @@ function escapeHtml(value) {
     return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
-function isBalanceProduct(product) {
-    const text = normalizeGameText(String(product && product.category_name || "") + " " + String(product && product.name || ""));
-    return /رصيد|ارصدة|أرصدة|اتصالات|وحدات|شحن|سيريتل|mtn|zain|زين|stc|orange|vodafone|ooredoo|etisalat|du|شامنا|internet|انترنت|بيانات|دقائق|مكالمات|usd|sar|aed|try/.test(text);
+const BALANCE_CATALOG = [
+    { key:"turkish", title:"رصيد تركي", aliases:["رصيد تركي","turkish balance","turkey balance","turkish credit","turkey credit"] },
+    { key:"syriatel", title:"سيريتل", aliases:["سيريتل","syriatel","syriatel cash"] },
+    { key:"mtn", title:"MTN", aliases:["mtn","mtn syria","mtn cash"] },
+    { key:"instapay", title:"Insta pay", aliases:["insta pay","instapay","insta-pay"] },
+    { key:"reflect", title:"Reflect", aliases:["reflect"] },
+    { key:"papara", title:"Papara", aliases:["papara"] },
+    { key:"paypal", title:"Paypal", aliases:["paypal","pay pal"] },
+    { key:"payoneer", title:"Payoneer", aliases:["payoneer"] },
+    { key:"touch", title:"Touch", aliases:["touch","touch lebanon","touch cash"] },
+    { key:"alfa", title:"Alfa", aliases:["alfa","alfa lebanon","alfa cash"] },
+    { key:"zain-iraq", title:"زين كاش العراق", aliases:["زين كاش العراق","zain cash iraq","zaincash iraq","zain cash"] },
+    { key:"rcell", title:"Rcell", aliases:["rcell","r cell"] },
+    { key:"whish-money", title:"Whish Money", aliases:["whish money","whishmoney","whish"] },
+    { key:"asiacell", title:"اسيا سيل", aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell"] }
+];
+
+function normalizeBalanceText(value) {
+    return normalizeGameText(String(value || ""))
+        .replace(/[أإآ]/g, "ا")
+        .replace(/ى/g, "ي");
 }
+
+function findBalanceCatalogItem(product) {
+    const categoryText = normalizeBalanceText(product && product.category_name);
+    const productText = normalizeBalanceText(product && product.name);
+    const combined = (categoryText + " " + productText).trim();
+    return BALANCE_CATALOG.find(function(item) {
+        return item.aliases.some(function(alias) {
+            const needle = normalizeBalanceText(alias);
+            if (!needle) return false;
+            return categoryText.includes(needle) || combined.includes(needle);
+        });
+    }) || null;
+}
+
+function isBalanceProduct(product) {
+    return !!findBalanceCatalogItem(product);
+}
+
 function getBalanceGroups() {
-    const groups = [], seen = new Map();
-    state.products.filter(isBalanceProduct).forEach(function(product) {
-        const title = cleanGameCategoryName(product.category_name || "أرصدة");
-        const key = String(product.parent_id ?? "") + "|" + title;
-        if (!seen.has(key)) {
-            seen.set(key, {key:key, title:title, image:product.category_img || "", products:[]});
-            groups.push(seen.get(key));
-        }
-        seen.get(key).products.push(product);
+    const groups = BALANCE_CATALOG.map(function(item) {
+        return {key:item.key,title:item.title,image:"",products:[]};
+    });
+    const byKey = new Map(groups.map(function(group){ return [group.key, group]; }));
+    state.products.forEach(function(product) {
+        const item = findBalanceCatalogItem(product);
+        if (!item) return;
+        const group = byKey.get(item.key);
+        if (!group) return;
+        if (!group.image && product.category_img) group.image = product.category_img;
+        group.products.push(product);
     });
     return groups;
 }
+
 function openBalancePage(fromHistory) {
     if (!fromHistory) pushInternalHistory("balance");
     const services=document.getElementById("servicesSection"), internal=document.getElementById("internalPage");
@@ -1946,26 +1985,30 @@ function openBalancePage(fromHistory) {
     if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="💵";
     if (!state.productsLive && !state.productsLoadingPromise) loadProducts({force:true}).catch(function(){});
     const groups=getBalanceGroups();
-    if(!groups.length || !state.productsLive){
+    if(!state.productsLive){
         content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري مزامنة تصنيفات الأرصدة...</p></div>';
         if(state.productsLoadingPromise){
             state.productsLoadingPromise.then(function(){ openBalancePage(true); }).catch(function(){});
         }
         return;
     }
-    content.innerHTML='<div class="game-page"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid">'+groups.map(function(group){
-        const image=group.image || ""; const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
-        return '<button class="game-category-tile game-product-group-card" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
+    content.innerHTML='<div class="game-page balance-level-two"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
+        const available=group.products.some(function(product){return product.available!==false&&product.available!==0;});
+        const image=group.image || "";
+        const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
+        return '<button class="game-category-tile game-product-group-card balance-category-tile'+(available?'':' is-disabled')+'" type="button" data-balance-group="'+escapeHtml(group.key)+'"'+(available?'':' disabled')+'><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
     }).join("")+'</div></div>';
     const back=document.getElementById("balanceBack"); if(back) back.addEventListener("click",closeInternalPage);
     content.querySelectorAll("[data-balance-group]").forEach(function(card){card.addEventListener("click",function(){openBalanceProductGroup(card.getAttribute("data-balance-group")||"");});});
     window.scrollTo({top:0,behavior:"smooth"});
 }
+
 function openBalanceProductGroup(groupKey, fromHistory) {
     if(!fromHistory) pushInternalHistory("balance-products",{groupKey:groupKey});
     const group=getBalanceGroups().find(function(item){return item.key===groupKey;});
-    if(group) renderBalanceProductPicker(group);
+    if(group && group.products.length) renderBalanceProductPicker(group);
 }
+
 function renderBalanceProductPicker(group) {
     const content=document.getElementById("internalPageContent"), title=document.getElementById("internalPageTitle"), icon=document.getElementById("internalPageIcon");
     if(!content || !group) return; if(title) title.textContent=group.title; if(icon) icon.textContent="💵";
