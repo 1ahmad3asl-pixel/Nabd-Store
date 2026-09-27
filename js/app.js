@@ -531,7 +531,7 @@ const GAME_CATALOG = [
     { title:"Project entropy", aliases:["project entropy"] },
     { title:"Gun of Glory", aliases:["gun of glory","guns of glory"] },
     { title:"Gangs of Glory", aliases:["gangs of glory"] },
-    { title:"City Of Crime Gang War", aliases:["city of crime gang war"] },
+    { title:"City Of Crime Gang War", aliases:["city of crime gang war","city of crime gang wars"] },
     { title:"Marvel Rivals", aliases:["marvel rivals","marvel reveals","مارفل ريفيلز","مارفل رايفلز"] },
     { title:"Whiteout Survival", aliases:["whiteout survival"] },
     { title:"Genshin Impact", aliases:["genshin impact"] },
@@ -711,7 +711,7 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("farlight 84") || text.includes("farlight84") || text.includes("فارلايت 84")) {
         return BACKEND_URL + "/api/game-images/farlight-84";
     }
-    if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
+    if (text.includes("city of crime gang war") || text.includes("city of crime gang wars")) {\n        return BACKEND_URL + "/api/game-images/city-of-crime-gang-war";\n    }\n    if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
         return BACKEND_URL + "/api/game-images/marvel-rivals";
     }
     if (text.includes("genshin impact")) {
@@ -887,7 +887,7 @@ function getGameGroups(gameTitle) {
     const isGangsOfGlory = normalizedGame.includes("gangs of glory") || normalizedGame.includes("غانغز اوف غلوري") || normalizedGame.includes("غانجز أوف غلوري");
     const isProjectEntropy = normalizedGame.includes("project entropy") || normalizedGame.includes("بروجكت انتروبي") || normalizedGame.includes("بروجيكت انتروبي");
     const isFarlight84 = normalizedGame.includes("farlight 84") || normalizedGame.includes("farlight84") || normalizedGame.includes("فارلايت 84");
-    const isMarvelRivals = normalizedGame.includes("marvel rivals") || normalizedGame.includes("marvel reveals") || normalizedGame.includes("مارفل ريفيلز") || normalizedGame.includes("مارفل رايفلز");
+    const isMarvelRivals = normalizedGame.includes("marvel rivals") || normalizedGame.includes("marvel reveals") || normalizedGame.includes("مارفل ريفيلز") || normalizedGame.includes("مارفل رايفلز");\n    const isCityOfCrimeGangWar = normalizedGame.includes("city of crime gang war") || normalizedGame.includes("city of crime gang wars");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -914,7 +914,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isGangsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isGangsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isCityOfCrimeGangWar)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
