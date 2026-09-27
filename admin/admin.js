@@ -595,6 +595,13 @@ function renderCustomers(customers) {
                         <button
                             class="small-button"
                             data-customer-id="${escapeAdminHtml(String(internalId))}"
+                            data-action="info"
+                        >
+                            👤 المعلومات
+                        </button>
+                        <button
+                            class="small-button"
+                            data-customer-id="${escapeAdminHtml(String(internalId))}"
                             data-action="wallet"
                         >
                             💰 المحفظة
@@ -612,6 +619,16 @@ function renderCustomers(customers) {
             `;
 
         }).join("");
+
+    table
+        .querySelectorAll(
+            '[data-action="info"]'
+        )
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                openCustomerInfo(button.getAttribute("data-customer-id"));
+            });
+        });
 
     table
         .querySelectorAll(
@@ -646,7 +663,30 @@ function renderCustomers(customers) {
 
 }
 
-async function openCustomerWallet(customerId) {
+async async function openCustomerInfo(customerId) {
+    try {
+        const data = await ADMIN_API.customer(customerId);
+        const customer = data.customer || {};
+        const phone = String(customer.phone || "").trim() || "غير مضاف";
+        const country = String(customer.phone_country || "").trim() || "غير محددة";
+        const email = String(customer.email || "").trim() || "غير مضاف";
+        const name = String(customer.name || "عميل");
+        const number = customer.customer_number ?? customer.customer_id ?? customerId;
+        const created = customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر";
+        const html = "<div id='customerInfoDialog' class='customer-info-dialog'><div class='customer-info-card'><div class='card-heading'><div><span>بيانات العميل</span><h2>" + escapeAdminHtml(name) + "</h2></div><button class='small-button' id='closeCustomerInfo'>إغلاق</button></div><div class='customer-info-grid'>" +
+            "<div><span>رقم العميل</span><strong>" + escapeAdminHtml(String(number)) + "</strong></div>" +
+            "<div><span>رقم الهاتف</span><strong dir='ltr'>" + escapeAdminHtml(phone) + "</strong></div>" +
+            "<div><span>الدولة</span><strong>" + escapeAdminHtml(country) + "</strong></div>" +
+            "<div><span>البريد الإلكتروني</span><strong dir='ltr'>" + escapeAdminHtml(email) + "</strong></div>" +
+            "<div><span>الرصيد</span><strong>" + formatAdminPrice(customer.balance || 0) + "</strong></div>" +
+            "<div><span>عدد الطلبات</span><strong>" + escapeAdminHtml(String(customer.orders_count ?? 0)) + "</strong></div>" +
+            "<div><span>الخصم</span><strong>" + Number(customer.discount || 0).toFixed(3) + "%</strong></div>" +
+            "<div><span>تاريخ التسجيل</span><strong>" + escapeAdminHtml(created) + "</strong></div></div></div></div>";
+        document.body.insertAdjacentHTML("beforeend", html);
+        document.getElementById("closeCustomerInfo").onclick = function(){ document.getElementById("customerInfoDialog")?.remove(); };
+    } catch (error) { showAdminToast(error.message || "تعذر تحميل معلومات العميل."); }
+}
+function openCustomerWallet(customerId) {
     try {
         const data = await ADMIN_API.customerWallet(customerId);
         const wallet = data.wallet || {};
