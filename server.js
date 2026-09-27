@@ -1122,10 +1122,21 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       : null;
     const allowedParams = allowedParamList ? new Set(allowedParamList) : null;
 
-    // واجهة ببجي تعرض "ID المقاتل" للمستخدم، بينما قد يكون اسم
+    // الواجهة تعرض "ID اللاعب" للمستخدم، بينما قد يكون اسم
     // الباراميتر الفعلي مختلفًا داخل كتالوج المزود. إذا كان المنتج
     // يملك باراميترًا واحدًا فقط، نربط playerId به تلقائيًا.
     const normalizedRawParams = {...rawParams};
+    const isJawakerProduct = /jawaker|جواكر/i.test(productText);
+    if (isJawakerProduct &&
+        Object.prototype.hasOwnProperty.call(normalizedRawParams, "playerId") &&
+        allowedParamList &&
+        !allowedParams.has("playerId") &&
+        allowedParamList.length === 1) {
+      const value = normalizedRawParams.playerId;
+      delete normalizedRawParams.playerId;
+      normalizedRawParams[allowedParamList[0]] = value;
+    }
+
     if (isPubgProduct &&
         Object.prototype.hasOwnProperty.call(normalizedRawParams, "playerId") &&
         allowedParamList &&
