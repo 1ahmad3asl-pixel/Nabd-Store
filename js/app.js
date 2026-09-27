@@ -1533,7 +1533,14 @@ async function loadProducts(options) {
             try {
                 localStorage.setItem(state.productsCacheKey, JSON.stringify({
                     savedAt: Date.now(),
-                    products: state.products
+                    // نخزن هيكل/تصنيفات المنتجات فقط، ولا نخزن الأسعار.
+                    // السعر الذي يصل للواجهة يبقى من Nemer مباشرة.
+                    products: state.products.map(function(product) {
+                        const cached = Object.assign({}, product);
+                        delete cached.price;
+                        delete cached.original_price;
+                        return cached;
+                    })
                 }));
             } catch (error) {
                 console.warn("Products cache skipped:", error);
