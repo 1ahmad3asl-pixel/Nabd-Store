@@ -1180,8 +1180,8 @@ function initializeInternalHistory() {
 
 function getNumberGroupDefinitions() {
     return [
-        {key:"whatsapp-s1",title:"أرقام واتساب S1",aliases:["ارقام واتساب s1","أرقام واتساب s1","whatsapp s1"]},
-        {key:"whatsapp-s2",title:"أرقام واتساب S2",aliases:["ارقام واتساب s2","أرقام واتساب s2","whatsapp s2"]},
+        {key:"whatsapp-s1",title:"أرقام واتساب S1",aliases:["ارقام واتساب s1","أرقام واتساب s1","whatsapp s1","واتساب سيرفر 1","واتساب سيرفر واحد","ارقام واتساب 1","أرقام واتساب 1","whatsapp server 1","whatsapp server1","whatsapp 1"]},
+        {key:"whatsapp-s2",title:"أرقام واتساب S2",aliases:["ارقام واتساب s2","أرقام واتساب s2","whatsapp s2","واتساب سيرفر 2","واتساب سيرفر اثنين","واتساب سيرفر اثنان","ارقام واتساب 2","أرقام واتساب 2","whatsapp server 2","whatsapp server2","whatsapp 2"]},
         {key:"gmail",title:"أرقام جيميل",aliases:["ارقام جيميل","أرقام جيميل","gmail"]},
         {key:"facebook",title:"أرقام فيسبوك",aliases:["ارقام فيسبوك","أرقام فيسبوك","facebook"]},
         {key:"icloud",title:"أرقام آيكلاود",aliases:["ارقام ايكلاود","أرقام ايكلاود","icloud"]},
@@ -1193,14 +1193,36 @@ function getNumberGroupDefinitions() {
 }
 
 function getNumberGroupProducts(group) {
-    const aliases=(group.aliases||[]).map(normalizeGameText);
+    const aliases=(group.aliases||[]).map(normalizeGameText).filter(Boolean);
     return state.products.filter(function(product){
-        const text=normalizeGameText(String(product.category_name||"")+" "+String(product.name||""));
-        return aliases.some(function(alias){return alias && (text.includes(alias)||alias.includes(text));});
+        const category=normalizeGameText(product && product.category_name);
+        const name=normalizeGameText(product && product.name);
+        const text=(category+" "+name).trim();
+
+        // WhatsApp S1/S2 are intentionally matched by server identity as well as
+        // the visible product/category name, so the two groups cannot mix.
+        if(group.key==="whatsapp-s1" || group.key==="whatsapp-s2"){
+            const serverToken=group.key==="whatsapp-s1" ? "s1" : "s2";
+            const serverArabic=group.key==="whatsapp-s1"
+                ? ["سيرفر 1","سيرفر واحد"]
+                : ["سيرفر 2","سيرفر اثنين","سيرفر اثنان"];
+            const hasWhatsapp=text.includes("whatsapp") || text.includes("واتساب");
+            const hasServer=text.split(/\\s+/).some(function(token){return token===serverToken;}) ||
+                serverArabic.some(function(token){return text.includes(normalizeGameText(token));});
+            if(hasWhatsapp && hasServer) return true;
+        }
+
+        return aliases.some(function(alias){
+            return alias && (text.includes(alias) || alias.includes(text));
+        });
     });
 }
 
 function getNumberGroupImage(group) {
+    // Use the WhatsApp brand asset for both WhatsApp number servers.
+    if(group && (group.key==="whatsapp-s1" || group.key==="whatsapp-s2")){
+        return BACKEND_URL + "/assets/whatsapp.svg";
+    }
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
@@ -1850,7 +1872,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     if (!content || !group) return;
 
     if (title) title.textContent = group.title;
-    if (icon) icon.textContent = "🎮";
+    if (icon) icon.textContent = isNumberPicker ? "📲" : "🎮";
 
     const products = Array.isArray(group.products) ? group.products : [];
     const availableProducts = products.filter(function(product) {
