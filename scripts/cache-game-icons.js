@@ -83,16 +83,18 @@ function extractAppIds(html) {
 }
 
 function extractMeta(html, property) {
-  const re = new RegExp(
-    '<meta[^>]+property=["\\\\\\\']' + property + '["\\\\\\\'][^>]+content=["\\\\\\\']([^"\\\\\\\']+)["\\\\\\\']',
-    "i"
-  );
-  const match = html.match(re);
-  return match ? match[1]
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/\\u003d/g, "=")
-    .replace(/\\u0026/g, "&") : "";
+  const re = /<meta[^>]+(?:property|name)=["']([^"']+)["'][^>]+content=["']([^"']+)["'][^>]*>/gi;
+  let match;
+  while ((match = re.exec(html))) {
+    if (String(match[1]).toLowerCase() === String(property).toLowerCase()) {
+      return match[2]
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/\\u003d/g, "=")
+        .replace(/\\u0026/g, "&");
+    }
+  }
+  return "";
 }
 
 async function getPlayDetails(appId) {
