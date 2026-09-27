@@ -1937,7 +1937,13 @@ function openBalancePage(fromHistory) {
     if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="💵";
     if(!state.productsLoaded && !state.productsLoadingPromise) loadProducts().catch(function(){});
     const groups=getBalanceGroups();
-    if(!groups.length){ content.innerHTML='<div class="products-loading"><p>جاري تحميل تصنيفات الأرصدة...</p></div>'; return; }
+    if(!groups.length){
+        content.innerHTML='<div class="products-loading"><p>جاري تحميل تصنيفات الأرصدة...</p></div>';
+        if(!state.productsLoaded && state.productsLoadingPromise){
+            state.productsLoadingPromise.then(function(){ openBalancePage(true); }).catch(function(){});
+        }
+        return;
+    }
     content.innerHTML='<div class="game-page"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid">'+groups.map(function(group){
         const image=group.image || ""; const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
         return '<button class="game-category-tile game-product-group-card" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
