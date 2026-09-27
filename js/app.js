@@ -1184,6 +1184,26 @@ function renderGameProductPicker(gameTitle, group) {
 
     let selectedIndex = firstProduct ? products.indexOf(firstProduct) : -1;
 
+    function isJawakerServerQuantityProduct(product) {
+        const text = normalizeGameText(
+            String(product && product.category_name || "") + " " +
+            String(product && product.name || "")
+        );
+        if (!text.includes("jawaker") && !text.includes("جواكر")) return false;
+        const isS2 = text.includes("s2") || text.includes("s 2");
+        const isS1 = text.includes("s1") || text.includes("s 1") ||
+            text.includes("server") || text.includes("سيرفر") || text.includes("سرفر") ||
+            text.includes("cum");
+        return isS1 || isS2;
+    }
+
+    function getGameQuantityConfig(product) {
+        if (isJawakerServerQuantityProduct(product)) {
+            return {enabled:true, min:10000, max:1000000, step:1};
+        }
+        return getProductQuantityConfig(product);
+    }
+
     function renderQuantity(product) {
         const holder = document.getElementById("gameQuantityField");
         if (!holder) return;
@@ -1194,7 +1214,7 @@ function renderGameProductPicker(gameTitle, group) {
             return;
         }
 
-        const config = getProductQuantityConfig(product);
+        const config = getGameQuantityConfig(product);
 
         if (!config.enabled) {
             holder.innerHTML = "";
@@ -1237,16 +1257,24 @@ function renderGameProductPicker(gameTitle, group) {
     function updateQuantityTotalPrice() {
         const qtyInput = document.getElementById("gameOrderQty");
         const totalLabel = document.getElementById("gameQuantityTotalPrice");
+        const selectedPrice = document.getElementById("pubgSelectedPrice");
         const product = products[selectedIndex];
-        if (!qtyInput || !totalLabel || !product) return;
+        if (!qtyInput || !product) return;
+
         const qty = Number(qtyInput.value);
         const unitPrice = getGameProductPrice(product);
+        const decimals = getPriceDecimalPlaces(product.price);
+
         if (!Number.isFinite(qty) || unitPrice === null) {
-            totalLabel.textContent = "السعر الإجمالي: السعر غير متاح";
+            if (totalLabel) totalLabel.textContent = "السعر الإجمالي: السعر غير متاح";
+            if (selectedPrice) selectedPrice.textContent = "السعر غير متاح";
             return;
         }
-        totalLabel.textContent = "السعر الإجمالي: " +
-            formatMoney(unitPrice * qty, getPriceDecimalPlaces(product.price));
+
+        const totalPrice = unitPrice * qty;
+        const formattedTotal = formatMoney(totalPrice, decimals);
+        if (totalLabel) totalLabel.textContent = "السعر الإجمالي: " + formattedTotal;
+        if (selectedPrice) selectedPrice.textContent = formattedTotal;
     }
 
     const quantityField = document.getElementById("gameQuantityField");
@@ -1332,7 +1360,7 @@ function submitGamePickerOrder(product, root) {
         qty = Number(qtyInput.value);
         const min = Number(qtyInput.min || 1);
         const max = Number(qtyInput.max || 999999999);
-        if (!Number.isFinite(qty) || qty < min || qty > max) {
+        if (!Number.isInteger(qty) || qty < min || qty > max) {
             invalid = true;
             qtyInput.classList.add("is-invalid");
         } else {
