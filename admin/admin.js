@@ -707,7 +707,7 @@ async function openCustomerWallet(customerId) {
         const data = await ADMIN_API.customerWallet(customerId);
         const wallet = data.wallet || {};
         const transactions = Array.isArray(wallet.transactions) ? wallet.transactions : [];
-        const typeMap = {admin_credit:"إضافة من الإدارة",admin_debit:"خصم من الإدارة",purchase:"شراء",refund:"استرداد",reversal:"عكس عملية"};
+        const typeMap = {admin_credit:"إضافة رصيد للعميل",admin_debit:"خصم رصيد من العميل",purchase:"شراء",refund:"استرداد",reversal:"عكس عملية"};
         const rows = transactions.length ? transactions.map(function(item) {
             const amount = Number(item.amount || 0);
             return "<tr><td>" + escapeAdminHtml(typeMap[item.type] || item.type || "-") + "</td><td>" +
@@ -1821,6 +1821,23 @@ async function loadTransactions() {
         renderTransactions(
             transactions
         );
+
+        const totals = transactions.reduce(function(acc, item) {
+            const amount = Number(item.amount || 0);
+            acc.net += Number.isFinite(amount) ? amount : 0;
+            if (item.type === "purchase") acc.sales += Math.max(0, amount);
+            if (item.type === "refund" || item.type === "admin_credit") acc.outflow += Math.abs(amount);
+            if (item.type === "admin_debit") acc.inflow += Math.abs(amount);
+            return acc;
+        }, {net:0,sales:0,outflow:0,inflow:0});
+
+        const setWalletStat = function(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = formatAdminPrice(value);
+        };
+        setWalletStat("totalDeposits", totals.sales);
+        setWalletStat("totalWithdrawals", totals.outflow);
+        setWalletStat("budgetNet", totals.net);
 
     } catch (error) {
 
