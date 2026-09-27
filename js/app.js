@@ -1163,27 +1163,25 @@ function getDisplayParamLabel(label) {
 }
 
 function renderPubgParamFields(product) {
-    const params = getUsableProductParams(product);
+    // في PUBG نستخدم أسماء params القادمة من الكتالوج/API حرفيًا.
+    // لا ننشئ playerId ولا نعيد تسمية أي parameter.
+    const params = Array.isArray(product && product.params)
+        ? product.params.map(function(label) { return String(label ?? "").trim(); })
+            .filter(function(label) { return label.length > 0; })
+        : [];
 
-    // ببجي تحتاج حقلًا واضحًا وثابتًا للـID، ولا نعرض اسمًا داخليًا
-    // قادمًا من الكتالوج مثل "ناتج البيانات في كتالوج" للمستخدم.
-    // نستخدم مفتاح الـID الفعلي من API إن كان معروفًا، وإلا نستخدم
-    // أول باراميتر للمنتج حتى يبقى الإرسال متوافقًا مع API.
-    const idKey = params.find(function(label) {
-        const normalized = normalizeGameText(label);
-        return normalized.includes("ايدي") ||
-            normalized.includes("الايدي") ||
-            normalized.includes("playerid") ||
-            normalized.includes("player id") ||
-            normalized === "player";
-    }) || params[0] || "playerId";
+    if (!params.length) {
+        return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+    }
 
-    const safeKey = escapeHtml(idKey);
-
-    return '<div class="pubg-field pubg-fighter-id-field">' +
-        '<label for="pubgFighterId">ID اللاعب</label>' +
-        '<input id="pubgFighterId" name="fighter_id" data-pubg-param="' + safeKey + '" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="أدخل ID اللاعب" required aria-required="true">' +
-        '</div>';
+    return params.map(function(label, index) {
+        const safeLabel = escapeHtml(label);
+        const inputId = "pubgParam_" + index;
+        return '<div class="pubg-field game-required-field">' +
+            '<label for="' + inputId + '">' + safeLabel + '</label>' +
+            '<input id="' + inputId + '" type="text" data-pubg-param="' + safeLabel + '" placeholder="أدخل ' + safeLabel + '" autocomplete="off" required aria-required="true">' +
+            '</div>';
+    }).join("");
 }
 
 function renderGameParamFields(product, gameTitle) {
@@ -1193,6 +1191,27 @@ function renderGameParamFields(product, gameTitle) {
     // إذا كانت params فارغة، فهذا المنتج لا يحتاج أي معلومة إضافية.
     if (!params.length) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+    }
+
+    // PUBG: اعرض كل params كما وصلت من API/الكتالوج حرفيًا، بما فيها أي اسم غير معتاد.
+    if (isPubgGame(gameTitle)) {
+        const exactParams = Array.isArray(product && product.params)
+            ? product.params.map(function(label) { return String(label ?? "").trim(); })
+                .filter(function(label) { return label.length > 0; })
+            : [];
+
+        if (!exactParams.length) {
+            return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+        }
+
+        return exactParams.map(function(label, index) {
+            const displayLabel = escapeHtml(label);
+            const inputId = "pubgExactParam_" + index;
+            return '<div class="pubg-field game-required-field">' +
+                '<label for="' + inputId + '">' + displayLabel + '</label>' +
+                '<input id="' + inputId + '" type="text" data-game-param="' + displayLabel + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
+                '</div>';
+        }).join("");
     }
 
     const normalizedGameTitle = normalizeGameText(gameTitle || "");
