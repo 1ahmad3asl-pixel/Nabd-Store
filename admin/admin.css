@@ -1007,3 +1007,31 @@ td{padding:14px 12px!important;}
   .page-heading{gap:10px!important;}
   .page-heading h1{font-size:21px!important;}
 }
+
+
+/* ===== تكبير نصوص قائمة الإدارة ===== */
+.admin-tabs.admin-drawer .admin-nav-item{
+  font-size:18px!important;
+  font-weight:800!important;
+  min-height:54px!important;
+}
+.admin-tabs.admin-drawer .admin-nav-item span:last-child{
+  font-size:18px!important;
+  line-height:1.4!important;
+}
+.admin-tabs.admin-drawer .admin-nav-logout{
+  font-size:17px!important;
+  font-weight:800!important;
+}
+@media(max-width:600px){
+  .admin-tabs.admin-drawer .admin-nav-item{
+    font-size:18px!important;
+    min-height:54px!important;
+  }
+  .admin-tabs.admin-drawer .admin-nav-item span:last-child{
+    font-size:18px!important;
+  }
+  .admin-tabs.admin-drawer .admin-nav-logout{
+    font-size:17px!important;
+  }
+}
