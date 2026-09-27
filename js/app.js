@@ -52,6 +52,13 @@ document.addEventListener("click", function(event) {
 
     // مستقل عن initializeCategories: يضمن أن قسم الأرصدة يستجيب
     // حتى لو فشل initializer آخر في الصفحة.
+    const appsButton = event.target.closest('.category[data-category="apps"]');
+    if (appsButton) {
+        event.preventDefault();
+        openAppsPage();
+        return;
+    }
+
     const balanceButton = event.target.closest('.category[data-category="balance"]');
     if (balanceButton) {
         event.preventDefault();
@@ -863,6 +870,10 @@ function initializeCategories() {
                 openGamesPage();
                 return;
             }
+            if (category === "apps") {
+                openAppsPage();
+                return;
+            }
             if (category === "balance") {
                 openBalancePage();
                 return;
@@ -1079,6 +1090,16 @@ function handleInternalHistoryState(state) {
         return;
     }
 
+    if (state.view === "apps") {
+        openAppsPage(true);
+        return;
+    }
+
+    if (state.view === "app-server") {
+        openAppServerPlaceholder(state.appServerTitle, state.appServerKey, true);
+        return;
+    }
+
     if (state.view === "balance") {
         openBalancePage(true);
         return;
@@ -1101,6 +1122,72 @@ function initializeInternalHistory() {
     window.addEventListener("popstate", function(event) {
         handleInternalHistoryState(event.state);
     });
+}
+
+function getAppServerTiles() {
+    return [
+        { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/assets/app-server-1.svg" },
+        { key:"server-2", title:"تطبيقات سيرفر 2", image:BACKEND_URL + "/assets/app-server-2.svg" },
+        { key:"server-3", title:"تطبيقات سيرفر 3", image:BACKEND_URL + "/assets/app-server-3.svg" },
+        { key:"server-4", title:"تطبيقات سيرفر 4", image:BACKEND_URL + "/assets/app-server-4.svg" }
+    ];
+}
+
+function openAppsPage(fromHistory) {
+    if (!fromHistory) pushInternalHistory("apps");
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    const content = document.getElementById("internalPageContent");
+    if (!services || !internal || !content) return;
+
+    services.hidden = true;
+    internal.hidden = false;
+    if (title) title.textContent = "قسم التطبيقات";
+    if (icon) icon.textContent = "📱";
+
+    const tiles = getAppServerTiles();
+    content.innerHTML =
+        '<div class="app-page-note">اختر قسم السيرفر للدخول إلى التطبيقات المتاحة.</div>' +
+        '<div class="game-category-grid app-server-grid">' +
+        tiles.map(function(tile) {
+            return '<button class="game-category-tile app-server-tile" type="button" data-app-server="' +
+                escapeHtml(tile.key) + '">' +
+                '<span class="game-tile-image app-server-image">' +
+                    '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">' +
+                '</span>' +
+                '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
+            '</button>';
+        }).join("") +
+        '</div>';
+
+    content.querySelectorAll(".app-server-tile").forEach(function(tile) {
+        tile.addEventListener("click", function() {
+            const key = tile.getAttribute("data-app-server") || "";
+            const selected = tiles.find(function(item) { return item.key === key; });
+            if (selected) openAppServerPlaceholder(selected.title, key);
+        });
+    });
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
+    if (!fromHistory) pushInternalHistory("app-server", {appServerTitle:titleText, appServerKey:serverKey});
+    const content = document.getElementById("internalPageContent");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    if (!content) return;
+    if (title) title.textContent = titleText;
+    if (icon) icon.textContent = "📱";
+    content.innerHTML =
+        '<div class="game-products-placeholder app-level-placeholder">' +
+            '<div class="game-products-placeholder-icon">📱</div>' +
+            '<h3>' + escapeHtml(titleText) + '</h3>' +
+            '<p>المستوى الثالث سيُضاف هنا وفقًا للصور المرجعية التالية.</p>' +
+        '</div>';
+    window.scrollTo({top:0, behavior:"smooth"});
 }
 
 function openGamesPage(fromHistory) {
