@@ -1832,12 +1832,8 @@ function handleAction(action) {
 }
 
 function getPriceDecimalPlaces(value) {
-    const text = String(value ?? "").trim();
-    if (!text || !Number.isFinite(Number(value))) return 3;
-    const dot = text.indexOf(".");
-    if (dot < 0) return 3;
-    const decimals = text.slice(dot + 1).replace(/0+$/, "").length;
-    return decimals > 0 ? Math.min(12, decimals) : 3;
+    // أسعار المتجر تُعرض دائمًا بثلاث خانات عشرية، مع التقريب إلى الأعلى.
+    return 3;
 }
 
 function ceilPrice(value, decimals) {
@@ -1859,7 +1855,9 @@ function formatMoney(value, decimals) {
 function formatProductMoney(product, value) {
     const amount = value === undefined ? getGameProductPrice(product) : value;
     if (amount === null || amount === undefined || !Number.isFinite(Number(amount))) return "السعر غير متاح";
-    return formatMoney(amount, getPriceDecimalPlaces(product && product.price));
+    const decimals = 3;
+    const roundedUp = ceilPrice(amount, decimals);
+    return roundedUp === null ? "السعر غير متاح" : formatMoney(roundedUp, decimals);
 }
 
 function updateBalance(value) {
