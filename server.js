@@ -1105,7 +1105,16 @@ app.get("/admin/index.html", requireAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), {
+  setHeaders: (res, filePath) => {
+    // Cache static assets aggressively; CSS/JS versions in HTML invalidate safely.
+    if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?)$/i.test(filePath)) {
+      res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
+    } else if (/\.html$/i.test(filePath)) {
+      res.setHeader("Cache-Control", "no-cache, must-revalidate");
+    }
+  }
+}));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
