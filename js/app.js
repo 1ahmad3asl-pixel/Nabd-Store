@@ -686,7 +686,8 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return BACKEND_URL + "/api/game-images/dragonheir-silent-gods";
     if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return BACKEND_URL + "/api/game-images/cloud-song";
     if (text.includes("yalla ludo") || text.includes("يلا لودو")) {
-        if (text.includes("gold")) return "";
+        // Yalla Ludo Gold ليس تطبيقًا مستقلًا؛ هو منتج Gold رسمي داخل Yalla Ludo،
+        // لذلك يستخدم نفس أيقونة Yalla Ludo الرسمية من Google Play.
         return BACKEND_URL + "/api/game-images/yalla-ludo";
     }
     return "";
