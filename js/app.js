@@ -548,8 +548,8 @@ const GAME_CATALOG = [
     { title:"Devil May Cry: Peak of Combat", aliases:["devil may cry","peak of combat"] },
     { title:"Crystal of Atlan", aliases:["crystal of atlan","crystal atlan","كريستال اوف اتلان","كريستال أوف أتلان"] },
     { title:"Bullet Echo", aliases:["bullet echo","bullet echo pvp shooter","بوليت إيكو","بولت إيكو"] },
-    { title:"Blood Strike", aliases:["blood strike"] },
-    { title:"Acecraft", aliases:["acecraft"] },
+    { title:"Blood Strike", aliases:["blood strike","bloodstrike","بلود سترايك"] },
+    { title:"Acecraft", aliases:["acecraft","ace craft","إيس كرافت","ايس كرافت"] },
     { title:"Arena Breakout", aliases:["arena breakout"] },
     { title:"Ludo Club", aliases:["ludo club"] },
     { title:"AFK Journey", aliases:["afk journey"] },
@@ -1185,7 +1185,9 @@ function renderGameParamFields(product, gameTitle) {
     const isSuperSus = normalizedGameTitle.includes("super sus");
     const isHonkaiStarRail = normalizedGameTitle.includes("honkai") || normalizedGameTitle.includes("star rail") || normalizedGameTitle.includes("هونكاي");
     const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
-    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
+    const isBloodStrike = normalizedGameTitle.includes("blood strike") || normalizedGameTitle.includes("bloodstrike") || normalizedGameTitle.includes("بلود سترايك");
+    const isAcecraft = normalizedGameTitle.includes("acecraft") || normalizedGameTitle.includes("ace craft") || normalizedGameTitle.includes("إيس كرافت") || normalizedGameTitle.includes("ايس كرافت");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus || isHonkaiStarRail || isBloodStrike || isAcecraft || normalizedGameTitle.includes("pubg mobile") || normalizedGameTitle.includes("ببجي");
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
