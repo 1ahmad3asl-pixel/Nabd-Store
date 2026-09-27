@@ -683,6 +683,8 @@ function getProductsForGame(gameTitle) {
 
 function getStoredGameImageUrl(gameTitle) {
     const text = normalizeGameText(gameTitle);
+    if (text.includes("yalla ludo gold codes")) return BACKEND_URL + "/api/game-images/yalla-ludo";
+    if (text.includes("yalla ludo diamonds codes")) return BACKEND_URL + "/api/game-images/yalla-ludo";
     if (text.includes("pubg") || text.includes("ببجي")) return BACKEND_URL + "/api/game-images/pubg-mobile";
     if (text.includes("roblox") || text.includes("روبلوكس")) return BACKEND_URL + "/api/game-images/roblox";
     if (text.includes("jawaker") || text.includes("جواكر")) return BACKEND_URL + "/api/game-images/jawaker";
