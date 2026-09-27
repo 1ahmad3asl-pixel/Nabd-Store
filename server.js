@@ -1191,7 +1191,11 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
 
     let result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
     if (!result.rows.length) {
-      await ensureOfficialGameImage(key, config[0], config[1]);
+      if (key === "marvel-rivals") {
+        await ensureMarvelRivalsOfficialImage();
+      } else {
+        await ensureOfficialGameImage(key, config[0], config[1]);
+      }
       result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
     }
 
