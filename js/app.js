@@ -519,7 +519,7 @@ function removeAllCategory() {
 
 const GAME_CATALOG = [
     { title:"ببجي موبايل", aliases:["pubg mobile","pubg","ببجي"] },
-    { title:"Roblox Game", aliases:["roblox"] },
+    { title:"Roblox", aliases:["roblox","roblox game","روبلوكس"] },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
     { title:"Clash of Clans", aliases:["clash of clans","clash"] },
@@ -1181,7 +1181,8 @@ function renderGameParamFields(product, gameTitle) {
     const isEightBallPool = normalizedGameTitle.includes("8ball pool") || normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
     const isGenshinImpact = normalizedGameTitle.includes("genshin impact");
     const isSuperSus = normalizedGameTitle.includes("super sus");
-    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus;
+    const isRoblox = normalizedGameTitle.includes("roblox") || normalizedGameTitle.includes("روبلوكس");
+    const isUnifiedPlayerIdGame = isRoblox || isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGunsOfGlory || isProjectEntropy || isFarlight84 || isMarvelRivals || isGenshinImpact || isSuperSus;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
