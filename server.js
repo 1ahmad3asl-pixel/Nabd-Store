@@ -1062,6 +1062,9 @@ async function ensureDragonheirOfficialImage() {
 async function ensureCloudSongOfficialImage() {
   return ensureOfficialGameImage("cloud-song", "vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers");
 }
+async function ensureYallaLudoOfficialImage() {
+  return ensureOfficialGameImage("yalla-ludo", "com.yalla.yallagames", "Yalla Ludo");
+}
 
 /* =========================
    PUBLIC STORE
@@ -1089,7 +1092,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "free-fire": ["com.dts.freefireth", "Free Fire"],
       "clash-of-clans": ["com.supercell.clashofclans", "Clash of Clans"],
       "dragonheir-silent-gods": ["com.sgra.dragon", "Dragonheir: Silent Gods"],
-      "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"]
+      "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
+      "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
@@ -1200,7 +1204,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isClashOfClansProduct = /clash\s*of\s*clans|كلاش\s*اوف\s*كلانس|كلاش\s*أوف\s*كلانس/i.test(productText);
     const isDragonheirProduct = /dragonheir|silent\s*gods|دراغون\s*هير/i.test(productText);
     const isCloudSongProduct = /cloud\s*song|skywalkers|كلاود\s*سونغ/i.test(productText);
-    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct;
+    const isYallaLudoProduct = /yalla\s*ludo|يلا\s*لودو/i.test(productText);
+    const isYallaLudoGoldProduct = /yalla\s*ludo\s*gold|يلا\s*لودو\s*غولد|يلا\s*لودو\s*جولد/i.test(productText);
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct || isDragonheirProduct || isCloudSongProduct || isYallaLudoProduct || isYallaLudoGoldProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
@@ -1491,6 +1497,7 @@ initDb()
     await ensureClashOfClansOfficialImage();
     await ensureDragonheirOfficialImage();
     await ensureCloudSongOfficialImage();
+    await ensureYallaLudoOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
