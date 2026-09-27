@@ -1126,8 +1126,8 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const minQty = Number(product.qty_values?.min);
     const maxQty = Number(product.qty_values?.max);
     const isJawakerProduct = /jawaker|جواكر/i.test(productText);
-    const isJawakerS2 = isJawakerProduct && /(?:s\s*2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
-    const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|server|سيرفر|سرفر|cum|عداد\s*جواكر\s*سيرفر)/i.test(productText);
+    const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
+    const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
 
     if (!isPubgProduct) {
@@ -1136,13 +1136,13 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       if (Number.isFinite(enforcedMinQty) && qty < enforcedMinQty) {
         return res.status(400).json({
           status:"ERROR",
-          message:isJawakerServerQuantity ? "كمية سيرفر جواكر يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أقل من الحد الأدنى للمنتج."
+          message:isJawakerServerQuantity ? "كمية عداد جواكر S1 وS2 يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أقل من الحد الأدنى للمنتج."
         });
       }
       if (Number.isFinite(enforcedMaxQty) && qty > enforcedMaxQty) {
         return res.status(400).json({
           status:"ERROR",
-          message:isJawakerServerQuantity ? "كمية سيرفر جواكر يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أكبر من الحد الأقصى للمنتج."
+          message:isJawakerServerQuantity ? "كمية عداد جواكر S1 وS2 يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أكبر من الحد الأقصى للمنتج."
         });
       }
     }
