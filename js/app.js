@@ -959,7 +959,7 @@ function getDisplayParamLabel(label) {
         text.includes("الايدي") ||
         text.includes("id")
     ) {
-        return "ID";
+        return "ID المقاتل";
     }
     return String(label || "").trim();
 }
@@ -1001,7 +1001,7 @@ function renderGameParamFields(product) {
             normalized.includes("playerid") ||
             normalized.includes("player id") ||
             normalized === "player";
-        const displayLabel = isId ? "ID" : getDisplayParamLabel(label);
+        const displayLabel = getDisplayParamLabel(label);
         const inputId = "gameParam_" + index;
         return '<div class="pubg-field game-required-field">' +
             '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
@@ -1071,8 +1071,10 @@ function renderGameProductPicker(gameTitle, group) {
     const gameImage = getGameTiles().find(function(tile) {
         return tile.title === gameTitle;
     });
-    const image = getProductImage(firstProduct) ||
-        (gameImage && gameImage.image ? gameImage.image : "");
+    // صورة التطبيق هي المرجع الموحد داخل المستوى الثالث وصفحة المنتجات.
+    // لا نسمح لصورة تصنيف منتج مختلف باستبدال صورة اللعبة.
+    const image = (gameImage && gameImage.image ? gameImage.image : "") ||
+        getProductImage(firstProduct);
     const imageSource = image
         ? (String(image).startsWith("http") ? image : BACKEND_URL + image)
         : "";
