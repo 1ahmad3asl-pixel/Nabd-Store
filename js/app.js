@@ -1214,6 +1214,27 @@ function renderGameParamFields(product, gameTitle) {
         }).join("");
     }
 
+    // PUBG: اعرض كل params كما وصلت من API/الكتالوج حرفيًا.
+    if (isPubgGame(gameTitle)) {
+        const exactParams = Array.isArray(product && product.params)
+            ? product.params.map(function(label) { return String(label ?? "").trim(); })
+                .filter(function(label) { return label.length > 0; })
+            : [];
+
+        if (!exactParams.length) {
+            return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+        }
+
+        return exactParams.map(function(label, index) {
+            const displayLabel = escapeHtml(label);
+            const inputId = "pubgExactParam_" + index;
+            return '<div class="pubg-field game-required-field">' +
+                '<label for="' + inputId + '">' + displayLabel + '</label>' +
+                '<input id="' + inputId + '" type="text" data-game-param="' + displayLabel + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
+                '</div>';
+        }).join("");
+    }
+
     const normalizedGameTitle = normalizeGameText(gameTitle || "");
     const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
     const isFreeFire = normalizedGameTitle.includes("free fire") || normalizedGameTitle.includes("فري فاير");
