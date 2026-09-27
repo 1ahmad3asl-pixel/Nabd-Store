@@ -1019,7 +1019,20 @@ app.get("/api/store", (req, res) => {
 app.get("/api/game-images/:gameKey", async (req, res) => {
   try {
     const key = String(req.params.gameKey || "").trim().toLowerCase();
-    const result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
+    const imageMap = {
+      "pubg-mobile": ["com.tencent.ig", "PUBG Mobile"],
+      "roblox": ["com.roblox.client", "Roblox"],
+      "jawaker": ["com.boundless.jawaker", "Jawaker"]
+    };
+    const config = imageMap[key];
+    if (!config) return res.status(404).end();
+
+    let result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
+    if (!result.rows.length) {
+      await ensureOfficialGameImage(key, config[0], config[1]);
+      result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
+    }
+
     if (!result.rows.length) return res.status(404).end();
     res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
     res.type(result.rows[0].mime_type);
