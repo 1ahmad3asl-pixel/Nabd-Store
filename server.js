@@ -1003,7 +1003,9 @@ async function ensureOfficialGameImage(gameKey, appId, label) {
       const fallbackUrls = [
         "https://play.google.com/store/apps/details?id=" + appId + "&hl=en",
         "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_US",
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_GB"
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_GB",
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=VN",
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=SG"
       ];
       for (const fallbackUrl of fallbackUrls) {
         pageResponse = await fetch(fallbackUrl, {headers: requestHeaders});
