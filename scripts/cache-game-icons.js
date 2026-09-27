@@ -74,7 +74,7 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
 
 function extractAppIds(html) {
   const ids = [];
-  const re = /(?:https?:\\/\\/play\\.google\\.com)?\\/store\\/apps\\/details\\?id=([A-Za-z0-9._-]+)/g;
+  const re = /(?:https?:\/\/play\.google\.com)?\/store\/apps\/details\?id=([A-Za-z0-9._-]+)/g;
   let match;
   while ((match = re.exec(html)) && ids.length < 8) {
     if (!ids.includes(match[1])) ids.push(match[1]);
