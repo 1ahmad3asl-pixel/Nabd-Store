@@ -681,6 +681,8 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("pubg") || text.includes("ببجي")) return BACKEND_URL + "/api/game-images/pubg-mobile";
     if (text.includes("roblox") || text.includes("روبلوكس")) return BACKEND_URL + "/api/game-images/roblox";
     if (text.includes("jawaker") || text.includes("جواكر")) return BACKEND_URL + "/api/game-images/jawaker";
+    if (text.includes("free fire") || text.includes("فري فاير")) return BACKEND_URL + "/api/game-images/free-fire";
+    if (text.includes("clash of clans") || text.includes("كلاش")) return BACKEND_URL + "/api/game-images/clash-of-clans";
     return "";
 }
 
@@ -818,6 +820,17 @@ function sortJawakerProducts(products) {
     });
 }
 
+function sortGameProducts(products) {
+    return products.slice().sort(function(a, b) {
+        const ap = getGameProductPrice(a);
+        const bp = getGameProductPrice(b);
+        const ad = ap === null ? Number.POSITIVE_INFINITY : ap;
+        const bd = bp === null ? Number.POSITIVE_INFINITY : bp;
+        if (ad !== bd) return ad - bd;
+        return String(a.name || "").localeCompare(String(b.name || ""), "ar");
+    });
+}
+
 function getGameGroups(gameTitle) {
     const products = getGameProducts(gameTitle);
     const groups = [];
@@ -825,6 +838,8 @@ function getGameGroups(gameTitle) {
     const normalizedGame = normalizeGameText(gameTitle);
     const isRoblox = normalizedGame.includes("roblox");
     const isJawaker = normalizedGame.includes("jawaker") || normalizedGame.includes("جواكر");
+    const isFreeFire = normalizedGame.includes("free fire") || normalizedGame.includes("فري فاير");
+    const isClashOfClans = normalizedGame.includes("clash of clans") || normalizedGame.includes("كلاش");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -851,7 +866,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = isRoblox
+        const key = (isRoblox || isFreeFire || isClashOfClans)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
@@ -869,6 +884,9 @@ function getGameGroups(gameTitle) {
         seen.get(key).products.push(product);
     });
 
+    groups.forEach(function(group) {
+        group.products = sortGameProducts(group.products);
+    });
     return groups;
 }
 
