@@ -763,6 +763,16 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("top war") || text.includes("توب وور")) return BACKEND_URL + "/api/game-images/top-war";
     if (text.includes("the ants") || text.includes("النمل: المملكة تحت الأرض")) return BACKEND_URL + "/api/game-images/the-ants";
     if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return BACKEND_URL + "/api/game-images/kingdom-guard";
+    if (text.includes("call of dragons") || text.includes("كول أوف دراغونز")) return BACKEND_URL + "/api/game-images/call-of-dragons";
+    if (text.includes("astral guardians")) return BACKEND_URL + "/api/game-images/astral-guardians";
+    if (text.includes("cyber fantasy")) return BACKEND_URL + "/api/game-images/cyber-fantasy";
+    if (text.includes("blockman go") || text.includes("بلوكمان جو")) return BACKEND_URL + "/api/game-images/blockman-go";
+    if (text.includes("blade x") || text.includes("odyssey of heroes")) return BACKEND_URL + "/api/game-images/blade-x";
+    if (text.includes("be the king")) return BACKEND_URL + "/api/game-images/be-the-king";
+    if (text.includes("captain tsubasa")) return BACKEND_URL + "/api/game-images/captain-tsubasa";
+    if (text.includes("idol party")) return BACKEND_URL + "/api/game-images/idol-party";
+    if (text.includes("hyper front")) return BACKEND_URL + "/api/game-images/hyper-front";
+    if (text.includes("infinite lagrange")) return BACKEND_URL + "/api/game-images/infinite-lagrange";
     if (text.includes("hero clash") || text.includes("هيرو كلاش")) return BACKEND_URL + "/api/game-images/hero-clash";
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
