@@ -1482,6 +1482,7 @@ function updateSettingsUI() {
         "profitRate",
         profit
     );
+    setValue("numberProfitRate", Number(adminState.settings.number_profit_rate ?? 10));
 
     setValue(
         "storeName",
@@ -1571,13 +1572,21 @@ async function saveProfitSettings() {
 
     try {
 
+        const numberProfit = Number(document.getElementById("numberProfitRate")?.value ?? 10);
+        if (Number.isNaN(numberProfit) || numberProfit < 0 || numberProfit > 100) {
+            showAdminToast("أدخل نسبة ربح الأرقام بين 0 و100.");
+            return;
+        }
+
         await ADMIN_API.updateSettings({
             profit_rate: profit,
+            number_profit_rate: numberProfit,
             currency_decimals: Number(document.getElementById("currencyDecimals")?.value || 3)
         });
 
         adminState.settings.profit_rate =
             profit;
+        adminState.settings.number_profit_rate = numberProfit;
 
         updateSettingsUI();
 
