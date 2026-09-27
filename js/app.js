@@ -747,6 +747,13 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return BACKEND_URL + "/api/game-images/age-of-empires-mobile";
     if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return BACKEND_URL + "/api/game-images/nikke";
     if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return BACKEND_URL + "/api/game-images/division-resurgence";
+    if (text.includes("arena breakout") || text.includes("arena breakout mobile") || text.includes("أرينا بريك أوت")) return BACKEND_URL + "/api/game-images/arena-breakout";
+    if (text.includes("ludo club") || text.includes("لودو كلوب")) return BACKEND_URL + "/api/game-images/ludo-club";
+    if (text.includes("afk journey")) return BACKEND_URL + "/api/game-images/afk-journey";
+    if (text.includes("age of magic")) return BACKEND_URL + "/api/game-images/age-of-magic";
+    if (text.includes("ghost story love destiny")) return BACKEND_URL + "/api/game-images/ghost-story-love-destiny";
+    if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return BACKEND_URL + "/api/game-images/arena-of-valor";
+    if (text.includes("growtopia") || text.includes("غروتوبيا")) return BACKEND_URL + "/api/game-images/growtopia";
     if (text.includes("hero clash") || text.includes("هيرو كلاش")) return BACKEND_URL + "/api/game-images/hero-clash";
     if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return BACKEND_URL + "/api/game-images/devil-may-cry";
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
