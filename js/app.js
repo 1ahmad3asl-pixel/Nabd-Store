@@ -779,7 +779,7 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
-async async function loadCachedGameImages(tiles) {
+async function loadCachedGameImages(tiles) {
     const list = Array.isArray(tiles) ? tiles : [];
     if (!list.length) return;
 
@@ -889,7 +889,6 @@ function openGamePlaceholder(gameTitle) {
     if (icon) icon.textContent = "🎮";
 
     const groups = getGameGroups(gameTitle);
-    const robloxImage = "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b4/d9/fc/b4d9fc91-b318-ab14-4d2c-f6e067afb081/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/1024x1024wd.png";
     const isRoblox = normalizeGameText(gameTitle).includes("roblox");
 
     if (!groups.length) {
