@@ -1035,3 +1035,11 @@ td{padding:14px 12px!important;}
     font-size:17px!important;
   }
 }
+
+/* ===== إرسال البريد الجماعي ===== */
+.email-broadcast-info{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;padding:16px;border:1px solid #292929;border-radius:12px;background:#0b0b0b;}
+.email-broadcast-info strong{font-size:18px!important;color:#f5c400;}
+.email-broadcast-info span{font-size:15px!important;line-height:1.7;color:#cfcfcf;}
+.email-broadcast-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;flex-wrap:wrap;}
+.email-broadcast-actions span{font-size:14px;color:#aaa;}
+.email-broadcast-actions button:disabled{opacity:.65;cursor:wait;}
