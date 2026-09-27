@@ -749,13 +749,20 @@ function getGameProducts(gameTitle) {
 }
 
 function getRobloxGroupTitle(product) {
-    const text = normalizeGameText(product && product.category_name);
-    if (text.includes("usa")) return "Roblox USA";
+    const text = normalizeGameText(product && (String(product.category_name || "") + " " + String(product.name || "")));
+    if (text.includes("usa") || text.includes("usd")) return "Roblox USA";
     if (text.includes("ksa") || text.includes("sar")) return "Roblox KSA";
     if (text.includes("uae") || text.includes("aed")) return "Roblox UAE";
     if (text.includes("cad")) return "Roblox CAD";
     if (text.includes("eur") || text.includes("€")) return "Roblox EUR";
     return cleanGameCategoryName(product && product.category_name || "Roblox");
+}
+
+function getJawakerGroupTitle(product) {
+    const raw = cleanGameCategoryName(product && product.category_name || "جواكر");
+    const text = normalizeGameText(raw);
+    if (!text || text === "jawaker" || text === "جواكر") return "جواكر";
+    return raw;
 }
 
 function getGameGroups(gameTitle) {
@@ -769,8 +776,9 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = isRoblox
-            ? "roblox|" + (parentKey || categoryName)
+        const isJawaker = normalizeGameText(gameTitle).includes("jawaker") || normalizeGameText(gameTitle).includes("جواكر");
+        const key = (isRoblox || isJawaker)
+            ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
         if (!seen.has(key)) {
