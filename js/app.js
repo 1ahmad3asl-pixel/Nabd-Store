@@ -736,12 +736,19 @@ function cleanGameCategoryName(value) {
 
 function getGameProducts(gameTitle) {
     return state.products.filter(function(product) {
+        const text = normalizeGameText(
+            String(product.category_name || "") + " " +
+            String(product.name || "")
+        );
+
         if (isPubgGame(gameTitle)) {
-            const text = normalizeGameText(
-                String(product.category_name || "") + " " +
-                String(product.name || "")
-            );
             return text.includes("ببجي") || text.includes("pubg");
+        }
+
+        // جواكر: اربط كل منتجات جواكر مباشرة بالنص القادم من الكتالوج،
+        // ثم دع getJawakerGroupTitle يفرزها إلى المربعات الثلاثة.
+        if (normalizeGameText(gameTitle).includes("jawaker") || normalizeGameText(gameTitle).includes("جواكر")) {
+            return text.includes("جواكر") || text.includes("jawaker");
         }
 
         const match = findGameMatch(product);
