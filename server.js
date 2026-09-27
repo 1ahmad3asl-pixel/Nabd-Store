@@ -906,8 +906,7 @@ app.post("/api/admin/email-broadcast", async (req, res) => {
   }
 
   const escapeHtml = value => String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-  const htmlMessage = escapeHtml(message).replace(/\r?
-/g,"<br>");
+  const htmlMessage = escapeHtml(message).replace(/\r?\n/g,"<br>");
   let sent=0, failed=0;
   const failures=[];
   for (let i=0;i<recipients.length;i+=100) {
