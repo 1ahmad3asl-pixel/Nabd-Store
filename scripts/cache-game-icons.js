@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 const ROOT = path.resolve(__dirname, "..");
 const APP_FILE = path.join(ROOT, "js", "app.js");
@@ -11,12 +12,15 @@ const CACHE_DIR = process.env.XDG_CACHE_HOME
 const CACHE_MANIFEST_FILE = CACHE_DIR ? path.join(CACHE_DIR, "index.json") : null;
 
 function slugify(value) {
-  return String(value || "")
+  const raw = String(value || "").trim();
+  const base = raw
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-zA-Z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .toLowerCase() || "game";
+  const hash = crypto.createHash("sha1").update(raw).digest("hex").slice(0, 10);
+  return base + "-" + hash;
 }
 
 function normalizeTitle(value) {
@@ -246,6 +250,14 @@ async function main() {
     try {
       Object.assign(manifest, JSON.parse(fs.readFileSync(MANIFEST_FILE, "utf8")));
     } catch (_) {}
+  }
+
+  // Older builds used "game.png" for every Arabic-only title, so several
+  // different games overwrote one another. Remove those legacy collisions.
+  for (const [title, url] of Object.entries(manifest)) {
+    if (/\/assets\/games\/game\.(png|jpg|jpeg|webp)$/i.test(String(url))) {
+      delete manifest[title];
+    }
   }
 
   console.log("Verifying official game icons:", catalog.length);
