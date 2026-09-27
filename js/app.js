@@ -1173,6 +1173,39 @@ function openAppsPage(fromHistory) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
+function getServerOneApps() {
+    const catalog = [["سول تشيل كريستال","SOUL CHILL CRYSTAL"],["يوهو واكا","YOHO WAKA"],["هاوك شات","Hawk Chat"],["هيليلي شات","Helli Chat"],["بشار شات","BISHAR CHAT"],["Limmatna","Limmatna"],["أهلن شات","AHLAN CHAT"],["بوتا جرين","BOTA GREEN"],["ياهلا شات","YAAHLAN CHAT"],["تاكا لايف","TAKA LIVE"],["وي بارتي","WE PARTY"],["وينكو","Winko"],["هوكي شات","HOKI CHAT"],["زافا لايف","ZAFFA LIVE"],["شاتي","Chati"],["هيبّا","Hebba"],["كراش لايف","CRUSH LIVE"],["تي لايف","TI LIVE"],["فوكا شات","Voca Chat"],["ديوان توك","DIWAN TALK"],["هوني جار","Honey Jar"],["نيو شات","NiuChat"],["سوجو","SUGO"],["روفا","Ruffa"],["سوهة","Soha"],["واهو شات","WAHO CHAT"],["فيلا","VILAA"],["شباب شات","Shabab Chat"],["4PARTY","4PARTY"],["أويوني شات","Oyuni Chat"],["سول شات","Soul chat"],["لوتفن","LOTFUN"],["زينا لايف","XENA LIVE"],["ناخّي","NAHKI"],["فوستار","VoStar"],["تامي شات","TAMI CHAT"],["جونكو شات","JUNKO CHAT"],["بيست لايف","BEST LIVE"],["بوبو لايف","Poppo"],["هاكي شات","HAKI CHAT"],["يسو فارم","Yeso Farm"],["يويو شات","YOYO CHAT"],["ليجو لايف","LIGO LIVE"],["سول ستار","SOUL STAR"],["لامي شات","LAMI CHAT"],["هيا شات","HIYA CHAT"],["لايت","LIGHT"],["لايكي لايف","LIKEE LIVE"],["فورفن شات","4FUN CHAT"],["بارتي ستار","PARTY STAR"],["فانسي لايف","FANCY LIVE"],["بيجو لايف","Bigo Live"],["ساما شات","Sama Chat"],["أب لايف","UP LIVE"],["أوهلا شات","OOHLA CHAT"],["روح","ROOH"],["تالك تالك","TALK TALK"],["ميكو شات","MICO CHAT"],["هابي شات","Habby Chat"],["ليت شات","LIT CHAT"],["سوبر لايف","SUPER LIVE"],["لاما شات","LAMA CHAT"],["بوبو شات","BOBO CHAT"],["كيو لايف","KIYO LIVE"],["أولامت","OLAMET"],["سكاي شات","SKY CHAT"],["هاوا شات","HAWA Chat"],["كواي لايف","KWAI LIVE"],["بيلا شات","Beela Chat"],["أزال لايف","Azal Live"],["سويو شات","SOYO CHAT"],["ميو","MEYO"],["بينمو شات","Binmo Chat"],["هامستر","HAMSTER"],["واياك شات","WYAK CHAT"],["كوكو لايف","COCCO LIVE"],["أيوومي","Ayome"],["ميجو لايف","MIGO LIVE"],["واكي ستار","Woki star"],["توب فويس","TOP VOICE"],["يوبي شات","YOBI CHAT"],["جولد شات","Gold Chat"],["هيو شات","HIYOO CHAT"],["ألو شات","ALLO CHAT"],["سوالفنا شات","SAWALFNA CHAT"],["ديمو","Dimo"],["ديتو لايف","DITTO LIVE"],["توب شات","TOP CHAT"],["آي ستار شات","1STAR CHAT"],["ليلى شات","LAYLA CHAT"],["سلام شات","SALAM CHAT"],["جيمي لايف","GIMME LIVE"],["هوب","HOOB"],["ليونز شات","LIONS CHAT"],["غالا ستار","GALA STAR"],["ويجو","WEGO"],["تادا شات","Tada Chat"],["تانجو","Tango"],["عمار","AMAR"],["سوماتش","SOMATCH"],["شاميت","CHAMET"],["هابي شات","HABI CHAT"],["بارتي هيرو","PARTY HERO"],["أمو","AMO"],["مجلس شات","MAJLIS CHAT"],["لايام","LAYAM"],["هالا مي","HALA ME"],["وصلة","WASLA"],["روستار","RoStar"],["هيجو لايف","HIGO LIVE"],["أشا لايف","ASHA LIVE"],["دانا شات","DANA CHAT"],["صدفة شات","SODFA CHAT"],["ويسو شات","WESO CHAT"],["شيلا شات","SHILA CHAT"],["فوفو شات","FOFO CHAT"],["يامي ستار","YAMI STAR"],["سایا لايكي","SAYA LIKEE"],["يودو فون","YUDO FUN"],["أب فن","UP FUN"],["ناوا شات","NAWA CHAT"],["مازا","MAZA"],["إنفون","INFUN"],["كيتي","KITI"],["يو بارتي","YOPARTY"],["بوتا لايف","PotaLive"],["لادو شات","LADO CHAT"],["بولي","BOLI"],["جاكو","JACO"],["واو شات","WAAW CHAT"],["جاني","GHANNY"],["كارني","CARNI"],["فوكا","VOCA"],["هاتي","HATI"],["يوهو ستار","YOHOO STAR"],["ليسكي","LEESKY"],["ساهرة","SAHRA"],["هالو ستار","HALO STAR"],["فف بارتي","VVPARTY"],["بوكيت","POCKET"],["هايوكي","HAYUKI"],["مزيون","MAZYOUN"],["جاميت","GAMET"],["هالا","HALLA"],["لكلك","LKLK"],["هاجو","HAGO"],["كيسميت","KESSMET"],["هيبارتي","HIPARTY"]];
+    const products = Array.isArray(state.products) ? state.products : [];
+    const normalize = function(value) {
+        return normalizeGameText(String(value || ""));
+    };
+    return catalog.map(function(item) {
+        const title = item[0];
+        const aliases = [item[0], item[1]].map(normalize).filter(Boolean);
+        let match = null;
+        for (const product of products) {
+            const text = normalize((product.category_name || "") + " " + (product.name || ""));
+            if (aliases.some(function(alias) { return text.includes(alias) || alias.includes(text); })) {
+                if (!match || (!match.category_img && product.category_img)) match = product;
+            }
+        }
+        return {
+            title: title,
+            search: item[1],
+            image: match && match.category_img ? String(match.category_img) : "",
+            product: match || null
+        };
+    });
+}
+
+function renderAppImage(appItem) {
+    if (appItem.image) {
+        const src = String(appItem.image).startsWith("http") ? appItem.image : BACKEND_URL + appItem.image;
+        return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(appItem.title) + '" loading="lazy">';
+    }
+    return '<span class="game-placeholder">📱</span>';
+}
+
 function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
     if (!fromHistory) pushInternalHistory("app-server", {appServerTitle:titleText, appServerKey:serverKey});
     const content = document.getElementById("internalPageContent");
@@ -1181,14 +1214,60 @@ function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
     if (!content) return;
     if (title) title.textContent = titleText;
     if (icon) icon.textContent = "📱";
+
+    if (serverKey !== "server-1") {
+        content.innerHTML =
+            '<div class="game-products-placeholder app-level-placeholder">' +
+                '<div class="game-products-placeholder-icon">📱</div>' +
+                '<h3>' + escapeHtml(titleText) + '</h3>' +
+                '<p>سيتم إضافة تطبيقات هذا السيرفر وفقًا للصور المرجعية القادمة.</p>' +
+            '</div>';
+        window.scrollTo({top:0, behavior:"smooth"});
+        return;
+    }
+
+    if (!state.productsLoaded && !state.productsLoadingPromise) {
+        loadProducts({force:true}).then(function(){ openAppServerPlaceholder(titleText, serverKey, true); }).catch(function(){});
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر 1...</p></div>';
+        return;
+    }
+
+    if (!state.productsLoaded && state.productsLoadingPromise) {
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل تطبيقات السيرفر 1...</p></div>';
+        state.productsLoadingPromise.then(function(){ openAppServerPlaceholder(titleText, serverKey, true); });
+        return;
+    }
+
+    const apps = getServerOneApps();
     content.innerHTML =
-        '<div class="game-products-placeholder app-level-placeholder">' +
-            '<div class="game-products-placeholder-icon">📱</div>' +
-            '<h3>' + escapeHtml(titleText) + '</h3>' +
-            '<p>المستوى الثالث سيُضاف هنا وفقًا للصور المرجعية التالية.</p>' +
+        '<div class="app-level-toolbar"><button class="pubg-back" type="button" id="appServerBack">← العودة إلى سيرفرات التطبيقات</button>' +
+        '<div class="game-products-heading"><strong>' + apps.length + ' تطبيق</strong><span>تطبيقات سيرفر 1</span></div></div>' +
+        '<div class="app-server-one-grid">' +
+        apps.map(function(appItem, index) {
+            return '<button class="app-product-tile" type="button" data-app-index="' + index + '">' +
+                '<span class="app-product-image">' + renderAppImage(appItem) + '</span>' +
+                '<span class="app-product-title">' + escapeHtml(appItem.title) + '</span>' +
+                (appItem.product ? '' : '<span class="app-product-missing">غير مرتبط بعد</span>') +
+            '</button>';
+        }).join("") +
         '</div>';
+
+    const back = document.getElementById("appServerBack");
+    if (back) back.addEventListener("click", function(){ openAppsPage(true); });
+
+    content.querySelectorAll(".app-product-tile").forEach(function(tile) {
+        tile.addEventListener("click", function() {
+            const index = Number(tile.getAttribute("data-app-index"));
+            const selected = apps[index];
+            if (!selected) return;
+            // المستوى الرابع سيُربط بالمنتجات بعد اعتماد حقول التطبيق.
+            showToast("تم اختيار " + selected.title + " — سيتم ربط منتجاته في المستوى الرابع.");
+        });
+    });
+
     window.scrollTo({top:0, behavior:"smooth"});
 }
+
 
 function openGamesPage(fromHistory) {
     if (!fromHistory) pushInternalHistory("games");
