@@ -44,9 +44,19 @@ const elements = {
 // Keeps the Games entry responsive even if another initializer fails.
 document.addEventListener("click", function(event) {
     const gamesButton = event.target.closest('.category[data-category="games"]');
-    if (!gamesButton) return;
-    event.preventDefault();
-    openGamesPage();
+    if (gamesButton) {
+        event.preventDefault();
+        openGamesPage();
+        return;
+    }
+
+    // مستقل عن initializeCategories: يضمن أن قسم الأرصدة يستجيب
+    // حتى لو فشل initializer آخر في الصفحة.
+    const balanceButton = event.target.closest('.category[data-category="balance"]');
+    if (balanceButton) {
+        event.preventDefault();
+        openBalancePage();
+    }
 });
 
 
