@@ -1188,6 +1188,13 @@ function renderPubgParamFields(product) {
 
 function renderGameParamFields(product, gameTitle) {
     const params = getUsableProductParams(product);
+
+    // لا ننشئ أي حقل من عندنا: حقول الشراء تُشتق حصراً من product.params.
+    // إذا كانت params فارغة، فهذا المنتج لا يحتاج أي معلومة إضافية.
+    if (!params.length) {
+        return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+    }
+
     const normalizedGameTitle = normalizeGameText(gameTitle || "");
     const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
     const isFreeFire = normalizedGameTitle.includes("free fire") || normalizedGameTitle.includes("فري فاير");
@@ -1249,14 +1256,26 @@ function renderGameParamFields(product, gameTitle) {
                 normalized === "player";
         });
 
-        const playerIdKey = playerIdParam || "playerId";
+        // لا نفترض وجود ID للاعب إذا لم يرسله المنتج في params.
+        // هذا يمنع إضافة حقول غير مرتبطة بالمنتج أو بالـAPI.
+        if (!playerIdParam) {
+            return params.map(function(label, index) {
+                const displayLabel = getDisplayParamLabel(label);
+                const inputId = "gameParam_" + index;
+                return '<div class="pubg-field game-required-field">' +
+                    '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
+                    '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(displayLabel) + '" autocomplete="off" required aria-required="true">' +
+                    '</div>';
+            }).join("");
+        }
+
         const playerField =
             '<div class="pubg-field game-required-field">' +
                 '<label for="gameParam_playerId">ID اللاعب</label>' +
-                '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdKey) + '" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true">' +
+                '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdParam) + '" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true">' +
             '</div>';
 
-        // أي حقول أخرى مطلوبة تبقى، لكن لا نعرض أي ID إضافي.
+        // أي حقول أخرى مطلوبة تبقى كما هي في params، دون إضافة حقول جديدة.
         const otherFields = params.filter(function(label) {
             const normalized = normalizeGameText(label);
             return !(normalized.includes("ايدي") ||
@@ -1274,10 +1293,6 @@ function renderGameParamFields(product, gameTitle) {
         }).join("");
 
         return playerField + otherFields;
-    }
-
-    if (!params.length) {
-        return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
     return params.map(function(label, index) {
