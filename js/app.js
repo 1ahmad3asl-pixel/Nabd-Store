@@ -549,12 +549,12 @@ function normalizeGameText(value) {
 }
 
 function findGameMatch(product) {
-    const haystack = normalizeGameText(
-        String(product.category_name || "") + " " + String(product.name || "")
-    );
+    const categoryText = normalizeGameText(product && product.category_name);
+    const productText = normalizeGameText(product && product.name);
+    const combinedText = (categoryText + " " + productText).trim();
 
-    // نطابق الاسم الأكثر تحديدًا أولًا حتى لا تُضم منتجات
-    // "Yalla Ludo Gold" أو "Gold Codes" داخل "Yalla Ludo" بالخطأ.
+    // نعتمد على تصنيف Nemer نفسه أولًا. اسم المنتج يُستخدم فقط كخطة
+    // احتياطية حتى لا تنتقل منتجات لعبة إلى لعبة أخرى بسبب كلمة مشتركة.
     const candidates = GAME_CATALOG.slice().sort(function(a, b) {
         const aLength = Math.max.apply(null, a.aliases.map(function(alias) {
             return normalizeGameText(alias).length;
@@ -565,11 +565,20 @@ function findGameMatch(product) {
         return bLength - aLength;
     });
 
-    return candidates.find(function(game) {
+    function matches(text, game) {
+        if (!text) return false;
         return game.aliases.some(function(alias) {
             const normalizedAlias = normalizeGameText(alias);
-            return normalizedAlias && haystack.includes(normalizedAlias);
+            if (!normalizedAlias) return false;
+            const escaped = normalizedAlias.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
+            return new RegExp("(^|\\s)" + escaped + "(?=\\s|$)", "i").test(text);
         });
+    }
+
+    return candidates.find(function(game) {
+        return matches(categoryText, game);
+    }) || candidates.find(function(game) {
+        return matches(combinedText, game);
     }) || null;
 }
 
