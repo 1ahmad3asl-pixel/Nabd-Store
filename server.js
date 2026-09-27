@@ -1195,7 +1195,17 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "growtopia": ["com.rtsoft.growtopia", "Growtopia"],
       "arena-of-valor": ["com.ngame.allstar.eu", "Arena of Valor"],
       "zepeto": ["com.naver.zepeto", "ZEPETO"],
-      "king-shot": ["com.fingerfun.kingshot", "King Shot"]
+      "king-shot": ["com.fingerfun.kingshot", "King Shot"],
+      "clash-of-plants": ["com.waterwish.garden.tales.clash.of.plants", "Garden Tales: Clash of Plants"],
+      "journey-renewed": ["com.xiyou.cyhk.gp", "Journey Renewed: Fate Fantasy"],
+      "civilization-eras-allies": ["com.t2k.prometheusroa", "Civilization: Eras & Allies"],
+      "kuroko-street-rivals": ["com.lmdgame.kuroko.sea", "Kuroko's Basketball: Street Rivals"],
+      "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
+      "kings-choice-sea": ["com.onemt.and.kc.sea", "King's Choice"],
+      "crossfire-legend": ["com.vng.crossfire", "Crossfire Legend"],
+      "legend-of-the-phoenix": ["com.duige.hzw.multilingual", "Legend of the Phoenix"],
+      "legacy-of-discord": ["com.gtarcade.lod", "Legacy of Discord-FuriousWings"],
+      "army-dudes": ["com.netease.retrorampage", "Deadly Dudes"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
