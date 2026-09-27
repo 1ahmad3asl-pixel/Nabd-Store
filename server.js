@@ -1044,7 +1044,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     if (product.available === false || product.available === 0) return res.status(400).json({status:"ERROR",message:"المنتج غير متاح حاليًا."});
 
     const apiPrice = normalizeNemerPrice(product.price);
-    if (apiPrice === null) return res.status(400).json({status:"400",message:"سعر المنتج غير متاح حاليًا من Nemer Card."});
+    if (apiPrice === null) return res.status(400).json({status:"ERROR",message:"سعر المنتج غير متاح حاليًا من Nemer Card."});
 
     // ببجي موبايل لا تستخدم حقل كمية: الطلب دائمًا لمنتج واحد.
     const productText = String(product.category_name || "") + " " + String(product.name || "");
