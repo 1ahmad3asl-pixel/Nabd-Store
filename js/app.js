@@ -1921,46 +1921,69 @@ function escapeHtml(value) {
 }
 
 function isBalanceProduct(product) {
-    const text = normalizeGameText(
-        String(product && product.category_name || "") + " " +
-        String(product && product.name || "")
-    );
+    const text = normalizeGameText(String(product && product.category_name || "") + " " + String(product && product.name || ""));
     return /رصيد|ارصدة|أرصدة|اتصالات|وحدات|شحن|سيريتل|mtn|zain|زين|stc|orange|vodafone|ooredoo|etisalat|du|شامنا|internet|انترنت|بيانات|دقائق|مكالمات|usd|sar|aed|try/.test(text);
 }
-
-/*
- * Balance catalog ordering:
- * Nemer is the source of truth. Keep the exact order returned by the
- * provider instead of sorting by price/name or inventing a local order.
- *
- * Level 2 = category_name + parent_id (the category identity exposed by Nemer).
- * Level 3/4 = the products in that category, preserving Nemer order.
- * Prices/availability/params are always taken from the live /api/products
- * response; no cached price is used for purchasing.
- */
 function getBalanceGroups() {
-    const groups = [];
-    const seen = new Map();
-
+    const groups = [], seen = new Map();
     state.products.filter(isBalanceProduct).forEach(function(product) {
         const title = cleanGameCategoryName(product.category_name || "أرصدة");
         const key = String(product.parent_id ?? "") + "|" + title;
-
         if (!seen.has(key)) {
-            seen.set(key, {
-                key: key,
-                title: title,
-                image: product.category_img || "",
-                products: []
-            });
+            seen.set(key, {key:key, title:title, image:product.category_img || "", products:[]});
             groups.push(seen.get(key));
         }
-
-        // Preserve the exact provider order. Do not sort by price/name.
         seen.get(key).products.push(product);
     });
-
     return groups;
+}
+function openBalancePage(fromHistory) {
+    if (!fromHistory) pushInternalHistory("balance");
+    const services=document.getElementById("servicesSection"), internal=document.getElementById("internalPage");
+    const title=document.getElementById("internalPageTitle"), icon=document.getElementById("internalPageIcon"), content=document.getElementById("internalPageContent");
+    if (!services || !internal || !content) return;
+    services.hidden=true; internal.hidden=false;
+    if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="💵";
+    if (!state.productsLive && !state.productsLoadingPromise) loadProducts({force:true}).catch(function(){});
+    const groups=getBalanceGroups();
+    if(!groups.length || !state.productsLive){
+        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري مزامنة تصنيفات الأرصدة...</p></div>';
+        if(state.productsLoadingPromise){
+            state.productsLoadingPromise.then(function(){ openBalancePage(true); }).catch(function(){});
+        }
+        return;
+    }
+    content.innerHTML='<div class="game-page"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid">'+groups.map(function(group){
+        const image=group.image || ""; const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
+        return '<button class="game-category-tile game-product-group-card" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
+    }).join("")+'</div></div>';
+    const back=document.getElementById("balanceBack"); if(back) back.addEventListener("click",closeInternalPage);
+    content.querySelectorAll("[data-balance-group]").forEach(function(card){card.addEventListener("click",function(){openBalanceProductGroup(card.getAttribute("data-balance-group")||"");});});
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+function openBalanceProductGroup(groupKey, fromHistory) {
+    if(!fromHistory) pushInternalHistory("balance-products",{groupKey:groupKey});
+    const group=getBalanceGroups().find(function(item){return item.key===groupKey;});
+    if(group) renderBalanceProductPicker(group);
+}
+function renderBalanceProductPicker(group) {
+    const content=document.getElementById("internalPageContent"), title=document.getElementById("internalPageTitle"), icon=document.getElementById("internalPageIcon");
+    if(!content || !group) return; if(title) title.textContent=group.title; if(icon) icon.textContent="💵";
+    const products=Array.isArray(group.products)?group.products:[], available=products.filter(function(p){return p.available!==false&&p.available!==0;}), first=available[0]||products[0]||null;
+    const list=products.map(function(product,index){const ok=product.available!==false&&product.available!==0, price=getGameProductPrice(product); return '<button class="pubg-option'+(ok?'':' is-disabled')+'" type="button" data-balance-index="'+index+'"'+(ok?'':' disabled')+'><span class="pubg-option-name">'+escapeHtml(product.name||"منتج")+'</span><span class="pubg-option-price">'+(price===null?'السعر غير متاح':formatProductMoney(product,price))+'</span>'+(ok?'':'<span class="pubg-option-status">غير متوفر</span>')+'</button>';}).join("");
+    const image=group.image||"", imageHtml=image?'<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToGroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first?formatProductPrice(first):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getGameProductPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    let selectedIndex=first?products.indexOf(first):-1;
+    function qtyConfig(p){const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step),enabled=Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));return{enabled:enabled,min:Number.isFinite(min)&&min>0?min:1,max:Number.isFinite(max)&&max>0?max:999999999,step:Number.isFinite(step)&&step>0?step:1};}
+    function renderQty(p){const h=document.getElementById("balanceQuantityField");if(!h)return;const q=qtyConfig(p);h.innerHTML=q.enabled?'<div class="pubg-field game-quantity-field"><label for="balanceOrderQty">الكمية</label><input id="balanceOrderQty" type="number" min="'+q.min+'" max="'+q.max+'" step="'+q.step+'" value="'+q.min+'" inputmode="numeric" required></div>':"";}
+    function updateTotal(){const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");if(!p||!el)return;const unit=getGameProductPrice(p),qty=q?Number(q.value):1;if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}el.textContent=formatMoney(ceilPrice(unit*qty,getPriceDecimalPlaces(p.price)),getPriceDecimalPlaces(p.price));}
+    function updateProduct(index){const p=products[index];if(!p)return;selectedIndex=index;const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");if(n)n.textContent=p.name||"اختر المنتج";if(pr)pr.textContent=formatProductPrice(p);if(f)f.innerHTML=renderGameParamFields(p,group.title);renderQty(p);updateTotal();if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;}
+    renderQty(first);updateTotal();const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
+    const back=document.getElementById("balanceBackToGroups");if(back)back.addEventListener("click",function(){openBalancePage();});
+    const select=document.getElementById("balanceSelect"),trigger=select&&select.querySelector(".pubg-select-trigger"),options=document.getElementById("balanceOptions");
+    if(trigger&&options){trigger.addEventListener("click",function(){const open=!options.hidden;options.hidden=open;trigger.setAttribute("aria-expanded",String(!open));});options.querySelectorAll("[data-balance-index]").forEach(function(o){o.addEventListener("click",function(){updateProduct(Number(o.getAttribute("data-balance-index")));options.hidden=true;trigger.setAttribute("aria-expanded","false");});});}
+    const submit=document.getElementById("balanceSubmitOrder");if(submit)submit.addEventListener("click",function(){const p=products[selectedIndex];if(!p)return;const params={};let invalid=false;document.querySelectorAll("#balanceParamFields [data-game-param]").forEach(function(input){const label=input.getAttribute("data-game-param")||"",value=String(input.value||"").trim();if(!value){invalid=true;input.classList.add("is-invalid");}else{params[label]=value;input.classList.remove("is-invalid");}});const qi=document.getElementById("balanceOrderQty"),qty=qi?Number(qi.value)||1:1;if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;if(invalid){showToast("يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}submit.disabled=true;fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:qty})}).then(async function(response){const data=await response.json();if(!response.ok||data.status==="ERROR")throw new Error(data.message||"تعذر إنشاء الطلب");if(data.balance!==undefined)updateBalance(data.balance);showToast("تم إرسال الطلب بنجاح.");}).catch(function(error){console.error("Balance order error:",error);showToast(error.message||"تعذر إنشاء الطلب.");}).finally(function(){submit.disabled=false;});});
+    window.scrollTo({top:0,behavior:"smooth"});
 }
 function getProductCategory(product) {
     const text = String(product.category_name || product.name || "").toLowerCase();
