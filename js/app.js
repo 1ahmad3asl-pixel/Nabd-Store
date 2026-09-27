@@ -1225,7 +1225,7 @@ function renderGameParamFields(product, gameTitle) {
             const safeParamKey = escapeHtml(label);
             return '<div class="pubg-field game-required-field">' +
                 '<label for="' + inputId + '">' + displayLabel + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
+                '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="' + displayLabel + '" autocomplete="off" required aria-required="true">' +
                 '</div>';
         }).join("");
     }
@@ -1299,7 +1299,7 @@ function renderGameParamFields(product, gameTitle) {
                 const inputId = "gameParam_" + index;
                 return '<div class="pubg-field game-required-field">' +
                     '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-                    '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(displayLabel) + '" autocomplete="off" required aria-required="true">' +
+                    '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
                     '</div>';
             }).join("");
         }
@@ -1307,7 +1307,7 @@ function renderGameParamFields(product, gameTitle) {
         const playerField =
             '<div class="pubg-field game-required-field">' +
                 '<label for="gameParam_playerId">ID اللاعب</label>' +
-                '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdParam) + '" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true">' +
+                '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdParam) + '" placeholder="' + escapeHtml(playerIdParam) + '" autocomplete="off" required aria-required="true">' +
             '</div>';
 
         // أي حقول أخرى مطلوبة تبقى كما هي في params، دون إضافة حقول جديدة.
@@ -1323,7 +1323,7 @@ function renderGameParamFields(product, gameTitle) {
             const inputId = "gameParam_extra_" + index;
             return '<div class="pubg-field game-required-field">' +
                 '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(displayLabel) + '" autocomplete="off" required aria-required="true">' +
+                '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
                 '</div>';
         }).join("");
 
@@ -1335,7 +1335,7 @@ function renderGameParamFields(product, gameTitle) {
         const inputId = "gameParam_" + index;
         return '<div class="pubg-field game-required-field">' +
             '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
-            '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(displayLabel) + '" autocomplete="off" required aria-required="true">' +
+            '<input id="' + inputId + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="' + escapeHtml(label) + '" autocomplete="off" required aria-required="true">' +
             '</div>';
     }).join("");
 }
@@ -1496,7 +1496,7 @@ function renderGameProductPicker(gameTitle, group) {
         holder.innerHTML =
             '<div class="pubg-field game-quantity-field">' +
                 '<label for="gameOrderQty">الكمية</label>' +
-                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" placeholder="10 آلاف - 1 مليون" inputmode="numeric" required aria-required="true">' +
+                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '"  inputmode="numeric" required aria-required="true">' +
             '</div>';
     }
 
@@ -2118,7 +2118,7 @@ function openProductModal(product) {
         const safeLabel = escapeHtml(getDisplayParamLabel(String(label || "البيانات")));
         return '<div class="order-field">' +
             '<label for="param_' + index + '">' + safeLabel + '</label>' +
-            '<input id="param_' + index + '" type="text" placeholder="أدخل ' + safeLabel + '" autocomplete="off">' +
+            '<input id="param_' + index + '" type="text" placeholder="' + escapeHtml(String(label || "")) + '" autocomplete="off">' +
             '</div>';
     }).join("");
 
