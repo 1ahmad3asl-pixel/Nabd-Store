@@ -1205,9 +1205,7 @@ function renderGameParamFields(product, gameTitle) {
         }
 
         return exactParams.map(function(label, index) {
-            const displayLabel = escapeHtml(
-                label === "ايدي_المقاتل_💣" ? "ID المقاتل" : label
-            );
+            const displayLabel = escapeHtml(label);
             const inputId = "pubgExactParam_" + index;
             const safeParamKey = escapeHtml(label);
             return '<div class="pubg-field game-required-field">' +
