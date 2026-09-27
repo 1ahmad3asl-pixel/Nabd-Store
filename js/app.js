@@ -67,6 +67,7 @@ function registerNabdServiceWorker() {
 document.addEventListener("DOMContentLoaded", function () {
 
     registerNabdServiceWorker();
+    initializeInternalHistory();
     initializeMenu();
     initializeCategories();
     initializeQuickMenu();
@@ -861,7 +862,43 @@ function getGameGroups(gameTitle) {
     return groups;
 }
 
-function openGamesPage() {
+function pushInternalHistory(view, data) {
+    const state = Object.assign({ nabdInternal: true, view: view }, data || {});
+    window.history.pushState(state, "", window.location.href);
+}
+
+function handleInternalHistoryState(state) {
+    if (!state || !state.nabdInternal) {
+        closeInternalPage();
+        return;
+    }
+
+    if (state.view === "games") {
+        openGamesPage(true);
+        return;
+    }
+
+    if (state.view === "game") {
+        openGamePlaceholder(state.gameTitle, true);
+        return;
+    }
+
+    if (state.view === "products") {
+        openGameProductGroup(state.gameTitle, state.groupKey, true);
+        return;
+    }
+
+    closeInternalPage();
+}
+
+function initializeInternalHistory() {
+    window.addEventListener("popstate", function(event) {
+        handleInternalHistoryState(event.state);
+    });
+}
+
+function openGamesPage(fromHistory) {
+    if (!fromHistory) pushInternalHistory("games");
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
@@ -924,7 +961,8 @@ function openGamesPage() {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function openGamePlaceholder(gameTitle) {
+function openGamePlaceholder(gameTitle, fromHistory) {
+    if (!fromHistory) pushInternalHistory("game", {gameTitle: gameTitle});
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
@@ -1393,7 +1431,8 @@ function submitGamePickerOrder(product, root) {
     });
 }
 
-function openGameProductGroup(gameTitle, groupKey) {
+function openGameProductGroup(gameTitle, groupKey, fromHistory) {
+    if (!fromHistory) pushInternalHistory("products", {gameTitle: gameTitle, groupKey: groupKey});
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
