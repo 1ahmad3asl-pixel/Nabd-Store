@@ -1151,7 +1151,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
       "honkai-star-rail": ["com.HoYoverse.hkrpgoversea", "Honkai: Star Rail"],
       "mobile-legends": ["com.mobile.legends", "Mobile Legends: Bang Bang"],
-      "whiteout-survival": ["com.gof.global", "Whiteout Survival"]
+      "whiteout-survival": ["com.gof.global", "Whiteout Survival"],
+      "blood-strike": ["com.netease.newspike", "Blood Strike"],
+      "acecraft": ["com.vizta.wefly", "ACECRAFT"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
