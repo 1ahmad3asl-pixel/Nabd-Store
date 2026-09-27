@@ -2522,3 +2522,58 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
     .dhikr-group span{font-size:21px}
     .dhikr-group span::after{margin-inline-start:42px}
 }
+
+
+/* ===== Welcome greeting on first entry ===== */
+.welcome-splash[hidden]{
+    display:none!important;
+}
+.welcome-splash{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.94);
+    opacity:1;
+    visibility:visible;
+    transition:opacity .38s ease,visibility .38s ease;
+}
+.welcome-splash.is-hidden{
+    opacity:0;
+    visibility:hidden;
+}
+.welcome-splash-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    text-align:center;
+    transform:translateY(0) scale(1);
+    animation:welcomePop .5s ease-out both;
+}
+.welcome-flower{
+    font-size:64px;
+    line-height:1;
+    filter:drop-shadow(0 5px 16px rgba(245,196,0,.28));
+}
+.welcome-text{
+    color:#f5c400;
+    font-size:clamp(30px,7vw,48px);
+    font-weight:950;
+    letter-spacing:.2px;
+    text-shadow:0 2px 16px rgba(245,196,0,.18);
+}
+@keyframes welcomePop{
+    from{opacity:0;transform:translateY(8px) scale(.94)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media (prefers-reduced-motion:reduce){
+    .welcome-splash-inner{animation:none}
+    .welcome-splash{transition:none}
+}
+.dhikr-bar[hidden]{
+    display:none!important;
+}
