@@ -1150,6 +1150,7 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "bullet-echo": ["com.zeptolab.bulletecho.google", "Bullet Echo"],
       "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
       "honkai-star-rail": ["com.HoYoverse.hkrpgoversea", "Honkai: Star Rail"],
+      "oxide-survival-island": ["com.catsbit.oxidesurvivalisland", "Oxide: Survival Island"],
       "mobile-legends": ["com.mobile.legends", "Mobile Legends: Bang Bang"],
       "whiteout-survival": ["com.gof.global", "Whiteout Survival"],
       "blood-strike": ["com.netease.newspike", "Blood Strike"],
