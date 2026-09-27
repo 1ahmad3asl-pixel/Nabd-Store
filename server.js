@@ -1098,7 +1098,36 @@ async function ensureGunsOfGloryOfficialImage() {
   return ensureOfficialGameImage("guns-of-glory", "com.diandian.gog", "Guns of Glory");
 }
 async function ensureGangsOfGloryOfficialImage() {
-  return ensureOfficialGameImage("gangs-of-glory", "com.sm.gog.hw.dygame", "Gangs of Glory");
+  const gameKey = "gangs-of-glory";
+  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
+  if (existing.rows.length) return;
+
+  // Google Play no longer serves this legacy package, so keep a stable
+  // app-icon fallback that is known to correspond to this exact package.
+  const fallbackImageUrl = "https://image-eo.winudf.com/v2/image1/Y29tLnNtLmdvZy5ody5keWdhbWVfaWNvbl8xNTk4MTUyNjEwXzA1Nw/icon.webp?fakeurl=1&type=.webp&w=120";
+
+  try {
+    const imageResponse = await fetch(fallbackImageUrl, {
+      headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store game icon fetcher)"}
+    });
+    if (!imageResponse.ok) throw new Error("Fallback game image returned " + imageResponse.status);
+
+    const mimeType = String(imageResponse.headers.get("content-type") || "image/webp").split(";")[0];
+    if (!mimeType.startsWith("image/")) throw new Error("Invalid fallback image type");
+
+    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) {
+      throw new Error("Fallback game image size is invalid");
+    }
+
+    await query(
+      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
+      [gameKey, "com.sm.gog.hw.dygame", imageBuffer, mimeType, fallbackImageUrl]
+    );
+    console.log("Gangs of Glory image saved using the package-matched fallback icon.");
+  } catch (error) {
+    console.warn("Gangs of Glory image sync skipped:", error.message);
+  }
 }
 async function ensureProjectEntropyOfficialImage() {
   return ensureOfficialGameImage("project-entropy", "com.entropy.global", "Project Entropy");
