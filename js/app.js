@@ -800,6 +800,16 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return BACKEND_URL + "/api/game-images/eggy-party";
     if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return BACKEND_URL + "/api/game-images/my-singing-monsters";
 
+    if (text.includes("dynasty heroes") || text.includes("legend samkok")) return BACKEND_URL + "/api/game-images/dynasty-heroes";
+    if (text.includes("starseed") || text.includes("asnia trigger")) return BACKEND_URL + "/api/game-images/starseed";
+    if (text.includes("magic chess") || text.includes("magic chess gogo") || text.includes("magic chess go go")) return BACKEND_URL + "/api/game-images/magic-chess-gogo";
+    if (text.includes("enhypen world") || text.includes("enhypen")) return BACKEND_URL + "/api/game-images/enhypen-world";
+    if (text.includes("marvel duel")) return BACKEND_URL + "/api/game-images/marvel-duel";
+    if (text.includes("extraordinary ones")) return BACKEND_URL + "/api/game-images/extraordinary-ones";
+    if (text.includes("eve echoes") || text.includes("eve echo")) return BACKEND_URL + "/api/game-images/eve-echoes";
+    if (text.includes("mirage perfect skyline") || text.includes("mirage:perfect skyline") || text.includes("mirage")) return BACKEND_URL + "/api/game-images/mirage-perfect-skyline";
+    if (text.includes("football master 2") || text.includes("football master")) return BACKEND_URL + "/api/game-images/football-master-2";
+    if (text.includes("marvel mystic mayhem")) return BACKEND_URL + "/api/game-images/marvel-mystic-mayhem";
     if (text.includes("garena speed drifters") || text.includes("speed drifters")) return BACKEND_URL + "/api/game-images/garena-speed-drifters";
     if (text.includes("mongil star dive")) return BACKEND_URL + "/api/game-images/mongil-star-dive";
     if (text.includes("modern strike online")) return BACKEND_URL + "/api/game-images/modern-strike-online";
