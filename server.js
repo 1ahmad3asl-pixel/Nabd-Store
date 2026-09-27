@@ -196,8 +196,8 @@ async function requireAdmin(req, res, next) {
   try {
     const auth = await adminAuth(req);
     if (!auth) {
-      if (req.path === "/admin" || req.path === "/admin/index.html") {
-        return res.redirect("/admin/login.html");
+      if (req.path === "/admin" || req.path === "/admin/index.html" || req.path === "/Aledaraa19" || req.path === "/Aledaraa19/" || req.path === "/Aledaraa19/index.html") {
+        return res.redirect("/Aledaraa19/login.html");
       }
       return res.status(401).json({
         status: "ERROR",
@@ -1091,6 +1091,48 @@ app.get("/api/orders/check", requireCustomer, async (req, res) => {
     console.error("Check orders error:", error);
     res.status(500).json({ status: "ERROR", message: "تعذر التحقق من الطلبات." });
   }
+});
+
+/* =========================
+   ADMIN ALIAS
+========================= */
+
+app.get("/Aledaraa19", requireAdmin, (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.get("/Aledaraa19/", requireAdmin, (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.get("/Aledaraa19/index.html", requireAdmin, (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.get("/Aledaraa19/login.html", (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.sendFile(path.join(__dirname, "admin", "login.html"));
+});
+
+app.get("/Aledaraa19/admin.css", (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.sendFile(path.join(__dirname, "admin", "admin.css"));
+});
+
+app.get("/Aledaraa19/admin.js", requireAdmin, (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.sendFile(path.join(__dirname, "admin", "admin.js"));
 });
 
 /* =========================
