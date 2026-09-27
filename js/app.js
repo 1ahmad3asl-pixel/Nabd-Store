@@ -723,6 +723,12 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("super sus")) {
         return BACKEND_URL + "/api/game-images/super-sus";
     }
+    if (text.includes("stumble guys")) {
+        return BACKEND_URL + "/api/game-images/stumble-guys";
+    }
+    if (text.includes("whiteout survival")) {
+        return BACKEND_URL + "/api/game-images/whiteout-survival";
+    }
     return "";
 }
 
