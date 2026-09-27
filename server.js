@@ -1112,9 +1112,26 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
     const minQty = Number(product.qty_values?.min);
     const maxQty = Number(product.qty_values?.max);
+    const isJawakerProduct = /jawaker|جواكر/i.test(productText);
+    const isJawakerS2 = isJawakerProduct && /(?:s\s*2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
+    const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|server|سيرفر|سرفر|cum|عداد\s*جواكر\s*سيرفر)/i.test(productText);
+    const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
+
     if (!isPubgProduct) {
-      if (Number.isFinite(minQty) && qty < minQty) return res.status(400).json({status:"ERROR",message:"الكمية أقل من الحد الأدنى للمنتج."});
-      if (Number.isFinite(maxQty) && qty > maxQty) return res.status(400).json({status:"ERROR",message:"الكمية أكبر من الحد الأقصى للمنتج."});
+      const enforcedMinQty = isJawakerServerQuantity ? 10000 : minQty;
+      const enforcedMaxQty = isJawakerServerQuantity ? 1000000 : maxQty;
+      if (Number.isFinite(enforcedMinQty) && qty < enforcedMinQty) {
+        return res.status(400).json({
+          status:"ERROR",
+          message:isJawakerServerQuantity ? "كمية سيرفر جواكر يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أقل من الحد الأدنى للمنتج."
+        });
+      }
+      if (Number.isFinite(enforcedMaxQty) && qty > enforcedMaxQty) {
+        return res.status(400).json({
+          status:"ERROR",
+          message:isJawakerServerQuantity ? "كمية سيرفر جواكر يجب أن تكون من 10,000 إلى 1,000,000." : "الكمية أكبر من الحد الأقصى للمنتج."
+        });
+      }
     }
 
     const allowedParamList = Array.isArray(product.params)
@@ -1126,7 +1143,6 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     // الباراميتر الفعلي مختلفًا داخل كتالوج المزود. إذا كان المنتج
     // يملك باراميترًا واحدًا فقط، نربط playerId به تلقائيًا.
     const normalizedRawParams = {...rawParams};
-    const isJawakerProduct = /jawaker|جواكر/i.test(productText);
     if (isJawakerProduct &&
         Object.prototype.hasOwnProperty.call(normalizedRawParams, "playerId") &&
         allowedParamList &&
