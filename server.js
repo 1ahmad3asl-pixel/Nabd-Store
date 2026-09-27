@@ -1157,6 +1157,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "arena-breakout": ["com.proximabeta.mf.uamo", "Arena Breakout"],
       "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"],
       "afk-journey": ["com.farlightgames.igame.gp", "AFK Journey"],
+      "blockman-go": ["com.sandboxol.blockymods", "Blockman Go"],
+      "growtopia": ["com.rtsoft.growtopia", "Growtopia"],
+      "arena-of-valor": ["com.ngame.allstar.eu", "Arena of Valor"],
       "zepeto": ["com.naver.zepeto", "ZEPETO"],
       "king-shot": ["com.fingerfun.kingshot", "King Shot"]
     };
