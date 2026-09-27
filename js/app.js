@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeSounds();
     initializeSearch();
     initializeDhikrTicker();
+    initializeDhikrHomeVisibility();
+    initializeWelcomeSplash();
     initializeTheme();
     initializeWhatsAppHitArea();
 
@@ -97,6 +99,65 @@ async function initializeDhikrTicker() {
     } catch (error) {
         console.warn("Dhikr settings load skipped:", error);
     }
+}
+
+/* =========================
+   HOME-ONLY DHIKR / REMINDERS
+========================= */
+
+function setDhikrHomeVisibility() {
+    const bar = document.getElementById("dhikrBar");
+    if (!bar) return;
+
+    // The ticker belongs only to the actual home view.
+    const internalPage = document.getElementById("internalPage");
+    const isHome = !internalPage || internalPage.hidden;
+    bar.hidden = !isHome;
+    bar.setAttribute("aria-hidden", isHome ? "false" : "true");
+}
+
+function initializeDhikrHomeVisibility() {
+    setDhikrHomeVisibility();
+
+    // Internal pages are rendered dynamically, so observe visibility changes.
+    const internalPage = document.getElementById("internalPage");
+    if (internalPage && window.MutationObserver) {
+        const observer = new MutationObserver(function () {
+            setDhikrHomeVisibility();
+        });
+        observer.observe(internalPage, { attributes: true, attributeFilter: ["hidden", "class"] });
+    }
+
+    window.addEventListener("hashchange", setDhikrHomeVisibility);
+}
+
+function initializeWelcomeSplash() {
+    const splash = document.getElementById("welcomeSplash");
+    if (!splash) return;
+
+    // Show once per browser-tab session: a fresh visit to the site gets the greeting,
+    // while navigating between pages inside the site does not replay it.
+    let alreadyWelcomed = false;
+    try {
+        alreadyWelcomed = sessionStorage.getItem("nabd-welcome-shown") === "1";
+    } catch (error) {}
+
+    if (alreadyWelcomed) return;
+
+    try {
+        sessionStorage.setItem("nabd-welcome-shown", "1");
+    } catch (error) {}
+
+    splash.hidden = false;
+    splash.setAttribute("aria-hidden", "false");
+
+    window.setTimeout(function () {
+        splash.classList.add("is-hidden");
+        window.setTimeout(function () {
+            splash.hidden = true;
+            splash.setAttribute("aria-hidden", "true");
+        }, 380);
+    }, 1700);
 }
 
 /* =========================
