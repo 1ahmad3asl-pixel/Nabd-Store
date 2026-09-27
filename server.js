@@ -1070,9 +1070,6 @@ async function ensureYallaLudoGoldOfficialImage() {
   // Use the official Yalla Ludo Play icon rather than an unrelated "Ludo Gold" app.
   return ensureOfficialGameImage("yalla-ludo-gold", "com.yalla.yallagames", "Yalla Ludo Gold");
 }
-async function ensureYallaLudoOfficialImage() {
-  return ensureOfficialGameImage("yalla-ludo", "com.yalla.yallagames", "Yalla Ludo");
-}
 
 /* =========================
    PUBLIC STORE
