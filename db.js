@@ -47,6 +47,7 @@ async function initDb() {
       password_hash TEXT,
       phone TEXT,
       phone_country TEXT,
+      avatar_url TEXT,
       balance NUMERIC(18,4) NOT NULL DEFAULT 0,
       orders_count INTEGER NOT NULL DEFAULT 0,
       discount NUMERIC(5,2) NOT NULL DEFAULT 0,
@@ -66,6 +67,7 @@ async function initDb() {
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS password_hash TEXT;
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS phone TEXT;
     ALTER TABLE customers ADD COLUMN IF NOT EXISTS phone_country TEXT;
+    ALTER TABLE customers ADD COLUMN IF NOT EXISTS avatar_url TEXT;
     CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_email_unique
       ON customers(LOWER(email)) WHERE email IS NOT NULL;
 
