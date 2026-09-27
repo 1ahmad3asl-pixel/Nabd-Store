@@ -1164,6 +1164,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "rise-of-kingdoms": ["com.lilithgame.roc.gp", "Rise of Kingdoms: Lost Crusade"],
       "top-war": ["com.Topwar.gp", "Top War: Battle Game"],
       "the-ants": ["com.allstarunion.ta", "The Ants: Underground Kingdom"],
+      "kingdom-guard": ["com.tap4fun.odin.kingdomguard", "Kingdom Guard: Tower Defense"],
+      "call-of-dragons": ["com.farlightgames.samo.gp", "Call of Dragons"],
       "hatsune-miku-colorful-stage": ["com.sega.ColorfulStage.en", "Hatsune Miku: Colorful Stage"],
       "golden-spatula": ["com.tencent.tmgp.sgame", "Golden Spatula"],
       "blockman-go": ["com.sandboxol.blockymods", "Blockman Go"],
