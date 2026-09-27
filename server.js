@@ -999,8 +999,16 @@ async function ensureOfficialGameImage(gameKey, appId, label) {
     let pageResponse = await fetch(pageUrl, {headers: requestHeaders});
     if (!pageResponse.ok) {
       // بعض الألعاب تكون متاحة على Google Play في مناطق معينة فقط؛
-      // أعد المحاولة بدون تقييد منطقة US قبل اعتبار الصورة غير متاحة.
-      pageResponse = await fetch("https://play.google.com/store/apps/details?id=" + appId + "&hl=en", {headers: requestHeaders});
+      // جرّب صيغ Google Play الشائعة قبل اعتبار الصورة غير متاحة.
+      const fallbackUrls = [
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en",
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_US",
+        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_GB"
+      ];
+      for (const fallbackUrl of fallbackUrls) {
+        pageResponse = await fetch(fallbackUrl, {headers: requestHeaders});
+        if (pageResponse.ok) break;
+      }
     }
     if (!pageResponse.ok) throw new Error("Google Play returned " + pageResponse.status);
     const html = await pageResponse.text();
