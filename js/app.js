@@ -69,6 +69,13 @@ document.addEventListener("click", function(event) {
     if (numbersButton) {
         event.preventDefault();
         openNumbersPage();
+        return;
+    }
+
+    const digitalButton = event.target.closest('.category[data-category="digital"]');
+    if (digitalButton) {
+        event.preventDefault();
+        if (typeof openDigitalPage === "function") openDigitalPage();
     }
 });
 
@@ -888,6 +895,10 @@ function initializeCategories() {
                 openNumbersPage();
                 return;
             }
+            if (category === "digital") {
+                if (typeof openDigitalPage === "function") openDigitalPage();
+                return;
+            }
 
             document.querySelectorAll(".category").forEach(function(item) {
                 item.classList.remove("active");
@@ -1131,6 +1142,20 @@ function handleInternalHistoryState(state) {
 
     if (state.view === "balance") {
         openBalancePage(true);
+        return;
+    }
+
+    if (state.view === "digital") {
+        if (typeof openDigitalPage === "function") openDigitalPage(true);
+        return;
+    }
+
+    if (state.view === "digital-products") {
+        if (typeof getDigitalGroups === "function" && typeof openDigitalProducts === "function") {
+            const group = getDigitalGroups().find(function(item){ return item.key === state.digitalGroupKey; });
+            if (group) openDigitalProducts(group, true);
+            else openDigitalPage(true);
+        }
         return;
     }
 
