@@ -1229,19 +1229,25 @@ function openNumberGroupProducts(groupKey,fromHistory) {
     const group=getNumberGroupDefinitions().find(function(g){return g.key===groupKey;});
     if(!group){openNumbersPage(!!fromHistory);return;}
     if(!fromHistory)pushInternalHistory("number-products",{numberGroupKey:groupKey});
-    const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),title=document.getElementById("internalPageTitle"),icon=document.getElementById("internalPageIcon"),content=document.getElementById("internalPageContent");
+    const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),content=document.getElementById("internalPageContent");
     if(!services||!internal||!content)return;
-    services.hidden=true;internal.hidden=false;if(title)title.textContent=group.title;if(icon)icon.textContent="📲";
-    if(!state.productsLoaded){content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل المنتجات...</p></div>';loadProducts({force:false}).then(function(){openNumberGroupProducts(groupKey,true);}).catch(function(){});return;}
+    services.hidden=true;internal.hidden=false;
+
+    if(!state.productsLoaded){
+        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل المنتجات...</p></div>';
+        loadProducts({force:false}).then(function(){openNumberGroupProducts(groupKey,true);}).catch(function(){});
+        return;
+    }
+
     const products=getNumberGroupProducts(group);
-    content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="numberGroupBack">← العودة إلى الأرقام</button><div class="game-products-heading"><strong>'+products.length+' منتج</strong><span>'+escapeHtml(group.title)+'</span></div></div><div class="numbers-product-grid">'+(products.length?products.map(function(p){
-        const available=p.available!==false&&p.available!==0,raw=p.price,live=state.productsLive&&raw!==null&&raw!==undefined&&String(raw).trim()!==""&&Number.isFinite(Number(raw))&&Number(raw)>=0;
-        const image=String(p.category_img||"").trim(),icon=image?'<img src="'+escapeHtml(image)+'" alt="" loading="lazy">':'<span class="numbers-product-placeholder">📲</span>';
-        return '<article class="numbers-product-card'+(available?'':' product-unavailable')+'"><div class="numbers-product-image">'+icon+'</div><h3>'+escapeHtml(p.name||"منتج")+'</h3><p>'+escapeHtml(p.category_name||"")+'</p><div class="price">'+(live?formatProductMoney(p,Number(raw)):"جاري تحديث السعر…")+'</div><button class="buy-btn number-buy-btn" type="button" data-number-product-id="'+escapeHtml(String(p.id))+'" '+(available&&live?'':'disabled')+'>'+ (available?(live?"شراء الآن":"جاري تحديث السعر"):"غير متوفر") +'</button></article>';
-    }).join(""):'<div class="products-loading"><p>لا توجد منتجات متاحة لهذا النوع حاليًا.</p></div>')+'</div>';
-    const back=document.getElementById("numberGroupBack");if(back)back.addEventListener("click",function(){openNumbersPage();});
-    content.querySelectorAll(".number-buy-btn[data-number-product-id]").forEach(function(btn){btn.addEventListener("click",function(){const p=state.products.find(function(item){return String(item.id)===String(btn.getAttribute("data-number-product-id"));});if(p)openProductModal(p);});});
-    window.scrollTo({top:0,behavior:"smooth"});
+    renderGameProductPicker(
+        group.title,
+        {title:group.title,image:getNumberGroupImage(group),products:products},
+        {
+            type:"numbers",
+            onBack:function(){openNumbersPage();}
+        }
+    );
 }
 function getAppServerTiles() {
     return [
@@ -1640,7 +1646,7 @@ function openGamesPage(fromHistory) {
     internal.hidden = false;
 
     if (title) title.textContent = "الألعاب";
-    if (icon) icon.textContent = "🎮";
+    if (icon) icon.textContent = isNumberPicker ? "📲" : "🎮";
 
     // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك تظهر فورًا.
     // نبدأ تحميل المنتجات في الخلفية بدون حبس المستخدم داخل شاشة تحميل.
@@ -1835,7 +1841,9 @@ function formatProductPrice(product) {
     return value === null ? "السعر غير متاح" : formatMoney(value);
 }
 
-function renderGameProductPicker(gameTitle, group) {
+function renderGameProductPicker(gameTitle, group, pickerOptions) {
+    pickerOptions = pickerOptions || {};
+    const isNumberPicker = pickerOptions.type === "numbers";
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
@@ -1885,7 +1893,7 @@ function renderGameProductPicker(gameTitle, group) {
         '</button>';
     }).join("");
 
-    const gameImage = getGameTiles().find(function(tile) {
+    const gameImage = isNumberPicker ? null : getGameTiles().find(function(tile) {
         return tile.title === gameTitle;
     });
     // صورة التطبيق هي المرجع الموحد داخل المستوى الثالث وصفحة المنتجات.
@@ -2040,7 +2048,11 @@ function renderGameProductPicker(gameTitle, group) {
 
     const back = document.getElementById("pubgBackToGroups");
     if (back) back.addEventListener("click", function() {
-        openGamePlaceholder(gameTitle);
+        if (typeof pickerOptions.onBack === "function") {
+            pickerOptions.onBack();
+        } else {
+            openGamePlaceholder(gameTitle);
+        }
     });
 
     const select = document.getElementById("pubgSelect");
