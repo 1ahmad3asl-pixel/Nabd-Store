@@ -1879,14 +1879,12 @@ function getStatusHtml(status) {
 
 function formatNemerBalance(value) {
     const number = Number(value);
-    // Nemer balance may contain three decimal places (e.g. 0.003).
-    // Keep four decimals in the UI so small balances are never rounded to zero.
-    return "$" + (Number.isFinite(number) ? number : 0).toFixed(4);
+    return "$" + (Number.isFinite(number) ? number : 0).toFixed(3);
 }
 
 function formatAdminPrice(value) {
     const number = Number(value) || 0;
-    const decimals = Math.max(2, Math.min(3, Number(adminState.settings.currency_decimals ?? 3)));
+    const decimals = 3;
     const currency = String(adminState.settings.currency || "USD");
     const symbols = {USD:"$",EUR:"€",TRY:"₺",SAR:"﷼",AED:"د.إ"};
     return (symbols[currency] || currency + " ") + number.toFixed(decimals);
