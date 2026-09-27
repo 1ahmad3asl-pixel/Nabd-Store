@@ -1146,6 +1146,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "city-of-crime-gang-war": ["com.fingerfun.coc.gplay", "City of Crime: Gang Wars"],
       "genshin-impact": ["com.miHoYo.GenshinImpact", "Genshin Impact"],
       "super-sus": ["com.je.supersus", "Super Sus"],
+      "crystal-of-atlan": ["com.hermes.p6gameos", "Crystal of Atlan"],
+      "bullet-echo": ["com.zeptolab.bulletecho.google", "Bullet Echo"],
       "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
       "whiteout-survival": ["com.gof.global", "Whiteout Survival"]
     };
