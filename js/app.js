@@ -56,6 +56,13 @@ document.addEventListener("click", function(event) {
     if (balanceButton) {
         event.preventDefault();
         openBalancePage();
+        return;
+    }
+
+    const numbersButton = event.target.closest('.category[data-category="numbers"]');
+    if (numbersButton) {
+        event.preventDefault();
+        openNumbersPage();
     }
 });
 
@@ -867,6 +874,10 @@ function initializeCategories() {
                 openBalancePage();
                 return;
             }
+            if (category === "numbers") {
+                openNumbersPage();
+                return;
+            }
 
             document.querySelectorAll(".category").forEach(function(item) {
                 item.classList.remove("active");
@@ -1059,6 +1070,169 @@ function pushInternalHistory(view, data) {
     window.history.pushState(state, "", window.location.href);
 }
 
+function getNumberProducts() {
+    return state.products.filter(function(product) {
+        if (isBalanceProduct(product)) return false;
+        const text = normalizeGameText(
+            String(product && product.category_name || "") + " " +
+            String(product && product.name || "")
+        );
+        return /رقم|numbers?|phone|mobile number|virtual number|sms|otp|وحدات|شحن|استرداد رصيد|mtn|syriatel|زين|شامنا/.test(text);
+    });
+}
+
+function getNumberLevelTwoGroups() {
+    const products = getNumberProducts();
+    const groups = [];
+    const seen = new Map();
+
+    products.forEach(function(product) {
+        const title = cleanGameCategoryName(product && product.category_name) || "أرقام";
+        const key = normalizeBalanceText(title);
+        if (!seen.has(key)) {
+            const group = {
+                key: "numbers|" + key,
+                title: title,
+                image: product && product.category_img ? product.category_img : "",
+                products: []
+            };
+            seen.set(key, group);
+            groups.push(group);
+        }
+        const group = seen.get(key);
+        if (!group.image && product && product.category_img) group.image = product.category_img;
+        group.products.push(product);
+    });
+
+    return groups;
+}
+
+function getNumberLevelThreeProducts(groupKey) {
+    const groups = getNumberLevelTwoGroups();
+    const group = groups.find(function(item) { return item.key === groupKey; });
+    return group ? group.products : [];
+}
+
+function openNumbersPage(fromHistory) {
+    if (!fromHistory) pushInternalHistory("numbers");
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    const content = document.getElementById("internalPageContent");
+    if (!services || !internal || !content) return;
+
+    services.hidden = true;
+    internal.hidden = false;
+    if (title) title.textContent = "الأرقام";
+    if (icon) icon.textContent = "📱";
+
+    if (!state.productsLive && !state.productsLoadingPromise) {
+        loadProducts({force:true}).catch(function(){});
+    }
+
+    if (!state.productsLive) {
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري مزامنة تصنيفات الأرقام من نمر...</p></div>';
+        if (state.productsLoadingPromise) {
+            state.productsLoadingPromise.then(function(){ openNumbersPage(true); }).catch(function(){});
+        }
+        return;
+    }
+
+    const groups = getNumberLevelTwoGroups();
+    if (!groups.length) {
+        content.innerHTML = '<div class="game-products-placeholder"><div class="game-products-placeholder-icon">📱</div><h3>الأرقام</h3><p>لا توجد خدمات أرقام متاحة حاليًا.</p></div>';
+        return;
+    }
+
+    content.innerHTML =
+        '<div class="game-page numbers-level-two">' +
+        '<button class="pubg-back" type="button" id="numbersBack">← العودة إلى الأقسام</button>' +
+        '<div class="game-page-note">التصنيفات التالية مأخوذة مباشرة من بيانات منتجات نمر، مع الحفاظ على ترتيب ظهورها في البيانات.</div>' +
+        '<div class="game-category-grid balance-category-grid">' +
+        groups.map(function(group) {
+            const available = group.products.some(function(product) {
+                return product.available !== false && product.available !== 0;
+            });
+            const imageHtml = group.image
+                ? '<img src="' + escapeHtml(group.image) + '" alt="' + escapeHtml(group.title) + '" loading="lazy">'
+                : '<span class="game-placeholder">📱</span>';
+            return '<button class="game-category-tile game-product-group-card balance-category-tile' +
+                (available ? '' : ' is-disabled') + '" type="button" data-number-group="' +
+                escapeHtml(group.key) + '"' + (available ? '' : ' disabled') + '>' +
+                '<span class="game-tile-image">' + imageHtml + '</span>' +
+                '<span class="game-tile-title">' + escapeHtml(group.title) + '</span>' +
+                '</button>';
+        }).join("") +
+        '</div></div>';
+
+    const back = document.getElementById("numbersBack");
+    if (back) back.addEventListener("click", closeInternalPage);
+
+    content.querySelectorAll("[data-number-group]").forEach(function(card) {
+        card.addEventListener("click", function() {
+            openNumbersLevelThree(card.getAttribute("data-number-group") || "");
+        });
+    });
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function openNumbersLevelThree(groupKey, fromHistory) {
+    if (!fromHistory) pushInternalHistory("numbers-level-three", {numberGroupKey: groupKey});
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    const content = document.getElementById("internalPageContent");
+    if (!services || !internal || !content) return;
+
+    services.hidden = true;
+    internal.hidden = false;
+    if (title) title.textContent = "الأرقام";
+    if (icon) icon.textContent = "📱";
+
+    const groups = getNumberLevelTwoGroups();
+    const group = groups.find(function(item){ return item.key === groupKey; });
+    if (!group) {
+        openNumbersPage(fromHistory);
+        return;
+    }
+
+    const products = group.products;
+    content.innerHTML =
+        '<div class="game-page numbers-level-three">' +
+        '<button class="pubg-back" type="button" id="numbersLevelThreeBack">← العودة إلى التصنيفات</button>' +
+        '<div class="game-products-heading"><strong>' + products.length + ' منتج</strong><span>' +
+        escapeHtml(group.title) + '</span></div>' +
+        '<div class="game-category-grid game-product-groups-grid">' +
+        products.map(function(product) {
+            const available = product.available !== false && product.available !== 0;
+            const imageHtml = product.category_img
+                ? '<img src="' + escapeHtml(product.category_img) + '" alt="" loading="lazy">'
+                : '<span class="game-placeholder">📱</span>';
+            return '<button class="game-category-tile game-product-group-card balance-category-tile' +
+                (available ? '' : ' is-disabled') + '" type="button" data-number-product="' +
+                escapeHtml(String(product.id)) + '"' + (available ? '' : ' disabled') + '>' +
+                '<span class="game-tile-image">' + imageHtml + '</span>' +
+                '<span class="game-tile-title">' + escapeHtml(product.name || "منتج") + '</span>' +
+                '</button>';
+        }).join("") +
+        '</div></div>';
+
+    const back = document.getElementById("numbersLevelThreeBack");
+    if (back) back.addEventListener("click", function(){ openNumbersPage(); });
+
+    content.querySelectorAll("[data-number-product]").forEach(function(card) {
+        card.addEventListener("click", function() {
+            const product = state.products.find(function(item) {
+                return String(item.id) === String(card.getAttribute("data-number-product"));
+            });
+            if (product) openProductModal(product);
+        });
+    });
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
 function handleInternalHistoryState(state) {
     if (!state || !state.nabdInternal) {
         closeInternalPage();
@@ -1081,6 +1255,16 @@ function handleInternalHistoryState(state) {
 
     if (state.view === "balance") {
         openBalancePage(true);
+        return;
+    }
+
+    if (state.view === "numbers") {
+        openNumbersPage(true);
+        return;
+    }
+
+    if (state.view === "numbers-level-three") {
+        openNumbersLevelThree(state.numberGroupKey, true);
         return;
     }
 
