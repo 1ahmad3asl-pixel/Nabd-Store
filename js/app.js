@@ -2,6 +2,7 @@ const state = {
     products: [],
     productsLoaded: false,
     productsLoadingPromise: null,
+    productsCacheKey: "nabd-products-cache-v2",
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -1479,19 +1480,34 @@ function getProductCategory(product) {
     return "other";
 }
 
-async function loadProducts() {
+async function loadProducts(options) {
+    options = options || {};
     if (state.productsLoadingPromise) return state.productsLoadingPromise;
 
-    if (elements.products) {
+    // اعرض آخر نسخة محفوظة فورًا، ثم حدّثها في الخلفية. هذا يلغي انتظار
+    // اتصال Nemer عند كل فتح للموقع أو صفحة الألعاب.
+    if (!options.force && !state.productsLoaded) {
+        try {
+            const cached = JSON.parse(localStorage.getItem(state.productsCacheKey) || "null");
+            if (cached && Array.isArray(cached.products) && cached.products.length) {
+                state.products = cached.products;
+                state.productsLoaded = true;
+                renderProducts();
+            }
+        } catch (error) {
+            localStorage.removeItem(state.productsCacheKey);
+        }
+    }
+
+    if (!state.productsLoaded && elements.products) {
         elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>جاري تحميل الخدمات...</p></div>";
     }
 
-    state.productsLoaded = false;
     state.productsLoadingPromise = (async function() {
         try {
             const controller = new AbortController();
-            // حد زمني قصير حتى لا يبقى الموقع عالقًا في "جاري التحميل".
-            const timeout = setTimeout(function() { controller.abort(); }, 8000);
+            // مهلة قصيرة مع إبقاء الواجهة مستجيبة.
+            const timeout = setTimeout(function() { controller.abort(); }, 5000);
             let response;
             try {
                 response = await fetch(BACKEND_URL + "/api/products", {
@@ -1514,15 +1530,23 @@ async function loadProducts() {
 
             state.products = Array.isArray(data.products) ? data.products : [];
             state.productsLoaded = true;
+            try {
+                localStorage.setItem(state.productsCacheKey, JSON.stringify({
+                    savedAt: Date.now(),
+                    products: state.products
+                }));
+            } catch (error) {
+                console.warn("Products cache skipped:", error);
+            }
             renderProducts();
             return state.products;
         } catch (error) {
             state.productsLoaded = false;
             console.error("Products load error:", error);
             if (elements.products) {
-                elements.products.innerHTML = "<div class=\"products-loading\"><p>تعذر تحميل المنتجات حاليًا.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">إعادة المحاولة</button></div>";
+                elements.products.innerHTML = "<div class=\"products-loading\"><div class=\"loading-spinner\"></div><p>تعذر التحديث الآن.</p><button class=\"buy-btn\" type=\"button\" id=\"retryProducts\">↻ إعادة التحميل</button></div>";
                 const retry = document.getElementById("retryProducts");
-                if (retry) retry.addEventListener("click", loadProducts, {once:true});
+                if (retry) retry.addEventListener("click", function() { loadProducts({force:true}).catch(function(){}); });
             }
             throw error;
         } finally {
