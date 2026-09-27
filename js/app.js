@@ -711,7 +711,10 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("farlight 84") || text.includes("farlight84") || text.includes("فارلايت 84")) {
         return BACKEND_URL + "/api/game-images/farlight-84";
     }
-    if (text.includes("city of crime gang war") || text.includes("city of crime gang wars")) {\n        return BACKEND_URL + "/api/game-images/city-of-crime-gang-war";\n    }\n    if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
+    if (text.includes("city of crime gang war") || text.includes("city of crime gang wars")) {
+        return BACKEND_URL + "/api/game-images/city-of-crime-gang-war";
+    }
+    if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
         return BACKEND_URL + "/api/game-images/marvel-rivals";
     }
     if (text.includes("genshin impact")) {
@@ -887,7 +890,8 @@ function getGameGroups(gameTitle) {
     const isGangsOfGlory = normalizedGame.includes("gangs of glory") || normalizedGame.includes("غانغز اوف غلوري") || normalizedGame.includes("غانجز أوف غلوري");
     const isProjectEntropy = normalizedGame.includes("project entropy") || normalizedGame.includes("بروجكت انتروبي") || normalizedGame.includes("بروجيكت انتروبي");
     const isFarlight84 = normalizedGame.includes("farlight 84") || normalizedGame.includes("farlight84") || normalizedGame.includes("فارلايت 84");
-    const isMarvelRivals = normalizedGame.includes("marvel rivals") || normalizedGame.includes("marvel reveals") || normalizedGame.includes("مارفل ريفيلز") || normalizedGame.includes("مارفل رايفلز");\n    const isCityOfCrimeGangWar = normalizedGame.includes("city of crime gang war") || normalizedGame.includes("city of crime gang wars");
+    const isMarvelRivals = normalizedGame.includes("marvel rivals") || normalizedGame.includes("marvel reveals") || normalizedGame.includes("مارفل ريفيلز") || normalizedGame.includes("مارفل رايفلز");
+    const isCityOfCrimeGangWar = normalizedGame.includes("city of crime gang war") || normalizedGame.includes("city of crime gang wars");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
