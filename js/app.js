@@ -1205,11 +1205,14 @@ function renderGameParamFields(product, gameTitle) {
         }
 
         return exactParams.map(function(label, index) {
-            const displayLabel = escapeHtml(label);
+            const displayLabel = escapeHtml(
+                label === "ايدي_المقاتل_💣" ? "ID المقاتل" : label
+            );
             const inputId = "pubgExactParam_" + index;
+            const safeParamKey = escapeHtml(label);
             return '<div class="pubg-field game-required-field">' +
-                '<label for="' + inputId + '">' + displayLabel + '</label>' +
-                '<input id="' + inputId + '" type="text" data-game-param="' + displayLabel + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
+                '<label for="' + inputId + '">أدخل ' + displayLabel + '</label>' +
+                '<input id="' + inputId + '" type="text" data-game-param="' + safeParamKey + '" placeholder="أدخل ' + displayLabel + '" autocomplete="off" required aria-required="true">' +
                 '</div>';
         }).join("");
     }
