@@ -651,6 +651,8 @@ const GAME_CATALOG = [
 function normalizeGameText(value) {
     return String(value || "")
         .toLowerCase()
+        .replace(/[٠-٩]/g, function(d){ return String("٠١٢٣٤٥٦٧٨٩".indexOf(d)); })
+        .replace(/[۰-۹]/g, function(d){ return String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)); })
         .replace(/[._:/\\-]+/g, " ")
         .replace(/\s+/g, " ")
         .trim();
@@ -1199,16 +1201,17 @@ function getNumberGroupProducts(group) {
         const name=normalizeGameText(product && product.name);
         const text=(category+" "+name).trim();
 
-        // WhatsApp S1/S2 are intentionally matched by server identity as well as
-        // the visible product/category name, so the two groups cannot mix.
+        // WhatsApp S1/S2 are matched from the API's actual server identity.
+        // Accept Arabic/English spelling, S1/S2, Server 1/2 and Arabic digits.
         if(group.key==="whatsapp-s1" || group.key==="whatsapp-s2"){
-            const serverToken=group.key==="whatsapp-s1" ? "s1" : "s2";
-            const serverArabic=group.key==="whatsapp-s1"
-                ? ["سيرفر 1","سيرفر واحد"]
-                : ["سيرفر 2","سيرفر اثنين","سيرفر اثنان"];
+            const serverNumber=group.key==="whatsapp-s1" ? "1" : "2";
             const hasWhatsapp=text.includes("whatsapp") || text.includes("واتساب");
-            const hasServer=text.split(/\\s+/).some(function(token){return token===serverToken;}) ||
-                serverArabic.some(function(token){return text.includes(normalizeGameText(token));});
+            const serverPatterns=group.key==="whatsapp-s1"
+                ? ["s1","server 1","server1","سيرفر 1","سيرفر واحد","واتساب 1"]
+                : ["s2","server 2","server2","سيرفر 2","سيرفر اثنين","سيرفر اثنان","واتساب 2"];
+            const hasServer=serverPatterns.some(function(pattern){
+                return text.includes(normalizeGameText(pattern));
+            }) || new RegExp("(^|\\s)"+serverNumber+"(\\s|$)").test(text);
             if(hasWhatsapp && hasServer) return true;
         }
 
