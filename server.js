@@ -1145,7 +1145,9 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"],
       "city-of-crime-gang-war": ["com.fingerfun.coc.gplay", "City of Crime: Gang Wars"],
       "genshin-impact": ["com.miHoYo.GenshinImpact", "Genshin Impact"],
-      "super-sus": ["com.je.supersus", "Super Sus"]
+      "super-sus": ["com.je.supersus", "Super Sus"],
+      "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
+      "whiteout-survival": ["com.gof.global", "Whiteout Survival"]
     };
     const config = imageMap[key];
     if (!config) return res.status(404).end();
