@@ -1121,6 +1121,13 @@ function renderGameProductPicker(gameTitle, group) {
     function renderQuantity(product) {
         const holder = document.getElementById("gameQuantityField");
         if (!holder) return;
+
+        // ببجي طلبها لمنتج واحد ولا نعرض حقل كمية حتى لو أعاده الكتالوج.
+        if (isPubgGame(gameTitle)) {
+            holder.innerHTML = "";
+            return;
+        }
+
         const config = getProductQuantityConfig(product);
 
         if (!config.enabled) {
@@ -1214,11 +1221,12 @@ function renderGameProductPicker(gameTitle, group) {
 
 function submitGamePickerOrder(product, root) {
     const params = {};
-    const inputs = root ? root.querySelectorAll("[data-game-param]") : [];
+    const inputs = root ? root.querySelectorAll("[data-game-param], [data-pubg-param]") : [];
     let invalid = false;
 
     inputs.forEach(function(input) {
-        const label = input.getAttribute("data-game-param") || "";
+        const label = input.getAttribute("data-game-param") ||
+            input.getAttribute("data-pubg-param") || "";
         const value = String(input.value || "").trim();
         if (!value) {
             invalid = true;
