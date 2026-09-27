@@ -1172,6 +1172,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const minQty = Number(product.qty_values?.min);
     const maxQty = Number(product.qty_values?.max);
     const isJawakerProduct = /jawaker|جواكر/i.test(productText);
+    const isFreeFireProduct = /free\s*fire|فري\s*فاير/i.test(productText);
+    const isClashOfClansProduct = /clash\s*of\s*clans|كلاش\s*اوف\s*كلانس|كلاش\s*أوف\s*كلانس/i.test(productText);
+    const isUnifiedPlayerIdProduct = isJawakerProduct || isFreeFireProduct || isClashOfClansProduct;
     const isJawakerS2 = isJawakerProduct && /(?:s\s*2|s2|عداد\s*جواكر\s*s\s*2)/i.test(productText);
     const isJawakerS1Server = isJawakerProduct && /(?:s\s*1|s1|سيرفر\s*s\s*1|سرفر\s*s\s*1|جواكر\s*سيرفر\s*s\s*1)/i.test(productText);
     const isJawakerServerQuantity = isJawakerS1Server || isJawakerS2;
@@ -1202,7 +1205,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     // الباراميتر الفعلي مختلفًا داخل كتالوج المزود. إذا كان المنتج
     // يملك باراميترًا واحدًا فقط، نربط playerId به تلقائيًا.
     const normalizedRawParams = {...rawParams};
-    if (isJawakerProduct &&
+    if (isUnifiedPlayerIdProduct &&
         Object.prototype.hasOwnProperty.call(normalizedRawParams, "playerId") &&
         allowedParamList &&
         !allowedParams.has("playerId") &&
