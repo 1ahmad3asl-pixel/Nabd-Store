@@ -1107,9 +1107,12 @@ function renderGameParamFields(product, gameTitle) {
     const params = getUsableProductParams(product);
     const normalizedGameTitle = normalizeGameText(gameTitle || "");
     const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
+    const isFreeFire = normalizedGameTitle.includes("free fire") || normalizedGameTitle.includes("فري فاير");
+    const isClashOfClans = normalizedGameTitle.includes("clash of clans") || normalizedGameTitle.includes("كلاش");
+    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans;
 
-    if (isJawaker) {
-        // جواكر: حقل ID اللاعب واحد فقط، حتى لو أعاد الـAPI أكثر من اسم لحقل الـID.
+    if (isUnifiedPlayerIdGame) {
+        // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
         const playerIdParam = params.find(function(label) {
             const normalized = normalizeGameText(label);
             return normalized.includes("ايدي") ||
@@ -1126,7 +1129,7 @@ function renderGameParamFields(product, gameTitle) {
                 '<input id="gameParam_playerId" type="text" data-game-param="' + escapeHtml(playerIdKey) + '" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true">' +
             '</div>';
 
-        // أي حقول أخرى غير الـID تبقى، لكن لا نعرض أي ID إضافي.
+        // أي حقول أخرى مطلوبة تبقى، لكن لا نعرض أي ID إضافي.
         const otherFields = params.filter(function(label) {
             const normalized = normalizeGameText(label);
             return !(normalized.includes("ايدي") ||
