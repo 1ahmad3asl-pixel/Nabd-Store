@@ -952,7 +952,7 @@ app.post("/api/admin/notifications", async (req, res) => {
 function normalizeNemerPrice(value) {
   if (value === null || value === undefined || String(value).trim() === "") return null;
   const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Number(parsed.toFixed(4)) : null;
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
 }
 
 async function ensureOfficialGameImage(gameKey, appId, label) {
@@ -1047,7 +1047,7 @@ app.get("/api/products", async (req, res) => {
           const originalPrice = normalizeNemerPrice(product.price);
           const sellingPrice = originalPrice === null
             ? null
-            : Number((originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100)).toFixed(4));
+            : Number(originalPrice * (1 + Number(adminSettings.profit_rate || 0) / 100).toFixed(6));
           return {
             id: product.id,
             product_id: product.product_id,
