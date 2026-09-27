@@ -685,6 +685,8 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("clash of clans") || text.includes("كلاش")) return BACKEND_URL + "/api/game-images/clash-of-clans";
     if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return BACKEND_URL + "/api/game-images/dragonheir-silent-gods";
     if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return BACKEND_URL + "/api/game-images/cloud-song";
+    if (text.includes("yalla ludo gold") || text.includes("يلا لودو gold") || text.includes("يلا لودو جولد") || text.includes("يلا لودو غولد")) return BACKEND_URL + "/api/game-images/yalla-ludo-gold";
+    if (text.includes("yalla ludo") || text.includes("يلا لودو")) return BACKEND_URL + "/api/game-images/yalla-ludo";
     if (text.includes("yalla ludo") || text.includes("يلا لودو")) {
         // Yalla Ludo Gold ليس تطبيقًا مستقلًا؛ هو منتج Gold رسمي داخل Yalla Ludo،
         // لذلك يستخدم نفس أيقونة Yalla Ludo الرسمية من Google Play.
@@ -850,6 +852,8 @@ function getGameGroups(gameTitle) {
     const isDragonheir = normalizedGame.includes("dragonheir") || normalizedGame.includes("silent gods") || normalizedGame.includes("دراغون هير");
     const isCloudSong = normalizedGame.includes("cloud song") || normalizedGame.includes("skywalkers") || normalizedGame.includes("كلاود سونغ");
     const isYallaLudo = normalizedGame.includes("yalla ludo") || normalizedGame.includes("يلا لودو");
+    const isYallaLudoGold = normalizedGame.includes("yalla ludo gold") || normalizedGame.includes("يلا لودو gold") || normalizedGame.includes("يلا لودو جولد") || normalizedGame.includes("يلا لودو غولد");
+    const isYallaLudo = normalizedGame.includes("yalla ludo") || normalizedGame.includes("يلا لودو");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -876,7 +880,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 

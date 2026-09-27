@@ -1065,6 +1065,11 @@ async function ensureCloudSongOfficialImage() {
 async function ensureYallaLudoOfficialImage() {
   return ensureOfficialGameImage("yalla-ludo", "com.yalla.yallagames", "Yalla Ludo");
 }
+async function ensureYallaLudoGoldOfficialImage() {
+  // Yalla Ludo Gold is a product/game catalog entry under Yalla Ludo.
+  // Use the official Yalla Ludo Play icon rather than an unrelated "Ludo Gold" app.
+  return ensureOfficialGameImage("yalla-ludo-gold", "com.yalla.yallagames", "Yalla Ludo Gold");
+}
 
 /* =========================
    PUBLIC STORE
@@ -1093,6 +1098,8 @@ app.get("/api/game-images/:gameKey", async (req, res) => {
       "clash-of-clans": ["com.supercell.clashofclans", "Clash of Clans"],
       "dragonheir-silent-gods": ["com.sgra.dragon", "Dragonheir: Silent Gods"],
       "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
+      "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"],
+      "yalla-ludo-gold": ["com.yalla.yallagames", "Yalla Ludo Gold"],
       "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"]
     };
     const config = imageMap[key];
@@ -1498,6 +1505,7 @@ initDb()
     await ensureDragonheirOfficialImage();
     await ensureCloudSongOfficialImage();
     await ensureYallaLudoOfficialImage();
+    await ensureYallaLudoGoldOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
