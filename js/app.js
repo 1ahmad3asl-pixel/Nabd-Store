@@ -698,6 +698,12 @@ function getStoredGameImageUrl(gameTitle) {
     if (text.includes("8 ball pool") || text.includes("eight ball pool") || text.includes("ثمانية بول") || text.includes("ثمنية بول")) {
         return BACKEND_URL + "/api/game-images/8-ball-pool";
     }
+    if (text.includes("gangs of glory") || text.includes("غانغز اوف غلوري") || text.includes("غانجز أوف غلوري")) {
+        return BACKEND_URL + "/api/game-images/gangs-of-glory";
+    }
+    if (text.includes("project entropy") || text.includes("بروجكت انتروبي") || text.includes("بروجيكت انتروبي")) {
+        return BACKEND_URL + "/api/game-images/project-entropy";
+    }
     return "";
 }
 
@@ -861,6 +867,8 @@ function getGameGroups(gameTitle) {
     const isYallaLudoGold = normalizedGame.includes("yalla ludo gold") || normalizedGame.includes("يلا لودو جولد") || normalizedGame.includes("يلا لودو غولد");
     const isLordsMobile = normalizedGame.includes("lords mobile") || normalizedGame.includes("لوردز موبايل") || normalizedGame.includes("لوردس موبايل");
     const isEightBallPool = normalizedGame.includes("8 ball pool") || normalizedGame.includes("eight ball pool") || normalizedGame.includes("ثمانية بول") || normalizedGame.includes("ثمنية بول");
+    const isGangsOfGlory = normalizedGame.includes("gangs of glory") || normalizedGame.includes("غانغز اوف غلوري") || normalizedGame.includes("غانجز أوف غلوري");
+    const isProjectEntropy = normalizedGame.includes("project entropy") || normalizedGame.includes("بروجكت انتروبي") || normalizedGame.includes("بروجيكت انتروبي");
 
     if (isJawaker) {
         const definitions = getJawakerGroupDefinitions();
@@ -887,7 +895,7 @@ function getGameGroups(gameTitle) {
             ? getRobloxGroupTitle(product)
             : cleanGameCategoryName(product.category_name || "منتجات " + gameTitle);
         const parentKey = String(product.parent_id ?? "");
-        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool)
+        const key = (isRoblox || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGangsOfGlory || isProjectEntropy)
             ? normalizeGameText(gameTitle) + "|" + normalizeGameText(categoryName)
             : parentKey + "|" + categoryName;
 
@@ -1136,7 +1144,7 @@ function renderGameParamFields(product, gameTitle) {
     const isYallaLudoGold = normalizedGameTitle.includes("yalla ludo gold") || normalizedGameTitle.includes("يلا لودو جولد") || normalizedGameTitle.includes("يلا لودو غولد");
     const isLordsMobile = normalizedGameTitle.includes("lords mobile") || normalizedGameTitle.includes("لوردز موبايل") || normalizedGameTitle.includes("لوردس موبايل");
     const isEightBallPool = normalizedGameTitle.includes("8 ball pool") || normalizedGameTitle.includes("eight ball pool") || normalizedGameTitle.includes("ثمانية بول") || normalizedGameTitle.includes("ثمنية بول");
-    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool;
+    const isUnifiedPlayerIdGame = isJawaker || isFreeFire || isClashOfClans || isDragonheir || isCloudSong || isYallaLudo || isYallaLudoGold || isLordsMobile || isEightBallPool || isGangsOfGlory || isProjectEntropy;
 
     if (isUnifiedPlayerIdGame) {
         // هذه الألعاب تعرض حقل ID اللاعب واحدًا فقط، حتى لو أعاد الـAPI أكثر من اسم للـID.
