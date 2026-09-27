@@ -1043,3 +1043,21 @@ td{padding:14px 12px!important;}
 .email-broadcast-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;flex-wrap:wrap;}
 .email-broadcast-actions span{font-size:14px;color:#aaa;}
 .email-broadcast-actions button:disabled{opacity:.65;cursor:wait;}
+
+
+/* إصلاح إدخال أسطر شريط الإعلانات */
+#dhikrItems{
+  display:block!important;
+  width:100%!important;
+  min-height:220px!important;
+  line-height:1.8!important;
+  white-space:pre-wrap!important;
+  overflow-y:auto!important;
+  resize:vertical!important;
+  direction:rtl!important;
+  text-align:right!important;
+}
+#dhikrItems:focus{
+  outline:none!important;
+  border-color:var(--primary,#f5c400)!important;
+}
