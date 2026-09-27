@@ -766,29 +766,22 @@ function getJawakerGroupTitle(product) {
     const text = normalizeGameText(raw);
 
     if (
-        text.includes("مسرع") ||
-        text.includes("accelerator") ||
-        text.includes("booster")
-    ) {
-        return "مسرع جواكر";
-    }
+        text.includes("مسرع") || text.includes("مسرعات") || text.includes("مسرعة") ||
+        text.includes("تسريع") || text.includes("accelerator") || text.includes("accelerate") ||
+        text.includes("booster") || text.includes("boost")
+    ) return "مسرع جواكر";
 
     if (
-        text.includes("s2") ||
-        text.includes("عداد جواكر s2") ||
-        text.includes("jawaker counter s2") ||
+        text.includes("s2") || text.includes("s 2") ||
+        text.includes("عداد جواكر s2") || text.includes("jawaker counter s2") ||
         text.includes("counter s2")
-    ) {
-        return "عداد جواكر S2";
-    }
+    ) return "عداد جواكر S2";
 
     if (
-        (text.includes("s1") && (text.includes("cum") || text.includes("server") || text.includes("سيرفر"))) ||
-        text.includes("عداد جواكر سيرفر s1") ||
-        text.includes("jawaker server s1")
-    ) {
-        return "عداد جواكر سيرفر S1 وCum";
-    }
+        text.includes("s1") || text.includes("s 1") || text.includes("cum") ||
+        text.includes("server") || text.includes("سيرفر") || text.includes("سرفر") ||
+        text.includes("عداد جواكر سيرفر") || text.includes("jawaker server")
+    ) return "عداد جواكر سيرفر S1 وCum";
 
     return "";
 }
@@ -1044,8 +1037,13 @@ function renderPubgParamFields(product) {
         '</div>';
 }
 
-function renderGameParamFields(product) {
+function renderGameParamFields(product, gameTitle) {
     const params = getUsableProductParams(product);
+    const normalizedGameTitle = normalizeGameText(gameTitle || "");
+    const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
+    if (!params.length && isJawaker) {
+        return '<div class="pubg-field game-required-field"><label for="gameParam_0">ID اللاعب</label><input id="gameParam_0" type="text" data-game-param="playerId" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true"></div>';
+    }
     if (!params.length) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
@@ -1057,7 +1055,10 @@ function renderGameParamFields(product) {
             normalized.includes("playerid") ||
             normalized.includes("player id") ||
             normalized === "player";
-        const displayLabel = getDisplayParamLabel(label);
+        const displayLabel = isJawaker && (
+            normalized.includes("ايدي") || normalized.includes("الايدي") ||
+            normalized.includes("playerid") || normalized.includes("player id") || normalized === "player"
+        ) ? "ID اللاعب" : getDisplayParamLabel(label);
         const inputId = "gameParam_" + index;
         return '<div class="pubg-field game-required-field">' +
             '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
@@ -1159,7 +1160,7 @@ function renderGameProductPicker(gameTitle, group) {
             '<div id="pubgParamFields">' +
                 (firstProduct ? (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
                     ? renderPubgParamFields(firstProduct)
-                    : renderGameParamFields(firstProduct)) : '') +
+                    : renderGameParamFields(firstProduct, gameTitle)) : '') +
             '</div>' +
             '<div class="pubg-field-label">اختر المنتج</div>' +
             '<div class="pubg-select" id="pubgSelect">' +
@@ -1221,11 +1222,11 @@ function renderGameProductPicker(gameTitle, group) {
         if (selectedPrice) selectedPrice.textContent = formatProductPrice(product);
         if (fields) fields.innerHTML = (isPubgGame(gameTitle) && normalizeGameText(group.title).includes("روبوت") && normalizeGameText(group.title).includes("سيرفر") && normalizeGameText(group.title).includes("2")
             ? renderPubgParamFields(product)
-            : renderGameParamFields(product));
+            : renderGameParamFields(product, gameTitle));
         renderQuantity(product);
 
         if (submit) {
-            submit.disabled = product.available === false || product.available === 0;
+            submit.disabled = product.available === false || product.available === 0 || getGameProductPrice(product) === null;
         }
     }
 
