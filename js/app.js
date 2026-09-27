@@ -592,6 +592,9 @@ function getGameTiles() {
             return String(product.category_img || "").trim();
         });
 
+        // صورة المستوى الثالث يجب أن تكون صورة اللعبة نفسها، لا صورة منتج
+        // من داخل التصنيف. إذا لم توجد صورة ثابتة للعبة، نستخدم صورة
+        // category_img القادمة مع منتجات اللعبة كبديل.
         return {
             title: game.title,
             image: game.image || (productWithImage && productWithImage.category_img) || "",
@@ -813,14 +816,16 @@ function openGamePlaceholder(gameTitle) {
         '</div>' +
         '<div class="game-category-grid game-product-groups-grid">' +
         groups.map(function(group) {
-            const pubgImage = "https://play-lh.googleusercontent.com/Se7jR6A5R0Mk9ClaIguf46yi2K3k32JsqKb3gAtrktIh3JwnFfxrQRmG9GLvdMpbxbMrReUOxzDkStxGxNo-5Q=w240-h480";
-            const imageHtml = isPubgGame(gameTitle)
-                ? '<img src="' + pubgImage + '" alt="PUBG MOBILE" loading="lazy">'
-                : (isRoblox
-                    ? '<img src="' + robloxImage + '" alt="Roblox" loading="lazy">'
-                    : (group.image
-                    ? '<img src="' + escapeHtml(group.image) + '" alt="" loading="lazy">'
-                    : '<span class="game-placeholder">🎮</span>'));
+            const gameTile = getGameTiles().find(function(tile) {
+                return tile.title === gameTitle;
+            });
+            // المستوى الثالث يعرض صورة اللعبة، وليس صورة أول منتج داخلها.
+            const gameImage = gameTile && gameTile.image ? gameTile.image : "";
+            const imageHtml = gameImage
+                ? '<img src="' + escapeHtml(gameImage) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
+                : (group.image
+                    ? '<img src="' + escapeHtml(group.image) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
+                    : '<span class="game-placeholder">🎮</span>');
 
             return '<button class="game-category-tile game-product-group-card" type="button" data-game-group="' +
                 escapeHtml(group.key) + '">' +
