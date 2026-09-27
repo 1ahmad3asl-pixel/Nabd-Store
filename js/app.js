@@ -546,8 +546,8 @@ const GAME_CATALOG = [
     { title:"King Shot", aliases:["king shot"] },
     { title:"Zepeto", aliases:["zepeto"] },
     { title:"Devil May Cry: Peak of Combat", aliases:["devil may cry","peak of combat"] },
-    { title:"Crystal of Atlan", aliases:["crystal of atlan"] },
-    { title:"Bullet Echo", aliases:["bullet echo"] },
+    { title:"Crystal of Atlan", aliases:["crystal of atlan","crystal atlan","كريستال اوف اتلان","كريستال أوف أتلان"] },
+    { title:"Bullet Echo", aliases:["bullet echo","bullet echo pvp shooter","بوليت إيكو","بولت إيكو"] },
     { title:"Blood Strike", aliases:["blood strike"] },
     { title:"Acecraft", aliases:["acecraft"] },
     { title:"Arena Breakout", aliases:["arena breakout"] },
@@ -722,6 +722,12 @@ function getStoredGameImageUrl(gameTitle) {
     }
     if (text.includes("super sus")) {
         return BACKEND_URL + "/api/game-images/super-sus";
+    }
+    if (text.includes("crystal of atlan") || text.includes("crystal atlan") || text.includes("كريستال اوف اتلان") || text.includes("كريستال أوف أتلان")) {
+        return BACKEND_URL + "/api/game-images/crystal-of-atlan";
+    }
+    if (text.includes("bullet echo") || text.includes("بوليت إيكو") || text.includes("بولت إيكو")) {
+        return BACKEND_URL + "/api/game-images/bullet-echo";
     }
     if (text.includes("stumble guys")) {
         return BACKEND_URL + "/api/game-images/stumble-guys";
