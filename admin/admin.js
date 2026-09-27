@@ -1818,26 +1818,17 @@ async function loadTransactions() {
                   data.data ||
                   [];
 
-        renderTransactions(
-            transactions
-        );
+        renderTransactions(transactions);
 
-        const totals = transactions.reduce(function(acc, item) {
-            const amount = Number(item.amount || 0);
-            acc.net += Number.isFinite(amount) ? amount : 0;
-            if (item.type === "purchase") acc.sales += Math.max(0, amount);
-            if (item.type === "refund" || item.type === "admin_credit") acc.outflow += Math.abs(amount);
-            if (item.type === "admin_debit") acc.inflow += Math.abs(amount);
-            return acc;
-        }, {net:0,sales:0,outflow:0,inflow:0});
-
+        const budget = data.budget || {};
         const setWalletStat = function(id, value) {
             const el = document.getElementById(id);
             if (el) el.textContent = formatAdminPrice(value);
         };
-        setWalletStat("totalDeposits", totals.sales);
-        setWalletStat("totalWithdrawals", totals.outflow);
-        setWalletStat("budgetNet", totals.net);
+        setWalletStat("totalDeposits", budget.sales ?? 0);
+        setWalletStat("totalWithdrawals", budget.customer_outflows ?? 0);
+        setWalletStat("budgetNet", budget.net_cash ?? 0);
+        setWalletStat("netProfit", budget.net_profit ?? 0);
 
     } catch (error) {
 
@@ -1902,19 +1893,19 @@ function renderTransactions(
                     </td>
 
                     <td>
-                        ${formatAdminPrice(
-                            item.amount ??
-                            0
-                        )}
+                        <strong class="${Number(item.amount || 0) >= 0 ? "status-success" : "status-danger"}">
+                            ${Number(item.amount || 0) >= 0 ? "+" : ""}${formatAdminPrice(item.amount ?? 0)}
+                        </strong>
                     </td>
 
                     <td>
-                        ${escapeAdminHtml(
-                            String(
-                                item.type ??
-                                "-"
-                            )
-                        )}
+                        ${escapeAdminHtml(({
+                            admin_credit:"إضافة رصيد للعميل",
+                            admin_debit:"خصم رصيد من العميل",
+                            purchase:"شراء",
+                            refund:"استرداد",
+                            reversal:"عكس عملية"
+                        })[item.type] || String(item.type || "-"))}
                     </td>
 
                     <td>
