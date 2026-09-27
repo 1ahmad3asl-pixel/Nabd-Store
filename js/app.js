@@ -1716,12 +1716,12 @@ function getPriceDecimalPlaces(value) {
     const dot = text.indexOf(".");
     if (dot < 0) return 3;
     const decimals = text.slice(dot + 1).replace(/0+$/, "").length;
-    return decimals > 0 ? Math.min(6, decimals) : 3;
+    return decimals > 0 ? Math.min(12, decimals) : 3;
 }
 
 function formatMoney(value, decimals) {
     const amount = Number(value) || 0;
-    const places = Number.isInteger(decimals) ? Math.max(0, Math.min(6, decimals)) : 3;
+    const places = Number.isInteger(decimals) ? Math.max(0, Math.min(12, decimals)) : 3;
     return "$" + amount.toFixed(places);
 }
 
