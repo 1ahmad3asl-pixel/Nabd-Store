@@ -2602,3 +2602,27 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
     font-size:0;
     overflow:hidden;
 }
+
+
+/* ===== Balance level 3: provider subcategory tiles ===== */
+.balance-subgroup-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px 18px;
+}
+.balance-subgroup-tile.is-disabled{
+    cursor:not-allowed;
+    filter:grayscale(1);
+    opacity:.58;
+}
+.balance-subgroup-tile.is-disabled .game-tile-image{
+    box-shadow:none;
+}
+@media(max-width:600px){
+    .balance-subgroup-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:22px 10px;
+    }
+    .balance-subgroup-tile .game-tile-title{
+        font-size:13px;
+    }
+}
