@@ -99,7 +99,7 @@ transition:
 .menu-btn:hover{ background:rgba(255,255,255,.12); }
 .menu-btn:active{ transform:scale(.92); }
 /* ========================= MOVING DHIKR BAR ========================= */
-.dhikr-bar{width:92%;max-width:1100px;height:58px;margin:10px auto 0;overflow:hidden;background:#111;border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;white-space:nowrap;position:relative;box-shadow:0 3px 12px rgba(0,0,0,.05);}
+.dhikr-bar{display:flex!important;visibility:visible!important;opacity:1!important;width:100%;max-width:none;height:58px;margin:10px auto 0;overflow:hidden;background:#111;border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;white-space:nowrap;position:relative;box-shadow:0 3px 12px rgba(0,0,0,.05);}
 .dhikr-track{display:flex;align-items:center;gap:0;min-width:max-content;animation:dhikrMove 22s linear infinite;will-change:transform;}
 .dhikr-group{display:flex;align-items:center;gap:55px;padding-inline:27.5px;flex:none;}
 .dhikr-track span{color:var(--primary);font-size:17px;font-weight:900;white-space:nowrap;}
