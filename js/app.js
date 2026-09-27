@@ -63,6 +63,12 @@ document.addEventListener("click", function(event) {
     if (balanceButton) {
         event.preventDefault();
         openBalancePage();
+        return;
+    }
+    const numbersButton = event.target.closest('.category[data-category="numbers"]');
+    if (numbersButton) {
+        event.preventDefault();
+        openNumbersPage();
     }
 });
 
@@ -878,6 +884,10 @@ function initializeCategories() {
                 openBalancePage();
                 return;
             }
+            if (category === "numbers") {
+                openNumbersPage();
+                return;
+            }
 
             document.querySelectorAll(".category").forEach(function(item) {
                 item.classList.remove("active");
@@ -1109,6 +1119,16 @@ function handleInternalHistoryState(state) {
         return;
     }
 
+    if (state.view === "numbers") {
+        openNumbersPage(true);
+        return;
+    }
+
+    if (state.view === "number-products") {
+        openNumberGroupProducts(state.numberGroupKey, true);
+        return;
+    }
+
     if (state.view === "balance") {
         openBalancePage(true);
         return;
@@ -1133,6 +1153,71 @@ function initializeInternalHistory() {
     });
 }
 
+function getNumberGroupDefinitions() {
+    return [
+        {key:"whatsapp-s1",title:"أرقام واتساب S1",aliases:["ارقام واتساب s1","أرقام واتساب s1","whatsapp s1"]},
+        {key:"whatsapp-s2",title:"أرقام واتساب S2",aliases:["ارقام واتساب s2","أرقام واتساب s2","whatsapp s2"]},
+        {key:"gmail",title:"أرقام جيميل",aliases:["ارقام جيميل","أرقام جيميل","gmail"]},
+        {key:"facebook",title:"أرقام فيسبوك",aliases:["ارقام فيسبوك","أرقام فيسبوك","facebook"]},
+        {key:"icloud",title:"أرقام آيكلاود",aliases:["ارقام ايكلاود","أرقام ايكلاود","icloud"]},
+        {key:"imo",title:"أرقام ايمو",aliases:["ارقام ايمو","أرقام ايمو","imo"]},
+        {key:"instagram",title:"أرقام انستغرام",aliases:["ارقام انستغرام","أرقام انستغرام","instagram"]},
+        {key:"whatsapp-badawi",title:"رقم واتساب بدوي",aliases:["رقم واتساب بدوي","ارقام واتساب بدوي","أرقام واتساب بدوي","whatsapp badawi"]},
+        {key:"whatsapp-ban",title:"حظر رقم واتساب",aliases:["حظر رقم واتساب","حظر ارقام واتساب","أرقام واتساب محظورة","whatsapp ban","banned whatsapp"]}
+    ];
+}
+
+function getNumberGroupProducts(group) {
+    const aliases=(group.aliases||[]).map(normalizeGameText);
+    return state.products.filter(function(product){
+        const text=normalizeGameText(String(product.category_name||"")+" "+String(product.name||""));
+        return aliases.some(function(alias){return alias && (text.includes(alias)||alias.includes(text));});
+    });
+}
+
+function getNumberGroupImage(group) {
+    const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
+    return p ? String(p.category_img) : "";
+}
+
+function openNumbersPage(fromHistory) {
+    if(!fromHistory) pushInternalHistory("numbers");
+    const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),title=document.getElementById("internalPageTitle"),icon=document.getElementById("internalPageIcon"),content=document.getElementById("internalPageContent");
+    if(!services||!internal||!content)return;
+    services.hidden=true; internal.hidden=false; if(title)title.textContent="الأرقام"; if(icon)icon.textContent="📲";
+    if(!state.productsLoaded){
+        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل خدمات الأرقام...</p></div>';
+        loadProducts({force:false}).then(function(){openNumbersPage(true);}).catch(function(){});
+        return;
+    }
+    const groups=getNumberGroupDefinitions().map(function(g){return Object.assign({},g,{productCount:getNumberGroupProducts(g).length,image:getNumberGroupImage(g)});});
+    content.innerHTML='<div class="numbers-page-note">اختر نوع الرقم للدخول إلى المنتجات المتاحة.</div><div class="game-category-grid numbers-category-grid">'+groups.map(function(g){
+        const img=g.image?'<img src="'+escapeHtml(g.image)+'" alt="" loading="lazy">':'<span class="numbers-placeholder">📲</span>';
+        const dis=g.productCount===0;
+        return '<button class="game-category-tile numbers-category-tile'+(dis?' is-disabled':'')+'" type="button" data-number-group="'+escapeHtml(g.key)+'"'+(dis?' disabled':'')+'><span class="game-tile-image">'+img+'</span><span class="game-tile-title">'+escapeHtml(g.title)+'</span><span class="numbers-count">'+g.productCount+' منتج</span></button>';
+    }).join("")+'</div>';
+    content.querySelectorAll(".numbers-category-tile:not([disabled])").forEach(function(tile){tile.addEventListener("click",function(){openNumberGroupProducts(tile.getAttribute("data-number-group"));});});
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openNumberGroupProducts(groupKey,fromHistory) {
+    const group=getNumberGroupDefinitions().find(function(g){return g.key===groupKey;});
+    if(!group){openNumbersPage(!!fromHistory);return;}
+    if(!fromHistory)pushInternalHistory("number-products",{numberGroupKey:groupKey});
+    const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),title=document.getElementById("internalPageTitle"),icon=document.getElementById("internalPageIcon"),content=document.getElementById("internalPageContent");
+    if(!services||!internal||!content)return;
+    services.hidden=true;internal.hidden=false;if(title)title.textContent=group.title;if(icon)icon.textContent="📲";
+    if(!state.productsLoaded){content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل المنتجات...</p></div>';loadProducts({force:false}).then(function(){openNumberGroupProducts(groupKey,true);}).catch(function(){});return;}
+    const products=getNumberGroupProducts(group);
+    content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="numberGroupBack">← العودة إلى الأرقام</button><div class="game-products-heading"><strong>'+products.length+' منتج</strong><span>'+escapeHtml(group.title)+'</span></div></div><div class="numbers-product-grid">'+(products.length?products.map(function(p){
+        const available=p.available!==false&&p.available!==0,raw=p.price,live=state.productsLive&&raw!==null&&raw!==undefined&&String(raw).trim()!==""&&Number.isFinite(Number(raw))&&Number(raw)>=0;
+        const image=String(p.category_img||"").trim(),icon=image?'<img src="'+escapeHtml(image)+'" alt="" loading="lazy">':'<span class="numbers-product-placeholder">📲</span>';
+        return '<article class="numbers-product-card'+(available?'':' product-unavailable')+'"><div class="numbers-product-image">'+icon+'</div><h3>'+escapeHtml(p.name||"منتج")+'</h3><p>'+escapeHtml(p.category_name||"")+'</p><div class="price">'+(live?formatProductMoney(p,Number(raw)):"جاري تحديث السعر…")+'</div><button class="buy-btn number-buy-btn" type="button" data-number-product-id="'+escapeHtml(String(p.id))+'" '+(available&&live?'':'disabled')+'>'+ (available?(live?"شراء الآن":"جاري تحديث السعر"):"غير متوفر") +'</button></article>';
+    }).join(""):'<div class="products-loading"><p>لا توجد منتجات متاحة لهذا النوع حاليًا.</p></div>')+'</div>';
+    const back=document.getElementById("numberGroupBack");if(back)back.addEventListener("click",function(){openNumbersPage();});
+    content.querySelectorAll(".number-buy-btn[data-number-product-id]").forEach(function(btn){btn.addEventListener("click",function(){const p=state.products.find(function(item){return String(item.id)===String(btn.getAttribute("data-number-product-id"));});if(p)openProductModal(p);});});
+    window.scrollTo({top:0,behavior:"smooth"});
+}
 function getAppServerTiles() {
     return [
         { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/assets/app-server-1.svg" },
