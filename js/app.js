@@ -1205,6 +1205,7 @@ function renderGameProductPicker(gameTitle, group) {
             '<div class="pubg-field game-quantity-field">' +
                 '<label for="gameOrderQty">الكمية</label>' +
                 '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required aria-required="true">' +
+                '<small id="gameQuantityTotalPrice" class="quantity-total-price"></small>' +
             '</div>';
     }
 
@@ -1224,6 +1225,7 @@ function renderGameProductPicker(gameTitle, group) {
             ? renderPubgParamFields(product)
             : renderGameParamFields(product, gameTitle));
         renderQuantity(product);
+        updateQuantityTotalPrice();
 
         if (submit) {
             submit.disabled = product.available === false || product.available === 0 || getGameProductPrice(product) === null;
@@ -1231,6 +1233,27 @@ function renderGameProductPicker(gameTitle, group) {
     }
 
     renderQuantity(firstProduct);
+
+    function updateQuantityTotalPrice() {
+        const qtyInput = document.getElementById("gameOrderQty");
+        const totalLabel = document.getElementById("gameQuantityTotalPrice");
+        const product = products[selectedIndex];
+        if (!qtyInput || !totalLabel || !product) return;
+        const qty = Number(qtyInput.value);
+        const unitPrice = getGameProductPrice(product);
+        if (!Number.isFinite(qty) || unitPrice === null) {
+            totalLabel.textContent = "السعر الإجمالي: السعر غير متاح";
+            return;
+        }
+        totalLabel.textContent = "السعر الإجمالي: " +
+            formatMoney(unitPrice * qty, getPriceDecimalPlaces(product.price));
+    }
+
+    const quantityField = document.getElementById("gameQuantityField");
+    if (quantityField) {
+        quantityField.addEventListener("input", updateQuantityTotalPrice);
+    }
+    updateQuantityTotalPrice();
 
     const back = document.getElementById("pubgBackToGroups");
     if (back) back.addEventListener("click", function() {
