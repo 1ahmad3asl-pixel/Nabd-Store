@@ -1079,24 +1079,49 @@ function renderGameParamFields(product, gameTitle) {
     const params = getUsableProductParams(product);
     const normalizedGameTitle = normalizeGameText(gameTitle || "");
     const isJawaker = normalizedGameTitle.includes("jawaker") || normalizedGameTitle.includes("جواكر");
-    if (!params.length && isJawaker) {
-        return '<div class="pubg-field game-required-field"><label for="gameParam_0">ID اللاعب</label><input id="gameParam_0" type="text" data-game-param="playerId" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true"></div>';
+
+    // جواكر تستخدم ID اللاعب كبيان أساسي في جميع منتجاتها، بما فيها المسرعات.
+    if (isJawaker) {
+        const hasPlayerId = params.some(function(label) {
+            const normalized = normalizeGameText(label);
+            return normalized.includes("ايدي") ||
+                normalized.includes("الايدي") ||
+                normalized.includes("playerid") ||
+                normalized.includes("player id") ||
+                normalized === "player";
+        });
+
+        const playerField = hasPlayerId ? "" :
+            '<div class="pubg-field game-required-field"><label for="gameParam_playerId">ID اللاعب</label><input id="gameParam_playerId" type="text" data-game-param="playerId" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true"></div>';
+
+        const otherFields = params.map(function(label, index) {
+            const normalized = normalizeGameText(label);
+            const isId = normalized.includes("ايدي") ||
+                normalized.includes("الايدي") ||
+                normalized.includes("playerid") ||
+                normalized.includes("player id") ||
+                normalized === "player";
+            if (isId) {
+                return '<div class="pubg-field game-required-field">' +
+                    '<label for="gameParam_' + index + '">ID اللاعب</label>' +
+                    '<input id="gameParam_' + index + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ID اللاعب" autocomplete="off" required aria-required="true">' +
+                    '</div>';
+            }
+            return '<div class="pubg-field game-required-field">' +
+                '<label for="gameParam_' + index + '">' + escapeHtml(getDisplayParamLabel(label)) + '</label>' +
+                '<input id="gameParam_' + index + '" type="text" data-game-param="' + escapeHtml(label) + '" placeholder="أدخل ' + escapeHtml(getDisplayParamLabel(label)) + '" autocomplete="off" required aria-required="true">' +
+                '</div>';
+        }).join("");
+
+        return playerField + otherFields;
     }
+
     if (!params.length) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
     return params.map(function(label, index) {
-        const normalized = normalizeGameText(label);
-        const isId = normalized.includes("ايدي") ||
-            normalized.includes("الايدي") ||
-            normalized.includes("playerid") ||
-            normalized.includes("player id") ||
-            normalized === "player";
-        const displayLabel = isJawaker && (
-            normalized.includes("ايدي") || normalized.includes("الايدي") ||
-            normalized.includes("playerid") || normalized.includes("player id") || normalized === "player"
-        ) ? "ID اللاعب" : getDisplayParamLabel(label);
+        const displayLabel = getDisplayParamLabel(label);
         const inputId = "gameParam_" + index;
         return '<div class="pubg-field game-required-field">' +
             '<label for="' + inputId + '">' + escapeHtml(displayLabel) + '</label>' +
@@ -1104,7 +1129,6 @@ function renderGameParamFields(product, gameTitle) {
             '</div>';
     }).join("");
 }
-
 function getGameProductPrice(product) {
     const value = product && product.price;
     if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
