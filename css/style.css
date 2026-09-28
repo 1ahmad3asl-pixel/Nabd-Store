@@ -3026,22 +3026,14 @@ input, textarea, select, [contenteditable="true"]{
    واجهة الأرصدة: شريطان ذهبيان عريضان بنهايات مائلة
 ========================= */
 #internalPage.balance-internal-page .internal-page-header{
-    display:flex;
-    align-items:center;
-    flex-wrap:nowrap;
     gap:10px;
     border-bottom:0;
 }
-#internalPage.balance-internal-page .internal-back{
-    flex:0 0 48px;
-}
 #internalPage.balance-internal-page .internal-page-header > div:last-child{
-    flex:1 1 auto;
+    flex:1;
     min-width:0;
-    display:flex;
-    align-items:center;
     justify-content:center;
-    gap:10px;
+    gap:8px;
 }
 #internalPage.balance-internal-page .internal-page-icon{
     display:none;
@@ -3056,8 +3048,8 @@ input, textarea, select, [contenteditable="true"]{
 #internalPage.balance-internal-page .internal-page-header > div:last-child::before,
 #internalPage.balance-internal-page .internal-page-header > div:last-child::after{
     content:"";
-    flex:0 0 48px;
-    width:48px;
+    flex:1 1 auto;
+    min-width:0;
     height:8px;
     background:var(--primary);
 }
