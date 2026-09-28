@@ -2784,7 +2784,10 @@ function openBalanceSubgroups(groupKey, fromHistory) {
             '<div class="game-category-grid game-product-groups-grid balance-subgroup-grid">' +
                 subgroups.map(function(subgroup){
                     const available=subgroup.products.some(function(product){return product.available!==false&&product.available!==0;});
-                    const image=subgroup.image||"";
+                    // المستوى الثالث يجب أن يملك صورة دائمًا: نستخدم صورة التصنيف القادمة من API،
+                    // وإن لم تكن موجودة نرجع إلى صورة مزود الأرصدة الثابتة من BALANCE_CATALOG.
+                    const catalogItem = BALANCE_CATALOG.find(function(item){ return item.key === group.key; });
+                    const image = subgroup.image || (catalogItem && catalogItem.image) || "";
                     const imageHtml=image
                         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(subgroup.title)+'" loading="lazy">'
                         : '<span class="game-placeholder">💵</span>';
