@@ -3010,13 +3010,16 @@ function renderBalanceProductPicker(group) {
     function qtyConfig(p){
         const v=p&&p.qty_values?p.qty_values:{};
         const min=Number(v.min),max=Number(v.max),step=Number(v.step);
-        const text=normalizeBalanceText(String(group.title||"")+" "+String(group.providerTitle||"")+" "+String(p&&p.category_name||"")+" "+String(p&&p.name||""));
-        const isMtnInvoice=text.includes("mtn")&&(text.includes("فاتور")||text.includes("invoice"));
+        const groupTitle=normalizeBalanceText(String(group.title||"")+" "+String(group.providerTitle||""));
+        const productTitle=normalizeBalanceText(String(p&&p.category_name||"")+" "+String(p&&p.name||""));
+        // تخصيص الكمية لفواتير MTN فقط؛ لا نطبقه على ألعاب مثل جواكر.
+        const isMtnInvoice=groupTitle.includes("mtn") &&
+            (groupTitle.includes("فاتور") || productTitle.includes("فاتور") || productTitle.includes("invoice"));
         const enabled=isMtnInvoice||Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));
         return{
             enabled:enabled,
             min:isMtnInvoice?500:(Number.isFinite(min)&&min>0?min:1),
-            max:isMtnInvoice?1000000:(Number.isFinite(max)&&max>0?max:1000000),
+            max:isMtnInvoice?1000000:(Number.isFinite(max)&&max>0?max:999999999),
             step:Number.isFinite(step)&&step>0?step:1
         };
     }
