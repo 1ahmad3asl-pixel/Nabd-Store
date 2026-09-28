@@ -1878,6 +1878,47 @@ function renderGameParamFields(product, gameTitle) {
             '</div>';
     }).join("");
 }
+function getTurkcellParamConfig(product) {
+    const params = Array.isArray(product && product.params)
+        ? product.params.map(function(label) { return String(label ?? "").trim(); }).filter(Boolean)
+        : [];
+    const normalized = params.map(function(label) {
+        return normalizeBalanceText(label).toLowerCase();
+    });
+    const phoneIndex = normalized.findIndex(function(label) {
+        return /رابط|link|url|phone|mobile|number|رقم|هاتف|موبايل/.test(label);
+    });
+    const packageIndex = normalized.findIndex(function(label, index) {
+        return index !== phoneIndex && /subscriber|package|packages|باقة|باقات|مشترك|مشتركين/.test(label);
+    });
+    return {
+        params: params,
+        phoneKey: phoneIndex >= 0 ? params[phoneIndex] : (params[0] || ""),
+        packageKey: packageIndex >= 0 ? params[packageIndex] : ""
+    };
+}
+
+function renderBalanceRequiredFields(product, groupTitle) {
+    const isTurkey = normalizeBalanceText(groupTitle || "").includes("تركي") ||
+        normalizeBalanceText(product && product.category_name || "").includes("تركي") ||
+        normalizeBalanceText(product && product.name || "").includes("ترك");
+    if (!isTurkey) return renderGameParamFields(product, groupTitle);
+
+    const config = getTurkcellParamConfig(product);
+    if (!config.phoneKey) {
+        return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
+    }
+
+    const safeKey = escapeHtml(config.phoneKey);
+    return '<div class="pubg-field game-required-field">' +
+        '<label for="gameParam_0">رقم الهاتف</label>' +
+        '<input id="gameParam_0" type="tel" data-game-param="' + safeKey + '" placeholder="أدخل رقم الهاتف" inputmode="tel" autocomplete="tel" required aria-required="true">' +
+        '</div>' +
+        (config.packageKey
+            ? '<div class="game-selected-package-note">الباقة: <strong>' + escapeHtml(product && product.name || "الباقة المختارة") + '</strong></div>'
+            : "");
+}
+
 function getRawProductPrice(product) {
     const value = product && product.original_price;
     if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
@@ -2996,7 +3037,7 @@ function renderBalanceProductPicker(group) {
         const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");
         if(n)n.textContent=p.name||"اختر المنتج";
         if(pr){const unit=getBalanceSaleUnitPrice(p);pr.textContent=unit===null?"السعر غير متاح":formatBalancePrice(p,unit);}
-        if(f)f.innerHTML=renderGameParamFields(p,group.title);
+        if(f)f.innerHTML=renderBalanceRequiredFields(p,group.title);
         renderQty(p);updateTotal();
         if(s)s.disabled=p.available===false||p.available===0||getBalanceSaleUnitPrice(p)===null;
     }
@@ -3025,6 +3066,13 @@ function renderBalanceProductPicker(group) {
             if(!value){invalid=true;input.classList.add("is-invalid");}
             else{params[label]=value;input.classList.remove("is-invalid");}
         });
+        // تركسل: حقل الباقة التقني في Nemer يُملأ تلقائيًا من المنتج المختار،
+        // فلا يظهر للعميل كحقل "باقات مشتركين".
+        const turkeyTitle = normalizeBalanceText(group.title || "");
+        if (turkeyTitle.includes("تركي") && turkeyTitle.includes("باقة")) {
+            const config = getTurkcellParamConfig(p);
+            if (config.packageKey) params[config.packageKey] = String(p.name || "").trim();
+        }
         const qi=document.getElementById("balanceOrderQty"),qty=qi?Number(qi.value)||1:1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
         if(invalid){showToast("يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}
