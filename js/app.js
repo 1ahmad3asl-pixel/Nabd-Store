@@ -2720,8 +2720,8 @@ function openBalancePage(fromHistory) {
     const services=document.getElementById("servicesSection"), internal=document.getElementById("internalPage");
     const title=document.getElementById("internalPageTitle"), icon=document.getElementById("internalPageIcon"), content=document.getElementById("internalPageContent");
     if (!services || !internal || !content) return;
-    services.hidden=true; internal.hidden=false;
-    if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="💵";
+    services.hidden=true; internal.hidden=false; internal.classList.add("balance-internal-page");
+    if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="";
     // المستوى الثاني يعرض التصنيفات الثابتة فقط؛ لا نستدعي Nemer هنا.
     // استدعاء API وربط المنتجات يتم عند دخول المستوى الثالث/صفحة الشراء.
     const groups=getBalanceGroups();
