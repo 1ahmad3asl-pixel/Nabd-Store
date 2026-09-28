@@ -250,6 +250,11 @@
 
             </div>
 
+            <div class="admin-stats-grid" style="margin-bottom:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+                <div class="stat-card"><div class="stat-icon">📦</div><div><span>عدد الطلبات</span><strong id="ordersTotalCount">0</strong></div></div>
+                <div class="stat-card"><div class="stat-icon">⚠️</div><div><span>الطلبات الفاشلة</span><strong id="ordersFailedCount">0</strong></div></div>
+            </div>
+
             <div class="admin-card">
 
                 <div class="filter-bar">
@@ -294,6 +299,7 @@
 
                             <tr>
                                 <th>الطلب</th>
+                                <th>العميل</th>
                                 <th>رقم العميل</th>
                                 <th>المنتج</th>
                                 <th>سعر API</th>
@@ -308,7 +314,7 @@
                         <tbody id="ordersTable">
 
                             <tr>
-                                <td colspan="8">
+                                <td colspan="9">
                                     لا توجد طلبات حاليًا
                                 </td>
                             </tr>
