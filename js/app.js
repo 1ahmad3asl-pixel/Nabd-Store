@@ -2530,13 +2530,13 @@ const BALANCE_CATALOG = [
         key:"syriatel",
         title:"سيريتيل",
         aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
-        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Syriatel_Logo.png"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo_wordmark_Syriatel.png"
     },
     {
         key:"mtn",
         title:"MTN",
         aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
-        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/MTN-Logo.png"
+        image:"https://upload.wikimedia.org/wikipedia/commons/a/af/MTN_Logo.svg"
     },
     {
         key:"zain-cash",
@@ -2572,7 +2572,7 @@ const BALANCE_CATALOG = [
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Payoneer_logo.svg"
+        image:"https://upload.wikimedia.org/wikipedia/commons/e/e7/Payoneer_logo.svg"
     },
     {
         key:"touch",
