@@ -1,3 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <image href="https://play-lh.googleusercontent.com/pmwiZbU4FEWJju_fyt2_G2bf7OdRKL7UCp7FLEubdkw9As3bUyaVew-nJoW3lDc716oXiZA162YAMz4vBUijQ4Q%3Dw240-h480" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid slice"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Syriatel">
+  <rect x="18" y="18" width="476" height="476" rx="72" fill="#e51b23"/>
+  <ellipse cx="256" cy="256" rx="202" ry="126" fill="#fff"/>
+  <text x="256" y="244" text-anchor="middle" font-family="Arial, Tahoma, sans-serif" font-size="58" font-weight="700" fill="#777">سيريتل</text>
+  <path d="M157 205 C205 176 242 172 286 184 C318 193 347 190 369 174" fill="none" stroke="#e51b23" stroke-width="13" stroke-linecap="round"/>
+  <path d="M260 180 C272 201 276 218 274 238" fill="none" stroke="#159447" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="270" cy="188" r="6" fill="#111"/>
+  <text x="256" y="309" text-anchor="middle" font-family="Arial, sans-serif" font-size="39" font-weight="700" fill="#777">SYRIATEL</text>
 </svg>
