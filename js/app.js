@@ -1252,16 +1252,11 @@ function openNumbersPage(fromHistory) {
     const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),title=document.getElementById("internalPageTitle"),icon=document.getElementById("internalPageIcon"),content=document.getElementById("internalPageContent");
     if(!services||!internal||!content)return;
     services.hidden=true; internal.hidden=false; if(title)title.textContent="الأرقام"; if(icon)icon.textContent="📲";
-    if(!state.productsLoaded){
-        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل خدمات الأرقام...</p></div>';
-        loadProducts({force:false}).then(function(){openNumbersPage(true);}).catch(function(){});
-        return;
-    }
-    const groups=getNumberGroupDefinitions().map(function(g){return Object.assign({},g,{productCount:getNumberGroupProducts(g).length,image:getNumberGroupImage(g)});});
-    content.innerHTML='<div class="numbers-page-note">اختر نوع الرقم للدخول إلى المنتجات المتاحة.</div><div class="game-category-grid numbers-category-grid">'+groups.map(function(g){
+    // المستوى الثاني يعرض التصنيفات فقط؛ جلب المنتجات يتم بعد الضغط على التصنيف.
+    const groups=getNumberGroupDefinitions().map(function(g){return Object.assign({},g,{image:getNumberGroupImage(g)});});
+    content.innerHTML='<div class="numbers-page-note">اختر نوع الرقم لجلب منتجاته المتاحة.</div><div class="game-category-grid numbers-category-grid">'+groups.map(function(g){
         const img=g.image?'<img src="'+escapeHtml(g.image)+'" alt="" loading="lazy">':'<span class="numbers-placeholder">📲</span>';
-        const dis=g.productCount===0;
-        return '<button class="game-category-tile numbers-category-tile'+(dis?' is-disabled':'')+'" type="button" data-number-group="'+escapeHtml(g.key)+'"'+(dis?' disabled':'')+'><span class="game-tile-image">'+img+'</span><span class="game-tile-title">'+escapeHtml(g.title)+'</span><span class="numbers-count">'+g.productCount+' منتج</span></button>';
+        return '<button class="game-category-tile numbers-category-tile" type="button" data-number-group="'+escapeHtml(g.key)+'"><span class="game-tile-image">'+img+'</span><span class="game-tile-title">'+escapeHtml(g.title)+'</span></button>';
     }).join("")+'</div>';
     content.querySelectorAll(".numbers-category-tile:not([disabled])").forEach(function(tile){tile.addEventListener("click",function(){openNumberGroupProducts(tile.getAttribute("data-number-group"));});});
     window.scrollTo({top:0,behavior:"smooth"});
@@ -1275,9 +1270,12 @@ function openNumberGroupProducts(groupKey,fromHistory) {
     if(!services||!internal||!content)return;
     services.hidden=true;internal.hidden=false;
 
-    if(!state.productsLoaded){
-        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل المنتجات...</p></div>';
-        loadProducts({force:false}).then(function(){openNumberGroupProducts(groupKey,true);}).catch(function(){});
+    // المستوى الثالث هو نقطة جلب منتجات التصنيف.
+    if(!state.productsLive){
+        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذا التصنيف...</p></div>';
+        loadProducts({force:true}).then(function(){openNumberGroupProducts(groupKey,true);}).catch(function(){
+            content.innerHTML='<div class="game-products-placeholder"><div class="game-products-placeholder-icon">⚠️</div><h3>'+escapeHtml(group.title)+'</h3><p>تعذر تحميل المنتجات حاليًا.</p></div>';
+        });
         return;
     }
 
@@ -1690,14 +1688,8 @@ function openGamesPage(fromHistory) {
     if (title) title.textContent = "الألعاب";
     if (icon) icon.textContent = "🎮";
 
-    // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك تظهر فورًا.
-    // نبدأ تحميل المنتجات في الخلفية بدون حبس المستخدم داخل شاشة تحميل.
+    // المستوى الثاني لا يجلب المنتجات. جلب منتجات اللعبة يبدأ بعد ضغط العميل على اللعبة.
     const tiles = getGameTiles();
-    if (!state.productsLoaded && !state.productsLoadingPromise) {
-        loadProducts().catch(function(error) {
-            console.warn("Background products preload failed:", error);
-        });
-    }
 
     content.innerHTML =
         '<div class="game-page-note">اختر اللعبة للدخول إلى التصنيفات والمنتجات المتاحة.</div>' +
@@ -1747,6 +1739,17 @@ function openGamePlaceholder(gameTitle, fromHistory) {
 
     if (title) title.textContent = gameTitle;
     if (icon) icon.textContent = "🎮";
+
+    // المستوى الثالث هو نقطة جلب منتجات اللعبة حسب القاعدة العامة للمشروع.
+    if (!state.productsLive) {
+        content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذه اللعبة...</p></div>';
+        loadProducts({force:true}).then(function(){ openGamePlaceholder(gameTitle, true); }).catch(function(){
+            content.innerHTML = '<div class="game-products-placeholder"><div class="game-products-placeholder-icon">⚠️</div><h3>' + escapeHtml(gameTitle) + '</h3><p>تعذر تحميل المنتجات حاليًا.</p><button class="buy-btn" type="button" id="retryGameProducts">↻ إعادة المحاولة</button></div>';
+            const retry=document.getElementById("retryGameProducts");
+            if(retry) retry.addEventListener("click",function(){openGamePlaceholder(gameTitle);});
+        });
+        return;
+    }
 
     const groups = getGameGroups(gameTitle);
     const isRoblox = normalizeGameText(gameTitle).includes("roblox");
