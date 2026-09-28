@@ -2995,3 +2995,27 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
         padding:7px 4px;
     }
 }
+
+/* ===== STORE INTERACTION LOCK ===== */
+/* واجهة المتجر مخصصة للمسارات التي نسمح بها فقط. */
+html, body{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    user-select:none;
+}
+img, svg{
+    -webkit-user-drag:none;
+    user-drag:none;
+    -webkit-user-select:none;
+    user-select:none;
+    pointer-events:none;
+}
+a, button, [role="button"], .category, .quick-item, .buy-btn{
+    -webkit-user-select:none;
+    user-select:none;
+}
+input, textarea, select, [contenteditable="true"]{
+    -webkit-user-select:text;
+    -moz-user-select:text;
+    user-select:text;
+}
