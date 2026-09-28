@@ -3113,10 +3113,10 @@ function renderBalanceProductPicker(group) {
             });
         });
     }
-    const turkcellServiceSelect=document.getElementById("turkcellServiceSelect");
-    if(turkcellServiceSelect){
-        turkcellServiceSelect.addEventListener("change",function(){
-            const option=turkcellServiceSelect.options[turkcellServiceSelect.selectedIndex];
+    if(content){
+        content.addEventListener("change",function(event){
+            if(!event.target || event.target.id!=="turkcellServiceSelect") return;
+            const option=event.target.options[event.target.selectedIndex];
             const index=option?Number(option.getAttribute("data-service-index")):NaN;
             if(Number.isInteger(index)) updateProduct(index);
         });
