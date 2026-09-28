@@ -2581,7 +2581,7 @@ function renderCustomerOrderResponse(response) {
         object.download_url || object.downloadUrl || object.url || object.file_url || object.fileUrl ||
         object.data?.download_url || object.data?.downloadUrl || object.data?.url ||
         object.data?.file_url || object.data?.fileUrl;
-    if (downloadUrl && /^https?:\\/\\//i.test(String(downloadUrl))) {
+    if (downloadUrl && /^https?:\/\//i.test(String(downloadUrl))) {
         return '<div class="customer-order-system-response">' +
             '<a class="customer-order-download" href="' + escapeHtml(String(downloadUrl)) +
             '" target="_blank" rel="noopener noreferrer" download>تحميل رد النظام</a></div>';
