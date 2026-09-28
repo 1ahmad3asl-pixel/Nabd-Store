@@ -2524,85 +2524,85 @@ const BALANCE_CATALOG = [
         key:"turkey-balance",
         title:"رصيد تركي",
         aliases:["رصيد تركي","الرصيد التركي","تركيا","تركي","turkish balance","turkey balance","turkey","try","tl"],
-        image:"https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg"
+        image:"/assets/balance/turkey-balance.svg"
     },
     {
         key:"syriatel",
         title:"سيريتيل",
         aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
-        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Syriatel%20Logo.png"
+        image:"/assets/balance/syriatel.svg"
     },
     {
         key:"mtn",
         title:"MTN",
         aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
-        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/MTN%20Logo.svg"
+        image:"/assets/balance/mtn.svg"
     },
     {
         key:"zain-cash",
         title:"زين كاش",
         aliases:["زين كاش","zain cash","zaincash","zain"],
-        image:"https://cdn.simpleicons.org/zaincash"
+        image:"/assets/balance/zain-cash.svg"
     },
     {
         key:"instapay",
         title:"InstaPay",
         aliases:["instapay","insta pay","انستا باي","إنستا باي"],
-        image:"https://cdn.simpleicons.org/instapay"
+        image:"/assets/balance/instapay.svg"
     },
     {
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"https://cdn.simpleicons.org/reflect"
+        image:"/assets/balance/reflect.svg"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"https://cdn.simpleicons.org/papara"
+        image:"/assets/balance/papara.svg"
     },
     {
         key:"paypal",
         title:"PayPal",
         aliases:["paypal","باي بال","بايبال"],
-        image:"https://cdn.simpleicons.org/paypal"
+        image:"/assets/balance/paypal.svg"
     },
     {
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"https://cdn.simpleicons.org/payoneer"
+        image:"/assets/balance/payoneer.svg"
     },
     {
         key:"touch",
         title:"Touch",
         aliases:["touch","touch lebanon","تاتش","تتش"],
-        image:"https://cdn.simpleicons.org/touch"
+        image:"/assets/balance/touch.svg"
     },
     {
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"https://cdn.simpleicons.org/alfa"
+        image:"/assets/balance/alfa.svg"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"https://cdn.simpleicons.org/rcell"
+        image:"/assets/balance/rcell.svg"
     },
     {
         key:"whish-money",
         title:"Whish Money",
         aliases:["whish money","whish","ويش موني","ويش","wish money"],
-        image:"https://cdn.simpleicons.org/whish"
+        image:"/assets/balance/whish-money.svg"
     },
     {
         key:"asia-cell",
         title:"آسيا سيل",
         aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
-        image:"https://cdn.simpleicons.org/asiacell"
+        image:"/assets/balance/asia-cell.svg"
     }
 ];
 function normalizeBalanceText(value) {
