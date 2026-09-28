@@ -2903,12 +2903,12 @@ function renderBalanceProductPicker(group) {
     let selectedIndex=first?products.indexOf(first):-1;
     function qtyConfig(p){
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
-        const groupTitle=normalizeBalanceText(group.title||"");
         const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
-        // فواتير MTN: الكمية إلزامية، من 500 حتى 1,000,000.
-        // نتحقق من اسم التصنيف والمنتج معًا حتى لا نعرض حد API العام (مثل 5 مليار).
-        const isMtnInvoice = String(group.balanceGroupKey || "").toLowerCase() === "mtn" &&
-            normalizeBalanceText(group.title || "").includes("فاتور");
+        // فواتير MTN: نربط الحد بالمنتج نفسه، لا بعنوان المستوى الثالث.
+        // هذا يمنع انتقال حد MTN إلى جواكر أو أي منتج آخر.
+        const isMtnInvoice =
+            String(group.balanceGroupKey || "").toLowerCase() === "mtn" &&
+            (productTitle.includes("فاتور") || productTitle.includes("invoice"));
         if(isMtnInvoice){
             return{enabled:true,min:500,max:1000000,step:1};
         }
