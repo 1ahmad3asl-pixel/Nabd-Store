@@ -2838,10 +2838,22 @@ function renderBalanceProductPicker(group) {
     const available=products.filter(function(p){return p.available!==false&&p.available!==0;});
     const first=available[0]||products[0]||null;
 
+    function getBalancePriceDecimals(product){
+        const raw=product&&product.price;
+        const text=String(raw==null?"":raw).trim();
+        const dot=text.indexOf(".");
+        if(dot<0)return 2;
+        return Math.max(2,Math.min(8,text.length-dot-1));
+    }
+    function formatBalancePrice(product,value){
+        const amount=Number(value);
+        if(!Number.isFinite(amount))return "السعر غير متاح";
+        return formatMoney(amount,getBalancePriceDecimals(product));
+    }
     const list=products.map(function(product,index){
         const ok=product.available!==false&&product.available!==0;
         const price=getGameProductPrice(product);
-        return '<button class="pubg-option'+(ok?'':' is-disabled')+'" type="button" data-balance-index="'+index+'"'+(ok?'':' disabled')+'><span class="pubg-option-name">'+escapeHtml(product.name||"منتج")+'</span><span class="pubg-option-price">'+(price===null?'السعر غير متاح':formatProductMoney(product,price))+'</span>'+(ok?'':'<span class="pubg-option-status">غير متوفر</span>')+'</button>';
+        return '<button class="pubg-option'+(ok?'':' is-disabled')+'" type="button" data-balance-index="'+index+'"'+(ok?'':' disabled')+'><span class="pubg-option-name">'+escapeHtml(product.name||"منتج")+'</span><span class="pubg-option-price">'+(price===null?'السعر غير متاح':formatBalancePrice(product,price))+'</span>'+(ok?'':'<span class="pubg-option-status">غير متوفر</span>')+'</button>';
     }).join("");
 
     const image=group.image||"";
@@ -2872,14 +2884,14 @@ function renderBalanceProductPicker(group) {
         if(!p||!el)return;
         const unit=getGameProductPrice(p),qty=q?Number(q.value):1;
         if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}
-        el.textContent=formatMoney(ceilPrice(unit*qty,getPriceDecimalPlaces(p.price)),getPriceDecimalPlaces(p.price));
+        el.textContent=formatBalancePrice(p,unit*qty);
     }
     function updateProduct(index){
         const p=products[index];if(!p)return;
         selectedIndex=index;
         const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");
         if(n)n.textContent=p.name||"اختر المنتج";
-        if(pr)pr.textContent=formatProductPrice(p);
+        if(pr)pr.textContent=formatBalancePrice(p,getGameProductPrice(p));
         if(f)f.innerHTML=renderGameParamFields(p,group.title);
         renderQty(p);updateTotal();
         if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;
