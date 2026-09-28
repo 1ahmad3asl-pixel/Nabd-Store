@@ -2752,8 +2752,9 @@ function openBalanceSubgroups(groupKey, fromHistory) {
     const icon=document.getElementById("internalPageIcon");
     if(!content) return;
 
-    // عند الانتقال للمستوى الثالث فقط، نطلب بيانات المنتجات الحية من Nemer.
-    if (!state.productsLive) {
+    // قاعدة الأرصدة: لا نطلب منتجات API قبل ضغط المستوى الثاني.
+    // وكل ضغطة على تصنيف المستوى الثاني تطلب البيانات الحية، حتى لو كانت المنتجات قد حُمّلت سابقًا من قسم آخر.
+    if (true) {
         content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذا التصنيف...</p></div>';
         const request = loadProducts({force:true});
         request.then(function(){ openBalanceSubgroups(groupKey, true); }).catch(function(){
@@ -2773,7 +2774,7 @@ function openBalanceSubgroups(groupKey, fromHistory) {
     const subgroups=getBalanceSubgroups(group);
 
     if(!subgroups.length){
-        content.innerHTML='<div class="game-products-placeholder"><div class="game-products-placeholder-icon">💵</div><h3>'+escapeHtml(group.title)+'</h3><p>لا توجد تصنيفات متاحة حاليًا.</p></div>';
+        content.innerHTML='<div class="game-products-placeholder"><div class="game-products-placeholder-icon">💵</div><h3>'+escapeHtml(group.title)+'</h3><p>لا توجد منتجات متاحة حاليًا لهذا التصنيف.</p></div>';
         return;
     }
 
