@@ -1960,7 +1960,9 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 .balance-category-tile .game-tile-image img[src*="turkey-balance.svg"],
 .balance-subgroup-tile .game-tile-image img[src*="turkey-balance.svg"],
 .balance-category-tile .game-tile-image img[src*="syriatel.sy"],
-.balance-subgroup-tile .game-tile-image img[src*="syriatel.sy"]{
+.balance-subgroup-tile .game-tile-image img[src*="syriatel.sy"],
+.balance-category-tile .game-tile-image img[src*="mtn.svg"],
+.balance-subgroup-tile .game-tile-image img[src*="mtn.svg"]{
     padding:0;
     object-fit:cover;
 }
