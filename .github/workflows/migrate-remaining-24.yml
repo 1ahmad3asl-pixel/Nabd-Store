@@ -1,5 +1,6 @@
 name: Migrate remaining 24 game images
 
+# Triggered again to complete the pending image migration.
 on:
   push:
     branches: [main]
@@ -51,7 +52,7 @@ jobs:
               if im.mode not in ("RGB","RGBA"):
                   im = im.convert("RGBA")
               im.save(dst, format="PNG", optimize=False)
-              print(f"{name}.png: {im.width}x{im.height}, source={len(r.content)} bytes, saved={dst.stat().st_size}")
+              print(f"{name}.png: {im.width}x{im.height}")
           PY
       - name: Verify files
         run: |
