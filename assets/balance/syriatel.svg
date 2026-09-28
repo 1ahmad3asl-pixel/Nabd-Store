@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Syriatel">
-  <rect x="18" y="18" width="476" height="476" rx="72" fill="#e51b23"/>
-  <ellipse cx="256" cy="256" rx="202" ry="126" fill="#fff"/>
-  <text x="256" y="244" text-anchor="middle" font-family="Arial, Tahoma, sans-serif" font-size="58" font-weight="700" fill="#777">سيريتل</text>
-  <path d="M157 205 C205 176 242 172 286 184 C318 193 347 190 369 174" fill="none" stroke="#e51b23" stroke-width="13" stroke-linecap="round"/>
-  <path d="M260 180 C272 201 276 218 274 238" fill="none" stroke="#159447" stroke-width="14" stroke-linecap="round"/>
-  <circle cx="270" cy="188" r="6" fill="#111"/>
-  <text x="256" y="309" text-anchor="middle" font-family="Arial, sans-serif" font-size="39" font-weight="700" fill="#777">SYRIATEL</text>
+  <rect x="18" y="18" width="476" height="476" rx="108" fill="#e51b23"/>
+  <ellipse cx="256" cy="256" rx="196" ry="130" fill="#fff"/>
+  <path d="M155 274c35-63 74-98 116-104 38-6 70 7 91 33-30-8-57-4-81 12-34 23-56 58-71 103-6 18-18 26-31 21-13-5-17-22-24-65z" fill="#e51b23"/>
+  <path d="M260 170c15 19 22 39 21 61" fill="none" stroke="#159447" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="280" cy="177" r="6" fill="#159447"/>
 </svg>
