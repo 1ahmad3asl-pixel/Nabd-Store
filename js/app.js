@@ -2530,25 +2530,25 @@ const BALANCE_CATALOG = [
         key:"syriatel",
         title:"سيريتيل",
         aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
-        image:"https://www.google.com/s2/favicons?domain=syriatel.com.sy&sz=256"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Syriatel_Logo.png"
     },
     {
         key:"mtn",
         title:"MTN",
         aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
-        image:"https://cdn.simpleicons.org/mtn"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/MTN-Logo.png"
     },
     {
         key:"zain-cash",
         title:"زين كاش",
         aliases:["زين كاش","zain cash","zaincash","zain"],
-        image:"https://cdn.simpleicons.org/zain"
+        image:"https://www.google.com/s2/favicons?domain=zaincash.iq&sz=256"
     },
     {
         key:"instapay",
         title:"InstaPay",
         aliases:["instapay","insta pay","انستا باي","إنستا باي"],
-        image:"https://cdn.simpleicons.org/instapay"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/InstaPay_Logo.png"
     },
     {
         key:"reflect",
@@ -2560,49 +2560,49 @@ const BALANCE_CATALOG = [
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"https://cdn.simpleicons.org/papara"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Papara_Logo.png"
     },
     {
         key:"paypal",
         title:"PayPal",
         aliases:["paypal","باي بال","بايبال"],
-        image:"https://cdn.simpleicons.org/paypal"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/PayPal_logo.svg"
     },
     {
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"https://cdn.simpleicons.org/payoneer"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Payoneer_logo.svg"
     },
     {
         key:"touch",
         title:"Touch",
         aliases:["touch","touch lebanon","تاتش","تتش"],
-        image:"https://www.google.com/s2/favicons?domain=touch.com.lb&sz=256"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo_wordmark_Touch_(Lebanon).png"
     },
     {
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"https://www.google.com/s2/favicons?domain=alfa.com.lb&sz=256"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo_text_Alfa_Telecom_(Lebanon).png"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"https://www.google.com/s2/favicons?domain=rcell.com&sz=256"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rcell.png"
     },
     {
         key:"whish-money",
         title:"Whish Money",
         aliases:["whish money","whish","ويش موني","ويش","wish money"],
-        image:"https://www.google.com/s2/favicons?domain=whish.money&sz=256"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo_Whish_Money_(Lebanon).png"
     },
     {
         key:"asia-cell",
         title:"آسيا سيل",
         aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
-        image:"https://cdn.simpleicons.org/asiacell"
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Asiacell_logo.svg"
     }
 ];
 function normalizeBalanceText(value) {
