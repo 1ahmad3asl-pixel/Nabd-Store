@@ -2765,7 +2765,7 @@ function getBalanceSubgroups(group) {
             },
             {
                 key: "turkey-balance|turkcell-payment",
-                title: "تسديد تركسل",
+                title: "تسديد تروكسل",
                 image: group.image || "",
                 products: sortGameProducts(paymentProducts),
                 balanceGroupKey: group.key,
