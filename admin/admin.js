@@ -909,6 +909,7 @@ async function loadOrders() {
         adminState.orders =
             orders;
 
+        updateOrderSummary(orders);
         renderOrders(orders);
 
     } catch (error) {
@@ -923,6 +924,16 @@ async function loadOrders() {
 
 }
 
+function updateOrderSummary(orders) {
+    const totalEl = document.getElementById("ordersTotalCount");
+    const failedEl = document.getElementById("ordersFailedCount");
+    const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
+    const failedCount = orders.filter(function(order) {
+        return failedStatuses.includes(String(order.status || "").toLowerCase());
+    }).length;
+    if (totalEl) totalEl.textContent = String(orders.length);
+    if (failedEl) failedEl.textContent = String(failedCount);
+}
 function filterOrders() {
 
     const searchInput =
@@ -994,7 +1005,7 @@ function renderOrders(orders) {
 
         table.innerHTML = `
             <tr>
-                <td colspan="8">
+                <td colspan="9">
                     لا توجد طلبات.
                 </td>
             </tr>
@@ -1021,6 +1032,15 @@ function renderOrders(orders) {
                             String(
                                 order.id ??
                                 order.order_id ??
+                                "-"
+                            )
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeAdminHtml(
+                            String(
+                                order.customer_name ??
                                 "-"
                             )
                         )}
