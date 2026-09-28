@@ -1,0 +1,17 @@
+name: Keep Nabd-Store Warm
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render health endpoint
+        run: |
+          set -e
+          curl --fail --silent --show-error --max-time 20 \
+            -H "User-Agent: Nabd-Store-Keep-Alive" \
+            https://nabd-store.onrender.com/api/health
