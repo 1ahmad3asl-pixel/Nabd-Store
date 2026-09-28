@@ -613,7 +613,7 @@ app.get("/api/admin/dashboard", async (req, res) => {
   // نجلب إحصائيات قاعدة البيانات ورصيد Nemer بشكل مستقل حتى لا يؤدي تعطل المزود إلى إخفاء أرقام الإدارة.
   const [profileResult, statsResult, recentResult] = await Promise.allSettled([
     getNemerProfile(),
-    query(\`
+    query(`
       SELECT
         (SELECT COUNT(*) FROM customers) AS customers,
         (SELECT COUNT(*) FROM orders) AS orders,
@@ -628,7 +628,7 @@ app.get("/api/admin/dashboard", async (req, res) => {
           SELECT SUM(profit) FROM orders
           WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
         ),0) AS profit
-    \`),
+    `),
     query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8")
   ]);
 
