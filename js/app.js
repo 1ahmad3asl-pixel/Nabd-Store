@@ -2778,20 +2778,40 @@ function getBalanceSubgroups(group) {
         const bundleProducts = [];
         const paymentProducts = [];
 
+        function isTurkcellServiceProduct(product) {
+            const combined = normalizeBalanceText(
+                String(product && product.category_name || "") + " " +
+                String(product && product.name || "")
+            );
+            const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
+            if (isPayment) return false;
+            return /رسائل?|sms|دقائق?|minute|minutes|turkcell|تركسل|تروكسل/.test(combined);
+        }
+
         products.forEach(function(product) {
             const combined = normalizeBalanceText(
                 String(product && product.category_name || "") + " " +
                 String(product && product.name || "")
             );
-
             const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
-
             if (isPayment) {
                 paymentProducts.push(product);
-            } else {
+            } else if (isTurkcellServiceProduct(product)) {
                 bundleProducts.push(product);
             }
         });
+
+        // احتياط إذا تغيّرت تسمية منتجات Nemer ولم تحمل كلمات الخدمة المتوقعة.
+        if (!bundleProducts.length) {
+            products.forEach(function(product) {
+                const combined = normalizeBalanceText(
+                    String(product && product.category_name || "") + " " +
+                    String(product && product.name || "")
+                );
+                const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
+                if (!isPayment) bundleProducts.push(product);
+            });
+        }
 
         return [
             {
@@ -2937,6 +2957,11 @@ function openBalanceProductGroup(groupKey, fromHistory) {
     openBalanceSubgroups(groupKey, fromHistory);
 }
 
+function isTurkcellBundleGroup(groupInfo) {
+    const title = normalizeBalanceText(groupInfo && groupInfo.title || "");
+    return title.includes("باقة") && (title.includes("تركي") || title.includes("تروكسل") || title.includes("turkcell"));
+}
+
 function renderBalanceProductPicker(group) {
     const content=document.getElementById("internalPageContent"), title=document.getElementById("internalPageTitle"), icon=document.getElementById("internalPageIcon");
     if(!content || !group) return;
@@ -2975,12 +3000,11 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">'+(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج")):(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج"))+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function isTurkcellBundle(groupInfo){
-        const title=normalizeBalanceText(groupInfo&&groupInfo.title||"");
-        return title.includes("باقة") && (title.includes("تركي") || title.includes("تروكسل") || title.includes("turkcell"));
+        return isTurkcellBundleGroup(groupInfo);
     }
     function qtyConfig(p){
         // باقة تركسل في Nemer تُباع كمنتج/باقة ثابتة ولا تحتوي على كمية.
