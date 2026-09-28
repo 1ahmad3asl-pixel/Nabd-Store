@@ -610,68 +610,87 @@ app.get("/api/customer/orders", requireCustomer, async (req, res) => {
 app.use("/api/admin", requireAdmin);
 
 app.get("/api/admin/dashboard", async (req, res) => {
-  // نجلب إحصائيات قاعدة البيانات ورصيد Nemer بشكل مستقل حتى لا يؤدي تعطل المزود إلى إخفاء أرقام الإدارة.
-  const [profileResult, statsResult, recentResult] = await Promise.allSettled([
-    getNemerProfile(),
-    query(`
-      SELECT
-        (SELECT COUNT(*) FROM customers) AS customers,
-        (SELECT COUNT(*) FROM orders) AS orders,
-        (SELECT COUNT(*) FROM orders
-          WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
-        ) AS failed_orders,
-        COALESCE((
-          SELECT SUM(price) FROM orders
-          WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
-        ),0) AS sales,
-        COALESCE((
-          SELECT SUM(profit) FROM orders
-          WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
-        ),0) AS profit
-    `),
-    query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8")
-  ]);
+  try {
+    const [profileResult, statsResult, recentResult] = await Promise.allSettled([
+      getNemerProfile(),
+      query(`
+        SELECT
+          (SELECT COUNT(*) FROM customers) AS customers,
+          (SELECT COUNT(*) FROM orders) AS orders,
+          (SELECT COUNT(*) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+          ) AS failed_orders,
+          COALESCE((
+            SELECT SUM(price) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ),0) AS sales,
+          COALESCE((
+            SELECT SUM(profit) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ),0) AS profit
+      `),
+      query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8")
+    ]);
 
-  let apiBalance = 0;
-  if (profileResult.status === "fulfilled") {
-    const profile = profileResult.value;
-    const rawBalance =
-      profile?.balance ??
-      profile?.data?.balance ??
-      profile?.data?.data?.balance ??
-      profile?.wallet?.balance ??
-      profile?.data?.wallet?.balance ??
-      0;
-    const parsedBalance = Number(rawBalance);
-    if (Number.isFinite(parsedBalance)) apiBalance = parsedBalance;
-  } else {
-    console.error("Admin profile error:", profileResult.reason?.message || profileResult.reason);
-  }
+    if (statsResult.status === "rejected") {
+      console.error("Admin dashboard database error:", statsResult.reason);
+      return res.status(503).json({
+        status: "ERROR",
+        code: "DATABASE_UNAVAILABLE",
+        message: "تعذر الاتصال بقاعدة بيانات المتجر."
+      });
+    }
 
-  if (statsResult.status === "rejected") {
-    console.error("Admin dashboard stats error:", statsResult.reason);
-    return res.status(500).json({
+    let apiBalance = null;
+    if (profileResult.status === "fulfilled") {
+      const profile = profileResult.value;
+      const rawBalance =
+        profile?.balance ??
+        profile?.data?.balance ??
+        profile?.data?.data?.balance ??
+        profile?.wallet?.balance ??
+        profile?.data?.wallet?.balance ??
+        null;
+      const parsedBalance = Number(rawBalance);
+      if (Number.isFinite(parsedBalance)) apiBalance = parsedBalance;
+    } else {
+      console.error("Admin Nemer profile error:", profileResult.reason?.message || profileResult.reason);
+    }
+
+    try {
+      await loadSettings();
+    } catch (settingsError) {
+      console.error("Admin settings database error:", settingsError);
+      return res.status(503).json({
+        status: "ERROR",
+        code: "DATABASE_UNAVAILABLE",
+        message: "تعذر تحميل إعدادات لوحة الإدارة من قاعدة البيانات."
+      });
+    }
+
+    const row = statsResult.value.rows[0] || {};
+    const recent = recentResult.status === "fulfilled" ? recentResult.value.rows : [];
+
+    res.json({
+      status: "OK",
+      total_customers: Number(row.customers || 0),
+      total_orders: Number(row.orders || 0),
+      failed_orders: Number(row.failed_orders || 0),
+      total_sales: Number(Number(row.sales || 0).toFixed(12)),
+      total_profit: Number(Number(row.profit || 0).toFixed(12)),
+      api_balance: apiBalance,
+      api_balance_available: apiBalance !== null,
+      recent_orders: recent,
+      settings: adminSettings
+    });
+  } catch (error) {
+    console.error("Admin dashboard error:", error);
+    res.status(500).json({
       status: "ERROR",
-      message: "تعذر تحميل إحصائيات لوحة الإدارة."
+      code: "ADMIN_DASHBOARD_ERROR",
+      message: "تعذر تحميل لوحة الإدارة."
     });
   }
-
-  await loadSettings();
-  const stats = statsResult.value;
-  const recent = recentResult.status === "fulfilled" ? recentResult.value : { rows: [] };
-  const row = stats.rows[0] || {};
-
-  res.json({
-    status: "OK",
-    total_customers: Number(row.customers || 0),
-    total_orders: Number(row.orders || 0),
-    failed_orders: Number(row.failed_orders || 0),
-    total_sales: Number(Number(row.sales || 0).toFixed(12)),
-    total_profit: Number(Number(row.profit || 0).toFixed(12)),
-    api_balance: Number(apiBalance.toFixed(12)),
-    recent_orders: recent.rows,
-    settings: adminSettings
-  });
 });
 
 app.get("/api/admin/customers", async (req, res) => {
