@@ -2473,38 +2473,176 @@ function initializeModal() {
 }
 
 
+async function showCustomerOrdersModal() {
+    showModal(
+        "طلباتي",
+        `
+        <div class="customer-orders-view" id="customerOrdersView">
+            <div class="customer-orders-loading">جاري تحميل طلباتك...</div>
+        </div>
+        `
+    );
+
+    const container = document.getElementById("customerOrdersView");
+    if (!container) return;
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/customer/orders", {
+            headers: {Accept: "application/json"},
+            credentials: "include",
+            cache: "no-store"
+        });
+
+        let data = {};
+        try { data = await response.json(); } catch (_) {}
+
+        if (response.status === 401) {
+            container.innerHTML = `
+                <div class="customer-orders-empty">
+                    <div class="customer-orders-empty-icon">🔐</div>
+                    <h3>سجّل الدخول أولًا</h3>
+                    <p>يمكنك رؤية طلباتك بعد تسجيل الدخول إلى حسابك.</p>
+                    <button type="button" class="buy-btn customer-orders-login" onclick="window.location.href='/customer-login.html'">تسجيل الدخول</button>
+                </div>
+            `;
+            return;
+        }
+
+        if (!response.ok || data.status === "ERROR") {
+            throw new Error(data.message || "تعذر تحميل الطلبات.");
+        }
+
+        renderCustomerOrders(container, Array.isArray(data.orders) ? data.orders : []);
+    } catch (error) {
+        console.error("Customer orders load failed:", error);
+        container.innerHTML = `
+            <div class="customer-orders-empty">
+                <div class="customer-orders-empty-icon">⚠️</div>
+                <h3>تعذر تحميل الطلبات</h3>
+                <p>${escapeHtml(error?.message || "حدث خطأ أثناء تحميل الطلبات.")}</p>
+                <button type="button" class="buy-btn customer-orders-retry" id="customerOrdersRetry">إعادة المحاولة</button>
+            </div>
+        `;
+        const retry = document.getElementById("customerOrdersRetry");
+        if (retry) retry.addEventListener("click", showCustomerOrdersModal);
+    }
+}
+
+function parseCustomerOrderObject(value) {
+    if (!value) return {};
+    if (typeof value === "object") return value;
+    try {
+        const parsed = JSON.parse(value);
+        return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_) {
+        return {};
+    }
+}
+
+function customerOrderStatusInfo(order) {
+    const raw = String(order?.status || order?.nemer_response?.status || "").toLowerCase();
+    const failed = ["failed","rejected","cancelled","canceled","error"].includes(raw);
+    const success = ["success","successful","completed","complete","done","delivered","ok"].includes(raw);
+    if (failed) return {label:"فشل الطلب", className:"customer-order-status-failed"};
+    if (success) return {label:"تم الطلب بنجاح", className:"customer-order-status-success"};
+    if (raw === "processing" || raw === "pending") return {label:"قيد المعالجة", className:"customer-order-status-processing"};
+    return {label: String(order?.status || "غير محدد"), className:"customer-order-status-processing"};
+}
+
+function formatCustomerOrderDate(value) {
+    if (!value) return "-";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleString("ar", {
+        year:"numeric", month:"2-digit", day:"2-digit",
+        hour:"2-digit", minute:"2-digit"
+    });
+}
+
+function renderCustomerOrderParams(params) {
+    const object = parseCustomerOrderObject(params);
+    const entries = Object.entries(object).filter(function(entry) {
+        return String(entry[0] || "").trim() && String(entry[1] ?? "").trim();
+    });
+    if (!entries.length) return '<span class="customer-order-muted">لا توجد معلومات إضافية</span>';
+    return entries.map(function(entry) {
+        return '<div class="customer-order-param"><strong>' +
+            escapeHtml(String(entry[0])) + ':</strong> <span>' +
+            escapeHtml(String(entry[1])) + '</span></div>';
+    }).join("");
+}
+
+function renderCustomerOrderResponse(response) {
+    const object = parseCustomerOrderObject(response);
+    if (!Object.keys(object).length) {
+        return '<span class="customer-order-muted">لم يصل رد محفوظ من Nemer.</span>';
+    }
+    const formatted = JSON.stringify(object, null, 2);
+    return '<pre class="customer-order-response">' + escapeHtml(formatted) + '</pre>';
+}
+
+function renderCustomerOrders(container, orders) {
+    if (!orders.length) {
+        container.innerHTML = `
+            <div class="customer-orders-empty">
+                <div class="customer-orders-empty-icon">📦</div>
+                <h3>لا توجد طلبات حتى الآن</h3>
+                <p>ستظهر طلباتك هنا بعد إتمام أول عملية شراء.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = orders.map(function(order, index) {
+        const status = customerOrderStatusInfo(order);
+        const orderNumber = order.order_id || order.id || "-";
+        const price = Number(order.price);
+        const displayPrice = Number.isFinite(price) ? price.toFixed(3) : "-";
+        const response = parseCustomerOrderObject(order.nemer_response);
+        const responseId = response.id ?? response.order_id ?? response.data?.id ?? response.data?.order_id;
+        const shownOrderNumber = responseId || orderNumber;
+        return `
+            <article class="customer-order-card">
+                <div class="customer-order-head">
+                    <div>
+                        <span class="customer-order-index">طلب #${orders.length - index}</span>
+                        <h3>${escapeHtml(String(order.product_name || "طلب"))}</h3>
+                    </div>
+                    <span class="customer-order-status ${status.className}">${escapeHtml(status.label)}</span>
+                </div>
+                <div class="customer-order-grid">
+                    <div class="customer-order-detail">
+                        <span>رقم الطلب</span>
+                        <strong dir="ltr">${escapeHtml(String(shownOrderNumber))}</strong>
+                    </div>
+                    <div class="customer-order-detail">
+                        <span>سعر الطلب</span>
+                        <strong>${escapeHtml(displayPrice)} USD</strong>
+                    </div>
+                    <div class="customer-order-detail">
+                        <span>تاريخ الطلب</span>
+                        <strong>${escapeHtml(formatCustomerOrderDate(order.created_at))}</strong>
+                    </div>
+                </div>
+                <div class="customer-order-section">
+                    <h4>المعلومات التي أدخلتها</h4>
+                    <div class="customer-order-params">${renderCustomerOrderParams(order.order_params)}</div>
+                </div>
+                <div class="customer-order-section">
+                    <h4>رد النظام من Nemer</h4>
+                    ${renderCustomerOrderResponse(order.nemer_response)}
+                </div>
+            </article>
+        `;
+    }).join("");
+}
+
 function handleAction(action) {
 
     switch (action) {
 
         case "orders":
-
-            showModal(
-                "طلباتي",
-                `
-                <div class="empty-state">
-
-                    <div
-                        style="
-                            font-size:40px;
-                            margin-bottom:10px;
-                        "
-                    >
-                        📦
-                    </div>
-
-                    <h3>
-                        طلباتي
-                    </h3>
-
-                    <p>
-                        سيتم عرض طلباتك هنا بعد تسجيل الدخول.
-                    </p>
-
-                </div>
-                `
-            );
-
+            showCustomerOrdersModal();
             break;
 
 
