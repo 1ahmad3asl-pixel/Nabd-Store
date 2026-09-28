@@ -1366,7 +1366,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       : {};
     const requestedQty = Number(req.body?.qty || 1);
     if (!productId || productId.length > 120) return res.status(400).json({status:"ERROR",message:"معرّف المنتج غير صالح."});
-    if (!Number.isInteger(requestedQty) || requestedQty < 1 || requestedQty > 1000000) {
+    if (!Number.isInteger(requestedQty) || requestedQty < 1 || requestedQty > 50000000) {
       return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
     }
 
