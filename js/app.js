@@ -3155,7 +3155,15 @@ async function submitProductOrder(product) {
         if (input && input.value.trim()) params[label] = input.value.trim();
     });
     const qtyInput = document.getElementById("orderQty");
-    const qty = qtyInput ? Number(qtyInput.value) || 1 : 1;
+    const qty = qtyInput ? Number(qtyInput.value) : NaN;
+    const minQty = Number(product.qty_values?.min || 1);
+    const maxQty = Number(product.qty_values?.max || 999999999);
+    if (qtyInput && (!Number.isInteger(qty) || qty < minQty || qty > maxQty)) {
+        qtyInput.classList.add("is-invalid");
+        showToast("يرجى إدخال كمية بين " + formatQuantityBound(minQty) + " و " + formatQuantityBound(maxQty) + ".");
+        return;
+    }
+    if (qtyInput) qtyInput.classList.remove("is-invalid");
     const confirm = document.getElementById("confirmProductOrder");
     if (confirm) confirm.disabled = true;
 
