@@ -2753,8 +2753,9 @@ function openBalanceSubgroups(groupKey, fromHistory) {
     if(!content) return;
 
     // قاعدة الأرصدة: لا نطلب منتجات API قبل ضغط المستوى الثاني.
-    // وكل ضغطة على تصنيف المستوى الثاني تطلب البيانات الحية، حتى لو كانت المنتجات قد حُمّلت سابقًا من قسم آخر.
-    if (true) {
+    // بعد نجاح الطلب نعيد الدخول مرة واحدة مع fromHistory=true لعرض التصنيفات،
+    // ولا نعيد استدعاء API من داخل الاستدعاء الثاني.
+    if (!fromHistory) {
         content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذا التصنيف...</p></div>';
         const request = loadProducts({force:true});
         request.then(function(){ openBalanceSubgroups(groupKey, true); }).catch(function(){
