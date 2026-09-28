@@ -2546,7 +2546,7 @@ function escapeHtml(value) {
 }
 
 const BALANCE_CATALOG = [
-    // قسم الأرصدة: 14 تصنيفًا ثابتًا. لا نحذف أي تصنيف إذا كان بلا منتجات حاليًا؛
+    // قسم الأرصدة: تصنيفات المستوى الثاني ثابتة، بينما بعض التصنيفات لها تقسيمات مخصصة في المستوى الثالث.
     // يبقى ظاهرًا بحالة غير متاحة، بينما المنتجات تُربط ديناميكيًا بكتالوج Nemer.
     {
         key:"turkey-balance",
@@ -2729,6 +2729,51 @@ function getBalanceSubgroups(group) {
     if (!group) return [];
 
     const products = Array.isArray(group.products) ? group.products : [];
+
+    // الرصيد التركي له مستويان ثابتان فقط:
+    // 1) باقة تركسل
+    // 2) تسديد تركسل
+    // لا نحذف أو ننسخ منتجات Nemer؛ نعيد تجميع المنتجات الموجودة
+    // داخل هذين التصنيفين فقط مع الحفاظ على product.id وباقي بيانات الطلب.
+    if (group.key === "turkey-balance") {
+        const bundleProducts = [];
+        const paymentProducts = [];
+
+        products.forEach(function(product) {
+            const combined = normalizeBalanceText(
+                String(product && product.category_name || "") + " " +
+                String(product && product.name || "")
+            );
+
+            const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
+
+            if (isPayment) {
+                paymentProducts.push(product);
+            } else {
+                bundleProducts.push(product);
+            }
+        });
+
+        return [
+            {
+                key: "turkey-balance|turkcell-bundle",
+                title: "باقة تركسل",
+                image: group.image || "",
+                products: sortGameProducts(bundleProducts),
+                balanceGroupKey: group.key,
+                providerTitle: group.title
+            },
+            {
+                key: "turkey-balance|turkcell-payment",
+                title: "تسديد تركسل",
+                image: group.image || "",
+                products: sortGameProducts(paymentProducts),
+                balanceGroupKey: group.key,
+                providerTitle: group.title
+            }
+        ];
+    }
+
     const groups = [];
     const seen = new Map();
 
@@ -2930,9 +2975,10 @@ function renderBalanceProductPicker(group) {
     function updateTotal(){
         const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");
         if(!p||!el)return;
-        const raw=getBalanceRawPrice(p);
-        if(raw===null){el.textContent="السعر غير متاح";return;}
-        const saleUnit=raw*(1+getProductProfitRateForClient(p)/100);
+
+        const saleUnit=getBalanceSaleUnitPrice(p);
+        if(saleUnit===null){el.textContent="السعر غير متاح";return;}
+
         const discountedUnit=saleUnit*(1-customerDiscount/100);
         const qty=q?Number(q.value):NaN;
         if(!Number.isFinite(qty)||qty<1){
@@ -2940,7 +2986,8 @@ function renderBalanceProductPicker(group) {
             el.textContent="$0.000";
             return;
         }
-        const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(raw));
+
+        const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(saleUnit));
         el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
     }
     function updateProduct(index){
