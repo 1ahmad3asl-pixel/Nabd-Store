@@ -1688,7 +1688,7 @@ function openGamesPage(fromHistory) {
     internal.hidden = false;
 
     if (title) title.textContent = "الألعاب";
-    if (icon) icon.textContent = isNumberPicker ? "📲" : "🎮";
+    if (icon) icon.textContent = "🎮";
 
     // صفحة الألعاب تعتمد على الكتالوج المحلي، لذلك تظهر فورًا.
     // نبدأ تحميل المنتجات في الخلفية بدون حبس المستخدم داخل شاشة تحميل.
