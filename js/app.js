@@ -2863,22 +2863,15 @@ function renderBalanceProductPicker(group) {
     const available=products.filter(function(p){return p.available!==false&&p.available!==0;});
     const first=available[0]||products[0]||null;
 
-    function getBalanceRawPrice(product){
-        const selling=Number(product&&product.price);
-        if(Number.isFinite(selling)&&selling>=0){
-            const rate=getProductProfitRateForClient(product);
-            if(rate>0){
-                const estimatedRaw=selling/(1+rate/100);
-                if(Number.isFinite(estimatedRaw)&&estimatedRaw>=0)return estimatedRaw;
-            }
-            return selling;
-        }
-        const raw=getRawProductPrice(product);
-        if(raw!==null)return raw;
-        return null;
-    }
     function getBalanceSaleUnitPrice(product){
-        const raw=getBalanceRawPrice(product);
+        // /api/products already returns the final selling price from the live Nemer price
+        // plus the configured margin. Use it directly so balance products such as MTN
+        // and Syriatel S1/S2 cannot lose their price because of a second margin calculation.
+        const selling=Number(product&&product.price);
+        if(Number.isFinite(selling)&&selling>=0)return selling;
+
+        // Backward-compatible fallback for any product carrying only original_price.
+        const raw=getRawProductPrice(product);
         if(raw===null)return null;
         return raw*(1+getProductProfitRateForClient(product)/100);
     }
@@ -2898,7 +2891,7 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getGameProductPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function qtyConfig(p){
