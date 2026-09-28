@@ -158,9 +158,9 @@ initializeAppearanceSettings();
     loadAdminDashboard();
     loadCustomers();
 
+    // حدّث الإحصائيات الرئيسية فقط. لا تعِد تحميل العملاء تلقائيًا حتى لا تُلغى نتائج البحث.
     setInterval(function () {
         loadAdminDashboard();
-        loadCustomers();
     }, 15000);
 
 });
@@ -493,7 +493,7 @@ async function loadCustomers(search = "") {
         adminState.customers =
             customers;
 
-        setText("totalCustomers", customers.length);
+        // لا تغيّر إحصائية العملاء العامة بنتائج البحث؛ الإحصائيات الرئيسية تأتي من /dashboard.
         renderCustomers(customers);
 
     } catch (error) {
@@ -909,7 +909,7 @@ async function loadOrders() {
         adminState.orders =
             orders;
 
-        updateOrderSummary(orders);
+        updateOrderSummary(orders, data.order_summary || null);
         renderOrders(orders);
 
     } catch (error) {
@@ -924,15 +924,20 @@ async function loadOrders() {
 
 }
 
-function updateOrderSummary(orders) {
+function updateOrderSummary(orders, summary) {
     const totalEl = document.getElementById("ordersTotalCount");
     const failedEl = document.getElementById("ordersFailedCount");
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
-    const failedCount = orders.filter(function(order) {
-        return failedStatuses.includes(String(order.status || "").toLowerCase());
-    }).length;
-    if (totalEl) totalEl.textContent = String(orders.length);
-    if (failedEl) failedEl.textContent = String(failedCount);
+    const total = summary && Number.isFinite(Number(summary.total))
+        ? Number(summary.total)
+        : orders.length;
+    const failed = summary && Number.isFinite(Number(summary.failed))
+        ? Number(summary.failed)
+        : orders.filter(function(order) {
+            return failedStatuses.includes(String(order.status || "").toLowerCase());
+        }).length;
+    if (totalEl) totalEl.textContent = String(total);
+    if (failedEl) failedEl.textContent = String(failed);
 }
 function filterOrders() {
 
