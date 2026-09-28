@@ -1529,8 +1529,8 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
       await client.query("UPDATE customers SET balance=$1,updated_at=NOW() WHERE customer_id=$2",[after.toFixed(12),customer.customer_id]);
       await client.query(
-        "INSERT INTO orders (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'processing')",
-        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(12)),Number(totalPrice.toFixed(12)),Number((totalPrice-apiPrice*qty).toFixed(12)),Number(discount.toFixed(2))]
+        "INSERT INTO orders (id,order_id,customer_id,product_id,product_name,api_price,price,profit,discount,status,order_params) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'processing',$10::jsonb)",
+        [orderId,orderId,customer.customer_id,String(product.id),String(product.name || ""),Number((apiPrice*qty).toFixed(12)),Number(totalPrice.toFixed(12)),Number((totalPrice-apiPrice*qty).toFixed(12)),Number(discount.toFixed(2)),JSON.stringify(params)]
       );
       const transactionId = "TXN-" + crypto.randomUUID();
       await client.query(
