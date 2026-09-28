@@ -1885,16 +1885,17 @@ function getTurkcellParamConfig(product) {
     const normalized = params.map(function(label) {
         return normalizeBalanceText(label).toLowerCase();
     });
+
+    // منتجات الرصيد التركي لا تستخدم حقول "الكمية/الرابط/المشتركين"
+    // الخاصة بتطبيق آخر. نأخذ مفتاح الحقل الأول من Nemer فقط، ونعرضه
+    // للمستخدم كرقم هاتف.
     const phoneIndex = normalized.findIndex(function(label) {
         return /رابط|link|url|phone|mobile|number|رقم|هاتف|موبايل/.test(label);
     });
-    const packageIndex = normalized.findIndex(function(label, index) {
-        return index !== phoneIndex && /subscriber|package|packages|باقة|باقات|مشترك|مشتركين/.test(label);
-    });
+
     return {
         params: params,
-        phoneKey: phoneIndex >= 0 ? params[phoneIndex] : (params[0] || ""),
-        packageKey: packageIndex >= 0 ? params[packageIndex] : ""
+        phoneKey: phoneIndex >= 0 ? params[phoneIndex] : (params[0] || "")
     };
 }
 
@@ -1913,10 +1914,7 @@ function renderBalanceRequiredFields(product, groupTitle) {
     return '<div class="pubg-field game-required-field">' +
         '<label for="gameParam_0">رقم الهاتف</label>' +
         '<input id="gameParam_0" type="tel" data-game-param="' + safeKey + '" placeholder="أدخل رقم الهاتف" inputmode="tel" autocomplete="tel" required aria-required="true">' +
-        '</div>' +
-        (config.packageKey
-            ? '<div class="game-selected-package-note">الباقة: <strong>' + escapeHtml(product && product.name || "الباقة المختارة") + '</strong></div>'
-            : "");
+        '</div>';
 }
 
 function getRawProductPrice(product) {
@@ -3078,14 +3076,7 @@ function renderBalanceProductPicker(group) {
             if(!value){invalid=true;input.classList.add("is-invalid");}
             else{params[label]=value;input.classList.remove("is-invalid");}
         });
-        // تركسل: حقل الباقة التقني في Nemer يُملأ تلقائيًا من المنتج المختار،
-        // فلا يظهر للعميل كحقل "باقات مشتركين".
-        const turkeyTitle = normalizeBalanceText(group.title || "");
-        if (turkeyTitle.includes("تركي") && turkeyTitle.includes("باقة")) {
-            const config = getTurkcellParamConfig(p);
-            if (config.packageKey) params[config.packageKey] = String(p.name || "").trim();
-        }
-        const qi=document.getElementById("balanceOrderQty");
+        // الرصيد التركي يحتاج رقم الهاتف فقط؛ حقول الباقة/المشتركين والكمية تخص منتجات أخرى.        const qi=document.getElementById("balanceOrderQty");
         const isFixedTurkcellBundle=isTurkcellBundle(group);
         const qty=qi?Number(qi.value):1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
