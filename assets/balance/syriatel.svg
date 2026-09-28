@@ -1,13 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Syriatel">
-  <rect width="512" height="512" rx="96" fill="#fff"/>
-  <g transform="translate(22 82) scale(.915)">
-    <path d="M12 168C78 94 166 50 264 50c90 0 170 29 224 83-56-35-123-49-195-39-100 14-190 51-281 105z" fill="#e30613"/>
-    <text x="250" y="190" text-anchor="middle" direction="rtl" unicode-bidi="bidi-override" font-family="Arial,Tahoma,sans-serif" font-size="72" font-weight="900" fill="#686868">سيريتل</text>
-    <path d="M226 103c-18 23-21 55-5 78 18 26 49 32 77 15 14-9 25-22 34-39-13 28-12 52 1 72 12 18 30 27 52 27" fill="none" stroke="#009b4d" stroke-width="15" stroke-linecap="round"/>
-    <path d="M289 111c-5 16-3 32 6 46 7 11 17 18 30 20" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
-    <path d="M289 116l8 7m-6 14 8 7m-2 14 8 6" stroke="#e30613" stroke-width="5" stroke-linecap="round"/>
-    <text x="325" y="249" text-anchor="middle" font-family="Arial,sans-serif" font-size="36" font-weight="900" font-style="italic" fill="#686868">SYRIA</text>
-    <text x="392" y="249" text-anchor="middle" font-family="Arial,sans-serif" font-size="36" font-weight="900" font-style="italic" fill="#e30613">tel</text>
-    <path d="M373 235c19 9 39 8 59-2" fill="none" stroke="#e30613" stroke-width="7" stroke-linecap="round"/>
-  </g>
+  <rect width="512" height="512" rx="0" fill="#ed111b"/>
+  <rect x="24" y="24" width="464" height="464" rx="86" fill="#fff"/>
+  <path d="M82 222c71-46 145-68 224-68 66 0 117 15 153 43" fill="none" stroke="#ed111b" stroke-width="5" stroke-linecap="round"/>
+  <path d="M82 222c69-42 142-61 220-61 64 0 113 13 150 36" fill="none" stroke="#ed111b" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="256" y="300" text-anchor="middle" direction="rtl" unicode-bidi="bidi-override" font-family="Arial,Tahoma,sans-serif" font-size="72" font-weight="800" fill="#6b6d70">أقرب إليك</text>
+  <path d="M397 210c-18 5-32 11-45 20" fill="none" stroke="#ed111b" stroke-width="4" stroke-linecap="round"/>
 </svg>
