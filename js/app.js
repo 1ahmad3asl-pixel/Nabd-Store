@@ -2638,8 +2638,7 @@ function getBalanceGroups() {
         if (!item) return;
         const group = byKey.get(item.key);
         if (!group) return;
-        // استخدم شعار المزود أولًا، ثم صورة التصنيف القادمة من API كبديل.
-        if (!group.image && product.category_img) group.image = product.category_img;
+        // صور قسم الأرصدة ثابتة ومحلية بالكامل؛ لا نستخدم category_img من API.
         group.products.push(product);
     });
     // لا نحذف أي تصنيف: حتى إذا لم توجد منتجات حاليًا، يبقى المربع ظاهرًا
@@ -2715,7 +2714,7 @@ function getBalanceSubgroups(group) {
             const subgroup = {
                 key: key,
                 title: title,
-                image: product && product.category_img ? product.category_img : "",
+                image: group.image || "",
                 products: [],
                 balanceGroupKey: group.key,
                 providerTitle: group.title
@@ -2725,9 +2724,7 @@ function getBalanceSubgroups(group) {
         }
 
         const subgroup = seen.get(key);
-        if (!subgroup.image && product && product.category_img) {
-            subgroup.image = product.category_img;
-        }
+        // صورة المستوى الثالث تبقى صورة المزود المحلية، وليس صورة API.
         subgroup.products.push(product);
     });
 
@@ -2784,9 +2781,9 @@ function openBalanceSubgroups(groupKey, fromHistory) {
             '<div class="game-category-grid game-product-groups-grid balance-subgroup-grid">' +
                 subgroups.map(function(subgroup){
                     const available=subgroup.products.some(function(product){return product.available!==false&&product.available!==0;});
-                    // قسم الأرصدة: المستوى الثالث يستخدم صورة التصنيف القادمة من API فقط.
-                    // لا نستخدم صور المزود الثابتة كبديل هنا.
-                    const image = subgroup.image || "";
+                    // قسم الأرصدة: جميع الصور محلية من BALANCE_CATALOG فقط.
+                    // لا نستخدم category_img أو أي صورة قادمة من API.
+                    const image = subgroup.image || group.image || "";
                     const imageHtml=image
                         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(subgroup.title)+'" loading="lazy">'
                         : '<span class="game-placeholder">💵</span>';
