@@ -2518,28 +2518,93 @@ function escapeHtml(value) {
 }
 
 const BALANCE_CATALOG = [
-    // مزودو الأرصدة الفعليون الموجودون في كتالوج المتجر.
-    // S1/S2 والفواتير تبقى تصنيفات داخل مزودها ولا تظهر كمزودين منفصلين.
+    // قسم الأرصدة: 14 تصنيفًا ثابتًا. لا نحذف أي تصنيف إذا كان بلا منتجات حاليًا؛
+    // يبقى ظاهرًا بحالة غير متاحة، بينما المنتجات تُربط ديناميكيًا بكتالوج Nemer.
+    {
+        key:"turkey-balance",
+        title:"رصيد تركي",
+        aliases:["رصيد تركي","الرصيد التركي","تركيا","تركي","turkish balance","turkey balance","turkey","try","tl"],
+        image:"https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg"
+    },
     {
         key:"syriatel",
         title:"سيريتيل",
-        aliases:["سيريتل","سيرياتيل","syriatel","syriatel cash"],
+        aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
         image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Syriatel%20Logo.png"
     },
     {
         key:"mtn",
         title:"MTN",
-        aliases:["mtn","mtn syria","mtn cash"],
+        aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
         image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/MTN%20Logo.svg"
     },
     {
-        key:"balance-refund",
-        title:"استرداد رصيد",
-        aliases:["استرداد رصيد","refund balance","balance refund"],
-        image:""
+        key:"zain-cash",
+        title:"زين كاش",
+        aliases:["زين كاش","zain cash","zaincash","zain"],
+        image:"https://cdn.simpleicons.org/zaincash"
+    },
+    {
+        key:"instapay",
+        title:"InstaPay",
+        aliases:["instapay","insta pay","انستا باي","إنستا باي"],
+        image:"https://cdn.simpleicons.org/instapay"
+    },
+    {
+        key:"reflect",
+        title:"Reflect",
+        aliases:["reflect","ريفلكت","رفلكت"],
+        image:"https://cdn.simpleicons.org/reflect"
+    },
+    {
+        key:"papara",
+        title:"Papara",
+        aliases:["papara","بابارا"],
+        image:"https://cdn.simpleicons.org/papara"
+    },
+    {
+        key:"paypal",
+        title:"PayPal",
+        aliases:["paypal","باي بال","بايبال"],
+        image:"https://cdn.simpleicons.org/paypal"
+    },
+    {
+        key:"payoneer",
+        title:"Payoneer",
+        aliases:["payoneer","بايونير"],
+        image:"https://cdn.simpleicons.org/payoneer"
+    },
+    {
+        key:"touch",
+        title:"Touch",
+        aliases:["touch","touch lebanon","تاتش","تتش"],
+        image:"https://cdn.simpleicons.org/touch"
+    },
+    {
+        key:"alfa",
+        title:"Alfa",
+        aliases:["alfa","alfa lebanon","ألفا","الفا"],
+        image:"https://cdn.simpleicons.org/alfa"
+    },
+    {
+        key:"rcell",
+        title:"Rcell",
+        aliases:["rcell","r cell","ارسل","آر سيل"],
+        image:"https://cdn.simpleicons.org/rcell"
+    },
+    {
+        key:"whish-money",
+        title:"Whish Money",
+        aliases:["whish money","whish","ويش موني","ويش","wish money"],
+        image:"https://cdn.simpleicons.org/whish"
+    },
+    {
+        key:"asia-cell",
+        title:"آسيا سيل",
+        aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
+        image:"https://cdn.simpleicons.org/asiacell"
     }
 ];
-
 function normalizeBalanceText(value) {
     return normalizeGameText(String(value || ""))
         .replace(/[أإآ]/g, "ا")
@@ -2577,8 +2642,9 @@ function getBalanceGroups() {
         if (!group.image && product.category_img) group.image = product.category_img;
         group.products.push(product);
     });
-    // لا نعرض بطاقات فارغة لمزودين غير موجودين في البيانات الحالية.
-    return groups.filter(function(group){ return group.products.length > 0; });
+    // لا نحذف أي تصنيف: حتى إذا لم توجد منتجات حاليًا، يبقى المربع ظاهرًا
+    // بحالة غير متاحة. هذا يحافظ على بنية قسم الأرصدة ويمنع اختفاء التصنيفات.
+    return groups;
 }
 
 function openBalancePage(fromHistory) {
