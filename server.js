@@ -625,6 +625,9 @@ app.get("/api/admin/dashboard", async (req, res) => {
     SELECT
       (SELECT COUNT(*) FROM customers) AS customers,
       (SELECT COUNT(*) FROM orders) AS orders,
+      (SELECT COUNT(*) FROM orders
+        WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+      ) AS failed_orders,
       COALESCE((
         SELECT SUM(price) FROM orders
         WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
@@ -643,6 +646,7 @@ app.get("/api/admin/dashboard", async (req, res) => {
     status: "OK",
     total_customers: Number(row.customers),
     total_orders: Number(row.orders),
+    failed_orders: Number(row.failed_orders),
     total_sales: Number(Number(row.sales).toFixed(12)),
     total_profit: Number(Number(row.profit).toFixed(12)),
     api_balance: Number(apiBalance.toFixed(12)),
@@ -697,7 +701,22 @@ app.get("/api/admin/orders", async (req, res) => {
   const result = await query(
     "SELECT o.*, c.name AS customer_name, c.customer_number FROM orders o LEFT JOIN customers c ON c.customer_id = o.customer_id ORDER BY o.created_at DESC"
   );
-  res.json({ status: "OK", orders: result.rows });
+  const summary = await query(`
+    SELECT
+      COUNT(*) AS total,
+      COUNT(*) FILTER (
+        WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+      ) AS failed
+    FROM orders
+  `);
+  res.json({
+    status: "OK",
+    orders: result.rows,
+    order_summary: {
+      total: Number(summary.rows[0]?.total || 0),
+      failed: Number(summary.rows[0]?.failed || 0)
+    }
+  });
 });
 
 app.get("/api/admin/products", async (req, res) => {
