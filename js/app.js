@@ -2618,7 +2618,7 @@ function getBalanceSubgroupTitle(product, fallbackTitle) {
 
     // Nemer displays Syriatel as three distinct level-3 tiles even when
     // some API records share the same parent/category: S1, S2 and invoices.
-    if (provider.includes("سيريتل") || provider.includes("syriatel")) {
+    if (provider.includes("سيريتل") || provider.includes("سيرياتيل") || provider.includes("سيريتيل") || provider.includes("syriatel")) {
         if (combined.includes("s1") || combined.includes("s 1")) return "وحدات سيريتل S1";
         if (combined.includes("s2") || combined.includes("s 2")) return "وحدات سيريتل S2";
         if (combined.includes("فاتور") || combined.includes("invoice")) return "فواتير سيريتل";
@@ -2630,7 +2630,7 @@ function getBalanceSubgroupTitle(product, fallbackTitle) {
 function getBalanceSubgroupRank(groupTitle, subgroupTitle) {
     const provider = normalizeBalanceText(groupTitle || "");
     const title = normalizeBalanceText(subgroupTitle || "");
-    if (provider.includes("سيريتل") || provider.includes("syriatel")) {
+    if (provider.includes("سيريتل") || provider.includes("سيرياتيل") || provider.includes("سيريتيل") || provider.includes("syriatel")) {
         if (title.includes("s1")) return 1;
         if (title.includes("s2")) return 2;
         if (title.includes("فاتور") || title.includes("invoice")) return 3;
