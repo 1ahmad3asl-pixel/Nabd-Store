@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Syriatel">
-  <rect x="18" y="18" width="476" height="476" rx="108" fill="#e51b23"/>
-  <ellipse cx="256" cy="256" rx="196" ry="130" fill="#fff"/>
-  <path d="M155 274c35-63 74-98 116-104 38-6 70 7 91 33-30-8-57-4-81 12-34 23-56 58-71 103-6 18-18 26-31 21-13-5-17-22-24-65z" fill="#e51b23"/>
-  <path d="M260 170c15 19 22 39 21 61" fill="none" stroke="#159447" stroke-width="14" stroke-linecap="round"/>
-  <circle cx="280" cy="177" r="6" fill="#159447"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Syriatel"><rect width="512" height="512" rx="96" fill="#e31b23"/><ellipse cx="256" cy="250" rx="196" ry="126" fill="#fff"/><path d="M144 278c35-63 74-98 116-104 38-6 70 7 91 33-30-8-57-4-81 12-34 23-56 58-71 103-6 18-18 26-31 21-13-5-17-22-24-65z" fill="#e31b23"/><path d="M260 174c15 19 22 39 21 61" fill="none" stroke="#159447" stroke-width="14" stroke-linecap="round"/><circle cx="280" cy="181" r="6" fill="#159447"/><text x="256" y="375" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="800" fill="#fff">SYRIATEL</text></svg>
