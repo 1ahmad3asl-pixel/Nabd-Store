@@ -1929,7 +1929,7 @@ function renderBalanceRequiredFields(product, groupTitle, serviceProducts, selec
             '<label for="turkcellServiceSelect">اختر الخدمة</label>' +
             '<select id="turkcellServiceSelect" data-game-param="' + escapeHtml(config.serviceKey) + '" required aria-required="true">' +
             serviceProducts.map(function(service, index) {
-                return '<option value="' + escapeHtml(service.name || "") + '"' + (index === selected ? ' selected' : '') + '>' +
+                return '<option value="' + escapeHtml(service.name || "") + '" data-service-index="' + index + '"' + (index === selected ? ' selected' : '') + '>' +
                     escapeHtml(service.name || "خدمة") + '</option>';
             }).join("") +
             '</select>' +
@@ -3022,7 +3022,7 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label">'+(isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName"><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label"'+(isTurkcellBundleGroup(group)?' style="display:none"':'')+'>'+ (isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"'+(isTurkcellBundleGroup(group)?' style="display:none"':'')+'><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName"><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function isTurkcellBundle(groupInfo){
@@ -3111,6 +3111,14 @@ function renderBalanceProductPicker(group) {
                 updateProduct(Number(o.getAttribute("data-balance-index")));
                 options.hidden=true;trigger.setAttribute("aria-expanded","false");
             });
+        });
+    }
+    const turkcellServiceSelect=document.getElementById("turkcellServiceSelect");
+    if(turkcellServiceSelect){
+        turkcellServiceSelect.addEventListener("change",function(){
+            const option=turkcellServiceSelect.options[turkcellServiceSelect.selectedIndex];
+            const index=option?Number(option.getAttribute("data-service-index")):NaN;
+            if(Number.isInteger(index)) updateProduct(index);
         });
     }
     const submit=document.getElementById("balanceSubmitOrder");
