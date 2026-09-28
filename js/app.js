@@ -2903,7 +2903,8 @@ function renderBalanceProductPicker(group) {
     let selectedIndex=first?products.indexOf(first):-1;
     function qtyConfig(p){
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
-        const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));\n        const subgroupTitle=normalizeBalanceText(group.title||"");
+        const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
+        const subgroupTitle=normalizeBalanceText(group.title||"");
         // فواتير MTN: نربط الحد بالمنتج نفسه، لا بعنوان المستوى الثالث.
         // هذا يمنع انتقال حد MTN إلى جواكر أو أي منتج آخر.
         const isMtnInvoice =
