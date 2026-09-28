@@ -2,8 +2,25 @@ const { Pool } = require("pg");
 
 if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required.");
 
+function databaseConnectionString() {
+  const raw = String(process.env.DATABASE_URL || "");
+  if (!raw) return raw;
+
+  // pg v8 warns when legacy sslmode values are present in the URL.
+  // Render already provides the TLS connection; keep TLS explicit below
+  // and remove URL-only sslmode flags to avoid ambiguous future semantics.
+  try {
+    const url = new URL(raw);
+    url.searchParams.delete("sslmode");
+    url.searchParams.delete("uselibpqcompat");
+    return url.toString();
+  } catch {
+    return raw;
+  }
+}
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: databaseConnectionString(),
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
 
