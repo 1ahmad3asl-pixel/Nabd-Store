@@ -596,11 +596,16 @@ app.post("/api/customer/logout", requireCustomer, async (req, res) => {
 });
 
 app.get("/api/customer/orders", requireCustomer, async (req, res) => {
-  const result = await query(
-    "SELECT id,order_id,product_id,product_name,price,discount,status,created_at FROM orders WHERE customer_id=$1 ORDER BY created_at DESC",
-    [req.customer.customer_id]
-  );
-  res.json({ status: "OK", orders: result.rows });
+  try {
+    const result = await query(
+      "SELECT id,order_id,product_id,product_name,api_price,price,discount,status,order_params,nemer_response,created_at FROM orders WHERE customer_id=$1 ORDER BY created_at DESC",
+      [req.customer.customer_id]
+    );
+    res.json({ status: "OK", orders: result.rows });
+  } catch (error) {
+    console.error("Customer orders error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر تحميل طلباتك." });
+  }
 });
 
 /* =========================
@@ -1599,20 +1604,24 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
     let order;
     try {
-      order = await createNemerOrder(productId,{...params,qty,order_uuid:reservation.order_uuid});
+        order = await createNemerOrder(productId,{...params,qty,order_uuid:reservation.order_uuid});
     } catch (error) {
       await refundWalletAfterFailedOrder(reservation);
+      await query(
+        "UPDATE orders SET status='failed',nemer_response=$1::jsonb WHERE id=$2",
+        [JSON.stringify({status:"error",message:String(error?.message || "تعذر تنفيذ الطلب من Nemer.")}), reservation.order_id]
+      ).catch(() => {});
       throw error;
     }
 
-    const apiStatus = String(order?.status || "pending").toLowerCase();
+    const apiStatus = String(order?.status || order?.data?.status || "pending").toLowerCase();
     const failed = ["failed","rejected","cancelled","canceled","error"].includes(apiStatus);
     if (failed) await refundWalletAfterFailedOrder(reservation);
 
-    const externalOrderId = String(order?.id ?? order?.order_id ?? reservation.order_uuid);
+    const externalOrderId = String(order?.id ?? order?.order_id ?? order?.data?.id ?? order?.data?.order_id ?? reservation.order_uuid);
     await query(
-      "UPDATE orders SET order_id=$1,status=$2 WHERE id=$3",
-      [externalOrderId, failed ? "failed" : apiStatus, reservation.order_id]
+      "UPDATE orders SET order_id=$1,status=$2,nemer_response=$3::jsonb WHERE id=$4",
+      [externalOrderId, failed ? "failed" : apiStatus, JSON.stringify(order || {}), reservation.order_id]
     );
     if (!failed) await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
 
