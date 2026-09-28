@@ -625,8 +625,14 @@ app.get("/api/admin/dashboard", async (req, res) => {
     SELECT
       (SELECT COUNT(*) FROM customers) AS customers,
       (SELECT COUNT(*) FROM orders) AS orders,
-      COALESCE((SELECT SUM(price) FROM orders),0) AS sales,
-      COALESCE((SELECT SUM(profit) FROM orders),0) AS profit
+      COALESCE((
+        SELECT SUM(price) FROM orders
+        WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+      ),0) AS sales,
+      COALESCE((
+        SELECT SUM(profit) FROM orders
+        WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+      ),0) AS profit
   `);
   const recent = await query(
     "SELECT * FROM orders ORDER BY created_at DESC LIMIT 8"
