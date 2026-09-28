@@ -1965,6 +1965,7 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 .balance-subgroup-tile .game-tile-image img[src*="mtn.svg"]{
     padding:0;
     object-fit:cover;
+    transform:scale(1.18);
 }
 
 .game-product-group-card .game-tile-title{
