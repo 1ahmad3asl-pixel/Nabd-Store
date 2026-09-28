@@ -1946,6 +1946,17 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
     object-fit:cover;
     display:block;
 }
+.balance-category-tile .game-tile-image img,
+.balance-subgroup-tile .game-tile-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
+    padding:14px;
+    box-sizing:border-box;
+    display:block;
+}
+
 .game-product-group-card .game-tile-title{
     font-size:15px;
 }
