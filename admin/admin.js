@@ -166,36 +166,20 @@ initializeAppearanceSettings();
 });
 
 function initializeAdminNavigation() {
+    // تنقل موحد عبر delegation حتى تبقى أزرار القائمة مستجيبة دائمًا.
+    document.addEventListener("click", function (event) {
+        const button = event.target.closest(".admin-nav-item, .admin-tab, [data-section-link]");
+        if (!button) return;
 
-    document
-        .querySelectorAll(".admin-nav-item, .admin-tab")
-        .forEach(function (button) {
+        const section =
+            button.getAttribute("data-section") ||
+            button.getAttribute("data-section-link");
 
-            button.addEventListener("click", function () {
-
-                const section =
-                    button.getAttribute("data-section");
-
-                showAdminSection(section);
-
-            });
-
-        });
-
-    document
-        .querySelectorAll("[data-section-link]")
-        .forEach(function (button) {
-
-            button.addEventListener("click", function () {
-
-                showAdminSection(
-                    button.getAttribute("data-section-link")
-                );
-
-            });
-
-        });
-
+        if (section) {
+            event.preventDefault();
+            showAdminSection(section);
+        }
+    });
 }
 
 function showAdminSection(section) {
@@ -240,9 +224,8 @@ function showAdminSection(section) {
     const sidebar =
         document.getElementById("adminTabs");
 
-    if (sidebar) {
-        sidebar.classList.remove("active");
-    }
+    // القائمة تُفتح وتُغلق عبر class "open" فقط.
+
 
     if (section === "customers") {
         loadCustomers();
@@ -305,10 +288,9 @@ function initializeAdminMenu() {
     if (closeButton) closeButton.addEventListener("click", () => setMenu(false));
     if (overlay) overlay.addEventListener("click", () => setMenu(false));
 
-    sidebar.querySelectorAll(".admin-nav-item").forEach(function(item) {
-        item.addEventListener("click", function() {
-            setMenu(false);
-        });
+    sidebar.addEventListener("click", function(event) {
+        const item = event.target.closest(".admin-nav-item");
+        if (item) setMenu(false);
     });
 }
 
