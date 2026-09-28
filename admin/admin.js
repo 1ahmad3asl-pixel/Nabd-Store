@@ -980,150 +980,48 @@ function filterOrders() {
 
 }
 
-function renderOrders(orders) {
-
-    const table =
-        document.getElementById(
-            "ordersTable"
-        );
-
-    if (!table) return;
-
-    if (!orders.length) {
-
-        table.innerHTML = `
-            <tr>
-                <td colspan="10">
-                    لا توجد طلبات.
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-    table.innerHTML =
-        orders.map(function (order) {
-
-            const status =
-                String(
-                    order.status ||
-                    "pending"
-                ).toLowerCase();
-
-            return `
-                <tr>
-
-                    <td>
-                        ${escapeAdminHtml(
-                            String(
-                                order.id ??
-                                order.order_id ??
-                                "-"
-                            )
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeAdminHtml(
-                            String(
-                                order.customer_name ??
-                                "-"
-                            )
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeAdminHtml(
-                            String(
-                                order.customer_id ??
-                                "-"
-                            )
-                        )}
-                    </td>
-
-                    <td class="order-customer-fields">
-                        ${renderOrderCustomerFields(order.order_params)}
-                    </td>
-
-                    <td>
-                        ${escapeAdminHtml(
-                            String(
-                                order.product_name ??
-                                order.product ??
-                                "-"
-                            )
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatAdminPrice(
-                            order.api_price ??
-                            order.cost ??
-                            0
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatAdminPrice(
-                            order.price ??
-                            order.amount ??
-                            0
-                        )}
-                    </td>
-
-                    <td>
-                        ${Number(
-                            order.discount ??
-                            0
-                        ).toFixed(2)}%
-                    </td>
-
-                    <td>
-                        ${getStatusHtml(status)}
-                    </td>
-
-                    <td>
-                        ${escapeAdminHtml(
-                            String(
-                                order.created_at ??
-                            function renderOrderCustomerFields(orderParams) {
+function renderOrderCustomerFields(orderParams) {
     if (!orderParams) return "-";
     let params = orderParams;
     if (typeof params === "string") {
-        try {
-            params = JSON.parse(params);
-        } catch {
-            return escapeAdminHtml(params);
-        }
+        try { params = JSON.parse(params); } catch { return escapeAdminHtml(params); }
     }
     if (!params || typeof params !== "object" || Array.isArray(params)) return "-";
-
     const entries = Object.entries(params).filter(function(entry) {
         return String(entry[0] || "").trim() && String(entry[1] ?? "").trim();
     });
     if (!entries.length) return "-";
-
     return entries.map(function(entry) {
         return '<div class="order-field-item"><strong>' +
-            escapeAdminHtml(String(entry[0])) +
-            ':</strong> <span>' +
-            escapeAdminHtml(String(entry[1])) +
-            '</span></div>';
+            escapeAdminHtml(String(entry[0])) + ':</strong> <span>' +
+            escapeAdminHtml(String(entry[1])) + '</span></div>';
     }).join("");
 }
 
-    "-"
-                            )
-                        )}
-                    </td>
-
-                </tr>
-            `;
-
-        }).join("");
-
+function renderOrders(orders) {
+    const table = document.getElementById("ordersTable");
+    if (!table) return;
+    if (!orders.length) {
+        table.innerHTML = '<tr><td colspan="10">لا توجد طلبات.</td></tr>';
+        return;
+    }
+    table.innerHTML = orders.map(function(order) {
+        const status = String(order.status || "pending").toLowerCase();
+        return `
+            <tr>
+                <td>${escapeAdminHtml(String(order.id ?? order.order_id ?? "-"))}</td>
+                <td>${escapeAdminHtml(String(order.customer_name ?? "-"))}</td>
+                <td>${escapeAdminHtml(String(order.customer_number ?? order.customer_id ?? "-"))}</td>
+                <td class="order-customer-fields">${renderOrderCustomerFields(order.order_params)}</td>
+                <td>${escapeAdminHtml(String(order.product_name ?? order.product ?? "-"))}</td>
+                <td>${formatAdminPrice(order.api_price ?? order.cost ?? 0)}</td>
+                <td>${formatAdminPrice(order.price ?? order.amount ?? 0)}</td>
+                <td>${Number(order.discount ?? 0).toFixed(2)}%</td>
+                <td>${getStatusHtml(status)}</td>
+                <td>${escapeAdminHtml(String(order.created_at ?? "-"))}</td>
+            </tr>
+        `;
+    }).join("");
 }
 
 function renderRecentOrders(orders) {
