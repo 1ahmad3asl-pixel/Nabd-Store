@@ -2872,12 +2872,27 @@ function renderBalanceProductPicker(group) {
         const q=qtyConfig(p);
         h.innerHTML=q.enabled?'<div class="pubg-field game-quantity-field"><label for="balanceOrderQty">الكمية</label><input id="balanceOrderQty" type="number" min="'+q.min+'" max="'+q.max+'" step="'+q.step+'" value="'+q.min+'" inputmode="numeric" required></div>':"";
     }
+    let customerDiscount=0;
+    async function loadBalanceCustomerDiscount(){
+        try{
+            const response=await fetch(BACKEND_URL+"/api/customer/auth/me",{headers:{Accept:"application/json"},credentials:"include",cache:"no-store"});
+            if(!response.ok)return;
+            const data=await response.json();
+            customerDiscount=Math.min(100,Math.max(0,Number(data.customer&&data.customer.discount||0)));
+        }catch(error){
+            customerDiscount=0;
+        }finally{
+            updateTotal();
+        }
+    }
     function updateTotal(){
         const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");
         if(!p||!el)return;
         const unit=getGameProductPrice(p),qty=q?Number(q.value):1;
         if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}
-        el.textContent=formatBalancePrice(p,unit*qty);
+        const discountedUnit=unit*(1-customerDiscount/100);
+        const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(p.price));
+        el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
     }
     function updateProduct(index){
         const p=products[index];if(!p)return;
@@ -2889,7 +2904,7 @@ function renderBalanceProductPicker(group) {
         renderQty(p);updateTotal();
         if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;
     }
-    renderQty(first);updateTotal();
+    renderQty(first);updateTotal();loadBalanceCustomerDiscount();
     const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
     const back=document.getElementById("balanceBackToSubgroups");
     if(back)back.addEventListener("click",function(){openBalanceSubgroups(group.balanceGroupKey||"");});
