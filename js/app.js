@@ -2862,6 +2862,17 @@ function renderBalanceProductPicker(group) {
     const available=products.filter(function(p){return p.available!==false&&p.available!==0;});
     const first=available[0]||products[0]||null;
 
+    function getBalanceRawPrice(product){
+        const raw=getRawProductPrice(product);
+        if(raw!==null)return raw;
+        const legacy=Number(product&&product.price);
+        return Number.isFinite(legacy)&&legacy>=0?legacy:null;
+    }
+    function getBalanceSaleUnitPrice(product){
+        const raw=getBalanceRawPrice(product);
+        if(raw===null)return null;
+        return raw*(1+getProductProfitRateForClient(product)/100);
+    }
     function formatBalancePrice(product,value){
         const amount=Number(value);
         if(!Number.isFinite(amount))return "السعر غير متاح";
@@ -2869,7 +2880,7 @@ function renderBalanceProductPicker(group) {
     }
     const list=products.map(function(product,index){
         const ok=product.available!==false&&product.available!==0;
-        const price=getGameProductPrice(product);
+        const price=getBalanceSaleUnitPrice(product);
         return '<button class="pubg-option'+(ok?'':' is-disabled')+'" type="button" data-balance-index="'+index+'"'+(ok?'':' disabled')+'><span class="pubg-option-name">'+escapeHtml(product.name||"منتج")+'</span><span class="pubg-option-price">'+(price===null?'السعر غير متاح':formatBalancePrice(product,price))+'</span>'+(ok?'':'<span class="pubg-option-status">غير متوفر</span>')+'</button>';
     }).join("");
 
@@ -2878,7 +2889,7 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first?formatProductPrice(first):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getGameProductPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getGameProductPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function qtyConfig(p){
@@ -2912,10 +2923,15 @@ function renderBalanceProductPicker(group) {
     function updateTotal(){
         const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");
         if(!p||!el)return;
-        const raw=getRawProductPrice(p),qty=q?Number(q.value):NaN;
-        if(!Number.isFinite(qty)||qty<1||raw===null){el.textContent="السعر غير متاح";return;}
+        const raw=getBalanceRawPrice(p);
+        if(raw===null){el.textContent="السعر غير متاح";return;}
         const saleUnit=raw*(1+getProductProfitRateForClient(p)/100);
         const discountedUnit=saleUnit*(1-customerDiscount/100);
+        const qty=q?Number(q.value):NaN;
+        if(!Number.isFinite(qty)||qty<1){
+            el.textContent=formatBalancePrice(p,discountedUnit);
+            return;
+        }
         const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(raw));
         el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
     }
@@ -2924,10 +2940,10 @@ function renderBalanceProductPicker(group) {
         selectedIndex=index;
         const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");
         if(n)n.textContent=p.name||"اختر المنتج";
-        if(pr)pr.textContent=formatBalancePrice(p,getGameProductPrice(p));
+        if(pr){const unit=getBalanceSaleUnitPrice(p);pr.textContent=unit===null?"السعر غير متاح":formatBalancePrice(p,unit);}
         if(f)f.innerHTML=renderGameParamFields(p,group.title);
         renderQty(p);updateTotal();
-        if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;
+        if(s)s.disabled=p.available===false||p.available===0||getBalanceSaleUnitPrice(p)===null;
     }
     renderQty(first);updateTotal();loadBalanceCustomerDiscount();
     const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
@@ -2979,7 +2995,19 @@ function renderBalanceProductPicker(group) {
     const image=group.image||"", imageHtml=image?'<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
     content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToGroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first?formatProductPrice(first):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getGameProductPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
     let selectedIndex=first?products.indexOf(first):-1;
-    function qtyConfig(p){const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step),enabled=Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));return{enabled:enabled,min:Number.isFinite(min)&&min>0?min:1,max:Number.isFinite(max)&&max>0?max:999999999,step:Number.isFinite(step)&&step>0?step:1};}
+    function qtyConfig(p){
+        const v=p&&p.qty_values?p.qty_values:{};
+        const min=Number(v.min),max=Number(v.max),step=Number(v.step);
+        const text=normalizeBalanceText(String(group.title||"")+" "+String(group.providerTitle||"")+" "+String(p&&p.category_name||"")+" "+String(p&&p.name||""));
+        const isMtnInvoice=text.includes("mtn")&&(text.includes("فاتور")||text.includes("invoice"));
+        const enabled=isMtnInvoice||Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));
+        return{
+            enabled:enabled,
+            min:isMtnInvoice?500:(Number.isFinite(min)&&min>0?min:1),
+            max:isMtnInvoice?1000000:(Number.isFinite(max)&&max>0?max:1000000),
+            step:Number.isFinite(step)&&step>0?step:1
+        };
+    }
     function renderQty(p){const h=document.getElementById("balanceQuantityField");if(!h)return;const q=qtyConfig(p);h.innerHTML=q.enabled?'<div class="pubg-field game-quantity-field"><label for="balanceOrderQty">الكمية</label><input id="balanceOrderQty" type="number" min="'+q.min+'" max="'+q.max+'" step="'+q.step+'" value="" placeholder="'+quantityRangePlaceholder(q.min,q.max)+'" inputmode="numeric" required></div>':"";}
     function updateTotal(){const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");if(!p||!el)return;const unit=getGameProductPrice(p),qty=q?Number(q.value):1;if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}el.textContent=formatMoney(ceilPrice(unit*qty,getPriceDecimalPlaces(p.price)),getPriceDecimalPlaces(p.price));}
     function updateProduct(index){const p=products[index];if(!p)return;selectedIndex=index;const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");if(n)n.textContent=p.name||"اختر المنتج";if(pr)pr.textContent=formatProductPrice(p);if(f)f.innerHTML=renderGameParamFields(p,group.title);renderQty(p);updateTotal();if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;}
