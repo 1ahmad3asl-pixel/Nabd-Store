@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#fff"/>
-  <image
-    href="https://upload.wikimedia.org/wikipedia/commons/0/0e/PayPal_2024_%28Icon%29.svg"
-    x="56" y="20" width="400" height="472"
-    preserveAspectRatio="xMidYMid meet"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PayPal">
+  <rect x="18" y="18" width="476" height="476" rx="108" fill="#f4f7fb"/>
+  <path d="M174 118h105c74 0 116 34 105 91-10 54-56 82-119 82h-37l-24 111h-63l33-154z" fill="#003087"/>
+  <path d="M201 145h78c48 0 75 19 68 54-6 31-35 48-78 48h-49l-19 89h-35z" fill="#0070ba"/>
+  <path d="M287 291h32c55 0 86-20 97-61 5 52-31 88-91 88h-28z" fill="#009cde"/>
 </svg>
