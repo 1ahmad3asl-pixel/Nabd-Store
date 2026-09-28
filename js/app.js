@@ -2557,7 +2557,7 @@ const BALANCE_CATALOG = [
         key:"syriatel",
         title:"سيريتيل",
         aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
-        image:"https://pbs.twimg.com/media/GflDfLlXEAAKyNx.jpg"
+        image:"https://www.zarkachat.com/wp-content/uploads/2020/04/syriatel-28227.jpg"
     },
     {
         key:"mtn",
