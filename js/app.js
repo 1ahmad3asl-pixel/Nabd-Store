@@ -1885,21 +1885,29 @@ function getTurkcellParamConfig(product) {
     const normalized = params.map(function(label) {
         return normalizeBalanceText(label).toLowerCase();
     });
-
-    // منتجات الرصيد التركي لا تستخدم حقول "الكمية/الرابط/المشتركين"
-    // الخاصة بتطبيق آخر. نأخذ مفتاح الحقل الأول من Nemer فقط، ونعرضه
-    // للمستخدم كرقم هاتف.
     const phoneIndex = normalized.findIndex(function(label) {
         return /رابط|link|url|phone|mobile|number|رقم|هاتف|موبايل/.test(label);
     });
-
+    const phoneParamIndex = phoneIndex >= 0 ? phoneIndex : 0;
+    let serviceParamIndex = -1;
+    for (let index = 0; index < params.length; index++) {
+        if (index === phoneParamIndex) continue;
+        if (/خدمة|service|package|باقة|اشتراك|subscriber|plan/.test(normalized[index])) {
+            serviceParamIndex = index;
+            break;
+        }
+    }
+    if (serviceParamIndex < 0 && params.length > 1) {
+        serviceParamIndex = params.findIndex(function(_, index) { return index !== phoneParamIndex; });
+    }
     return {
         params: params,
-        phoneKey: phoneIndex >= 0 ? params[phoneIndex] : (params[0] || "")
+        phoneKey: params[phoneParamIndex] || "",
+        serviceKey: serviceParamIndex >= 0 ? params[serviceParamIndex] : ""
     };
 }
 
-function renderBalanceRequiredFields(product, groupTitle) {
+function renderBalanceRequiredFields(product, groupTitle, serviceProducts, selectedServiceIndex) {
     const isTurkey = /ترك|تروكسل|turkcell|turkey/.test(normalizeBalanceText(groupTitle || "")) ||
         normalizeBalanceText(product && product.category_name || "").includes("تركي") ||
         /ترك|تروكسل|turkcell|turkey/.test(normalizeBalanceText(product && product.name || ""));
@@ -1910,11 +1918,25 @@ function renderBalanceRequiredFields(product, groupTitle) {
         return '<div class="game-no-required-fields">لا توجد معلومات إضافية مطلوبة لهذا المنتج.</div>';
     }
 
-    const safeKey = escapeHtml(config.phoneKey);
-    return '<div class="pubg-field game-required-field">' +
-        '<label for="gameParam_0">رقم الهاتف</label>' +
-        '<input id="gameParam_0" type="tel" data-game-param="' + safeKey + '" placeholder="أدخل رقم الهاتف" inputmode="tel" autocomplete="tel" required aria-required="true">' +
+    let html = '<div class="pubg-field game-required-field">' +
+        '<label for="gameParam_0">أدخل الرقم</label>' +
+        '<input id="gameParam_0" type="tel" data-game-param="' + escapeHtml(config.phoneKey) + '" placeholder="أدخل الرقم" inputmode="tel" autocomplete="tel" required aria-required="true">' +
         '</div>';
+
+    if (config.serviceKey && Array.isArray(serviceProducts) && serviceProducts.length) {
+        const selected = Math.max(0, Math.min(serviceProducts.length - 1, Number(selectedServiceIndex || 0)));
+        html += '<div class="pubg-field game-required-field">' +
+            '<label for="turkcellServiceSelect">اختر الخدمة</label>' +
+            '<select id="turkcellServiceSelect" data-game-param="' + escapeHtml(config.serviceKey) + '" required aria-required="true">' +
+            serviceProducts.map(function(service, index) {
+                return '<option value="' + escapeHtml(service.name || "") + '"' + (index === selected ? ' selected' : '') + '>' +
+                    escapeHtml(service.name || "خدمة") + '</option>';
+            }).join("") +
+            '</select>' +
+            '</div>';
+    }
+
+    return html;
 }
 
 function getRawProductPrice(product) {
@@ -3000,7 +3022,7 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title):"")+'</div><div class="pubg-field-label">'+(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج")):(isTurkcellBundleGroup(group)?"اختر الخدمة":"اختر المنتج"))+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label">'+(isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName"><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function isTurkcellBundle(groupInfo){
@@ -3071,7 +3093,7 @@ function renderBalanceProductPicker(group) {
         const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");
         if(n)n.textContent=p.name||"اختر المنتج";
         if(pr){const unit=getBalanceSaleUnitPrice(p);pr.textContent=unit===null?"السعر غير متاح":formatBalancePrice(p,unit);}
-        if(f)f.innerHTML=renderBalanceRequiredFields(p,group.title);
+        if(f)f.innerHTML=renderBalanceRequiredFields(p,group.title,products,index);
         renderQty(p);updateTotal();
         if(s)s.disabled=p.available===false||p.available===0||getBalanceSaleUnitPrice(p)===null;
     }
@@ -3100,7 +3122,8 @@ function renderBalanceProductPicker(group) {
             if(!value){invalid=true;input.classList.add("is-invalid");}
             else{params[label]=value;input.classList.remove("is-invalid");}
         });
-        // الرصيد التركي يحتاج رقم الهاتف فقط؛ حقول الباقة/المشتركين والكمية تخص منتجات أخرى.        const qi=document.getElementById("balanceOrderQty");
+        // باقة تركسل تحتاج رقم الهاتف + الخدمة المختارة؛ باقي منتجات الأرصدة تستخدم حقولها الخاصة.
+        const qi=document.getElementById("balanceOrderQty");
         const isFixedTurkcellBundle=isTurkcellBundle(group);
         const qty=qi?Number(qi.value):1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
