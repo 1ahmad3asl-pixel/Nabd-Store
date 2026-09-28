@@ -3091,7 +3091,7 @@ function renderBalanceProductPicker(group) {
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
         if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}
         submit.disabled=true;
-        fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:qty})})
+        fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:isFixedTurkcellBundle?1:qty})})
             .then(async function(response){
                 const data=await response.json();
                 if(!response.ok||data.status==="ERROR")throw new Error(data.message||"تعذر إنشاء الطلب");
