@@ -2575,10 +2575,23 @@ function renderCustomerOrderParams(params) {
 function renderCustomerOrderResponse(response) {
     const object = parseCustomerOrderObject(response);
     if (!Object.keys(object).length) {
-        return '<span class="customer-order-muted">لم يصل رد محفوظ من Nemer.</span>';
+        return '<div class="customer-order-system-response customer-order-muted">لا يوجد رد نظام</div>';
     }
-    const formatted = JSON.stringify(object, null, 2);
-    return '<pre class="customer-order-response">' + escapeHtml(formatted) + '</pre>';
+    const downloadUrl =
+        object.download_url || object.downloadUrl || object.url || object.file_url || object.fileUrl ||
+        object.data?.download_url || object.data?.downloadUrl || object.data?.url ||
+        object.data?.file_url || object.data?.fileUrl;
+    if (downloadUrl && /^https?:\\/\\//i.test(String(downloadUrl))) {
+        return '<div class="customer-order-system-response">' +
+            '<a class="customer-order-download" href="' + escapeHtml(String(downloadUrl)) +
+            '" target="_blank" rel="noopener noreferrer" download>تحميل رد النظام</a></div>';
+    }
+    const message = object.message || object.msg || object.response || object.data?.message;
+    if (message && typeof message !== "object") {
+        return '<div class="customer-order-system-response customer-order-response-text">' +
+            escapeHtml(String(message)) + '</div>';
+    }
+    return '<div class="customer-order-system-response customer-order-muted">وصل رد من النظام، لكن لا يوجد ملف تحميل في الاستجابة.</div>';
 }
 
 function renderCustomerOrders(container, orders) {
@@ -2625,7 +2638,7 @@ function renderCustomerOrders(container, orders) {
                     </div>
                 </div>
                 <div class="customer-order-section">
-                    <h4>المعلومات التي أدخلتها</h4>
+                    <h4>المعلومات التي أدخلها الزبون</h4>
                     <div class="customer-order-params">${renderCustomerOrderParams(order.order_params)}</div>
                 </div>
                 <div class="customer-order-section">
