@@ -2657,10 +2657,10 @@ function openBalancePage(fromHistory) {
     // استدعاء API وربط المنتجات يتم عند دخول المستوى الثالث/صفحة الشراء.
     const groups=getBalanceGroups();
     content.innerHTML='<div class="game-page balance-level-two"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
-        const available=group.products.some(function(product){return product.available!==false&&product.available!==0;});
         const image=group.image || "";
         const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
-        return '<button class="game-category-tile game-product-group-card balance-category-tile'+(available?'':' is-disabled')+'" type="button" data-balance-group="'+escapeHtml(group.key)+'"'+(available?'':' disabled')+'><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
+        // المستوى الثاني لا يعطل التصنيف قبل تحميل API؛ الضغط عليه هو الذي يبدأ تحميل منتجاته.
+        return '<button class="game-category-tile game-product-group-card balance-category-tile" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
     }).join("")+'</div></div>';
     const back=document.getElementById("balanceBack"); if(back) back.addEventListener("click",closeInternalPage);
     content.querySelectorAll("[data-balance-group]").forEach(function(card){card.addEventListener("click",function(){openBalanceProductGroup(card.getAttribute("data-balance-group")||"");});});
