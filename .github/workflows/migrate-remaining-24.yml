@@ -1,0 +1,80 @@
+name: Migrate remaining 24 game images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/migrate-remaining-24.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install image tooling
+        run: python3 -m pip install --disable-pip-version-check pillow requests
+      - name: Download and validate images
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import requests
+          from PIL import Image
+          from io import BytesIO
+
+          names = [
+            "ludo-club","lords-mobile","magic-chess-gogo","marvel-duel",
+            "marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline",
+            "mobile-legends","modern-strike-online","mongil-star-dive",
+            "my-singing-monsters","onmyoji-arena","oxide-survival-island",
+            "overmortal-idle-global","project-entropy","pubg-mobile","roblox",
+            "rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war",
+            "whiteout-survival","yalla-ludo"
+          ]
+          out = Path("public/game-images")
+          out.mkdir(parents=True, exist_ok=True)
+          for name in names:
+              url = f"https://nabd-store.onrender.com/api/game-images/{name}"
+              r = requests.get(url, timeout=60)
+              r.raise_for_status()
+              im = Image.open(BytesIO(r.content))
+              im.load()
+              if im.width <= 0 or im.height <= 0:
+                  raise RuntimeError(f"Invalid dimensions: {name}")
+              dst = out / f"{name}.png"
+              # Keep the source's visual content and dimensions; PNG avoids lossy recompression.
+              if im.mode not in ("RGB","RGBA"):
+                  im = im.convert("RGBA")
+              im.save(dst, format="PNG", optimize=False)
+              print(f"{name}.png: {im.width}x{im.height}, source={len(r.content)} bytes, saved={dst.stat().st_size}")
+          PY
+      - name: Verify files
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          names = ["ludo-club","lords-mobile","magic-chess-gogo","marvel-duel","marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline","mobile-legends","modern-strike-online","mongil-star-dive","my-singing-monsters","onmyoji-arena","oxide-survival-island","overmortal-idle-global","project-entropy","pubg-mobile","roblox","rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war","whiteout-survival","yalla-ludo"]
+          for n in names:
+              p=Path("public/game-images")/(n+".png")
+              assert p.is_file() and p.stat().st_size > 0, n
+              with Image.open(p) as im:
+                  assert im.format == "PNG" and im.width > 0 and im.height > 0
+          print("Verified 24/24 images.")
+          PY
+      - name: Commit images and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name "Nabd-Store-ON"
+          git config user.email "1ahmad3asl@gmail.com"
+          git add public/game-images
+          git add .github/workflows/migrate-remaining-24.yml
+          git rm .github/workflows/migrate-remaining-24.yml
+          git commit -m "Migrate remaining 24 game images"
+          git push origin main
