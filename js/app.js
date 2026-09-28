@@ -2575,7 +2575,7 @@ const BALANCE_CATALOG = [
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"https://upload.wikimedia.org/wikipedia/commons/e/e7/Payoneer_logo.svg"
+        image:"/assets/balance/payoneer.svg"
     },
     {
         key:"touch",
