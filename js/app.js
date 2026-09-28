@@ -2980,7 +2980,15 @@ function renderBalanceProductPicker(group) {
     content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderGameParamFields(first,group.title):"")+'</div><div class="pubg-field-label">اختر المنتج</div><div class="pubg-select" id="balanceSelect"><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
+    function isTurkcellBundle(groupInfo){
+        const title=normalizeBalanceText(groupInfo&&groupInfo.title||"");
+        return title.includes("باقة") && (title.includes("تركي") || title.includes("تروكسل") || title.includes("turkcell"));
+    }
     function qtyConfig(p){
+        // باقة تركسل في Nemer تُباع كمنتج/باقة ثابتة ولا تحتوي على كمية.
+        // لا نُظهر حقل الكمية حتى لو أعادت بيانات المنتج حقول qty قديمة أو عامة.
+        if(isTurkcellBundle(group)) return{enabled:false,min:1,max:1,step:1};
+
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
         const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
         const subgroupTitle=normalizeBalanceText(group.title||"");
@@ -3023,7 +3031,11 @@ function renderBalanceProductPicker(group) {
         const discountedUnit=saleUnit*(1-customerDiscount/100);
         const qty=q?Number(q.value):NaN;
         if(!Number.isFinite(qty)||qty<1){
-            // لا كمية = لا توجد عملية شراء محسوبة بعد، لذلك السعر المعروض صفر.
+            // المنتجات الثابتة مثل باقات تركسل لا تحتوي كمية؛ السعر هو سعر المنتج نفسه.
+            if(!q){
+                el.textContent=formatBalancePrice(p,discountedUnit);
+                return;
+            }
             el.textContent="$0.000";
             return;
         }
@@ -3073,9 +3085,11 @@ function renderBalanceProductPicker(group) {
             const config = getTurkcellParamConfig(p);
             if (config.packageKey) params[config.packageKey] = String(p.name || "").trim();
         }
-        const qi=document.getElementById("balanceOrderQty"),qty=qi?Number(qi.value)||1:1;
+        const qi=document.getElementById("balanceOrderQty");
+        const isFixedTurkcellBundle=isTurkcellBundle(group);
+        const qty=qi?Number(qi.value):1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
-        if(invalid){showToast("يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}
+        if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}
         submit.disabled=true;
         fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:qty})})
             .then(async function(response){
