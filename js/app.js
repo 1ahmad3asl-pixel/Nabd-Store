@@ -3,6 +3,9 @@ const state = {
     productsLoaded: false,
     productsLoadingPromise: null,
     productsLive: false,
+    profitRate: 0,
+    numberProfitRate: 0,
+    profitRateLoaded: false,
     productsCacheKey: "nabd-products-cache-v2",
     gameProductsIndex: null,
     gameProductsSource: null,
@@ -1874,6 +1877,18 @@ function renderGameParamFields(product, gameTitle) {
             '</div>';
     }).join("");
 }
+function getRawProductPrice(product) {
+    const value = product && product.original_price;
+    if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
+        return Number(value);
+    }
+    return null;
+}
+function getProductProfitRateForClient(product) {
+    const text = String(product && product.category_name || "") + " " + String(product && product.name || "");
+    const isNumber = /\b(numbers?|number|whatsapp|facebook|gmail|icloud|instagram|imo)\b|أرقام|رقم|واتساب|فيسبوك|جيميل|ايكلاود|آي كلاود|انستغرام|إنستغرام|ايمو/i.test(text);
+    return isNumber ? Number(state.numberProfitRate || 0) : Number(state.profitRate || 0);
+}
 function getGameProductPrice(product) {
     const value = product && product.price;
     if (value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0) {
@@ -2522,7 +2537,7 @@ function formatQuantityBound(value){
     return Math.trunc(amount).toLocaleString("en-US");
 }
 function quantityRangePlaceholder(min,max){
-    return formatQuantityBound(min)+" ↔ "+formatQuantityBound(max);
+    return formatQuantityBound(min)+" ← "+formatQuantityBound(max);
 }
 
 function escapeHtml(value) {
@@ -2897,10 +2912,11 @@ function renderBalanceProductPicker(group) {
     function updateTotal(){
         const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");
         if(!p||!el)return;
-        const unit=getGameProductPrice(p),qty=q?Number(q.value):1;
-        if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}
-        const discountedUnit=unit*(1-customerDiscount/100);
-        const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(p.price));
+        const raw=getRawProductPrice(p),qty=q?Number(q.value):NaN;
+        if(!Number.isFinite(qty)||qty<1||raw===null){el.textContent="السعر غير متاح";return;}
+        const saleUnit=raw*(1+getProductProfitRateForClient(p)/100);
+        const discountedUnit=saleUnit*(1-customerDiscount/100);
+        const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(raw));
         el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
     }
     function updateProduct(index){
@@ -3038,6 +3054,9 @@ async function loadProducts(options) {
             }
 
             state.products = Array.isArray(data.products) ? data.products : [];
+            state.profitRate = Number(data.profit_rate) || 0;
+            state.numberProfitRate = Number(data.number_profit_rate) || 0;
+            state.profitRateLoaded = true;
             state.productsLoaded = true;
             state.productsLive = true;
             state.gameProductsIndex = null;
