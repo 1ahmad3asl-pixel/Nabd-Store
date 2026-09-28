@@ -130,6 +130,7 @@ async function initDb() {
     CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
     CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
     ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_params JSONB NOT NULL DEFAULT '{}'::jsonb;
+    ALTER TABLE orders ADD COLUMN IF NOT EXISTS nemer_response JSONB NOT NULL DEFAULT '{}'::jsonb;
 
     CREATE TABLE IF NOT EXISTS transactions (
       id TEXT PRIMARY KEY,
