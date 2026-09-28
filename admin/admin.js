@@ -3,6 +3,7 @@ const ADMIN_API = {
 
     async request(endpoint, options = {}) {
         const response = await fetch(this.base + endpoint, {
+            credentials: "same-origin",
             ...options,
             headers: {
                 "Accept": "application/json",
@@ -311,24 +312,24 @@ function initializeDashboard() {
 }
 
 async function loadAdminDashboard() {
+    setText("totalCustomers", "…");
+    setText("totalOrders", "…");
+    setText("totalSales", "…");
+    setText("totalProfit", "…");
+    setText("apiBalance", "…");
 
     try {
-
-        const data =
-            await ADMIN_API.dashboard();
-
+        const data = await ADMIN_API.dashboard();
         updateDashboard(data);
-
     } catch (error) {
-
-        console.error(error);
-
-        showAdminToast(
-            "تعذر تحميل بيانات لوحة التحكم."
-        );
-
+        console.error("Admin dashboard load failed:", error);
+        setText("totalCustomers", "—");
+        setText("totalOrders", "—");
+        setText("totalSales", "—");
+        setText("totalProfit", "—");
+        setText("apiBalance", "—");
+        showAdminToast(error?.message || "تعذر تحميل بيانات لوحة التحكم.");
     }
-
 }
 
 function updateDashboard(data) {
@@ -2036,7 +2037,10 @@ function formatNemerBalance(value) {
 
 function formatAdminPrice(value) {
     const number = Number(value) || 0;
-    const decimals = 3;
+    const configured = Number(adminState.settings.currency_decimals);
+    const decimals = Number.isInteger(configured) && configured >= 0 && configured <= 6
+        ? configured
+        : 3;
     const currency = String(adminState.settings.currency || "USD");
     const symbols = {USD:"$",EUR:"€",TRY:"₺",SAR:"﷼",AED:"د.إ"};
     return (symbols[currency] || currency + " ") + number.toFixed(decimals);
