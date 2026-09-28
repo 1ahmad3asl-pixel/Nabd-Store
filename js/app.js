@@ -2863,10 +2863,18 @@ function renderBalanceProductPicker(group) {
     const first=available[0]||products[0]||null;
 
     function getBalanceRawPrice(product){
+        const selling=Number(product&&product.price);
+        if(Number.isFinite(selling)&&selling>=0){
+            const rate=getProductProfitRateForClient(product);
+            if(rate>0){
+                const estimatedRaw=selling/(1+rate/100);
+                if(Number.isFinite(estimatedRaw)&&estimatedRaw>=0)return estimatedRaw;
+            }
+            return selling;
+        }
         const raw=getRawProductPrice(product);
         if(raw!==null)return raw;
-        const legacy=Number(product&&product.price);
-        return Number.isFinite(legacy)&&legacy>=0?legacy:null;
+        return null;
     }
     function getBalanceSaleUnitPrice(product){
         const raw=getBalanceRawPrice(product);
@@ -2895,8 +2903,10 @@ function renderBalanceProductPicker(group) {
     function qtyConfig(p){
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
         const groupTitle=normalizeBalanceText(group.title||"");
+        const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
         // فواتير MTN: الكمية إلزامية، من 500 حتى 1,000,000.
-        if(groupTitle.includes("mtn") && groupTitle.includes("فاتور")){
+        // نتحقق من اسم التصنيف والمنتج معًا حتى لا نعرض حد API العام (مثل 5 مليار).
+        if((groupTitle+" "+productTitle).includes("mtn") && (groupTitle+" "+productTitle).includes("فاتور")){
             return{enabled:true,min:500,max:1000000,step:1};
         }
         const enabled=Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));
@@ -2929,7 +2939,8 @@ function renderBalanceProductPicker(group) {
         const discountedUnit=saleUnit*(1-customerDiscount/100);
         const qty=q?Number(q.value):NaN;
         if(!Number.isFinite(qty)||qty<1){
-            el.textContent=formatBalancePrice(p,discountedUnit);
+            // لا كمية = لا توجد عملية شراء محسوبة بعد، لذلك السعر المعروض صفر.
+            el.textContent="$0.000";
             return;
         }
         const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(raw));
