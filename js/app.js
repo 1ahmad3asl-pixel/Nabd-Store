@@ -2518,20 +2518,26 @@ function escapeHtml(value) {
 }
 
 const BALANCE_CATALOG = [
-    { key:"turkish", title:"رصيد تركي", aliases:["رصيد تركي","turkish balance","turkey balance","turkish credit","turkey credit"] },
-    { key:"syriatel", title:"سيريتل", aliases:["سيريتل","syriatel","syriatel cash"] },
-    { key:"mtn", title:"MTN", aliases:["mtn","mtn syria","mtn cash"] },
-    { key:"instapay", title:"Insta pay", aliases:["insta pay","instapay","insta-pay"] },
-    { key:"reflect", title:"Reflect", aliases:["reflect"] },
-    { key:"papara", title:"Papara", aliases:["papara"] },
-    { key:"paypal", title:"Paypal", aliases:["paypal","pay pal"] },
-    { key:"payoneer", title:"Payoneer", aliases:["payoneer"] },
-    { key:"touch", title:"Touch", aliases:["touch","touch lebanon","touch cash"] },
-    { key:"alfa", title:"Alfa", aliases:["alfa","alfa lebanon","alfa cash"] },
-    { key:"zain-iraq", title:"زين كاش العراق", aliases:["زين كاش العراق","zain cash iraq","zaincash iraq","zain cash"] },
-    { key:"rcell", title:"Rcell", aliases:["rcell","r cell"] },
-    { key:"whish-money", title:"Whish Money", aliases:["whish money","whishmoney","whish"] },
-    { key:"asiacell", title:"اسيا سيل", aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell"] }
+    // مزودو الأرصدة الفعليون الموجودون في كتالوج المتجر.
+    // S1/S2 والفواتير تبقى تصنيفات داخل مزودها ولا تظهر كمزودين منفصلين.
+    {
+        key:"syriatel",
+        title:"سيريتيل",
+        aliases:["سيريتل","سيرياتيل","syriatel","syriatel cash"],
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Syriatel%20Logo.png"
+    },
+    {
+        key:"mtn",
+        title:"MTN",
+        aliases:["mtn","mtn syria","mtn cash"],
+        image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/MTN%20Logo.svg"
+    },
+    {
+        key:"balance-refund",
+        title:"استرداد رصيد",
+        aliases:["استرداد رصيد","refund balance","balance refund"],
+        image:""
+    }
 ];
 
 function normalizeBalanceText(value) {
@@ -2559,7 +2565,7 @@ function isBalanceProduct(product) {
 
 function getBalanceGroups() {
     const groups = BALANCE_CATALOG.map(function(item) {
-        return {key:item.key,title:item.title,image:"",products:[]};
+        return {key:item.key,title:item.title,image:item.image || "",products:[]};
     });
     const byKey = new Map(groups.map(function(group){ return [group.key, group]; }));
     state.products.forEach(function(product) {
@@ -2567,10 +2573,12 @@ function getBalanceGroups() {
         if (!item) return;
         const group = byKey.get(item.key);
         if (!group) return;
+        // استخدم شعار المزود أولًا، ثم صورة التصنيف القادمة من API كبديل.
         if (!group.image && product.category_img) group.image = product.category_img;
         group.products.push(product);
     });
-    return groups;
+    // لا نعرض بطاقات فارغة لمزودين غير موجودين في البيانات الحالية.
+    return groups.filter(function(group){ return group.products.length > 0; });
 }
 
 function openBalancePage(fromHistory) {
