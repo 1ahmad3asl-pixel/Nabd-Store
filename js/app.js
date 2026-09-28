@@ -2527,7 +2527,7 @@ const BALANCE_CATALOG = [
         key:"turkey-balance",
         title:"رصيد تركي",
         aliases:["رصيد تركي","الرصيد التركي","تركيا","تركي","turkish balance","turkey balance","turkey","try","tl"],
-        image:"/assets/balance/turkey-balance.svg"
+        image:"https://flags.restcountries.com/v5/w640/tr-1x1.png"
     },
     {
         key:"syriatel",
@@ -2545,25 +2545,25 @@ const BALANCE_CATALOG = [
         key:"zain-cash",
         title:"زين كاش",
         aliases:["زين كاش","zain cash","zaincash","zain"],
-        image:"/assets/balance/zain-cash.svg"
+        image:"https://www.google.com/s2/favicons?domain=zaincash.com&sz=256"
     },
     {
         key:"instapay",
         title:"InstaPay",
         aliases:["instapay","insta pay","انستا باي","إنستا باي"],
-        image:"/assets/balance/instapay.svg"
+        image:"https://www.google.com/s2/favicons?domain=instapay.eg&sz=256"
     },
     {
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"/assets/balance/reflect.svg"
+        image:"https://www.google.com/s2/favicons?domain=reflectapp.com&sz=256"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"/assets/balance/papara.svg"
+        image:"https://www.google.com/s2/favicons?domain=papara.com&sz=256"
     },
     {
         key:"paypal",
@@ -2581,31 +2581,31 @@ const BALANCE_CATALOG = [
         key:"touch",
         title:"Touch",
         aliases:["touch","touch lebanon","تاتش","تتش"],
-        image:"/assets/balance/touch.svg"
+        image:"https://www.google.com/s2/favicons?domain=touch.com.lb&sz=256"
     },
     {
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"/assets/balance/alfa.svg"
+        image:"https://www.google.com/s2/favicons?domain=alfa.com.lb&sz=256"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"/assets/balance/rcell.svg"
+        image:"https://www.google.com/s2/favicons?domain=rcell.me&sz=256"
     },
     {
         key:"whish-money",
         title:"Whish Money",
         aliases:["whish money","whish","ويش موني","ويش","wish money"],
-        image:"/assets/balance/whish-money.svg"
+        image:"https://www.google.com/s2/favicons?domain=whish.money&sz=256"
     },
     {
         key:"asia-cell",
         title:"آسيا سيل",
         aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
-        image:"/assets/balance/asia-cell.svg"
+        image:"https://www.google.com/s2/favicons?domain=asiacell.com&sz=256"
     }
 ];
 function normalizeBalanceText(value) {
