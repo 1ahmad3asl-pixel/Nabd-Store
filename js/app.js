@@ -2557,7 +2557,7 @@ const BALANCE_CATALOG = [
         key:"syriatel",
         title:"سيريتيل",
         aliases:["سيريتل","سيرياتيل","سيريتيل","syriatel","syriatel cash"],
-        image:"https://images.seeklogo.com/logo-png/13/1/syriatel-logo-png_seeklogo-134995.png"
+        image:"https://mersally.com/wp-content/uploads/2023/08/F0BWO47WYAIk6-H.jpg"
     },
     {
         key:"mtn",
