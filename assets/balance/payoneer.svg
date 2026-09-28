@@ -1,7 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8eef5"/></linearGradient></defs>
-<rect width="512" height="512" rx="96" fill="url(#g)"/>
-<circle cx="256" cy="210" r="112" fill="#111827"/>
-<text x="256" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#fff">PO</text>
-<text x="256" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#111827">Payoneer</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Payoneer">
+  <defs>
+    <linearGradient id="payoneerOrange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff4f00"/>
+      <stop offset="1" stop-color="#e33d00"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="472" height="472" rx="108" fill="url(#payoneerOrange)"/>
+  <path d="M139 366c22-70 62-139 121-188 39-33 78-51 111-53 20-1 34 6 39 17 6 13-5 25-26 31-40 12-91 39-133 77-43 39-75 78-96 120-7 14-15 23-24 23-9 0-15-9-13-27 3-25 10-51 21-78z" fill="#fff"/>
+  <path d="M145 188c-12-32-11-59-1-70 8-9 19-6 28 8 13 21 22 53 22 82 0 20-5 33-14 37-11 5-23-8-35-57z" fill="#fff"/>
 </svg>
