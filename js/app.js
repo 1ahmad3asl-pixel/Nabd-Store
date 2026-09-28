@@ -2838,17 +2838,10 @@ function renderBalanceProductPicker(group) {
     const available=products.filter(function(p){return p.available!==false&&p.available!==0;});
     const first=available[0]||products[0]||null;
 
-    function getBalancePriceDecimals(product){
-        const raw=product&&product.price;
-        const text=String(raw==null?"":raw).trim();
-        const dot=text.indexOf(".");
-        if(dot<0)return 2;
-        return Math.max(2,Math.min(8,text.length-dot-1));
-    }
     function formatBalancePrice(product,value){
         const amount=Number(value);
         if(!Number.isFinite(amount))return "السعر غير متاح";
-        return formatMoney(amount,getBalancePriceDecimals(product));
+        return formatProductMoney(product,amount);
     }
     const list=products.map(function(product,index){
         const ok=product.available!==false&&product.available!==0;
@@ -2950,7 +2943,7 @@ function renderBalanceProductPicker(group) {
     function renderQty(p){const h=document.getElementById("balanceQuantityField");if(!h)return;const q=qtyConfig(p);h.innerHTML=q.enabled?'<div class="pubg-field game-quantity-field"><label for="balanceOrderQty">الكمية</label><input id="balanceOrderQty" type="number" min="'+q.min+'" max="'+q.max+'" step="'+q.step+'" value="'+q.min+'" inputmode="numeric" required></div>':"";}
     function updateTotal(){const p=products[selectedIndex],el=document.getElementById("balanceSelectedPrice"),q=document.getElementById("balanceOrderQty");if(!p||!el)return;const unit=getGameProductPrice(p),qty=q?Number(q.value):1;if(!Number.isFinite(qty)||qty<1||unit===null){el.textContent="السعر غير متاح";return;}el.textContent=formatMoney(ceilPrice(unit*qty,getPriceDecimalPlaces(p.price)),getPriceDecimalPlaces(p.price));}
     function updateProduct(index){const p=products[index];if(!p)return;selectedIndex=index;const n=document.getElementById("balanceSelectedName"),pr=document.getElementById("balanceSelectedPrice"),f=document.getElementById("balanceParamFields"),s=document.getElementById("balanceSubmitOrder");if(n)n.textContent=p.name||"اختر المنتج";if(pr)pr.textContent=formatProductPrice(p);if(f)f.innerHTML=renderGameParamFields(p,group.title);renderQty(p);updateTotal();if(s)s.disabled=p.available===false||p.available===0||getGameProductPrice(p)===null;}
-    renderQty(first);updateTotal();const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
+    renderQty(first);updateTotal();loadBalanceCustomerDiscount();const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
     const back=document.getElementById("balanceBackToGroups");if(back)back.addEventListener("click",function(){openBalancePage();});
     const select=document.getElementById("balanceSelect"),trigger=select&&select.querySelector(".pubg-select-trigger"),options=document.getElementById("balanceOptions");
     if(trigger&&options){trigger.addEventListener("click",function(){const open=!options.hidden;options.hidden=open;trigger.setAttribute("aria-expanded",String(!open));});options.querySelectorAll("[data-balance-index]").forEach(function(o){o.addEventListener("click",function(){updateProduct(Number(o.getAttribute("data-balance-index")));options.hidden=true;trigger.setAttribute("aria-expanded","false");});});}
