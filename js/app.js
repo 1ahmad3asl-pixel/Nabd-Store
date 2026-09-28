@@ -2854,6 +2854,11 @@ function renderBalanceProductPicker(group) {
     let selectedIndex=first?products.indexOf(first):-1;
     function qtyConfig(p){
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
+        const groupTitle=normalizeBalanceText(group.title||"");
+        // فواتير MTN: الكمية إلزامية، من 500 حتى 50,000,000.
+        if(groupTitle.includes("mtn") && groupTitle.includes("فاتور")){
+            return{enabled:true,min:500,max:50000000,step:1};
+        }
         const enabled=Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));
         return{enabled:enabled,min:Number.isFinite(min)&&min>0?min:1,max:Number.isFinite(max)&&max>0?max:999999999,step:Number.isFinite(step)&&step>0?step:1};
     }
