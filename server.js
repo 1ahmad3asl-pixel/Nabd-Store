@@ -610,45 +610,64 @@ app.get("/api/customer/orders", requireCustomer, async (req, res) => {
 app.use("/api/admin", requireAdmin);
 
 app.get("/api/admin/dashboard", async (req, res) => {
+  // نجلب إحصائيات قاعدة البيانات ورصيد Nemer بشكل مستقل حتى لا يؤدي تعطل المزود إلى إخفاء أرقام الإدارة.
+  const [profileResult, statsResult, recentResult] = await Promise.allSettled([
+    getNemerProfile(),
+    query(\`
+      SELECT
+        (SELECT COUNT(*) FROM customers) AS customers,
+        (SELECT COUNT(*) FROM orders) AS orders,
+        (SELECT COUNT(*) FROM orders
+          WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+        ) AS failed_orders,
+        COALESCE((
+          SELECT SUM(price) FROM orders
+          WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+        ),0) AS sales,
+        COALESCE((
+          SELECT SUM(profit) FROM orders
+          WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+        ),0) AS profit
+    \`),
+    query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8")
+  ]);
+
   let apiBalance = 0;
-  try {
-    const profile = await getNemerProfile();
-    apiBalance = Number(
-      profile?.balance ?? profile?.data?.balance ?? profile?.wallet ?? 0
-    );
-  } catch (error) {
-    console.error("Admin profile error:", error.message);
+  if (profileResult.status === "fulfilled") {
+    const profile = profileResult.value;
+    const rawBalance =
+      profile?.balance ??
+      profile?.data?.balance ??
+      profile?.data?.data?.balance ??
+      profile?.wallet?.balance ??
+      profile?.data?.wallet?.balance ??
+      0;
+    const parsedBalance = Number(rawBalance);
+    if (Number.isFinite(parsedBalance)) apiBalance = parsedBalance;
+  } else {
+    console.error("Admin profile error:", profileResult.reason?.message || profileResult.reason);
+  }
+
+  if (statsResult.status === "rejected") {
+    console.error("Admin dashboard stats error:", statsResult.reason);
+    return res.status(500).json({
+      status: "ERROR",
+      message: "تعذر تحميل إحصائيات لوحة الإدارة."
+    });
   }
 
   await loadSettings();
-  const stats = await query(`
-    SELECT
-      (SELECT COUNT(*) FROM customers) AS customers,
-      (SELECT COUNT(*) FROM orders) AS orders,
-      (SELECT COUNT(*) FROM orders
-        WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
-      ) AS failed_orders,
-      COALESCE((
-        SELECT SUM(price) FROM orders
-        WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
-      ),0) AS sales,
-      COALESCE((
-        SELECT SUM(profit) FROM orders
-        WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
-      ),0) AS profit
-  `);
-  const recent = await query(
-    "SELECT * FROM orders ORDER BY created_at DESC LIMIT 8"
-  );
-  const row = stats.rows[0];
+  const stats = statsResult.value;
+  const recent = recentResult.status === "fulfilled" ? recentResult.value : { rows: [] };
+  const row = stats.rows[0] || {};
 
   res.json({
     status: "OK",
-    total_customers: Number(row.customers),
-    total_orders: Number(row.orders),
-    failed_orders: Number(row.failed_orders),
-    total_sales: Number(Number(row.sales).toFixed(12)),
-    total_profit: Number(Number(row.profit).toFixed(12)),
+    total_customers: Number(row.customers || 0),
+    total_orders: Number(row.orders || 0),
+    failed_orders: Number(row.failed_orders || 0),
+    total_sales: Number(Number(row.sales || 0).toFixed(12)),
+    total_profit: Number(Number(row.profit || 0).toFixed(12)),
     api_balance: Number(apiBalance.toFixed(12)),
     recent_orders: recent.rows,
     settings: adminSettings
