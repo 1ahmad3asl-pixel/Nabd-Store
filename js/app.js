@@ -1597,7 +1597,7 @@ function renderAppProductPicker(group) {
         }
         holder.innerHTML =
             '<div class="pubg-field game-quantity-field"><label for="appOrderQty">الكمية</label>' +
-            '<input id="appOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '" inputmode="numeric" required></div>';
+            '<input id="appOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="" placeholder="' + quantityRangePlaceholder(config.min,config.max) + '" inputmode="numeric" required></div>';
     }
 
     function updateTotal() {
@@ -2038,7 +2038,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
         holder.innerHTML =
             '<div class="pubg-field game-quantity-field">' +
                 '<label for="gameOrderQty">الكمية</label>' +
-                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="' + config.min + '"  inputmode="numeric" required aria-required="true">' +
+                '<input id="gameOrderQty" type="number" min="' + config.min + '" max="' + config.max + '" step="' + config.step + '" value="" placeholder="' + quantityRangePlaceholder(config.min,config.max) + '" inputmode="numeric" required aria-required="true">' +
             '</div>';
     }
 
@@ -2514,6 +2514,15 @@ function closeModal() {
     if (!elements.modal) return;
     elements.modal.classList.remove("active");
     document.body.style.overflow = "";
+}
+
+function formatQuantityBound(value){
+    const amount=Number(value);
+    if(!Number.isFinite(amount))return "";
+    return Math.trunc(amount).toLocaleString("en-US");
+}
+function quantityRangePlaceholder(min,max){
+    return formatQuantityBound(min)+" ↔ "+formatQuantityBound(max);
 }
 
 function escapeHtml(value) {
@@ -3123,7 +3132,7 @@ function openProductModal(product) {
             fields +
             '<div class="order-field">' +
                 '<label for="orderQty">الكمية</label>' +
-                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" value="' + minQty + '" inputmode="numeric">' +
+                '<input id="orderQty" type="number" min="' + minQty + '" max="' + maxQty + '" step="1" value="" placeholder="' + quantityRangePlaceholder(minQty,maxQty) + '" inputmode="numeric" required>' +
             '</div>' +
             '<div class="order-price-row">' +
                 '<span>السعر</span>' +
