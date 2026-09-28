@@ -2654,15 +2654,9 @@ function openBalancePage(fromHistory) {
     if (!services || !internal || !content) return;
     services.hidden=true; internal.hidden=false;
     if(title) title.textContent="الأرصدة"; if(icon) icon.textContent="💵";
-    if (!state.productsLive && !state.productsLoadingPromise) loadProducts({force:true}).catch(function(){});
+    // المستوى الثاني يعرض التصنيفات الثابتة فقط؛ لا نستدعي Nemer هنا.
+    // استدعاء API وربط المنتجات يتم عند دخول المستوى الثالث/صفحة الشراء.
     const groups=getBalanceGroups();
-    if(!state.productsLive){
-        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري مزامنة تصنيفات الأرصدة...</p></div>';
-        if(state.productsLoadingPromise){
-            state.productsLoadingPromise.then(function(){ openBalancePage(true); }).catch(function(){});
-        }
-        return;
-    }
     content.innerHTML='<div class="game-page balance-level-two"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
         const available=group.products.some(function(product){return product.available!==false&&product.available!==0;});
         const image=group.image || "";
@@ -2757,6 +2751,18 @@ function openBalanceSubgroups(groupKey, fromHistory) {
     const title=document.getElementById("internalPageTitle");
     const icon=document.getElementById("internalPageIcon");
     if(!content) return;
+
+    // عند الانتقال للمستوى الثالث فقط، نطلب بيانات المنتجات الحية من Nemer.
+    if (!state.productsLive) {
+        content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذا التصنيف...</p></div>';
+        const request = loadProducts({force:true});
+        request.then(function(){ openBalanceSubgroups(groupKey, true); }).catch(function(){
+            content.innerHTML='<div class="game-products-placeholder"><div class="game-products-placeholder-icon">⚠️</div><h3>تعذر تحميل المنتجات</h3><p>يرجى المحاولة مرة أخرى.</p><button class="buy-btn" type="button" id="retryBalanceProducts">↻ إعادة المحاولة</button></div>';
+            const retry=document.getElementById("retryBalanceProducts");
+            if(retry) retry.addEventListener("click",function(){openBalanceSubgroups(groupKey);});
+        });
+        return;
+    }
 
     const group=getBalanceGroups().find(function(item){return item.key===groupKey;});
     if(!group) return;
