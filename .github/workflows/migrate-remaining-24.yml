@@ -48,7 +48,6 @@ jobs:
               if im.width <= 0 or im.height <= 0:
                   raise RuntimeError(f"Invalid dimensions: {name}")
               dst = out / f"{name}.png"
-              # Keep the source's visual content and dimensions; PNG avoids lossy recompression.
               if im.mode not in ("RGB","RGBA"):
                   im = im.convert("RGBA")
               im.save(dst, format="PNG", optimize=False)
