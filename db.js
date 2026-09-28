@@ -52,8 +52,7 @@ async function initDb() {
     "ALTER TABLE orders ALTER COLUMN profit TYPE NUMERIC(24,12)",
     "ALTER TABLE transactions ALTER COLUMN amount TYPE NUMERIC(24,12)",
     "ALTER TABLE transactions ALTER COLUMN balance_before TYPE NUMERIC(24,12)",
-    "ALTER TABLE transactions ALTER COLUMN balance_after TYPE NUMERIC(24,12)",
-    "ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_params JSONB NOT NULL DEFAULT '{}'::jsonb"
+    "ALTER TABLE transactions ALTER COLUMN balance_after TYPE NUMERIC(24,12)"
   ]) {
     try { await query(sql); } catch (error) { console.warn("Money precision migration:", error.message); }
   }
@@ -130,6 +129,7 @@ async function initDb() {
 
     CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
     CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
+    ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_params JSONB NOT NULL DEFAULT '{}'::jsonb;
 
     CREATE TABLE IF NOT EXISTS transactions (
       id TEXT PRIMARY KEY,
