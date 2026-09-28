@@ -1005,7 +1005,7 @@ function renderOrders(orders) {
 
         table.innerHTML = `
             <tr>
-                <td colspan="9">
+                <td colspan="10">
                     لا توجد طلبات.
                 </td>
             </tr>
@@ -1055,6 +1055,10 @@ function renderOrders(orders) {
                         )}
                     </td>
 
+                    <td class="order-customer-fields">
+                        ${renderOrderCustomerFields(order.order_params)}
+                    </td>
+
                     <td>
                         ${escapeAdminHtml(
                             String(
@@ -1096,7 +1100,33 @@ function renderOrders(orders) {
                         ${escapeAdminHtml(
                             String(
                                 order.created_at ??
-                                "-"
+                            function renderOrderCustomerFields(orderParams) {
+    if (!orderParams) return "-";
+    let params = orderParams;
+    if (typeof params === "string") {
+        try {
+            params = JSON.parse(params);
+        } catch {
+            return escapeAdminHtml(params);
+        }
+    }
+    if (!params || typeof params !== "object" || Array.isArray(params)) return "-";
+
+    const entries = Object.entries(params).filter(function(entry) {
+        return String(entry[0] || "").trim() && String(entry[1] ?? "").trim();
+    });
+    if (!entries.length) return "-";
+
+    return entries.map(function(entry) {
+        return '<div class="order-field-item"><strong>' +
+            escapeAdminHtml(String(entry[0])) +
+            ':</strong> <span>' +
+            escapeAdminHtml(String(entry[1])) +
+            '</span></div>';
+    }).join("");
+}
+
+    "-"
                             )
                         )}
                     </td>
