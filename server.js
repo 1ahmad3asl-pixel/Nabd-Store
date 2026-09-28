@@ -1388,7 +1388,14 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     // ببجي موبايل لا تستخدم حقل كمية: الطلب دائمًا لمنتج واحد.
     const productText = String(product.category_name || "") + " " + String(product.name || "");
     const isPubgProduct = /pubg|ببجي/i.test(productText);
+    const isMtnInvoiceProduct = /mtn/i.test(productText) && /فاتور/i.test(productText);
     const qty = isPubgProduct ? 1 : requestedQty;
+    if (isMtnInvoiceProduct && (qty < 500 || qty > 1000000)) {
+      return res.status(400).json({
+        status:"ERROR",
+        message:"كمية فواتير MTN يجب أن تكون من 500 إلى 1,000,000."
+      });
+    }
 
     const minQty = Number(product.qty_values?.min);
     const maxQty = Number(product.qty_values?.max);
