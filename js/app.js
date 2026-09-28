@@ -1899,9 +1899,9 @@ function getTurkcellParamConfig(product) {
 }
 
 function renderBalanceRequiredFields(product, groupTitle) {
-    const isTurkey = normalizeBalanceText(groupTitle || "").includes("تركي") ||
+    const isTurkey = /ترك|تروكسل|turkcell|turkey/.test(normalizeBalanceText(groupTitle || "")) ||
         normalizeBalanceText(product && product.category_name || "").includes("تركي") ||
-        normalizeBalanceText(product && product.name || "").includes("ترك");
+        /ترك|تروكسل|turkcell|turkey/.test(normalizeBalanceText(product && product.name || ""));
     if (!isTurkey) return renderGameParamFields(product, groupTitle);
 
     const config = getTurkcellParamConfig(product);
