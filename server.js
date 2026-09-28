@@ -694,7 +694,9 @@ app.put("/api/admin/customers/:id/discount", async (req, res) => {
 });
 
 app.get("/api/admin/orders", async (req, res) => {
-  const result = await query("SELECT * FROM orders ORDER BY created_at DESC");
+  const result = await query(
+    "SELECT o.*, c.name AS customer_name, c.customer_number FROM orders o LEFT JOIN customers c ON c.customer_id = o.customer_id ORDER BY o.created_at DESC"
+  );
   res.json({ status: "OK", orders: result.rows });
 });
 
