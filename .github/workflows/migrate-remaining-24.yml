@@ -1,6 +1,6 @@
 name: Migrate remaining 24 game images
 
-# Triggered again to complete the pending image migration.
+# Corrected source host and retriggered to complete the pending image migration.
 on:
   push:
     branches: [main]
@@ -41,7 +41,7 @@ jobs:
           out = Path("public/game-images")
           out.mkdir(parents=True, exist_ok=True)
           for name in names:
-              url = f"https://nabd-store.onrender.com/api/game-images/{name}"
+              url = f"https://nabd-store-1.onrender.com/api/game-images/{name}"
               r = requests.get(url, timeout=60)
               r.raise_for_status()
               im = Image.open(BytesIO(r.content))
