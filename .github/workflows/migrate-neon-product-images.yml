@@ -18,16 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Wait for Neon export endpoint
-        run: |
-          set -euo pipefail
-          for i in $(seq 1 60); do
-            headers=$(curl -sS -D - -o /dev/null "${IMAGE_HOST}/yalla-ludo" || true)
-            if echo "$headers" | grep -qi "^X-Nabd-Image-Source: neon-game-images"; then exit 0; fi
-            sleep 10
-          done
-          echo "Neon export endpoint was not deployed in time."
-          exit 1
       - name: Copy exact Neon image bytes
         run: |
           set -euo pipefail
@@ -101,16 +91,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Wait for Neon export endpoint
-        run: |
-          set -euo pipefail
-          for i in $(seq 1 60); do
-            headers=$(curl -sS -D - -o /dev/null "${IMAGE_HOST}/ludo-club" || true)
-            if echo "$headers" | grep -qi "^X-Nabd-Image-Source: neon-game-images"; then exit 0; fi
-            sleep 10
-          done
-          echo "Neon export endpoint was not deployed in time."
-          exit 1
       - name: Copy exact Neon image bytes
         run: |
           set -euo pipefail
@@ -184,16 +164,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Wait for Neon export endpoint
-        run: |
-          set -euo pipefail
-          for i in $(seq 1 60); do
-            headers=$(curl -sS -D - -o /dev/null "${IMAGE_HOST}/legend-of-the-phoenix" || true)
-            if echo "$headers" | grep -qi "^X-Nabd-Image-Source: neon-game-images"; then exit 0; fi
-            sleep 10
-          done
-          echo "Neon export endpoint was not deployed in time."
-          exit 1
       - name: Copy exact Neon image bytes
         run: |
           set -euo pipefail
