@@ -1454,7 +1454,7 @@ html[data-theme="dark"] .slider{background:#333;}
 .reference-category-grid .category-art{
   width:100%!important;
   aspect-ratio:1/1!important;
-  max-width:190px!important;
+  max-width:240px!important;
   border-radius:28px!important;
   display:flex!important;
   align-items:center!important;
@@ -3336,14 +3336,14 @@ body{min-width:0;}
     .quick-item{min-width:0;padding:11px 3px;}
     .quick-item span{font-size:10px;}
     .categories{
-        grid-template-columns:repeat(3,minmax(0,1fr));
-        gap:7px;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
         width:100%;
     }
-    .category{min-width:0;border-radius:12px;}
-    .reference-category-grid .category-title,
+     .category{min-width:0;border-radius:14px;}
+     .reference-category-grid .category-title,
     .category-tile .category-title{
-        font-size:10px!important;
+        font-size:11px!important;
         line-height:1.25;
         overflow-wrap:anywhere;
     }
