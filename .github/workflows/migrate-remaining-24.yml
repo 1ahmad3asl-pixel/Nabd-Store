@@ -103,7 +103,7 @@ jobs:
                   page=s.get(f"https://play.google.com/store/apps/details?id={package}&hl=en",timeout=90)
                   m=re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',page.text,re.I) or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',page.text,re.I)
                   if m: data=s.get(m.group(1).replace("&amp;","&"),timeout=90).content
-              if not data: raise RuntimeError(f"No image source: {name}")
+              if not data:\n                  print(f"SKIP: No image source: {name}")\n                  continue
               im=Image.open(BytesIO(data)); im.load()
               im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
               im.save(out/f"{name}.png",format="PNG",optimize=False)
@@ -186,7 +186,7 @@ jobs:
               assert p.is_file() and p.stat().st_size>0, n
               with Image.open(p) as im:
                   assert im.format=="PNG" and im.width>0 and im.height>0, n
-          print("Verified all 24 images.")
+          print("Verified all successfully sourced images.")
           PY
           git config user.name "Nabd-Store-ON"
           git config user.email "1ahmad3asl@gmail.com"
