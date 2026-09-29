@@ -3285,6 +3285,22 @@ body{min-width:0;}
 }
 
 @media(max-width:600px){
+    /* المستوى الأول على الهاتف: نفس كثافة وحجم مربعات قسم الألعاب */
+    .reference-category-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr))!important;
+        gap:22px 14px!important;
+        width:100%!important;
+        padding:6px 0 28px!important;
+    }
+    .reference-category-grid .category-tile{
+        width:100%!important;
+    }
+    .reference-category-grid .category-art{
+        width:100%!important;
+        max-width:none!important;
+        aspect-ratio:1/1!important;
+    }
+
     .main-header{
         height:62px;
         padding:0 8px;
