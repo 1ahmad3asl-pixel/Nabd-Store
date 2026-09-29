@@ -719,143 +719,143 @@ function getProductsForGame(gameTitle) {
 
 function getStoredGameImageUrl(gameTitle) {
     const text = normalizeGameText(gameTitle);
-    if (text.includes("yalla ludo gold codes")) return "/game-images/yalla-ludo.png";
-    if (text.includes("yalla ludo diamonds codes")) return "/game-images/yalla-ludo.png";
-    if (text.includes("pubg") || text.includes("ببجي")) return "/game-images/pubg-mobile.png";
-    if (text.includes("roblox") || text.includes("روبلوكس")) return "/game-images/roblox.png";
-    if (text.includes("jawaker") || text.includes("جواكر")) return "/game-images/jawaker.png";
-    if (text.includes("free fire") || text.includes("فري فاير")) return "/game-images/free-fire.png";
-    if (text.includes("clash of clans") || text.includes("كلاش")) return "/game-images/clash-of-clans.png";
-    if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return "/game-images/dragonheir-silent-gods.jpg";
+    if (text.includes("yalla ludo gold codes")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/yalla-ludo.png";
+    if (text.includes("yalla ludo diamonds codes")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/yalla-ludo.png";
+    if (text.includes("pubg") || text.includes("ببجي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/pubg-mobile.png";
+    if (text.includes("roblox") || text.includes("روبلوكس")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/roblox.png";
+    if (text.includes("jawaker") || text.includes("جواكر")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/jawaker.png";
+    if (text.includes("free fire") || text.includes("فري فاير")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/free-fire.png";
+    if (text.includes("clash of clans") || text.includes("كلاش")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/clash-of-clans.png";
+    if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/dragonheir-silent-gods.jpg";
     if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return "/game-images/cloud-song";
     if (text.includes("yalla ludo gold") || text.includes("يلا لودو جولد") || text.includes("يلا لودو غولد")) {
         // Yalla Ludo Gold ليس تطبيقًا مستقلاً؛ يستخدم نفس أيقونة Yalla Ludo الرسمية.
-        return "/game-images/yalla-ludo.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/yalla-ludo.png";
     }
     if (text.includes("yalla ludo") || text.includes("يلا لودو")) {
-        return "/game-images/yalla-ludo.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/yalla-ludo.png";
     }
     if (text.includes("lords mobile") || text.includes("لوردز موبايل") || text.includes("لوردس موبايل")) {
-        return "/game-images/lords-mobile.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/lords-mobile.png";
     }
     if (text.includes("8ball pool") || text.includes("8 ball pool") || text.includes("eight ball pool") || text.includes("ثمانية بول") || text.includes("ثمنية بول")) {
-        return "/game-images/8-ball-pool.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/8-ball-pool.png";
     }
     if (text.includes("gun of glory") || text.includes("guns of glory")) {
-        return "/game-images/guns-of-glory.jpg";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/guns-of-glory.jpg";
     }
     if (text.includes("gangs of glory") || text.includes("غانغز اوف غلوري") || text.includes("غانجز أوف غلوري")) {
-        return "/game-images/gangs-of-glory.webp";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/gangs-of-glory.webp";
     }
     if (text.includes("project entropy") || text.includes("بروجكت انتروبي") || text.includes("بروجيكت انتروبي")) {
-        return "/game-images/project-entropy.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/project-entropy.png";
     }
     if (text.includes("farlight 84") || text.includes("farlight84") || text.includes("فارلايت 84")) {
-        return "/game-images/farlight-84.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/farlight-84.png";
     }
     if (text.includes("city of crime gang war") || text.includes("city of crime gang wars")) {
-        return "/game-images/city-of-crime-gang-war.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/city-of-crime-gang-war.png";
     }
     if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
-        return "/game-images/marvel-rivals.jpg";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/marvel-rivals.jpg";
     }
     if (text.includes("genshin impact")) {
-        return "/game-images/genshin-impact.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/genshin-impact.png";
     }
     if (text.includes("super sus")) {
-        return "/game-images/super-sus.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/super-sus.png";
     }
     if (text.includes("crystal of atlan") || text.includes("crystal atlan") || text.includes("كريستال اوف اتلان") || text.includes("كريستال أوف أتلان")) {
-        return "/game-images/crystal-of-atlan.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/crystal-of-atlan.png";
     }
     if (text.includes("bullet echo") || text.includes("بوليت إيكو") || text.includes("بولت إيكو")) {
-        return "/game-images/bullet-echo.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/bullet-echo.png";
     }
     if (text.includes("stumble guys")) {
-        return "/game-images/stumble-guys.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/stumble-guys.png";
     }
-    if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return "/game-images/honkai-star-rail.png";
-    if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return "/game-images/mobile-legends.png";
-    if (text.includes("oxide") || text.includes("survival island")) return "/game-images/oxide-survival-island.png";
+    if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/honkai-star-rail.png";
+    if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/mobile-legends.png";
+    if (text.includes("oxide") || text.includes("survival island")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/oxide-survival-island.png";
     if (text.includes("king shot") || text.includes("kingshot")) return "/game-images/king-shot";
     if (text.includes("zepeto")) return "/game-images/zepeto";
-    if (text.includes("blood strike") || text.includes("bloodstrike")) return "/game-images/blood-strike.png";
-    if (text.includes("acecraft") || text.includes("ace craft")) return "/game-images/acecraft.png";
-    if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return "/game-images/age-of-empires-mobile.png";
-    if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return "/game-images/nikke.png";
-    if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return "/game-images/division-resurgence.png";
-    if (text.includes("arena breakout") || text.includes("arena breakout mobile") || text.includes("أرينا بريك أوت")) return "/game-images/arena-breakout.png";
-    if (text.includes("ludo club") || text.includes("لودو كلوب")) return "/game-images/ludo-club.png";
-    if (text.includes("afk journey")) return "/game-images/afk-journey.png";
-    if (text.includes("age of magic")) return "/game-images/age-of-magic.png";
+    if (text.includes("blood strike") || text.includes("bloodstrike")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/blood-strike.png";
+    if (text.includes("acecraft") || text.includes("ace craft")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/acecraft.png";
+    if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/age-of-empires-mobile.png";
+    if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/nikke.png";
+    if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/division-resurgence.png";
+    if (text.includes("arena breakout") || text.includes("arena breakout mobile") || text.includes("أرينا بريك أوت")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/arena-breakout.png";
+    if (text.includes("ludo club") || text.includes("لودو كلوب")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/ludo-club.png";
+    if (text.includes("afk journey")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/afk-journey.png";
+    if (text.includes("age of magic")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/age-of-magic.png";
     if (text.includes("ghost story love destiny")) return "/game-images/ghost-story-love-destiny";
-    if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return "/game-images/arena-of-valor.png";
-    if (text.includes("growtopia") || text.includes("غروتوبيا")) return "/game-images/growtopia.png";
+    if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/arena-of-valor.png";
+    if (text.includes("growtopia") || text.includes("غروتوبيا")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/growtopia.png";
     if (text.includes("golden spatula") || text.includes("غولدن سباتولا")) return "/game-images/golden-spatula";
-    if (text.includes("hatsune miku") || text.includes("colorful stage") || text.includes("هتسوني ميكو")) return "/game-images/hatsune-miku-colorful-stage.png";
+    if (text.includes("hatsune miku") || text.includes("colorful stage") || text.includes("هتسوني ميكو")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/hatsune-miku-colorful-stage.png";
     if (text.includes("arknights endfield") || text.includes("arknights") || text.includes("أركنايتس إندفيلد")) return "/game-images/arknights-endfield";
-    if (text.includes("haikyu fly high") || text.includes("haikyu") || text.includes("هايكيو فلاي هاي")) return "/game-images/haikyu-fly-high.png";
-    if (text.includes("ballistic hero vng") || text.includes("ballistic hero") || text.includes("بالستك هيرو")) return "/game-images/ballistic-hero-vng.png";
+    if (text.includes("haikyu fly high") || text.includes("haikyu") || text.includes("هايكيو فلاي هاي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/haikyu-fly-high.png";
+    if (text.includes("ballistic hero vng") || text.includes("ballistic hero") || text.includes("بالستك هيرو")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/ballistic-hero-vng.png";
     if (text.includes("heaven burns red") || text.includes("هيفن برنز ريد")) return "/game-images/heaven-burns-red";
-    if (text.includes("rise of kingdoms") || text.includes("رايز أوف كينغدومز")) return "/game-images/rise-of-kingdoms.png";
+    if (text.includes("rise of kingdoms") || text.includes("رايز أوف كينغدومز")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/rise-of-kingdoms.png";
     if (text.includes("top war") || text.includes("توب وور")) return "/game-images/top-war";
     if (text.includes("the ants") || text.includes("النمل: المملكة تحت الأرض")) return "/game-images/the-ants";
-    if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return "/game-images/kingdom-guard.jpg";
-    if (text.includes("call of dragons") || text.includes("كول أوف دراغونز")) return "/game-images/call-of-dragons.jpg";
-    if (text.includes("astral guardians")) return "/game-images/astral-guardians.png";
+    if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/kingdom-guard.jpg";
+    if (text.includes("call of dragons") || text.includes("كول أوف دراغونز")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/call-of-dragons.jpg";
+    if (text.includes("astral guardians")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/astral-guardians.png";
     if (text.includes("cyber fantasy")) return "/game-images/cyber-fantasy";
-    if (text.includes("blockman go") || text.includes("بلوكمان جو")) return "/game-images/blockman-go.png";
+    if (text.includes("blockman go") || text.includes("بلوكمان جو")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/blockman-go.png";
     if (text.includes("blade x") || text.includes("odyssey of heroes")) return "/game-images/blade-x";
-    if (text.includes("be the king")) return "/game-images/be-the-king.png";
-    if (text.includes("captain tsubasa")) return "/game-images/captain-tsubasa.jpg";
-    if (text.includes("idol party")) return "/game-images/idol-party.png";
+    if (text.includes("be the king")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/be-the-king.png";
+    if (text.includes("captain tsubasa")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/captain-tsubasa.jpg";
+    if (text.includes("idol party")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/idol-party.png";
     if (text.includes("hyper front")) return "/game-images/hyper-front";
-    if (text.includes("infinite lagrange")) return "/game-images/infinite-lagrange.png";
+    if (text.includes("infinite lagrange")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/infinite-lagrange.png";
     if (text.includes("clash of plants")) return "/game-images/clash-of-plants";
     if (text.includes("journey renewed") || text.includes("fate fantasy")) return "/game-images/journey-renewed";
-    if (text.includes("civilization") || text.includes("eras & allies")) return "/game-images/civilization-eras-allies.png";
-    if (text.includes("kuroko street rivals") || text.includes("kuroko")) return "/game-images/kuroko-street-rivals.png";
+    if (text.includes("civilization") || text.includes("eras & allies")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/civilization-eras-allies.png";
+    if (text.includes("kuroko street rivals") || text.includes("kuroko")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/kuroko-street-rivals.png";
     if (text.includes("cloud song") || text.includes("skywalkers")) return "/game-images/cloud-song";
-    if (text.includes("king's choice") || text.includes("kings choice")) return "/game-images/kings-choice-sea.png";
-    if (text.includes("crossfire legend")) return "/game-images/crossfire-legend.png";
-    if (text.includes("legend of the phoenix")) return "/game-images/legend-of-the-phoenix.png";
-    if (text.includes("legacy of discord") || text.includes("furiouswings")) return "/game-images/legacy-of-discord.png";
+    if (text.includes("king's choice") || text.includes("kings choice")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/kings-choice-sea.png";
+    if (text.includes("crossfire legend")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/crossfire-legend.png";
+    if (text.includes("legend of the phoenix")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/legend-of-the-phoenix.png";
+    if (text.includes("legacy of discord") || text.includes("furiouswings")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/legacy-of-discord.png";
     if (text.includes("army dudes")) return "/game-images/army-dudes";
     if (text.includes("crystalfall")) return "/game-images/crystalfall";
-    if (text.includes("crossout mobile") || text.includes("crossout")) return "/game-images/crossout-mobile.jpg";
-    if (text.includes("dragon raja")) return "/game-images/dragon-raja-sea.png";
+    if (text.includes("crossout mobile") || text.includes("crossout")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/crossout-mobile.jpg";
+    if (text.includes("dragon raja")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/dragon-raja-sea.png";
     if (text.includes("dragon nest m") || text.includes("dragon nest")) return "/game-images/dragon-nest-m-sea";
-    if (text.includes("life makeover")) return "/game-images/life-makeover-global.png";
-    if (text.includes("love nikki")) return "/game-images/love-nikki.png";
-    if (text.includes("dragonheir") || text.includes("dragonheir silent gods")) return "/game-images/dragonheir-silent-gods.jpg";
+    if (text.includes("life makeover")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/life-makeover-global.png";
+    if (text.includes("love nikki")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/love-nikki.png";
+    if (text.includes("dragonheir") || text.includes("dragonheir silent gods")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/dragonheir-silent-gods.jpg";
     if (text.includes("dream and lethe") || text.includes("dream & lethe")) return "/game-images/dream-and-lethe-record";
-    if (text.includes("eggy party")) return "/game-images/eggy-party.png";
+    if (text.includes("eggy party")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/eggy-party.png";
     if (text.includes("echocalypse") || text.includes("scarlet covenant")) return "/game-images/echocalypse-scarlet-covenant";
-    if (text.includes("hero clash") || text.includes("هيرو كلاش")) return "/game-images/hero-clash.png";
-    if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return "/game-images/devil-may-cry.png";
-    if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return "/game-images/eggy-party.png";
-    if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return "/game-images/my-singing-monsters.jpg";
+    if (text.includes("hero clash") || text.includes("هيرو كلاش")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/hero-clash.png";
+    if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/devil-may-cry.png";
+    if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/eggy-party.png";
+    if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/my-singing-monsters.jpg";
 
-    if (text.includes("dynasty heroes") || text.includes("legend samkok")) return "/game-images/dynasty-heroes.png";
+    if (text.includes("dynasty heroes") || text.includes("legend samkok")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/dynasty-heroes.png";
     if (text.includes("starseed") || text.includes("asnia trigger")) return "/game-images/starseed";
-    if (text.includes("magic chess") || text.includes("magic chess gogo") || text.includes("magic chess go go")) return "/game-images/magic-chess-gogo.png";
-    if (text.includes("enhypen world") || text.includes("enhypen")) return "/game-images/enhypen-world.png";
-    if (text.includes("marvel duel")) return "/game-images/marvel-duel.png";
+    if (text.includes("magic chess") || text.includes("magic chess gogo") || text.includes("magic chess go go")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/magic-chess-gogo.png";
+    if (text.includes("enhypen world") || text.includes("enhypen")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/enhypen-world.png";
+    if (text.includes("marvel duel")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/marvel-duel.png";
     if (text.includes("extraordinary ones")) return "/game-images/extraordinary-ones";
-    if (text.includes("eve echoes") || text.includes("eve echo")) return "/game-images/eve-echoes.png";
-    if (text.includes("mirage perfect skyline") || text.includes("mirage:perfect skyline") || text.includes("mirage")) return "/game-images/mirage-perfect-skyline.png";
-    if (text.includes("football master 2") || text.includes("football master")) return "/game-images/football-master-2.jpg";
+    if (text.includes("eve echoes") || text.includes("eve echo")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/eve-echoes.png";
+    if (text.includes("mirage perfect skyline") || text.includes("mirage:perfect skyline") || text.includes("mirage")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/mirage-perfect-skyline.png";
+    if (text.includes("football master 2") || text.includes("football master")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/football-master-2.jpg";
     if (text.includes("marvel mystic mayhem")) return "/game-images/marvel-mystic-mayhem";
     if (text.includes("garena speed drifters") || text.includes("speed drifters")) return "/game-images/garena-speed-drifters";
     if (text.includes("mongil star dive")) return "/game-images/mongil-star-dive";
     if (text.includes("modern strike online")) return "/game-images/modern-strike-online";
-    if (text.includes("overmortal idle global") || text.includes("overmortal")) return "/game-images/overmortal-idle-global";    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return "/game-images/onmyoji-arena.png";
+    if (text.includes("overmortal idle global") || text.includes("overmortal")) return "/game-images/overmortal-idle-global";    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/onmyoji-arena.png";
     if (text.includes("stormshot") || text.includes("storm shot") || text.includes("ستورمشوت")) return "/game-images/stormshot";
-    if (text.includes("crossout mobile") || text.includes("crossout") || text.includes("كروس أوت موبايل")) return "/game-images/crossout-mobile.jpg";
-    if (text.includes("dragon raja sea") || text.includes("dragon raja") || text.includes("دراغون راجا")) return "/game-images/dragon-raja-sea.png";
-    if (text.includes("life makeover global") || text.includes("life makeover") || text.includes("لايف ميك أوفر")) return "/game-images/life-makeover-global.png";
+    if (text.includes("crossout mobile") || text.includes("crossout") || text.includes("كروس أوت موبايل")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/crossout-mobile.jpg";
+    if (text.includes("dragon raja sea") || text.includes("dragon raja") || text.includes("دراغون راجا")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/dragon-raja-sea.png";
+    if (text.includes("life makeover global") || text.includes("life makeover") || text.includes("لايف ميك أوفر")) return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/life-makeover-global.png";
     if (text.includes("whiteout survival")) {
-        return "/game-images/whiteout-survival.png";
+        return "https://raw.githubusercontent.com/1ahmad3asl-pixel/Nabd-Store/main/public/game-images/whiteout-survival.png";
     }
     return "";
 }
