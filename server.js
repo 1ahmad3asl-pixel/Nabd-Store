@@ -1246,6 +1246,36 @@ app.get("/api/store", (req, res) => {
   });
 });
 
+app.get("/api/game-images-neon/:gameKey", async (req, res) => {
+  try {
+    const key = String(req.params.gameKey || "").trim().toLowerCase();
+    if (!/^[a-z0-9_-]{1,120}$/.test(key)) {
+      return res.status(400).json({ status: "ERROR", message: "Invalid image key." });
+    }
+
+    const result = await query(
+      "SELECT image_data, mime_type FROM game_images WHERE game_key=$1 LIMIT 1",
+      [key]
+    );
+    if (!result.rows[0] || !result.rows[0].image_data) {
+      return res.status(404).json({ status: "NOT_FOUND", message: "No stored Neon image for this game." });
+    }
+
+    const mime = String(result.rows[0].mime_type || "application/octet-stream").toLowerCase();
+    if (!/^image\/(png|jpe?g|webp|gif|avif|svg\+xml)$/.test(mime)) {
+      return res.status(415).json({ status: "ERROR", message: "Stored image MIME type is not supported." });
+    }
+
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Nabd-Image-Source", "neon-game-images");
+    res.type(mime);
+    res.send(result.rows[0].image_data);
+  } catch (error) {
+    console.error("Neon image export error:", error);
+    res.status(500).json({ status: "ERROR", message: "Unable to read stored Neon image." });
+  }
+});
+
 app.get("/api/game-images/:gameKey", async (req, res) => {
   try {
     const key = String(req.params.gameKey || "").trim().toLowerCase();
