@@ -3188,3 +3188,18 @@ input, textarea, select, [contenteditable="true"]{
     padding:16px 2px 6px!important;
   }
 }
+
+
+/* ===== Nabd-Store level-one category supplied artwork ===== */
+.reference-category-grid .category-art{
+  background:#000 url('../assets/nabd-store-category.svg') center center / cover no-repeat!important;
+  background-size:cover!important;
+}
+.reference-category-grid .category-art::before,
+.reference-category-grid .category-art::after{
+  display:none!important;
+  content:none!important;
+}
+.reference-category-grid .category-art>span{
+  display:none!important;
+}
