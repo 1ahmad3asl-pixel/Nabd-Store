@@ -3192,7 +3192,7 @@ input, textarea, select, [contenteditable="true"]{
 
 /* ===== Nabd-Store level-one category supplied artwork ===== */
 .reference-category-grid .category-art{
-  background:#000 url('../assets/nabd-store-category.svg') center center / cover no-repeat!important;
+  background:#000 url('../assets/category-nabd-store.webp') center center / cover no-repeat!important;
   background-size:cover!important;
 }
 .reference-category-grid .category-art::before,
