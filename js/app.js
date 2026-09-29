@@ -2951,14 +2951,22 @@ function getBalanceSubgroups(group) {
         const bundleProducts = [];
         const paymentProducts = [];
 
-        function isTurkcellServiceProduct(product) {
+        function isTurkcellBundleProduct(product) {
             const combined = normalizeBalanceText(
                 String(product && product.category_name || "") + " " +
                 String(product && product.name || "")
-            );
+            ).toLowerCase();
+
             const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
             if (isPayment) return false;
-            return /رسائل?|sms|دقائق?|minute|minutes|turkcell|تركسل|تروكسل/.test(combined);
+
+            // باقة تركسل يجب أن تكون باقة مركبة فعلية، وليست منتج رسائل أو دقائق منفردًا.
+            // نتحقق من وجود مكوّنات الباقة الثلاثة: إنترنت + دقائق + SMS.
+            const hasInternet = /internet|data|gb|mb|g[b]?|m[b]?|انترنت|إنترنت|جيجا|ميجا/.test(combined);
+            const hasMinutes = /دقائق?|دقيقه|دقيقة|minute|minutes|dk|min/.test(combined);
+            const hasSms = /sms|رسائل?|message|messages/.test(combined);
+
+            return hasInternet && hasMinutes && hasSms;
         }
 
         products.forEach(function(product) {
@@ -2967,24 +2975,16 @@ function getBalanceSubgroups(group) {
                 String(product && product.name || "")
             );
             const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
+
             if (isPayment) {
                 paymentProducts.push(product);
-            } else if (isTurkcellServiceProduct(product)) {
+            } else if (isTurkcellBundleProduct(product)) {
                 bundleProducts.push(product);
             }
         });
 
-        // احتياط إذا تغيّرت تسمية منتجات Nemer ولم تحمل كلمات الخدمة المتوقعة.
-        if (!bundleProducts.length) {
-            products.forEach(function(product) {
-                const combined = normalizeBalanceText(
-                    String(product && product.category_name || "") + " " +
-                    String(product && product.name || "")
-                );
-                const isPayment = /تسديد|تسديدات|فاتور|فواتير|دفع|دفعة|invoice|invoices|payment|bill|billing|fatura|fatur/.test(combined);
-                if (!isPayment) bundleProducts.push(product);
-            });
-        }
+        // لا نستخدم احتياطًا يعرض منتجات غير مطابقة؛ إذا لم نجد باقات مركبة
+        // يجب أن يظهر قسم باقة تركسل فارغًا بدل خلطه بمنتجات أخرى.
 
         return [
             {
