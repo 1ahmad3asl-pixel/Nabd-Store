@@ -3253,3 +3253,111 @@ input, textarea, select, [contenteditable="true"]{
 }
 
 
+/* =========================================================
+   MOBILE LAYOUT FIX — 2026-09-29
+   الهدف: الهاتف بعرض كامل + القائمة الجانبية مغلقة افتراضيًا
+========================================================= */
+html,body{width:100%;max-width:100%;overflow-x:hidden;}
+body{min-width:0;}
+.main-header{width:100%;max-width:100vw;min-width:0;}
+.header-logo{min-width:0;overflow:hidden;}
+.header-logo span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.header-actions{flex:0 0 auto;min-width:0;}
+
+.drawer{
+    right:0!important;
+    transform:translateX(100%);
+    visibility:hidden;
+    pointer-events:none;
+    will-change:transform;
+}
+.drawer.active{
+    right:0!important;
+    transform:translateX(0);
+    visibility:visible;
+    pointer-events:auto;
+}
+.overlay{
+    pointer-events:none;
+}
+.overlay.active{
+    pointer-events:auto;
+}
+
+@media(max-width:600px){
+    .main-header{
+        height:62px;
+        padding:0 8px;
+    }
+    .header-logo{
+        flex:1 1 auto;
+        min-width:0;
+        max-width:calc(100% - 150px);
+        font-size:18px;
+    }
+    .header-logo-image{
+        width:40px;
+        height:40px;
+        flex-basis:40px;
+    }
+    .header-actions{gap:4px;}
+    .wallet{
+        min-width:0;
+        padding:7px 8px;
+        font-size:11px;
+    }
+    .wallet strong{font-size:16px;}
+    .menu-btn{width:38px;height:38px;}
+
+    .dhikr-bar{
+        width:calc(100% - 16px);
+        max-width:calc(100vw - 16px);
+        margin:8px auto 10px;
+    }
+    .search-section{
+        width:calc(100% - 16px);
+        margin:0 auto;
+    }
+    .container{
+        width:calc(100% - 16px);
+        max-width:none;
+        margin:12px auto 20px;
+    }
+    .hero{
+        width:100%;
+        box-sizing:border-box;
+        padding:18px 14px;
+        border-radius:16px;
+    }
+    .quick-menu{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:6px;
+    }
+    .quick-item{min-width:0;padding:11px 3px;}
+    .quick-item span{font-size:10px;}
+    .categories{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+        width:100%;
+    }
+    .category{min-width:0;border-radius:12px;}
+    .reference-category-grid .category-title,
+    .category-tile .category-title{
+        font-size:10px!important;
+        line-height:1.25;
+        overflow-wrap:anywhere;
+    }
+    .products,.search-results{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+    }
+    .product{min-width:0;padding:11px;}
+}
+@media(max-width:360px){
+    .header-logo{max-width:calc(100% - 135px);font-size:16px;}
+    .header-logo-image{width:36px;height:36px;flex-basis:36px;}
+    .wallet strong{font-size:14px;}
+    .categories{gap:5px;}
+    .reference-category-grid .category-title,
+    .category-tile .category-title{font-size:9px!important;}
+}
