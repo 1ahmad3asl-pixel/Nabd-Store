@@ -405,6 +405,10 @@ function initializeSounds() {
 
 function initializeMenu() {
 
+    // تأكيد الحالة الابتدائية: القائمة مغلقة دائمًا عند تحميل الصفحة.
+    // لا تُفتح إلا عبر زر القائمة.
+    closeMenu();
+
     if (elements.menuBtn) {
 
         elements.menuBtn.addEventListener(
