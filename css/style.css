@@ -3206,7 +3206,7 @@ input, textarea, select, [contenteditable="true"]{
 
 /* شعار الصورة داخل هيدر واجهة العميل */
 .header-logo{display:flex;align-items:center;gap:7px;}
-.header-logo-image{width:48px;height:48px;display:block;object-fit:cover;object-position:center;border-radius:9px;flex:0 0 48px;}
+.header-logo-image{width:48px;height:48px;display:block;object-fit:cover;object-position:center;border-radius:9px;flex:0 0 48px;background:#000 url('../assets/category-nabd-store.webp') center center / cover no-repeat!important;}
 @media (max-width:520px){
   .header-logo-image{width:44px;height:44px;flex-basis:44px;border-radius:8px;}
   .header-logo{gap:6px;font-size:20px;}
