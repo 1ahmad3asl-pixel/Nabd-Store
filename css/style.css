@@ -3211,3 +3211,43 @@ input, textarea, select, [contenteditable="true"]{
   .header-logo-image{width:44px;height:44px;flex-basis:44px;border-radius:8px;}
   .header-logo{gap:6px;font-size:20px;}
 }
+
+
+/* =========================
+   المستوى الأول: صورة موحّدة للأقسام
+   الصورة محفوظة كملف مستقل في GitHub
+========================= */
+.category-tile{
+    position:relative;
+    padding:0;
+    overflow:hidden;
+    background:#000;
+    isolation:isolate;
+}
+.category-tile .category-art{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    margin:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:url('../assets/level1-category/nabd-store-level1.webp');
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+.category-tile .category-art > span{
+    display:none;
+}
+.category-tile .category-title{
+    position:relative;
+    z-index:2;
+    margin-top:auto;
+    width:100%;
+    padding:12px 6px 8px;
+    color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,.95);
+    background:linear-gradient(to top,rgba(0,0,0,.94) 0%,rgba(0,0,0,.62) 52%,rgba(0,0,0,0) 100%);
+}
