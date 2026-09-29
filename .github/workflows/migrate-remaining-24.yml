@@ -1,6 +1,5 @@
-name: Migrate remaining 24 game images
+name: Migrate game images - 3 batches
 
-# Triggered to complete the pending image migration from the live Nabd-Store service.
 on:
   push:
     branches: [main]
@@ -11,70 +10,123 @@ on:
 permissions:
   contents: write
 
+env:
+  IMAGE_HOST: https://nabd-store.onrender.com/api/game-images
+
 jobs:
-  migrate:
+  batch1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install image tooling
-        run: python3 -m pip install --disable-pip-version-check pillow requests
-      - name: Download and validate images
+      - name: Download batch 1
         run: |
           set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pillow requests
           python3 - <<'PY'
           from pathlib import Path
           import requests
           from PIL import Image
           from io import BytesIO
-
-          names = [
-            "ludo-club","lords-mobile","magic-chess-gogo","marvel-duel",
-            "marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline",
-            "mobile-legends","modern-strike-online","mongil-star-dive",
-            "my-singing-monsters","onmyoji-arena","oxide-survival-island",
-            "overmortal-idle-global","project-entropy","pubg-mobile","roblox",
-            "rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war",
-            "whiteout-survival","yalla-ludo"
-          ]
-          out = Path("public/game-images")
-          out.mkdir(parents=True, exist_ok=True)
-          for name in names:
-              url = f"https://nabd-store.onrender.com/api/game-images/{name}"
-              r = requests.get(url, timeout=60)
-              r.raise_for_status()
-              im = Image.open(BytesIO(r.content))
-              im.load()
-              if im.width <= 0 or im.height <= 0:
-                  raise RuntimeError(f"Invalid dimensions: {name}")
-              dst = out / f"{name}.png"
-              if im.mode not in ("RGB","RGBA"):
-                  im = im.convert("RGBA")
-              im.save(dst, format="PNG", optimize=False)
-              print(f"{name}.png: {im.width}x{im.height}")
+          names = ["ludo-club","lords-mobile","magic-chess-gogo","marvel-duel","marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline","mobile-legends"]
+          out=Path("batch1"); out.mkdir()
+          for n in names:
+              r=requests.get(f"{__import__('os').environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
+              im=Image.open(BytesIO(r.content)); im.load()
+              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+              im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
+              im.save(out/f"{n}.png",format="PNG",optimize=False)
+              print(n, im.size)
           PY
-      - name: Verify files
+      - uses: actions/upload-artifact@v4
+        with:
+          name: game-images-batch1
+          path: batch1
+
+  batch2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download batch 2
         run: |
           set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pillow requests
+          python3 - <<'PY'
+          from pathlib import Path
+          import requests, os
+          from PIL import Image
+          from io import BytesIO
+          names = ["modern-strike-online","mongil-star-dive","my-singing-monsters","onmyoji-arena","oxide-survival-island","overmortal-idle-global","project-entropy","pubg-mobile"]
+          out=Path("batch2"); out.mkdir()
+          for n in names:
+              r=requests.get(f"{os.environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
+              im=Image.open(BytesIO(r.content)); im.load()
+              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+              im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
+              im.save(out/f"{n}.png",format="PNG",optimize=False)
+              print(n, im.size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: game-images-batch2
+          path: batch2
+
+  batch3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download batch 3
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pillow requests
+          python3 - <<'PY'
+          from pathlib import Path
+          import requests, os
+          from PIL import Image
+          from io import BytesIO
+          names = ["roblox","rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war","whiteout-survival","yalla-ludo"]
+          out=Path("batch3"); out.mkdir()
+          for n in names:
+              r=requests.get(f"{os.environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
+              im=Image.open(BytesIO(r.content)); im.load()
+              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+              im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
+              im.save(out/f"{n}.png",format="PNG",optimize=False)
+              print(n, im.size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: game-images-batch3
+          path: batch3
+
+  commit:
+    needs: [batch1,batch2,batch3]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: game-images-batch*
+          merge-multiple: true
+          path: public/game-images
+      - name: Verify and commit
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pillow
           python3 - <<'PY'
           from pathlib import Path
           from PIL import Image
           names = ["ludo-club","lords-mobile","magic-chess-gogo","marvel-duel","marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline","mobile-legends","modern-strike-online","mongil-star-dive","my-singing-monsters","onmyoji-arena","oxide-survival-island","overmortal-idle-global","project-entropy","pubg-mobile","roblox","rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war","whiteout-survival","yalla-ludo"]
           for n in names:
               p=Path("public/game-images")/(n+".png")
-              assert p.is_file() and p.stat().st_size > 0, n
+              assert p.is_file() and p.stat().st_size>0, n
               with Image.open(p) as im:
-                  assert im.format == "PNG" and im.width > 0 and im.height > 0
-          print("Verified 24/24 images.")
+                  assert im.format=="PNG" and im.width>0 and im.height>0, n
+          print("Verified all 24 images.")
           PY
-      - name: Commit images and remove one-shot workflow
-        run: |
-          set -euo pipefail
           git config user.name "Nabd-Store-ON"
           git config user.email "1ahmad3asl@gmail.com"
           git add public/game-images
-          git add .github/workflows/migrate-remaining-24.yml
-          git rm .github/workflows/migrate-remaining-24.yml
-          git commit -m "Migrate remaining 24 game images"
+          git commit -m "Migrate remaining game images in three batches"
           git push origin main
