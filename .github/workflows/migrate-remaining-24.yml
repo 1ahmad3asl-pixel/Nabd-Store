@@ -24,18 +24,43 @@ jobs:
           python3 -m pip install --disable-pip-version-check pillow requests
           python3 - <<'PY'
           from pathlib import Path
-          import requests
+          import requests, re, os
           from PIL import Image
           from io import BytesIO
-          names = ["ludo-club","lords-mobile","magic-chess-gogo","marvel-duel","marvel-mystic-mayhem","marvel-rivals","mirage-perfect-skyline","mobile-legends"]
+
+          items = {
+            "ludo-club":"com.moonfrog.ludo.club",
+            "lords-mobile":"com.igg.android.lordsmobile",
+            "magic-chess-gogo":"com.mobilechess.gp",
+            "marvel-duel":"com.netease.mduelna",
+            "marvel-mystic-mayhem":"com.netease.mmm",
+            "marvel-rivals":"marvel-rivals-official",
+            "mirage-perfect-skyline":"com.eyougame.xmqx.en",
+            "mobile-legends":"com.mobile.legends",
+          }
           out=Path("batch1"); out.mkdir()
-          for n in names:
-              r=requests.get(f"{__import__('os').environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
-              im=Image.open(BytesIO(r.content)); im.load()
-              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+          s=requests.Session(); s.headers.update({"User-Agent":"Mozilla/5.0"})
+          for name, package in items.items():
+              data=None
+              try:
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=90)
+                  if r.ok and r.content:
+                      data=r.content
+              except Exception:
+                  pass
+              if data is None and package != "marvel-rivals-official":
+                  page=s.get(f"https://play.google.com/store/apps/details?id={package}&hl=en",timeout=90)
+                  m=re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',page.text,re.I)
+                  if not m:
+                      m=re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',page.text,re.I)
+                  if m:
+                      data=s.get(m.group(1).replace("&amp;","&"),timeout=90).content
+              if not data:
+                  raise RuntimeError(f"No image source: {name}")
+              im=Image.open(BytesIO(data)); im.load()
               im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
-              im.save(out/f"{n}.png",format="PNG",optimize=False)
-              print(n, im.size)
+              im.save(out/f"{name}.png",format="PNG",optimize=False)
+              print(name, im.size)
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -52,18 +77,37 @@ jobs:
           python3 -m pip install --disable-pip-version-check pillow requests
           python3 - <<'PY'
           from pathlib import Path
-          import requests, os
+          import requests, re, os
           from PIL import Image
           from io import BytesIO
-          names = ["modern-strike-online","mongil-star-dive","my-singing-monsters","onmyoji-arena","oxide-survival-island","overmortal-idle-global","project-entropy","pubg-mobile"]
+
+          items = {
+            "modern-strike-online":"com.gamedevlab.modernstrike",
+            "mongil-star-dive":"com.cjenm.mongil",
+            "my-singing-monsters":"com.bigbluebubble.singingmonsters.full",
+            "onmyoji-arena":"com.netease.g78na.gb",
+            "oxide-survival-island":"com.catsbit.oxidesurvivalisland",
+            "overmortal-idle-global":"com.xsupergame.overmortal",
+            "project-entropy":"com.entropy.global",
+            "pubg-mobile":"com.tencent.ig",
+          }
           out=Path("batch2"); out.mkdir()
-          for n in names:
-              r=requests.get(f"{os.environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
-              im=Image.open(BytesIO(r.content)); im.load()
-              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+          s=requests.Session(); s.headers.update({"User-Agent":"Mozilla/5.0"})
+          for name, package in items.items():
+              data=None
+              try:
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=90)
+                  if r.ok and r.content: data=r.content
+              except Exception: pass
+              if data is None:
+                  page=s.get(f"https://play.google.com/store/apps/details?id={package}&hl=en",timeout=90)
+                  m=re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',page.text,re.I) or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',page.text,re.I)
+                  if m: data=s.get(m.group(1).replace("&amp;","&"),timeout=90).content
+              if not data: raise RuntimeError(f"No image source: {name}")
+              im=Image.open(BytesIO(data)); im.load()
               im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
-              im.save(out/f"{n}.png",format="PNG",optimize=False)
-              print(n, im.size)
+              im.save(out/f"{name}.png",format="PNG",optimize=False)
+              print(name, im.size)
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -80,18 +124,37 @@ jobs:
           python3 -m pip install --disable-pip-version-check pillow requests
           python3 - <<'PY'
           from pathlib import Path
-          import requests, os
+          import requests, re, os
           from PIL import Image
           from io import BytesIO
-          names = ["roblox","rise-of-kingdoms","stormshot","stumble-guys","super-sus","top-war","whiteout-survival","yalla-ludo"]
+
+          items = {
+            "roblox":"com.roblox.client",
+            "rise-of-kingdoms":"com.lilithgame.roc.gp",
+            "stormshot":"com.funplus.ss",
+            "stumble-guys":"com.kitkagames.fallbuddies",
+            "super-sus":"com.je.supersus",
+            "top-war":"com.Topwar.gp",
+            "whiteout-survival":"com.gof.global",
+            "yalla-ludo":"com.yalla.yallagames",
+          }
           out=Path("batch3"); out.mkdir()
-          for n in names:
-              r=requests.get(f"{os.environ['IMAGE_HOST']}/{n}",timeout=90); r.raise_for_status()
-              im=Image.open(BytesIO(r.content)); im.load()
-              if im.width<=0 or im.height<=0: raise RuntimeError(n)
+          s=requests.Session(); s.headers.update({"User-Agent":"Mozilla/5.0"})
+          for name, package in items.items():
+              data=None
+              try:
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=90)
+                  if r.ok and r.content: data=r.content
+              except Exception: pass
+              if data is None:
+                  page=s.get(f"https://play.google.com/store/apps/details?id={package}&hl=en",timeout=90)
+                  m=re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',page.text,re.I) or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',page.text,re.I)
+                  if m: data=s.get(m.group(1).replace("&amp;","&"),timeout=90).content
+              if not data: raise RuntimeError(f"No image source: {name}")
+              im=Image.open(BytesIO(data)); im.load()
               im=im.convert("RGBA") if im.mode not in ("RGB","RGBA") else im
-              im.save(out/f"{n}.png",format="PNG",optimize=False)
-              print(n, im.size)
+              im.save(out/f"{name}.png",format="PNG",optimize=False)
+              print(name, im.size)
           PY
       - uses: actions/upload-artifact@v4
         with:
