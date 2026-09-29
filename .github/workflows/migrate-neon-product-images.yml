@@ -75,7 +75,7 @@ jobs:
           s=requests.Session(); s.headers.update({"User-Agent":"Nabd-Store-Neon-Migration/1.0"})
           for name in items:
               try:
-                  r=s.get(f"{{os.environ['IMAGE_HOST']}}/{{name}}",timeout=120)
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=120)
               except Exception as e:
                   print(f"ERROR {name}: {e}"); continue
               if r.status_code == 404:
@@ -91,7 +91,7 @@ jobs:
               p=out/(name+"."+ext); p.write_bytes(data)
               if ext != "svg":
                   with Image.open(BytesIO(data)) as im: im.verify()
-              print(f"NEON_OK {name} {mime} {len(data)} sha256={{hashlib.sha256(data).hexdigest()}}")
+              print(f"NEON_OK {name} {mime} {len(data)} sha256={hashlib.sha256(data).hexdigest()}")
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -158,7 +158,7 @@ jobs:
           s=requests.Session(); s.headers.update({"User-Agent":"Nabd-Store-Neon-Migration/1.0"})
           for name in items:
               try:
-                  r=s.get(f"{{os.environ['IMAGE_HOST']}}/{{name}}",timeout=120)
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=120)
               except Exception as e:
                   print(f"ERROR {name}: {e}"); continue
               if r.status_code == 404:
@@ -174,7 +174,7 @@ jobs:
               p=out/(name+"."+ext); p.write_bytes(data)
               if ext != "svg":
                   with Image.open(BytesIO(data)) as im: im.verify()
-              print(f"NEON_OK {name} {mime} {len(data)} sha256={{hashlib.sha256(data).hexdigest()}}")
+              print(f"NEON_OK {name} {mime} {len(data)} sha256={hashlib.sha256(data).hexdigest()}")
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -241,7 +241,7 @@ jobs:
           s=requests.Session(); s.headers.update({"User-Agent":"Nabd-Store-Neon-Migration/1.0"})
           for name in items:
               try:
-                  r=s.get(f"{{os.environ['IMAGE_HOST']}}/{{name}}",timeout=120)
+                  r=s.get(f"{os.environ['IMAGE_HOST']}/{name}",timeout=120)
               except Exception as e:
                   print(f"ERROR {name}: {e}"); continue
               if r.status_code == 404:
@@ -257,7 +257,7 @@ jobs:
               p=out/(name+"."+ext); p.write_bytes(data)
               if ext != "svg":
                   with Image.open(BytesIO(data)) as im: im.verify()
-              print(f"NEON_OK {name} {mime} {len(data)} sha256={{hashlib.sha256(data).hexdigest()}}")
+              print(f"NEON_OK {name} {mime} {len(data)} sha256={hashlib.sha256(data).hexdigest()}")
           PY
       - uses: actions/upload-artifact@v4
         with:
