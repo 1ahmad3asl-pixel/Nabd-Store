@@ -3377,3 +3377,12 @@ body{min-width:0;}
     .reference-category-grid .category-title,
     .category-tile .category-title{font-size:9px!important;}
 }
+
+
+/* Match level-one interface titles to balance section title sizing */
+@media(max-width:600px){
+  .reference-category-grid .category-title,
+  .reference-category-grid .category-tile .category-title{
+    font-size:16px!important;
+  }
+}
