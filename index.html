@@ -7,7 +7,10 @@
 .welcome-choice-title{font-size:17px;font-weight:700;margin-bottom:14px}
 .welcome-choice-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .welcome-choice-btn{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;border-radius:13px;text-decoration:none;font:inherit;font-weight:800;cursor:pointer;box-sizing:border-box}
-.welcome-login-btn{background:linear-gradient(135deg,#f5c400,#c99f00);color:#111}
+.welcome-register-btn,.welcome-google-btn{grid-column:1 / -1}
+.welcome-register-btn{background:linear-gradient(135deg,#f5c400,#c99f00);color:#111}
+.welcome-google-btn{background:#fff;color:#222;border:1px solid rgba(255,255,255,.55)}
+.welcome-login-btn{background:rgba(255,255,255,.08);color:inherit;border:1px solid currentColor}
 .welcome-guest-btn{background:rgba(255,255,255,.08);color:inherit;border:1px solid currentColor}
 @keyframes welcomeChoiceIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:380px){.welcome-choice-actions{grid-template-columns:1fr}.welcome-choice-btn{min-height:46px}}
@@ -19,6 +22,8 @@
         <div class="welcome-choice" id="welcomeChoice" hidden>
             <div class="welcome-choice-title">كيف تحب المتابعة؟</div>
             <div class="welcome-choice-actions">
+                <a class="welcome-choice-btn welcome-register-btn" href="/customer-login.html?mode=register">إنشاء حساب</a>
+                <a class="welcome-choice-btn welcome-google-btn" href="/api/customer/google">تسجيل الدخول عن طريق جوجل</a>
                 <a class="welcome-choice-btn welcome-login-btn" href="/customer-login.html">تسجيل الدخول</a>
                 <button class="welcome-choice-btn welcome-guest-btn" id="continueAsGuest" type="button">المتابعة كضيف</button>
             </div>
