@@ -1596,13 +1596,15 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
     border-radius:14px;
     background:#141414;
     color:#f5c400;
-    font-size:40px;
+    font-size:42px;
     font-weight:900;
+    font-family:Arial,sans-serif;
     line-height:1;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
+    padding:0 0 4px 0;
     padding:0;
     cursor:pointer;
     box-sizing:border-box;
@@ -3211,7 +3213,7 @@ input, textarea, select, [contenteditable="true"]{
     content:"";
     flex:1 1 auto;
     min-width:0;
-    height:66px;
+    height:90px;
     background:#f5c400;
 }
 #internalPage.balance-internal-page .internal-page-header > div:last-child::before{
