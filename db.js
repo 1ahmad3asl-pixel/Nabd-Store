@@ -101,6 +101,20 @@ async function initDb() {
     CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_email_unique
       ON customers(LOWER(email)) WHERE email IS NOT NULL;
 
+    CREATE TABLE IF NOT EXISTS customer_email_verifications (
+      email TEXT PRIMARY KEY,
+      code_hash TEXT NOT NULL,
+      verification_token_hash TEXT,
+      expires_at TIMESTAMPTZ NOT NULL,
+      attempts INTEGER NOT NULL DEFAULT 0,
+      verified_at TIMESTAMPTZ,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_customer_email_verifications_expires
+      ON customer_email_verifications(expires_at);
+
     CREATE TABLE IF NOT EXISTS customer_sessions (
       token TEXT PRIMARY KEY,
       customer_id TEXT NOT NULL REFERENCES customers(customer_id) ON DELETE CASCADE,
