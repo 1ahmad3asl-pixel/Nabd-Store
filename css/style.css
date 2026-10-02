@@ -3600,3 +3600,61 @@ body{min-width:0;}
     font-size:11px!important;
   }
 }
+
+
+/* ===== الواجهة الأولية: العنوان خارج إطار المربع مثل قسم الأرصدة ===== */
+.reference-category-grid .category-tile{
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:0!important;
+  gap:10px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+.reference-category-grid .category-tile .category-art{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  flex:0 0 auto!important;
+  overflow:hidden!important;
+  border:3px solid #f5c400!important;
+  border-radius:17px!important;
+  box-shadow:0 0 14px rgba(245,196,0,.22),inset 0 0 0 1px rgba(255,255,255,.06)!important;
+  margin:0!important;
+}
+.reference-category-grid .category-tile .category-title{
+  position:static!important;
+  z-index:auto!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 3px!important;
+  background:none!important;
+  color:var(--text)!important;
+  font-size:16px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  text-align:center!important;
+  text-shadow:none!important;
+}
+@media(max-width:600px){
+  .reference-category-grid .category-tile{gap:9px!important;}
+  .reference-category-grid .category-tile .category-art{
+    border-width:2px!important;
+    border-radius:14px!important;
+  }
+  .reference-category-grid .category-tile .category-title{
+    font-size:13px!important;
+  }
+}
+@media(max-width:360px){
+  .reference-category-grid .category-tile .category-title{font-size:11px!important;}
+}
