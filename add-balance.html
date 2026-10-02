@@ -12,13 +12,14 @@ body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,s
 .back{width:44px;height:44px;border-radius:14px;background:#151515;border:1px solid #292929;color:#fff;font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
 h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 .subtitle{text-align:center;color:#aaa;margin:0 0 24px;font-size:15px}
-.methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.method{min-height:150px;border:1px solid #292929;border-radius:22px;background:linear-gradient(145deg,#151515,#0d0d0d);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:.2s}
-.method:hover{transform:translateY(-3px);border-color:#b8860b}
-.icon{width:64px;height:64px;border-radius:18px;background:#1d1d1d;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:12px}
-.name{font-size:19px;font-weight:900}
-.note{font-size:12px;color:#999;margin-top:6px}
-@media(max-width:560px){.methods{grid-template-columns:1fr}.method{min-height:135px}}
+.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;padding:3px 2px}
+.method{width:100%;aspect-ratio:1/1;border:1px solid #292929;border-radius:17px;background:#141414;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:10px;overflow:hidden;text-decoration:none;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:.2s}
+.method:hover{border-color:#b8860b;color:#b8860b;transform:translateY(-2px)}
+.method:active{transform:scale(.97)}
+.icon{width:72%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:42px;margin:auto}
+.name{width:100%;text-align:center;font-size:14px;font-weight:900;padding:8px 3px 4px}
+.note{display:none}
+@media(max-width:560px){.methods{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -29,10 +30,10 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 </header>
 <p class="subtitle">اختر طريقة إدخال الرصيد التي تريد استخدامها</p>
 <section class="methods" aria-label="طرق الدفع">
-<a class="method" href="#" data-method="sham-dollar"><span class="icon">💵</span><span class="name">شام كاش دولار</span><span class="note">قريبًا</span></a>
-<a class="method" href="#" data-method="sham-syp"><span class="icon">💴</span><span class="name">شام كاش سوري</span><span class="note">قريبًا</span></a>
-<a class="method" href="#" data-method="binance"><span class="icon">🟡</span><span class="name">باينانس</span><span class="note">قريبًا</span></a>
-<a class="method" href="#" data-method="syriatel"><span class="icon">📱</span><span class="name">سيرياتيل كاش</span><span class="note">قريبًا</span></a>
+<a class="method" href="#" data-method="sham-dollar"><span class="icon">💵</span><span class="name">شام كاش دولار</span></a>
+<a class="method" href="#" data-method="sham-syp"><span class="icon">💴</span><span class="name">شام كاش سوري</span></a>
+<a class="method" href="#" data-method="binance"><span class="icon">🟡</span><span class="name">باينانس</span></a>
+<a class="method" href="#" data-method="syriatel"><span class="icon">📱</span><span class="name">سيرياتيل كاش</span></a>
 </section>
 </main>
 <script>
