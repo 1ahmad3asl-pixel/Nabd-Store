@@ -1999,9 +1999,12 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
     height:100%!important;
     max-width:none!important;
     max-height:none!important;
+    padding:0!important;
+    box-sizing:border-box!important;
     display:block!important;
     object-fit:cover!important;
     object-position:center!important;
+    transform:none!important;
 }
 
 .balance-category-grid .balance-category-tile .game-tile-image{
