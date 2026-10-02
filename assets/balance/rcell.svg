@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rcell"><rect width="512" height="512" rx="76" fill="#fff"/><circle cx="256" cy="218" r="150" fill="#e51b23"/><path d="M170 132h92c61 0 99 29 99 76 0 31-17 55-47 67l53 82h-67l-43-70h-29v70h-58V132zm58 48v61h27c30 0 47-10 47-31 0-20-17-30-47-30h-27z" fill="#fff"/><text x="256" y="438" text-anchor="middle" font-family="Arial,sans-serif" font-size="48" font-weight="800" fill="#e51b23">Rcell</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rcell">
+<rect width="512" height="512" rx="96" fill="#fff"/>
+<path d="M112 92h288v72H112z" fill="#e21b2d"/>
+<path d="M112 164h72v188h-72zM328 164h72v188h-72z" fill="#e21b2d"/>
+<path d="M184 164h105c61 0 99 31 99 82 0 37-22 64-61 77l67 75h-82l-53-66h-2v66h-73zm73 52v65h27c22 0 34-11 34-32s-12-33-34-33z" fill="#e21b2d"/>
+<text x="256" y="430" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#e21b2d">Rcell</text>
+</svg>
