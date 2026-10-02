@@ -2983,7 +2983,7 @@ function openBalancePage(fromHistory) {
     // المستوى الثاني يعرض التصنيفات الثابتة فقط؛ لا نستدعي Nemer هنا.
     // استدعاء API وربط المنتجات يتم عند دخول المستوى الثالث/صفحة الشراء.
     const groups=getBalanceGroups();
-    content.innerHTML='<div class="game-page balance-level-two"><button class="pubg-back" type="button" id="balanceBack">← العودة إلى الأقسام</button><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
+    content.innerHTML='<div class="game-page balance-level-two"><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
         const image=group.image || "";
         const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
         // المستوى الثاني لا يعطل التصنيف قبل تحميل API؛ الضغط عليه هو الذي يبدأ تحميل منتجاته.
