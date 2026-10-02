@@ -1601,9 +1601,9 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 #internalPageTitle::before,
 #internalPageTitle::after{
     content:"";
-    width:110px;
+    width:165px;
     height:4px;
-    flex:0 1 110px;
+    flex:0 1 165px;
     background:currentColor;
     clip-path:polygon(0 50%, 9px 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 9px 100%);
     opacity:.9;
@@ -1612,8 +1612,8 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
     #internalPageTitle{font-size:20px;gap:8px;}
     #internalPageTitle::before,
     #internalPageTitle::after{
-        width:82px;
-        flex-basis:82px;
+        width:165px;
+        flex-basis:165px;
     }
 }
 .internal-page-content{
