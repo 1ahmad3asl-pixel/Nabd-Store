@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختر طريقة الدفع - Nabd-Store</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif}
+.page{width:min(920px,94vw);margin:0 auto;padding:22px 0 40px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+.back{width:44px;height:44px;border-radius:14px;background:#151515;border:1px solid #292929;color:#fff;font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
+.subtitle{text-align:center;color:#aaa;margin:0 0 24px;font-size:15px}
+.methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.method{min-height:150px;border:1px solid #292929;border-radius:22px;background:linear-gradient(145deg,#151515,#0d0d0d);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:.2s}
+.method:hover{transform:translateY(-3px);border-color:#b8860b}
+.icon{width:64px;height:64px;border-radius:18px;background:#1d1d1d;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:12px}
+.name{font-size:19px;font-weight:900}
+.note{font-size:12px;color:#999;margin-top:6px}
+@media(max-width:560px){.methods{grid-template-columns:1fr}.method{min-height:135px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="top">
+<a class="back" href="/" aria-label="العودة">‹</a>
+<h1>اختر طريقة الدفع</h1>
+</header>
+<p class="subtitle">اختر طريقة إدخال الرصيد التي تريد استخدامها</p>
+<section class="methods" aria-label="طرق الدفع">
+<a class="method" href="#" data-method="sham-dollar"><span class="icon">💵</span><span class="name">شام كاش دولار</span><span class="note">قريبًا</span></a>
+<a class="method" href="#" data-method="sham-syp"><span class="icon">💴</span><span class="name">شام كاش سوري</span><span class="note">قريبًا</span></a>
+<a class="method" href="#" data-method="binance"><span class="icon">🟡</span><span class="name">باينانس</span><span class="note">قريبًا</span></a>
+<a class="method" href="#" data-method="syriatel"><span class="icon">📱</span><span class="name">سيرياتيل كاش</span><span class="note">قريبًا</span></a>
+</section>
+</main>
+<script>
+document.querySelectorAll("[data-method]").forEach(function(card){
+ card.addEventListener("click",function(e){e.preventDefault();});
+});
+</script>
+</body>
+</html>
