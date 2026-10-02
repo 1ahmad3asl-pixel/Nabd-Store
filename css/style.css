@@ -3485,3 +3485,38 @@ body{min-width:0;}
     .syp-rate-card-head h2 { font-size:.95rem; }
     .syp-rate-value strong { font-size:1.25rem; }
 }
+
+
+/* ========================= HEADER EDGE ALIGNMENT ========================= */
+/* Keep the store logo/name flush to the left edge, mirroring the menu button's edge alignment. */
+.main-header{
+    position:sticky;
+    padding-left:12px;
+    padding-right:12px;
+}
+.header-logo{
+    order:2;
+    margin-inline-start:0 !important;
+    margin-inline-end:0 !important;
+    position:absolute;
+    left:12px;
+    right:auto;
+    top:50%;
+    transform:translateY(-50%);
+}
+.header-actions{
+    order:1;
+    margin-left:auto;
+    margin-right:0;
+}
+@media(max-width:600px){
+    .main-header{
+        padding-left:12px;
+        padding-right:12px;
+    }
+    .header-logo{
+        left:12px;
+        right:auto;
+        margin:0 !important;
+    }
+}
