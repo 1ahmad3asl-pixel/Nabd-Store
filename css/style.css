@@ -3733,6 +3733,10 @@ body{min-width:0;}
     object-position:center!important;
     transform:none!important;
 }
+.balance-category-grid .balance-brand-image img{
+    object-fit:cover!important;
+    object-position:center!important;
+}
 @media(max-width:600px){
     .balance-category-grid .game-tile-image{
         border-radius:14px!important;
