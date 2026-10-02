@@ -1,0 +1,25 @@
+{
+  "name": "Nabd-Store - لوحة الإدارة",
+  "short_name": "إدارة نبض ستور",
+  "description": "لوحة إدارة Nabd-Store",
+  "start_url": "/Aledaraa19/",
+  "scope": "/Aledaraa19/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/assets/category-nabd-store.webp",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/category-nabd-store.webp",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ]
+}
