@@ -3701,6 +3701,40 @@ body{min-width:0;}
   .reference-category-grid .category-tile .category-title{font-size:13px!important;}
 }
 
-/* تكبير شعارات الأرصدة داخل المربع */
-.balance-category-grid .balance-brand-image img{width:100%;height:100%;object-fit:cover;transform:scale(1.35);transform-origin:center;}
-@media(max-width:600px){.balance-category-grid .balance-brand-image img{transform:scale(1.32);}}
+/* ===== صور مربعات الأرصدة: ملء المربع وإخفاء الإطار ===== */
+.balance-category-grid .game-tile-image{
+    width:100%;
+    height:100%;
+    aspect-ratio:1/1;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:17px!important;
+    overflow:hidden!important;
+    box-shadow:none!important;
+    background:transparent!important;
+}
+.balance-category-grid .game-tile-image img{
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    display:block!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    transform:none!important;
+    border:0!important;
+    border-radius:inherit!important;
+}
+.balance-category-grid .balance-brand-image img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    transform:none!important;
+}
+@media(max-width:600px){
+    .balance-category-grid .game-tile-image{
+        border-radius:14px!important;
+    }
+}
