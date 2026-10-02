@@ -52,6 +52,7 @@ const adminLoginAttempts = new Map();
 const customerLoginAttempts = new Map();
 const orderRateLimits = new Map();
 const googleOAuthStates = new Map();
+const customerEmailVerificationRateLimits = new Map();
 const COOKIE_SECURE = process.env.COOKIE_SECURE !== "false";
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
@@ -147,6 +148,30 @@ function safeEqual(a, b) {
   const x = Buffer.from(String(a));
   const y = Buffer.from(String(b));
   return x.length === y.length && crypto.timingSafeEqual(x, y);
+}
+
+function hashEmailVerificationValue(value) {
+  return crypto.createHash("sha256").update(String(value)).digest("hex");
+}
+
+async function sendCustomerVerificationEmail(email, code) {
+  if (!RESEND_API_KEY || !EMAIL_FROM) {
+    const error = new Error("خدمة البريد غير مهيأة. أضف RESEND_API_KEY و EMAIL_FROM في إعدادات Render.");
+    error.statusCode = 503;
+    throw error;
+  }
+  const subject = "رمز التحقق من البريد الإلكتروني - Nabd-Store";
+  const html = '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222"><h2 style="margin:0 0 14px">Nabd-Store</h2><p>رمز التحقق من بريدك الإلكتروني هو:</p><div style="font-size:30px;font-weight:800;letter-spacing:8px;margin:18px 0;padding:14px 18px;background:#f5f5f5;border-radius:12px;text-align:center">' + String(code) + '</div><p>صلاحية الرمز 10 دقائق. إذا لم تطلب إنشاء حساب، يمكنك تجاهل هذه الرسالة.</p></div>';
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
+    body: JSON.stringify({from:EMAIL_FROM,to:[email],subject,text:"رمز التحقق من بريدك الإلكتروني في Nabd-Store هو: "+code+". صلاحية الرمز 10 دقائق.",html})
+  });
+  if (!response.ok) {
+    let message="تعذر إرسال رمز التحقق إلى البريد الإلكتروني.";
+    try { const data=await response.json(); if(data?.message) message=String(data.message); } catch {}
+    const error=new Error(message); error.statusCode=502; throw error;
+  }
 }
 
 function hashPassword(password) {
@@ -368,11 +393,54 @@ app.post("/api/admin/logout", requireAdmin, async (req, res) => {
    CUSTOMER AUTH
 ========================= */
 
+app.post("/api/customer/email/send-code", async (req, res) => {
+  try {
+    const email=String(req.body?.email||"").trim().toLowerCase();
+    if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({status:"ERROR",message:"البريد الإلكتروني غير صحيح."});
+    const exists=await query("SELECT customer_id FROM customers WHERE LOWER(email)=LOWER($1)",[email]);
+    if (exists.rows[0]) return res.status(409).json({status:"ERROR",message:"البريد الإلكتروني مستخدم بالفعل."});
+    const now=Date.now(), lastSentAt=customerEmailVerificationRateLimits.get(email)||0;
+    if (now-lastSentAt<60000) return res.status(429).json({status:"ERROR",message:"انتظر دقيقة قبل طلب رمز جديد."});
+    const code=String(crypto.randomInt(100000,1000000));
+    await sendCustomerVerificationEmail(email,code);
+    const verificationToken=crypto.randomBytes(32).toString("hex");
+    await query("INSERT INTO customer_email_verifications(email,code_hash,verification_token_hash,expires_at,attempts,verified_at,updated_at) VALUES($1,$2,$3,NOW()+INTERVAL '10 minutes',0,NULL,NOW()) ON CONFLICT(email) DO UPDATE SET code_hash=EXCLUDED.code_hash,verification_token_hash=EXCLUDED.verification_token_hash,expires_at=EXCLUDED.expires_at,attempts=0,verified_at=NULL,updated_at=NOW()",[email,hashEmailVerificationValue(code),hashEmailVerificationValue(verificationToken)]);
+    customerEmailVerificationRateLimits.set(email,now);
+    res.json({status:"OK",message:"تم إرسال رمز التحقق إلى بريدك الإلكتروني."});
+  } catch(error) {
+    console.error("Customer verification email error:",error);
+    res.status(error.statusCode||500).json({status:"ERROR",message:error.message||"تعذر إرسال رمز التحقق."});
+  }
+});
+
+app.post("/api/customer/email/verify-code", async (req, res) => {
+  try {
+    const email=String(req.body?.email||"").trim().toLowerCase(), code=String(req.body?.code||"").trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)||!/^\d{6}$/.test(code)) return res.status(400).json({status:"ERROR",message:"أدخل البريد ورمز التحقق المكوّن من 6 أرقام."});
+    const result=await query("SELECT email,code_hash,verification_token_hash,expires_at,attempts,verified_at FROM customer_email_verifications WHERE email=$1",[email]);
+    const verification=result.rows[0];
+    if (!verification||new Date(verification.expires_at).getTime()<=Date.now()) return res.status(400).json({status:"ERROR",message:"رمز التحقق منتهي أو غير موجود. أرسل رمزًا جديدًا."});
+    if (verification.verified_at) return res.status(400).json({status:"ERROR",message:"تم التحقق من هذا البريد مسبقًا. تابع التسجيل."});
+    if (Number(verification.attempts||0)>=5) return res.status(429).json({status:"ERROR",message:"تم تجاوز عدد محاولات التحقق. أرسل رمزًا جديدًا."});
+    if (!safeEqual(hashEmailVerificationValue(code),verification.code_hash)) {
+      await query("UPDATE customer_email_verifications SET attempts=attempts+1,updated_at=NOW() WHERE email=$1",[email]);
+      return res.status(400).json({status:"ERROR",message:"رمز التحقق غير صحيح."});
+    }
+    const verificationToken=crypto.randomBytes(32).toString("hex");
+    await query("UPDATE customer_email_verifications SET verification_token_hash=$1,verified_at=NOW(),updated_at=NOW() WHERE email=$2",[hashEmailVerificationValue(verificationToken),email]);
+    res.json({status:"OK",verification_token:verificationToken});
+  } catch(error) {
+    console.error("Customer verification code error:",error);
+    res.status(500).json({status:"ERROR",message:"تعذر التحقق من الرمز."});
+  }
+});
+
 app.post("/api/customer/register", async (req, res) => {
   try {
     const name = String(req.body?.name || "").trim();
     const email = String(req.body?.email || "").trim().toLowerCase();
     const password = String(req.body?.password || "");
+    const verificationToken = String(req.body?.verification_token || "").trim();
 
     if (name.length < 2 || name.length > 80) {
       return res.status(400).json({ status: "ERROR", message: "الاسم غير صالح." });
@@ -385,6 +453,14 @@ app.post("/api/customer/register", async (req, res) => {
         status: "ERROR",
         message: "كلمة المرور يجب أن تكون بين 8 و200 حرف."
       });
+    }
+
+    if (!verificationToken) return res.status(400).json({status:"ERROR",message:"يجب التحقق من البريد الإلكتروني أولًا."});
+
+    const verificationResult=await query("SELECT verification_token_hash,expires_at,verified_at FROM customer_email_verifications WHERE email=$1",[email]);
+    const verification=verificationResult.rows[0];
+    if (!verification||!verification.verified_at||!verification.verification_token_hash||new Date(verification.expires_at).getTime()<=Date.now()||!safeEqual(hashEmailVerificationValue(verificationToken),verification.verification_token_hash)) {
+      return res.status(400).json({status:"ERROR",message:"تحقق من بريدك الإلكتروني قبل إنشاء الحساب."});
     }
 
     const exists = await query(
@@ -404,6 +480,7 @@ app.post("/api/customer/register", async (req, res) => {
       [customerId, name, email, hashPassword(password)]
     );
     const customerNumber = inserted.rows[0].customer_number;
+    await query("DELETE FROM customer_email_verifications WHERE email=$1",[email]);
 
     const token = crypto.randomBytes(32).toString("hex");
     await createCustomerSession(
