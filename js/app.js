@@ -229,67 +229,23 @@ function initializeDhikrHomeVisibility() {
     window.addEventListener("hashchange", setDhikrHomeVisibility);
 }
 
-async function initializeWelcomeSplash() {
+function initializeWelcomeSplash() {
     const splash = document.getElementById("welcomeSplash");
-    const choice = document.getElementById("welcomeChoice");
-    const guestButton = document.getElementById("continueAsGuest");
     if (!splash) return;
 
-    // لا نعرض شاشة الدخول/الترحيب للعميل الذي لديه جلسة دخول صالحة.
-    // يتم التحقق من الجلسة من الخادم في كل فتح/تحديث للصفحة.
-    let loggedIn = false;
-    try {
-        const response = await fetch("/api/customer/auth/me", {
-            method: "GET",
-            headers: { Accept: "application/json" },
-            credentials: "same-origin",
-            cache: "no-store"
-        });
-        if (response.ok) {
-            const data = await response.json();
-            loggedIn = !!(data && data.customer);
-            if (loggedIn) {
-                state.user = data.customer;
-            }
-        }
-    } catch (error) {
-        console.warn("Customer session check skipped:", error);
-    }
-
-    if (loggedIn) {
-        splash.hidden = true;
-        splash.classList.remove("is-hidden");
-        splash.setAttribute("aria-hidden", "true");
-        if (choice) choice.hidden = true;
-        return;
-    }
-
-    // الزائر غير المسجل فقط يرى شاشة الترحيب وخيارات الدخول.
+    // شاشة الترحيب العادية فقط: تظهر عند فتح الموقع أو تحديثه،
+    // بدون أي شاشة ثانية لاختيار تسجيل الدخول أو المتابعة كضيف.
     splash.hidden = false;
     splash.classList.remove("is-hidden");
     splash.setAttribute("aria-hidden", "false");
 
-    if (choice) {
-        choice.hidden = true;
-        window.setTimeout(function () {
-            choice.hidden = false;
-        }, 1200);
-    }
-
-    function closeSplash() {
+    window.setTimeout(function () {
         splash.classList.add("is-hidden");
         window.setTimeout(function () {
             splash.hidden = true;
             splash.setAttribute("aria-hidden", "true");
         }, 380);
-    }
-
-    if (guestButton) {
-        guestButton.addEventListener("click", function () {
-            try { sessionStorage.setItem("nabdGuestMode", "1"); } catch (e) {}
-            closeSplash();
-        }, { once: true });
-    }
+    }, 1400);
 }
 
 /* =========================
