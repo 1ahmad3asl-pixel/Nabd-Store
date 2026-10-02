@@ -1589,18 +1589,24 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
     border-bottom:1px solid #e7e7e7;
 }
 .internal-back{
-    width:48px;
-    height:48px;
-    border:1px solid #d7d7d7;
-    border-radius:12px;
-    background:#fff;
-    color:#111;
-    font-size:28px;
+    width:52px;
+    height:52px;
+    flex:0 0 52px;
+    border:2px solid #f5c400;
+    border-radius:14px;
+    background:#141414;
+    color:#f5c400;
+    font-size:40px;
+    font-weight:900;
     line-height:1;
     display:flex;
     align-items:center;
     justify-content:center;
+    text-align:center;
+    padding:0;
     cursor:pointer;
+    box-sizing:border-box;
+    box-shadow:0 0 12px rgba(245,196,0,.2),inset 0 0 0 1px rgba(255,255,255,.05);
 }
 .internal-page-header > div:last-child{
     display:flex;
