@@ -21,7 +21,6 @@ body{min-height:100vh;display:grid;place-items:center;background:var(--backgroun
 .register-btn{background:transparent;color:var(--primary);border:1px solid var(--primary)!important}
 .google-login{display:block;margin-top:12px;padding:13px;text-align:center;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--text);font-weight:700;background:var(--white)}
 .auth-error{display:none;margin-top:14px;padding:11px;border-radius:10px;background:#ffe8e8;color:#a00;text-align:center}
-.back{display:inline-block;margin-top:18px;text-decoration:none;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -40,7 +39,6 @@ body{min-height:100vh;display:grid;place-items:center;background:var(--backgroun
 <a class="google-login" href="/api/customer/google">تسجيل الدخول باستخدام Google</a>
 <div id="authError" class="auth-error"></div>
 </form>
-<a class="back" href="/">← العودة إلى المتجر</a>
 </main>
 <script>
 let mode="login",emailVerified=false,verificationToken="";
