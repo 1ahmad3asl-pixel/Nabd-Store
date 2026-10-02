@@ -3536,3 +3536,67 @@ body{min-width:0;}
 @media(max-width:600px){
   .reference-category-grid .category-tile{border-width:2px!important;border-radius:14px!important;}
 }
+
+
+/* ===== إصلاح نهائي: عناوين مربعات الواجهة الأولية أسفل الصورة بدون تداخل ===== */
+.reference-category-grid .category-tile{
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+  padding:0!important;
+  border:3px solid #f5c400!important;
+  border-radius:17px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+}
+.reference-category-grid .category-tile .category-art{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  flex:0 0 auto!important;
+  border:0!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  margin:0!important;
+}
+.reference-category-grid .category-tile .category-title{
+  position:static!important;
+  z-index:auto!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 3px 2px!important;
+  background:none!important;
+  color:var(--text)!important;
+  font-size:16px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  text-align:center!important;
+  text-shadow:none!important;
+}
+@media(max-width:600px){
+  .reference-category-grid .category-tile{
+    border-width:2px!important;
+    border-radius:14px!important;
+    gap:9px!important;
+  }
+  .reference-category-grid .category-tile .category-art{
+    border-radius:12px!important;
+  }
+  .reference-category-grid .category-tile .category-title{
+    font-size:13px!important;
+    line-height:1.25!important;
+    padding:0 2px 2px!important;
+  }
+}
+@media(max-width:360px){
+  .reference-category-grid .category-tile .category-title{
+    font-size:11px!important;
+  }
+}
