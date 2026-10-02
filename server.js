@@ -101,6 +101,44 @@ app.use((req, res, next) => {
   next();
 });
 
+async function getLiraScopeRate() {
+  const url = "https://lirascope.syria-cloud.sy/api/v1/rates/latest?currencies=USD&lang=ar";
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Accept": "application/json" },
+      cache: "no-store",
+      signal: controller.signal
+    });
+    if (!response.ok) {
+      throw new Error("LiraScope HTTP " + response.status);
+    }
+    const data = await response.json();
+    const market = Array.isArray(data.marketRates)
+      ? data.marketRates.find(rate => String(rate.currency).toUpperCase() === "USD")
+      : null;
+    const buy = Number(market?.buy);
+    if (!Number.isFinite(buy) || buy <= 0) {
+      throw new Error("LiraScope لم يُرجع سعر شراء صالح للدولار.");
+    }
+    const updatedRate = buy + 10;
+    return {
+      source: "LiraScope",
+      currency: "USD",
+      sourceType: "market",
+      rateType: "buy",
+      buy,
+      added: 10,
+      rate: updatedRate,
+      timestampUtc: market?.timestampUtc || data.timestampUtc || null
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 function clientIp(req) {
   return String(req.ip || req.socket.remoteAddress || "").trim();
 }
@@ -294,6 +332,21 @@ app.post("/api/admin/login", async (req, res) => {
   );
 
   res.json({ status: "OK", admin: { email: ADMIN_EMAIL } });
+});
+
+app.get("/api/exchange-rate", async (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  try {
+    const rate = await getLiraScopeRate();
+    res.json({ status: "OK", rate });
+  } catch (error) {
+    console.error("LiraScope rate error:", error);
+    res.status(502).json({
+      status: "ERROR",
+      message: "تعذر الحصول على سعر الصرف الحالي من LiraScope."
+    });
+  }
 });
 
 app.get("/api/admin/auth/me", requireAdmin, (req, res) => {
