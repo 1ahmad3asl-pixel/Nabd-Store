@@ -3139,7 +3139,7 @@ input, textarea, select, [contenteditable="true"]{
     flex:1 1 auto;
     min-width:0;
     height:22px;
-    background:var(--primary);
+    background:#f5c400;
 }
 #internalPage.balance-internal-page .internal-page-header > div:last-child::before{
     clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%);
