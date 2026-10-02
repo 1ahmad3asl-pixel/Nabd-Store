@@ -1,7 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rcell">
 <rect width="512" height="512" rx="96" fill="#fff"/>
-<path d="M112 92h288v72H112z" fill="#e21b2d"/>
-<path d="M112 164h72v188h-72zM328 164h72v188h-72z" fill="#e21b2d"/>
-<path d="M184 164h105c61 0 99 31 99 82 0 37-22 64-61 77l67 75h-82l-53-66h-2v66h-73zm73 52v65h27c22 0 34-11 34-32s-12-33-34-33z" fill="#e21b2d"/>
-<text x="256" y="430" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#e21b2d">Rcell</text>
+<g transform="translate(34 48)">
+  <path d="M205 14c72 0 139 26 161 75 21 47-2 92-42 124-41 32-102 52-162 38-59-14-105-53-117-105-11-49 12-91 53-112C130 20 169 14 205 14z" fill="#f5e900"/>
+  <path d="M70 91c34-45 91-65 143-55 48 9 77 37 83 75 6 38-11 82-47 112-37 31-92 48-144 37-48-10-83-40-93-78-10-35 0-66 58-91z" fill="#ff8b22" opacity=".96"/>
+  <path d="M59 131c26-25 68-36 107-30 40 6 77 26 96 58 19 31 17 69-3 99-23 34-68 55-114 54-50-1-94-26-112-63-17-35-9-84 26-118z" fill="#e5232b"/>
+  <path d="M118 64h76c59 0 91 28 91 72 0 31-18 53-50 64l56 87h-61l-47-76h-10v76h-55V64zm55 42v63h22c25 0 38-11 38-32s-13-31-38-31z" fill="#fff"/>
+</g>
+<text x="361" y="276" font-family="Arial,sans-serif" font-size="92" font-weight="700" fill="#1556a8">cell</text>
 </svg>
