@@ -2981,7 +2981,7 @@ function openBalancePage(fromHistory) {
         const image=group.image || "";
         const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
         // المستوى الثاني لا يعطل التصنيف قبل تحميل API؛ الضغط عليه هو الذي يبدأ تحميل منتجاته.
-        return '<button class="game-category-tile game-product-group-card balance-category-tile" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
+        return '<button class="game-category-tile game-product-group-card balance-category-tile" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image '+(["instapay","zain-cash","reflect"].includes(group.key)?"balance-brand-image":"")+'">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
     }).join("")+'</div></div>';
     const back=document.getElementById("balanceBack"); if(back) back.addEventListener("click",closeInternalPage);
     content.querySelectorAll("[data-balance-group]").forEach(function(card){card.addEventListener("click",function(){openBalanceProductGroup(card.getAttribute("data-balance-group")||"");});});
