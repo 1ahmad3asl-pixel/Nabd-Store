@@ -1783,6 +1783,12 @@ app.get("/Aledaraa19/index.html", requireAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
+app.get("/Aledaraa19/manifest.json", requireAdmin, (req, res) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
+  res.sendFile(path.join(__dirname, "admin", "manifest.json"));
+});
+
 app.get("/Aledaraa19/login.html", (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
