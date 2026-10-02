@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8eef5"/></linearGradient></defs>
-<rect width="512" height="512" rx="96" fill="url(#g)"/>
-<circle cx="256" cy="210" r="112" fill="#111827"/>
-<text x="256" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#fff">WM</text>
-<text x="256" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#111827">Whish Money</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Whish Money">
+<rect width="512" height="512" rx="96" fill="#f70846"/>
+<path d="M91 213h88l-38 25 99 0-55 29 96 0-49 28 99 0-44 25h-105l-91-48 91-48H91z" fill="#fff"/>
+<path d="M256 175c19 0 31 12 38 29l27 67 27-78c7-20 19-30 37-30 23 0 37 17 31 40l-31 122c-5 20-18 31-37 31-18 0-31-11-38-29l-27-70-27 70c-7 18-20 29-38 29-19 0-32-11-37-31l-31-122c-6-23 8-40 31-40 18 0 30 10 37 30l27 78 27-67c7-17 19-29 38-29z" fill="#fff"/>
 </svg>
