@@ -42,6 +42,34 @@
 </div>
 
 <!-- =========================
+     سعر صرف الليرة السورية
+     يُحدّث عند تحميل/تحديث الصفحة
+========================= -->
+<section class="syp-rate-card" id="sypRateCard" aria-label="سعر صرف الليرة السورية">
+  <div class="syp-rate-card-head">
+    <div>
+      <span class="syp-rate-label">سعر الصرف</span>
+      <h2>الدولار مقابل الليرة السورية</h2>
+    </div>
+    <span class="syp-rate-source">LiraScope</span>
+  </div>
+  <div class="syp-rate-values">
+    <div class="syp-rate-value">
+      <span>سعر الشراء</span>
+      <strong id="sypSourceRate">—</strong>
+      <small>ل.س / $</small>
+    </div>
+    <div class="syp-rate-plus" aria-hidden="true">+10</div>
+    <div class="syp-rate-value syp-rate-final">
+      <span>السعر المعتمد في نبض ستور</span>
+      <strong id="sypStoreRate">—</strong>
+      <small>ل.س / $</small>
+    </div>
+  </div>
+  <div class="syp-rate-meta" id="sypRateMeta">جاري تحديث سعر الصرف...</div>
+</section>
+
+<!-- =========================
      البحث
 ========================= --><section class="search-section"><div class="search-box"><input
         type="search"
