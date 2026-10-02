@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Reflect">
-<rect width="512" height="512" rx="96" fill="#fff"/>
-<g fill="#5b3f96">
-  <path d="M157 126h105c69 0 113 35 113 91 0 40-23 69-64 83l67 108h-72l-57-94h-39v94h-53V126zm53 47v87h43c42 0 67-15 67-44 0-29-25-43-67-43h-43z"/>
-  <path d="M210 260h92v49h-92z"/>
+<rect width="512" height="512" rx="96" fill="#5b3f96"/>
+<g fill="#fff">
+<path d="M70 116h112c78 0 126 39 126 99 0 43-25 74-69 90l78 116h-78l-66-102h-43v102H70V116zm60 52v99h42c48 0 75-17 75-50 0-33-27-49-75-49h-42z"/>
+<path d="M278 164h62v106h-62z"/>
+<path d="M280 282h58v58h-58z"/>
 </g>
+<text x="352" y="405" text-anchor="middle" font-family="Arial,sans-serif" font-size="54" font-weight="700" fill="#fff">Reflect</text>
 </svg>
