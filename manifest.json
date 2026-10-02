@@ -1,0 +1,25 @@
+{
+  "name": "Nabd-Store",
+  "short_name": "نبض ستور",
+  "description": "خدماتك الرقمية في مكان واحد",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/assets/category-nabd-store.webp",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/category-nabd-store.webp",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ]
+}
