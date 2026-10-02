@@ -1462,7 +1462,7 @@ html[data-theme="dark"] .slider{background:#333;}
   flex-direction:column!important;
   align-items:center!important;
   justify-content:flex-start!important;
-  gap:8px!important;
+  gap:12px!important;
   min-width:0!important;
   padding:0!important;
   border:0!important;
@@ -1508,7 +1508,8 @@ html[data-theme="dark"] .slider{background:#333;}
   line-height:1.25!important;
   font-weight:800!important;
   color:var(--text)!important;
-  padding:0 2px!important;
+  padding:3px 2px 0!important;
+  margin:0!important;
 }
 .reference-heading{margin-bottom:10px!important;text-align:center!important;}
 .reference-heading .section-label{display:none!important;}
