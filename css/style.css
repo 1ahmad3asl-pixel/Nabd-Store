@@ -3727,13 +3727,6 @@ body{min-width:0;}
     border-radius:inherit!important;
 }
 .balance-category-grid .balance-brand-image img{
-    width:100%!important;
-    height:100%!important;
-    object-fit:cover!important;
-    object-position:center!important;
-    transform:none!important;
-}
-.balance-category-grid .balance-brand-image img{
     object-fit:cover!important;
     object-position:center!important;
 }
