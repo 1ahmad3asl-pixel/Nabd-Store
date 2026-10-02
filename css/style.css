@@ -46,8 +46,8 @@ box-shadow:
 بسبب dir="rtl":
 الشعار يظهر في الجهة اليمنى
 والرصيد + القائمة في الجهة اليسرى */
-.header-logo{ order:2; font-size:22px; font-weight:900; white-space:nowrap; }
-.header-actions{ order:1;
+.header-logo{ order:1; font-size:22px; font-weight:900; white-space:nowrap; }
+.header-actions{ order:2;
 display:flex;
 align-items:center;
 gap:10px;
@@ -68,6 +68,25 @@ min-width:82px;
 
 user-select:none;
 }
+.wallet-add-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:28px;
+height:28px;
+margin-inline-start:8px;
+border-radius:8px;
+background:#f5c400;
+color:#111;
+font-size:22px;
+font-weight:900;
+line-height:1;
+text-decoration:none;
+box-shadow:0 2px 8px rgba(245,196,0,.22);
+transition:transform .12s ease,filter .18s ease;
+}
+.wallet-add-btn:hover{filter:brightness(1.08);}
+.wallet-add-btn:active{transform:scale(.9);}
 .wallet strong{ direction:ltr; display:inline-block;
 font-family:inherit;
 
@@ -3205,7 +3224,7 @@ input, textarea, select, [contenteditable="true"]{
 }
 
 /* شعار الصورة داخل هيدر واجهة العميل */
-.header-logo{display:flex;align-items:center;gap:7px;}
+ .header-logo{display:flex;align-items:center;gap:7px;}
 .header-logo-image{width:48px;height:48px;display:block;object-fit:cover;object-position:center;border-radius:9px;flex:0 0 48px;background:#000 url('../assets/category-nabd-store.webp') center center / cover no-repeat!important;}
 @media (max-width:520px){
   .header-logo-image{width:44px;height:44px;flex-basis:44px;border-radius:8px;}
@@ -3323,6 +3342,7 @@ body{min-width:0;}
         font-size:11px;
     }
     .wallet strong{font-size:16px;}
+    .wallet-add-btn{width:26px;height:26px;font-size:20px;margin-inline-start:6px;}
     .menu-btn{width:38px;height:38px;}
 
     .dhikr-bar{
