@@ -3386,3 +3386,80 @@ body{min-width:0;}
     font-size:16px!important;
   }
 }
+
+
+/* =========================
+   LiraScope - SYP exchange rate card
+   The section can be moved later without changing its logic.
+========================= */
+.syp-rate-card {
+    width: min(100%, 980px);
+    margin: 16px auto 22px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(22,28,42,.96), rgba(15,20,32,.96));
+    box-shadow: 0 10px 30px rgba(0,0,0,.16);
+    direction: rtl;
+}
+.syp-rate-card-head {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+}
+.syp-rate-card-head h2 {
+    margin:3px 0 0;
+    font-size:1.05rem;
+}
+.syp-rate-label,.syp-rate-value span,.syp-rate-meta {
+    color:rgba(255,255,255,.68);
+}
+.syp-rate-label { font-size:.78rem; }
+.syp-rate-source {
+    padding:6px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    font-size:.78rem;
+}
+.syp-rate-values {
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:stretch;
+    gap:10px;
+}
+.syp-rate-value {
+    min-width:0;
+    padding:13px;
+    border-radius:14px;
+    background:rgba(255,255,255,.055);
+    text-align:center;
+}
+.syp-rate-value strong {
+    display:block;
+    margin:5px 0 1px;
+    font-size:1.45rem;
+    line-height:1.2;
+}
+.syp-rate-value small { color:rgba(255,255,255,.55); }
+.syp-rate-plus {
+    align-self:center;
+    font-weight:800;
+    font-size:1rem;
+}
+.syp-rate-final {
+    border:1px solid rgba(255,255,255,.14);
+}
+.syp-rate-meta {
+    margin-top:11px;
+    font-size:.75rem;
+    text-align:center;
+}
+@media (max-width:560px) {
+    .syp-rate-card { margin:12px auto 18px; padding:14px; border-radius:16px; }
+    .syp-rate-values { grid-template-columns:1fr; }
+    .syp-rate-plus { padding:0; }
+    .syp-rate-card-head h2 { font-size:.95rem; }
+    .syp-rate-value strong { font-size:1.25rem; }
+}
