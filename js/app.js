@@ -2439,14 +2439,43 @@ function initializeSearch() {
 
     searchInput.addEventListener(
         "input",
-        function () {
+        async function () {
 
             state.searchQuery =
                 searchInput.value
                     .trim()
                     .toLowerCase();
 
-            renderProducts();
+            // لا توجد قائمة منتجات عامة في الواجهة؛ تظهر النتائج فقط عند البحث.
+            if (!state.searchQuery) {
+                if (elements.products) {
+                    elements.products.innerHTML = "";
+                    elements.products.hidden = true;
+                }
+                return;
+            }
+
+            // البحث مستقل عن القسم الذي كان مفتوحًا سابقًا، ويبحث في جميع المنتجات.
+            state.selectedCategory = "all";
+
+            if (elements.products) {
+                elements.products.hidden = false;
+                elements.products.innerHTML =
+                    '<div class="products-loading"><div class="loading-spinner"></div><p>جاري البحث عن المنتجات...</p></div>';
+            }
+
+            try {
+                await loadProducts();
+                renderProducts();
+                if (elements.products) {
+                    elements.products.scrollIntoView({behavior:"smooth", block:"start"});
+                }
+            } catch (error) {
+                if (elements.products) {
+                    elements.products.innerHTML =
+                        '<div class="products-loading"><p>تعذر البحث عن المنتجات حاليًا.</p></div>';
+                }
+            }
         }
     );
 
