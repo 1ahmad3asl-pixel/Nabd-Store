@@ -966,7 +966,13 @@ function initializeCategories() {
     });
 
     const back = document.getElementById("internalBack");
-    if (back) back.addEventListener("click", closeInternalPage);
+    if (back) back.addEventListener("click", function() {
+        if (window.history.state && window.history.state.nabdInternal) {
+            window.history.back();
+        } else {
+            closeInternalPage();
+        }
+    });
 }
 
 function cleanGameCategoryName(value) {
