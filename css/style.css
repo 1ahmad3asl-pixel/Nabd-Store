@@ -46,8 +46,8 @@ box-shadow:
 بسبب dir="rtl":
 الشعار يظهر في الجهة اليمنى
 والرصيد + القائمة في الجهة اليسرى */
-.header-logo{ order:1; font-size:22px; font-weight:900; white-space:nowrap; }
-.header-actions{ order:2;
+.header-logo{ order:2; font-size:22px; font-weight:900; white-space:nowrap; }
+.header-actions{ order:1;
 display:flex;
 align-items:center;
 gap:10px;
