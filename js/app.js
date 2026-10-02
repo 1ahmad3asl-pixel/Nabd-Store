@@ -2295,7 +2295,8 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function submitGamePickerOrder(product, root) {
+async function submitGamePickerOrder(product, root) {
+    if (!(await requireCustomerLoginForPurchase())) return;
     const params = {};
     const inputs = root ? root.querySelectorAll("[data-game-param], [data-pubg-param]") : [];
     let invalid = false;
@@ -3506,7 +3507,26 @@ function renderProducts() {
     });
 }
 
-function openProductModal(product) {
+async function requireCustomerLoginForPurchase() {
+    try {
+        const response = await fetch("/api/customer/auth/me", {
+            headers: {Accept:"application/json"},
+            credentials: "same-origin"
+        });
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.customer) return true;
+        }
+    } catch (error) {}
+    showModal(
+        "تسجيل الدخول مطلوب",
+        '<div class="empty-state"><div style="font-size:42px;margin-bottom:10px">🔐</div><h3>سجّل الدخول لإتمام الشراء</h3><p>يمكنك مشاهدة المنتجات والأسعار كضيف، لكن شراء أي منتج يتطلب تسجيل الدخول إلى حسابك.</p><a class="buy-btn" href="/customer-login.html" style="display:inline-flex;text-decoration:none;align-items:center;justify-content:center;margin-top:12px">تسجيل الدخول</a></div>'
+    );
+    return false;
+}
+
+async function openProductModal(product) {
+    if (!(await requireCustomerLoginForPurchase())) return;
     const params = Array.isArray(product.params) ? product.params : [];
     const fields = params.map(function(label, index) {
         const safeLabel = escapeHtml(String(label || ""));
@@ -3544,6 +3564,7 @@ function openProductModal(product) {
 }
 
 async function submitProductOrder(product) {
+    if (!(await requireCustomerLoginForPurchase())) return;
     const params = {};
     (Array.isArray(product.params) ? product.params : []).forEach(function(label, index) {
         const input = document.getElementById("param_" + index);
