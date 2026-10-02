@@ -229,37 +229,14 @@ function initializeDhikrHomeVisibility() {
     window.addEventListener("hashchange", setDhikrHomeVisibility);
 }
 
-async function initializeWelcomeSplash() {
+function initializeWelcomeSplash() {
     const splash = document.getElementById("welcomeSplash");
     const choice = document.getElementById("welcomeChoice");
     const guestButton = document.getElementById("continueAsGuest");
     if (!splash) return;
 
-    // العميل المسجل لا يحتاج إلى شاشة تسجيل الدخول بعد "حياك الله".
-    // نتحقق من جلسة العميل أولًا؛ إذا كان مسجلًا نغلق شاشة الترحيب مباشرة.
-    let isLoggedIn = false;
-    try {
-        const response = await fetch("/api/customer/auth/me", {
-            headers: {Accept: "application/json"},
-            credentials: "same-origin",
-            cache: "no-store"
-        });
-        if (response.ok) {
-            const data = await response.json();
-            isLoggedIn = !!(data && data.customer);
-        }
-    } catch (error) {
-        isLoggedIn = false;
-    }
-
-    if (isLoggedIn) {
-        splash.hidden = true;
-        splash.classList.add("is-hidden");
-        splash.setAttribute("aria-hidden", "true");
-        return;
-    }
-
-    // العميل الجديد/غير المسجل يرى "حياك الله" ثم خيارات تسجيل الدخول أو التسجيل أو المتابعة كضيف.
+    // شاشة "حياك الله" تظهر دائمًا عند فتح الموقع أو تحديث الصفحة،
+    // سواء كان العميل مسجلًا أو غير مسجل.
     splash.hidden = false;
     splash.classList.remove("is-hidden");
     splash.setAttribute("aria-hidden", "false");
