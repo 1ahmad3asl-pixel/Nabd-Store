@@ -17,6 +17,47 @@ const state = {
 };
 
 const BACKEND_URL = "";
+async function loadSypExchangeRate() {
+    const sourceEl = document.getElementById("sypSourceRate");
+    const storeEl = document.getElementById("sypStoreRate");
+    const metaEl = document.getElementById("sypRateMeta");
+    if (!sourceEl || !storeEl || !metaEl) return;
+
+    sourceEl.textContent = "جاري التحديث...";
+    storeEl.textContent = "جاري التحديث...";
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/exchange-rate?_=" + Date.now(), {
+            method: "GET",
+            headers: { "Accept": "application/json" },
+            credentials: "same-origin",
+            cache: "no-store"
+        });
+        const data = await response.json();
+        if (!response.ok || data.status !== "OK" || !data.rate) {
+            throw new Error(data.message || "تعذر تحديث سعر الصرف.");
+        }
+
+        const buy = Number(data.rate.buy);
+        const rate = Number(data.rate.rate);
+        sourceEl.textContent = Number.isFinite(buy) ? buy.toLocaleString("ar-SY") : "—";
+        storeEl.textContent = Number.isFinite(rate) ? rate.toLocaleString("ar-SY") : "—";
+
+        const updated = data.rate.timestampUtc ? new Date(data.rate.timestampUtc) : null;
+        const time = updated && !Number.isNaN(updated.getTime())
+            ? updated.toLocaleTimeString("ar-SY", { hour: "2-digit", minute: "2-digit" })
+            : "";
+        metaEl.textContent = time
+            ? "آخر تحديث من LiraScope: " + time
+            : "تم تحديث السعر من LiraScope";
+    } catch (error) {
+        sourceEl.textContent = "—";
+        storeEl.textContent = "—";
+        metaEl.textContent = error.message || "تعذر تحديث سعر الصرف.";
+    }
+}
+
+
 
 // سياسات التخزين المؤقت:
 // هيكل المنتجات/التصنيفات/الصور: 30 دقيقة كمدة تحديث قصوى.
@@ -96,6 +137,10 @@ function registerNabdServiceWorker() {
 /* =========================
    START
 ========================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadSypExchangeRate();
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     initializeStoreInteractionLock();
