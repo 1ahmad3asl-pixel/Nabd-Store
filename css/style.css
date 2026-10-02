@@ -434,6 +434,34 @@ margin-bottom:20px;
 
 padding:3px 2px;
 }
+/* ===== قاعدة مربعات الواجهة الأولية: نفس مرجع مربعات الألعاب/الأرصدة ===== */
+.categories{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:24px 18px;
+}
+.reference-category-grid .category-tile .category-art{
+  width:100%!important;
+  aspect-ratio:1/1!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+.reference-category-grid .category-tile .category-art img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  transform:none!important;
+}
+@media(max-width:600px){
+  .categories{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px 10px;
+  }
+}
+
 .category{ width:100%;
 aspect-ratio:1 / 1;
 
