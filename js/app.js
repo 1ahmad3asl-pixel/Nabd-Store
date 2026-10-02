@@ -1368,6 +1368,7 @@ function openAppsPage(fromHistory) {
 
     const tiles = getAppServerTiles();
     content.innerHTML =
+        '<div class="products-loading app-services-loading"><div class="loading-spinner"></div><p>جاري تحميل الخدمات...</p></div>' +
         '<div class="app-page-note">اختر قسم السيرفر للدخول إلى التطبيقات المتاحة.</div>' +
         '<div class="game-category-grid app-server-grid">' +
         tiles.map(function(tile) {
