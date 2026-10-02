@@ -231,20 +231,36 @@ function initializeDhikrHomeVisibility() {
 
 function initializeWelcomeSplash() {
     const splash = document.getElementById("welcomeSplash");
+    const choice = document.getElementById("welcomeChoice");
+    const guestButton = document.getElementById("continueAsGuest");
     if (!splash) return;
 
-    // يظهر عند كل دخول/تحديث للصفحة الرئيسية، ويستمر لمدة ثانيتين.
+    // شاشة ترحيب أولية: تظهر "حياك الله" ثم تعرض خيار تسجيل الدخول أو المتابعة كضيف.
     splash.hidden = false;
     splash.classList.remove("is-hidden");
     splash.setAttribute("aria-hidden", "false");
 
-    window.setTimeout(function () {
+    if (choice) {
+        choice.hidden = true;
+        window.setTimeout(function () {
+            choice.hidden = false;
+        }, 1200);
+    }
+
+    function closeSplash() {
         splash.classList.add("is-hidden");
         window.setTimeout(function () {
             splash.hidden = true;
             splash.setAttribute("aria-hidden", "true");
         }, 380);
-    }, 2000);
+    }
+
+    if (guestButton) {
+        guestButton.addEventListener("click", function () {
+            try { sessionStorage.setItem("nabdGuestMode", "1"); } catch (e) {}
+            closeSplash();
+        }, { once: true });
+    }
 }
 
 /* =========================
