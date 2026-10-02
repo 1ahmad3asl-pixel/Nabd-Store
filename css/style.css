@@ -3205,7 +3205,7 @@ input, textarea, select, [contenteditable="true"]{
     content:"";
     flex:1 1 auto;
     min-width:0;
-    height:22px;
+    height:66px;
     background:#f5c400;
 }
 #internalPage.balance-internal-page .internal-page-header > div:last-child::before{
