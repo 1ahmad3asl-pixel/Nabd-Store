@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Touch"><rect width="512" height="512" rx="96" fill="#f4f4f4"/><circle cx="256" cy="224" r="146" fill="#6d2077"/><text x="256" y="245" text-anchor="middle" font-family="Arial,sans-serif" font-size="92" font-weight="900" fill="#fff">touch</text><text x="256" y="397" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="800" fill="#6d2077">LEBANON</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="touch">
+<rect width="512" height="512" rx="96" fill="#fff"/>
+<ellipse cx="256" cy="256" rx="211" ry="151" fill="#58c2cc"/>
+<ellipse cx="256" cy="256" rx="191" ry="134" fill="#00a5b5"/>
+<text x="256" y="296" text-anchor="middle" font-family="Arial,sans-serif" font-size="112" font-weight="700" font-style="italic" fill="#fff">touch</text>
+</svg>
