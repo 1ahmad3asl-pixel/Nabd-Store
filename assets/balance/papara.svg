@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Papara"><rect width="512" height="512" rx="96" fill="#fff"/><g transform="translate(94 126)"><path d="M0 0h55v30c18-23 45-35 77-35 61 0 108 45 108 104s-47 104-108 104c-32 0-59-12-77-35v92H0V0zm119 58c-31 0-55 23-55 61s24 61 55 61 55-23 55-61-24-61-55-61z" fill="#111"/><circle cx="82" cy="16" r="16" fill="#20c4b6"/><text x="119" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="54" font-weight="700" fill="#111">papara</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8eef5"/></linearGradient></defs>
+<rect width="512" height="512" rx="96" fill="url(#g)"/>
+<circle cx="256" cy="210" r="112" fill="#111827"/>
+<text x="256" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#fff">PP</text>
+<text x="256" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#111827">Papara</text>
+</svg>
