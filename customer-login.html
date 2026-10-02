@@ -41,6 +41,14 @@ body{min-height:100vh;display:grid;place-items:center;background:var(--backgroun
 </form>
 </main>
 <script>
+(async function redirectAlreadyLoggedInCustomer(){
+  try{
+    const r=await fetch("/api/customer/auth/me",{headers:{"Accept":"application/json"},credentials:"same-origin",cache:"no-store"});
+    if(!r.ok) return;
+    const data=await r.json();
+    if(data && data.customer) location.replace("/customer-profile.html");
+  }catch(_){}
+})();
 let mode="login",emailVerified=false,verificationToken="";
 const form=document.getElementById("authForm"),nameField=document.getElementById("nameField"),loginBtn=document.getElementById("loginBtn"),registerBtn=document.getElementById("registerBtn"),password=document.getElementById("password"),passwordToggle=document.getElementById("passwordToggle"),error=document.getElementById("authError"),email=document.getElementById("email"),sendCodeBtn=document.getElementById("sendCodeBtn"),codeSection=document.getElementById("codeSection"),verificationCode=document.getElementById("verificationCode"),verifyCodeBtn=document.getElementById("verifyCodeBtn"),verifiedBadge=document.getElementById("verifiedBadge"),passwordSection=document.getElementById("passwordSection");
 function showError(message,ok=false){error.textContent=message;error.style.display="block";error.style.background=ok?"#e8f7ee":"#ffe8e8";error.style.color=ok?"#176b3a":"#a00";}
