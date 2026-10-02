@@ -1974,7 +1974,36 @@ html[data-theme="dark"] .search-box{border-color:#e9e9e9!important;}
 .game-product-groups-grid{
     margin-top:4px;
 }
-.balance-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 18px;}
+/* ===== قاعدة صور ومربعات الأرصدة: مطابقة لشكل مربعات الألعاب ===== */
+.balance-category-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px 18px;
+}
+.balance-category-grid .balance-category-tile{
+    width:100%;
+    min-width:0;
+    padding:0;
+    text-align:center;
+}
+.balance-category-grid .balance-category-tile .game-tile-image{
+    width:100%;
+    aspect-ratio:1/1;
+    height:auto;
+    min-width:0;
+    border-radius:18px;
+    overflow:hidden;
+    box-sizing:border-box;
+}
+.balance-category-grid .balance-category-tile .game-tile-image img{
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    display:block!important;
+    object-fit:cover!important;
+    object-position:center!important;
+}
+
 .balance-category-grid .balance-category-tile .game-tile-image{
     width:100%;
     aspect-ratio:1/1;
