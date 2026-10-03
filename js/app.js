@@ -237,17 +237,32 @@ function initializeWelcomeSplash() {
     const splash = document.getElementById("welcomeSplash");
     if (!splash) return;
 
-    // شاشة الترحيب العادية فقط: تظهر عند فتح الموقع أو تحديثه،
-    // بدون أي شاشة ثانية لاختيار تسجيل الدخول أو المتابعة كضيف.
+    // تظهر فقط عند فتح الصفحة أو عمل Refresh، وليس عند الرجوع داخل الموقع.
+    let navigationType = "navigate";
+    try {
+        const entry = performance.getEntriesByType("navigation")[0];
+        if (entry && entry.type) navigationType = entry.type;
+    } catch (_) {}
+
+    if (navigationType === "back_forward") {
+        splash.hidden = true;
+        splash.classList.add("is-hidden");
+        splash.setAttribute("aria-hidden", "true");
+        splash.style.display = "none";
+        return;
+    }
+
     splash.hidden = false;
     splash.classList.remove("is-hidden");
+    splash.style.display = "flex";
     splash.setAttribute("aria-hidden", "false");
 
     window.setTimeout(function () {
         splash.classList.add("is-hidden");
+        splash.setAttribute("aria-hidden", "true");
         window.setTimeout(function () {
             splash.hidden = true;
-            splash.setAttribute("aria-hidden", "true");
+            splash.style.display = "none";
         }, 380);
     }, 2000);
 }
