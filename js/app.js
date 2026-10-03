@@ -53,13 +53,15 @@ function createSectionScope(section, category, productId) {
 
 const sectionState = {
     current: createSectionScope(NabdScope.HOME),
-    history: []
+    history: [],
+    revision: 0
 };
 
 function setSectionScope(section, category, productId, options) {
     const next = createSectionScope(section, category, productId);
     const previous = sectionState.current;
     sectionState.current = next;
+    sectionState.revision += 1;
 
     if (!options || options.recordHistory !== false) {
         sectionState.history.push({
@@ -81,6 +83,16 @@ function getSectionScope(section) {
 
 function isSameSection(section) {
     return sectionState.current.section === String(section || "");
+}
+
+function captureSectionScope(section, category, productId) {
+    const scope = setSectionScope(section, category, productId);
+    return { scope: scope, revision: sectionState.revision };
+}
+
+function isCurrentSectionScope(snapshot) {
+    return !!snapshot && snapshot.revision === sectionState.revision &&
+        snapshot.scope.key === sectionState.current.key;
 }
 
 
@@ -1862,7 +1874,8 @@ function renderAppProductPicker(group) {
 
 
 function openGamesPage(fromHistory) {
-    if (!fromHistory) pushInternalHistory("games");
+    const snapshot = captureSectionScope(NabdScope.GAMES);
+    if (!fromHistory) pushInternalHistory("games", {scopeKey: snapshot.scope.key});
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
@@ -1899,6 +1912,7 @@ function openGamesPage(fromHistory) {
     content.querySelectorAll(".game-category-tile").forEach(function(tile) {
         tile.addEventListener("click", async function() {
             const gameTitle = tile.getAttribute("data-game-title") || "اللعبة";
+            const gameSnapshot = captureSectionScope(NabdScope.GAMES, gameTitle);
 
             // لا نعرض شاشة تحميل مزعجة عند الضغط على اللعبة.
             // إذا كانت البيانات جاهزة نفتح المستوى الثالث مباشرة.
@@ -1906,8 +1920,10 @@ function openGamesPage(fromHistory) {
             if (!state.productsLive) {
                 try {
                     await loadProducts({force:true});
+                    if (!isCurrentSectionScope(gameSnapshot)) return;
                 } catch (error) {
-                    openGamePlaceholder(gameTitle);
+                    if (!isCurrentSectionScope(gameSnapshot)) return;
+            openGamePlaceholder(gameTitle);
                     return;
                 }
             }
@@ -1920,7 +1936,8 @@ function openGamesPage(fromHistory) {
 }
 
 function openGamePlaceholder(gameTitle, fromHistory) {
-    if (!fromHistory) pushInternalHistory("game", {gameTitle: gameTitle});
+    const snapshot = captureSectionScope(NabdScope.GAMES, gameTitle);
+    if (!fromHistory) pushInternalHistory("game", {gameTitle: gameTitle, scopeKey: snapshot.scope.key});
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
@@ -1932,7 +1949,10 @@ function openGamePlaceholder(gameTitle, fromHistory) {
     // المستوى الثالث هو نقطة جلب منتجات اللعبة حسب القاعدة العامة للمشروع.
     if (!state.productsLive) {
         content.innerHTML = '<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل منتجات هذه اللعبة...</p></div>';
-        loadProducts({force:true}).then(function(){ openGamePlaceholder(gameTitle, true); }).catch(function(){
+        loadProducts({force:true}).then(function(){
+            if (isCurrentSectionScope(snapshot)) openGamePlaceholder(gameTitle, true);
+        }).catch(function(){
+            if (!isCurrentSectionScope(snapshot)) return;
             content.innerHTML = '<div class="game-products-placeholder"><div class="game-products-placeholder-icon">⚠️</div><h3>' + escapeHtml(gameTitle) + '</h3><p>تعذر تحميل المنتجات حاليًا.</p><button class="buy-btn" type="button" id="retryGameProducts">↻ إعادة المحاولة</button></div>';
             const retry=document.getElementById("retryGameProducts");
             if(retry) retry.addEventListener("click",function(){openGamePlaceholder(gameTitle);});
@@ -2478,7 +2498,8 @@ async function submitGamePickerOrder(product, root) {
 }
 
 function openGameProductGroup(gameTitle, groupKey, fromHistory) {
-    if (!fromHistory) pushInternalHistory("products", {gameTitle: gameTitle, groupKey: groupKey});
+    const snapshot = captureSectionScope(NabdScope.GAMES, gameTitle, groupKey);
+    if (!fromHistory) pushInternalHistory("products", {gameTitle: gameTitle, groupKey: groupKey, scopeKey: snapshot.scope.key});
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
