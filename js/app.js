@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    initializeStoreInteractionLock();
+    // لا نضع أي قفل عام على أحداث اللمس؛ عناصر المتجر التفاعلية يجب أن تستجيب مباشرة.    initializeStoreInteractionLock();
 
     registerNabdServiceWorker();
     initializeInternalHistory();
