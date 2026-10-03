@@ -106,7 +106,18 @@ document.addEventListener("click", function(event) {
     const balanceButton = event.target.closest('.category[data-category="balance"]');
     if (balanceButton) {
         event.preventDefault();
-        openBalancePage();
+        event.stopPropagation();
+        try {
+            openBalancePage(false);
+        } catch (error) {
+            console.error("Balance page open error:", error);
+            const services=document.getElementById("servicesSection");
+            const internal=document.getElementById("internalPage");
+            if (services && internal) {
+                services.hidden=true;
+                internal.hidden=false;
+            }
+        }
         return;
     }
     const numbersButton = event.target.closest('.category[data-category="numbers"]');
