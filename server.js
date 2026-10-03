@@ -224,8 +224,6 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
   }
 }
 
-}
-
 function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = crypto.scryptSync(String(password), salt, 64).toString("hex");
