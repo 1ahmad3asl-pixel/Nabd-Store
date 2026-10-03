@@ -170,14 +170,6 @@ async function initDb() {
       message TEXT NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
-    CREATE TABLE IF NOT EXISTS game_images (
-      game_key TEXT PRIMARY KEY,
-      app_id TEXT NOT NULL,
-      image_data BYTEA NOT NULL,
-      mime_type TEXT NOT NULL DEFAULT 'image/png',
-      source_url TEXT,
-      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
   `);
 }
 
