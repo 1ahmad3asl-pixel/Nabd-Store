@@ -30,6 +30,7 @@ jobs:
           import tempfile
           import urllib.parse
           import urllib.request
+          import urllib.error
 
           games = {
               "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
@@ -127,10 +128,10 @@ jobs:
                       page = response.read().decode("utf-8", "ignore")
 
               patterns = [
-                  r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
-                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
-                  r'<meta[^>]+property=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
-                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']twitter:image["\']'
+                  r"""<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']""",
+                  r"""<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']""",
+                  r"""<meta[^>]+property=["']twitter:image["'][^>]+content=["']([^"']+)["']""",
+                  r"""<meta[^>]+content=["']([^"']+)["'][^>]+property=["']twitter:image["']"""
               ]
               candidates = []
               for pattern in patterns:
