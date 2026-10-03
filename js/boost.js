@@ -13,6 +13,9 @@ const GROUPS=[
 ];
 let products=[];
 let loaded=false;
+let boostScopeRevision=0;
+function captureBoostScope(groupKey){ boostScopeRevision+=1; return {revision:boostScopeRevision,key:groupKey||"boost"}; }
+function isCurrentBoostScope(snapshot){ return !!snapshot && snapshot.revision===boostScopeRevision; }
 function n(v){return typeof normalizeGameText==="function"?normalizeGameText(String(v||"")):String(v||"").toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ـ/g,"").replace(/\s+/g," ").trim();}
 function esc(v){return typeof escapeHtml==="function"?escapeHtml(v):String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
 function groupProducts(g){return products.filter(p=>{const t=n((p.category_name||"")+" "+(p.name||""));if(!/(رشق|boost|followers?|likes?|views?|members?|subscribers?|متابع|مشاهد|اعجاب|لايك|مشترك)/i.test(t))return false;return g.a.map(n).some(a=>t.includes(a));});}
@@ -25,6 +28,7 @@ function renderBoostGroups(e){
  scrollTo({top:0,behavior:"smooth"});
 }
 function openBoost(fromHistory){
+ const scope=captureBoostScope();
  if(!fromHistory)push("boost");
  const e=els();if(!e.services||!e.page||!e.content)return;
  e.services.hidden=true;e.page.hidden=false;if(e.title)e.title.textContent="رشق صفحات";if(e.icon)e.icon.textContent="🚀";
@@ -38,6 +42,7 @@ function openBoost(fromHistory){
  if(!loaded){
   e.content.insertAdjacentHTML("afterbegin",'<div class="boost-sync-status" id="boostSyncStatus">جاري تحديث منتجات الرشق في الخلفية…</div>');
   loadProducts({force:false}).then(p=>{
+   if(!isCurrentBoostScope(scope)) return;
    products=Array.isArray(p)?p:[];
    loaded=true;
    window.__nabdBoostProducts=products;
@@ -49,6 +54,7 @@ function openBoost(fromHistory){
  }
 }
 function openBoostProducts(g,fromHistory){
+ const scope=captureBoostScope(g && g.key);
  if(!fromHistory)push("boost-products",{boostGroupKey:g.key});
  const e=els();if(!e.content)return;
  if(e.title)e.title.textContent=g.title;if(e.icon)e.icon.textContent="🚀";
@@ -58,7 +64,7 @@ function openBoostProducts(g,fromHistory){
   return '<article class="boost-product-card"><div class="boost-product-name">'+esc(p.name||"منتج")+'</div><div class="boost-product-meta">'+esc(p.category_name||"")+'</div><div class="boost-product-price">'+(live?formatProductMoney(p,price):"السعر غير متاح")+'</div><button class="buy-btn boost-buy-btn" type="button" data-id="'+esc(String(p.id))+'" '+(ok&&live?"":"disabled")+'>'+ (ok?(live?"شراء الآن":"جاري تحديث السعر"):"غير متوفر")+'</button></article>';
  }).join(""):'<div class="products-loading"><p>لا توجد منتجات مرتبطة بهذا النوع حاليًا.</p></div>')+'</div>';
  const back=document.getElementById("boostBack");if(back)back.onclick=()=>openBoost(false);
- e.content.querySelectorAll(".boost-buy-btn[data-id]").forEach(b=>b.addEventListener("click",()=>{const p=list.find(x=>String(x.id)===String(b.dataset.id));if(p)openProductModal(p);}));
+ e.content.querySelectorAll(".boost-buy-btn[data-id]").forEach(b=>b.addEventListener("click",()=>{const p=list.find(x=>String(x.id)===String(b.dataset.id));if(p && isCurrentBoostScope(scope))openProductModal(p);}));
  scrollTo({top:0,behavior:"smooth"});
 }
 window.__nabdHandleBoostHistory=function(s){
