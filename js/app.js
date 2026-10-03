@@ -2881,13 +2881,13 @@ const BALANCE_CATALOG = [
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"https://reflectapp.com/wp-content/themes/reflectapp/images/reflect_footer.png"
+        image:"/assets/balance/reflect-official.png"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"https://upload.wikimedia.org/wikipedia/commons/d/dd/Papara_Logo.png?v=20261003"
+        image:"/assets/balance/papara-official.png"
     },
     {
         key:"paypal",
@@ -2911,13 +2911,13 @@ const BALANCE_CATALOG = [
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"https://www.alfa.com.lb/images/logo.png"
+        image:"/assets/balance/alfa-official.png"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"https://rcell.me/images/logo/logo-shape.svg"
+        image:"/assets/balance/rcell-official.svg"
     },
     {
         key:"whish-money",

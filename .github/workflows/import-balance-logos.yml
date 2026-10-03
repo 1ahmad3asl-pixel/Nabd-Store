@@ -1,0 +1,64 @@
+name: Import balance logos once
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "assets/balance/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-logos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download official/current logo files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/balance
+
+          curl -L --fail --retry 3 --retry-all-errors             "https://reflectapp.com/wp-content/themes/reflectapp/images/reflect_footer.png"             -o assets/balance/reflect-official.png
+
+          curl -L --fail --retry 3 --retry-all-errors             "https://upload.wikimedia.org/wikipedia/commons/d/dd/Papara_Logo.png"             -o assets/balance/papara-official.png
+
+          curl -L --fail --retry 3 --retry-all-errors             "https://www.alfa.com.lb/images/logo.png"             -o assets/balance/alfa-official.png
+
+          curl -L --fail --retry 3 --retry-all-errors             "https://rcell.me/images/logo/logo-shape.svg"             -o assets/balance/rcell-official.svg
+
+          python - <<'PY'
+          from pathlib import Path
+          pngs = [
+              Path("assets/balance/reflect-official.png"),
+              Path("assets/balance/papara-official.png"),
+              Path("assets/balance/alfa-official.png"),
+          ]
+          for p in pngs:
+              data = p.read_bytes()
+              if not data.startswith(b"\\x89PNG\\r\\n\\x1a\\n"):
+                  raise SystemExit(f"Invalid PNG: {p}")
+          svg = Path("assets/balance/rcell-official.svg").read_text(encoding="utf-8", errors="strict").lstrip()
+          if "<svg" not in svg[:1000]:
+              raise SystemExit("Invalid Rcell SVG")
+          print("All logo files downloaded and validated.")
+          PY
+
+      - name: Commit local logo files and remove bootstrap workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/balance/reflect-official.png                   assets/balance/papara-official.png                   assets/balance/alfa-official.png                   assets/balance/rcell-official.svg
+          git rm -f .github/workflows/import-balance-logos.yml
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "إضافة شعارات الأرصدة كملفات محلية"
+          git push

@@ -3812,26 +3812,26 @@ body{min-width:0;}
 }
 
 /* ===== شعارات رسمية لقسمي Papara وReflect داخل الأرصدة ===== */
-.balance-category-grid .game-tile-image img[src*="Papara_Logo.png"],
-.balance-subgroup-tile .game-tile-image img[src*="Papara_Logo.png"],
-.balance-category-grid .game-tile-image img[src*="reflect_footer.png"],
-.balance-subgroup-tile .game-tile-image img[src*="reflect_footer.png"]{
+.balance-category-grid .game-tile-image img[src*="papara-official.png"],
+.balance-subgroup-tile .game-tile-image img[src*="papara-official.png"],
+.balance-category-grid .game-tile-image img[src*="reflect-official.png"],
+.balance-subgroup-tile .game-tile-image img[src*="reflect-official.png"]{
     object-fit:contain!important;
     object-position:center!important;
     padding:18px!important;
     background:#fff!important;
     transform:none!important;
 }
-.balance-category-grid .game-tile-image img[src*="Papara_Logo.png"]{
+.balance-category-grid .game-tile-image img[src*="papara-official.png"]{
     padding:30px 18px!important;
 }
-.balance-category-grid .game-tile-image img[src*="reflect_footer.png"]{
+.balance-category-grid .game-tile-image img[src*="reflect-official.png"]{
     padding:34px 18px!important;
 }
 
 /* ===== شعارات الأرصدة الرسمية: Reflect / Alfa / Rcell ===== */
-.balance-category-grid .game-tile-image img[src*="reflect_footer.png"],
-.balance-subgroup-tile .game-tile-image img[src*="reflect_footer.png"]{
+.balance-category-grid .game-tile-image img[src*="reflect-official.png"],
+.balance-subgroup-tile .game-tile-image img[src*="reflect-official.png"]{
     object-fit:contain!important;
     object-position:center!important;
     padding:18px!important;
@@ -3839,20 +3839,20 @@ body{min-width:0;}
     border-radius:inherit!important;
     transform:none!important;
 }
-.balance-category-grid .game-tile-image img[src*="alfa.com.lb/images/logo.png"],
-.balance-subgroup-tile .game-tile-image img[src*="alfa.com.lb/images/logo.png"],
-.balance-category-grid .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"],
-.balance-subgroup-tile .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"]{
+.balance-category-grid .game-tile-image img[src*="alfa-official.png"],
+.balance-subgroup-tile .game-tile-image img[src*="alfa-official.png"],
+.balance-category-grid .game-tile-image img[src*="rcell-official.svg"],
+.balance-subgroup-tile .game-tile-image img[src*="rcell-official.svg"]{
     object-fit:contain!important;
     object-position:center!important;
     padding:18px!important;
     background:#fff!important;
     transform:none!important;
 }
-.balance-category-grid .game-tile-image img[src*="alfa.com.lb/images/logo.png"]{
+.balance-category-grid .game-tile-image img[src*="alfa-official.png"]{
     padding:0!important;
     object-fit:cover!important;
 }
-.balance-category-grid .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"]{
+.balance-category-grid .game-tile-image img[src*="rcell-official.svg"]{
     padding:30px!important;
 }
