@@ -75,8 +75,5 @@ window.__nabdHandleBoostHistory=function(s){
   else openBoost(true);
  }
 };
-document.addEventListener("click",e=>{
- const b=e.target.closest('.category[data-category="boost"]');if(!b)return;
- e.preventDefault();e.stopPropagation();openBoost(false);
-},true);
+
 })();
