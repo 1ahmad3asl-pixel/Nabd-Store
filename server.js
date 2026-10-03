@@ -173,6 +173,7 @@ async function sendCustomerVerificationEmail(email, code) {
     try { const data=await response.json(); if(data?.message) message=String(data.message); } catch {}
     const error=new Error(message); error.statusCode=502; throw error;
   }
+}
 
 function escapeHtmlEmail(value) {
   return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
