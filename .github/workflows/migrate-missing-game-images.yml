@@ -1,0 +1,168 @@
+name: Complete missing game images in GitHub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/migrate-missing-game-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Download and validate only missing images
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import html
+          import os
+          import re
+          import sys
+          import tempfile
+          import urllib.parse
+          import urllib.request
+
+          games = {
+              "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
+              "king-shot": ("com.fingerfun.kingshot", "King Shot"),
+              "zepeto": ("com.naver.zepeto", "ZEPETO"),
+              "ghost-story-love-destiny": ("com.netease.wxzcglobal", "Ghost Story: Love Destiny"),
+              "golden-spatula": ("com.tencent.tmgp.sgame", "Golden Spatula"),
+              "arknights-endfield": ("com.hypergryph.endfield", "Arknights: Endfield"),
+              "heaven-burns-red": ("com.heavenburnsred.global", "Heaven Burns Red"),
+              "top-war": ("com.Topwar.gp", "Top War: Battle Game"),
+              "the-ants": ("com.allstarunion.ta", "The Ants: Underground Kingdom"),
+              "cyber-fantasy": ("com.hkfancygame.kog.android", "Cyber Fantasy"),
+              "blade-x": ("com.yjmgames.bladex.aos", "Blade X: Odyssey of Heroes"),
+              "hyper-front": ("com.battlefun.c1game.na", "Hyper Front"),
+              "clash-of-plants": ("com.waterwish.garden.tales.clash.of.plants", "Garden Tales: Clash of Plants"),
+              "journey-renewed": ("com.xiyou.cyhk.gp", "Journey Renewed: Fate Fantasy"),
+              "dragon-nest-m-sea": ("com.sdg.dragonnest", "Dragon Nest M"),
+              "dream-and-lethe-record": ("com.kingsgroup.dreamandlethe", "Dream and Lethe Record"),
+              "echocalypse-scarlet-covenant": ("com.gaea.echocalypse.en", "Echocalypse: Scarlet Covenant"),
+              "starseed": ("com.com2us.starseedgl.android.google.global.normal", "STARSEED: Asnia Trigger"),
+              "extraordinary-ones": ("com.netease.frxyna", "Extraordinary Ones"),
+              "marvel-mystic-mayhem": ("com.netease.mmm", "Marvel Mystic Mayhem"),
+              "garena-speed-drifters": ("com.garena.game.drift", "Garena Speed Drifters"),
+              "mongil-star-dive": ("com.cjenm.mongil", "Mongil: Star Dive"),
+              "modern-strike-online": ("com.gamedevlab.modernstrike", "Modern Strike Online"),
+              "overmortal-idle-global": ("com.xsupergame.overmortal", "Overmortal: Idle Global"),
+              "stormshot": ("com.funplus.ss", "Stormshot"),
+          }
+
+          root = "public/game-images"
+          os.makedirs(root, exist_ok=True)
+          ua = "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)"
+          downloaded = []
+
+          for key, (app_id, label) in games.items():
+              existing = []
+              for ext in ("png", "jpg", "jpeg", "webp"):
+                  p = os.path.join(root, key + "." + ext)
+                  if os.path.isfile(p) and os.path.getsize(p) > 1000:
+                      existing.append(p)
+              if existing:
+                  print("SKIP existing:", key)
+                  continue
+
+              page_url = "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(app_id) + "&hl=en&gl=US"
+              req = urllib.request.Request(
+                  page_url,
+                  headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
+              )
+              with urllib.request.urlopen(req, timeout=45) as response:
+                  page = response.read().decode("utf-8", "ignore")
+
+              patterns = [
+                  r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']'
+              ]
+              candidates = []
+              for pattern in patterns:
+                  candidates.extend(re.findall(pattern, page, re.I))
+              if not candidates:
+                  raise RuntimeError("No official Google Play og:image found for " + label + " (" + app_id + ")")
+
+              image_url = html.unescape(candidates[0]).replace("\\u0026", "&")
+              image_req = urllib.request.Request(image_url, headers={"User-Agent": ua})
+              with urllib.request.urlopen(image_req, timeout=45) as response:
+                  data = response.read()
+                  mime = (response.headers.get("Content-Type") or "").split(";")[0].lower()
+
+              if len(data) < 1000 or len(data) > 5 * 1024 * 1024:
+                  raise RuntimeError("Invalid image size for " + label + ": " + str(len(data)))
+
+              ext = {"image/jpeg": "jpg", "image/webp": "webp", "image/png": "png"}.get(mime)
+              if not ext:
+                  raise RuntimeError("Unsupported image type for " + label + ": " + mime)
+
+              final_path = os.path.join(root, key + "." + ext)
+              fd, temp_path = tempfile.mkstemp(prefix=key + ".", suffix=".pending." + ext, dir=root)
+              os.close(fd)
+              with open(temp_path, "wb") as f:
+                  f.write(data)
+              downloaded.append((temp_path, final_path, label, len(data)))
+              print("DOWNLOADED:", label, "->", final_path, len(data), "bytes")
+
+          if not downloaded:
+              print("No missing images needed migration.")
+              sys.exit(0)
+
+          # Publish only after every requested image downloaded successfully.
+          for temp_path, final_path, label, size in downloaded:
+              os.replace(temp_path, final_path)
+
+          print("Successfully prepared", len(downloaded), "new GitHub game images.")
+          PY
+
+      - name: Validate image files
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          root = Path("public/game-images")
+          targets = [
+              "cloud-song","king-shot","zepeto","ghost-story-love-destiny","golden-spatula",
+              "arknights-endfield","heaven-burns-red","top-war","the-ants","cyber-fantasy",
+              "blade-x","hyper-front","clash-of-plants","journey-renewed","dragon-nest-m-sea",
+              "dream-and-lethe-record","echocalypse-scarlet-covenant","starseed","extraordinary-ones",
+              "marvel-mystic-mayhem","garena-speed-drifters","mongil-star-dive","modern-strike-online",
+              "overmortal-idle-global","stormshot"
+          ]
+          missing = []
+          for key in targets:
+              matches = [p for p in root.glob(key + ".*") if p.suffix.lower() in {".png",".jpg",".jpeg",".webp"}]
+              if not matches:
+                  missing.append(key)
+                  continue
+              for p in matches:
+                  if p.stat().st_size < 1000:
+                      raise RuntimeError("Image too small: " + str(p))
+                  with Image.open(p) as im:
+                      im.verify()
+                  print("VALID:", p)
+          if missing:
+              raise RuntimeError("Still missing images: " + ", ".join(missing))
+          PY
+
+      - name: Commit only the completed GitHub image set
+        run: |
+          set -euo pipefail
+          git config user.name "Nabd-Store-ON"
+          git config user.email "1ahmad3asl@gmail.com"
+          git add public/game-images
+          if git diff --cached --quiet; then
+            echo "No image changes required."
+            exit 0
+          fi
+          git commit -m "Complete missing game images in GitHub"
+          git push origin main
