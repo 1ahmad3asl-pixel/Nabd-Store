@@ -9,7 +9,6 @@ permissions:
 
 jobs:
   migrate:
-    if: hashFiles('.github/game-image-migration.trigger') != ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,6 +20,10 @@ jobs:
         env:
           PYTHONUNBUFFERED: "1"
         run: |
+          if [ ! -f .github/game-image-migration.trigger ]; then
+            echo "No migration marker; nothing to do."
+            exit 0
+          fi
           python3 <<'PY'
           import html
           import os
