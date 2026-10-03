@@ -2,9 +2,7 @@ name: Migrate game images to GitHub
 
 on:
   push:
-    paths:
-      - ".github/workflows/migrate-game-images.yml"
-      - ".github/game-image-migration.trigger"
+  workflow_dispatch:
   workflow_dispatch:
 
 permissions:
@@ -12,6 +10,7 @@ permissions:
 
 jobs:
   migrate:
+    if: hashFiles('.github/game-image-migration.trigger') != ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -118,7 +117,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/game-images
+          git add public/game-images .github/game-image-migration.trigger
+          rm -f .github/game-image-migration.trigger
+          git add public/game-images .github/game-image-migration.trigger
           if git diff --cached --quiet; then
             echo "No image changes to commit."
             exit 0
