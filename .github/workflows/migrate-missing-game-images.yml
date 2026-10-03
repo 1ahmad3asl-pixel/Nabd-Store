@@ -55,6 +55,11 @@ jobs:
               "mongil-star-dive": ("page", "https://www.appbrain.com/app/mongil-star-dive/com.netmarble.monster2"),
               "modern-strike-online": ("page", "https://www.appbrain.com/app/modern-strike-online/com.gamedevltd.modernstrike"),
               "stormshot": ("page", "https://www.appbrain.com/app/stormshot-isle-of-adventure/com.sivona.stormshot.e"),
+              "clash-of-plants": ("page", "https://apkpure.net/garden-tales-clash-of-plants/com.waterwish.garden.tales.clash.of.plants"),
+              "echocalypse-scarlet-covenant": ("page", "https://apkpure.net/echocalypse-scarlet-covenant/com.gaea.echocalypse.en"),
+              "starseed": ("page", "https://apkpure.net/starseed-asnia-trigger/com.com2us.starseedgl.android.google.jp.normal"),
+              "extraordinary-ones": ("page", "https://apkpure.net/extraordinary-ones/com.netease.frxyna"),
+              "overmortal-idle-global": ("page", "https://apkpure.net/overmortal-idle-global/com.xsupergame.overmortal"),
           }
 
           class MetaParser(HTMLParser):
