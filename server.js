@@ -193,7 +193,7 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     "المبلغ: $" + safeAmount + "\n" +
     "اسم العميل: " + String(customer.name || "") + "\n" +
     "ID العميل: " + String(customer.customer_number || "") + "\n" +
-    "المعرّف الداخلي: " + String(customer.customer_id || "") + "\n" +
+    "رقم الهاتف: " + String(customer.phone || "") + "\n" +
     "بريد العميل: " + String(customer.email || "") + "\n\n" +
     "تم إرفاق صورة الحوالة.";
   const html =
@@ -202,7 +202,7 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     '<p><strong>المبلغ:</strong> $' + safeAmount + '</p>' +
     '<p><strong>اسم العميل:</strong> ' + escapeHtmlEmail(customer.name || "") + '</p>' +
     '<p><strong>ID العميل:</strong> ' + escapeHtmlEmail(customer.customer_number || "") + '</p>' +
-    '<p><strong>المعرّف الداخلي:</strong> ' + escapeHtmlEmail(customer.customer_id || "") + '</p>' +
+    '<p><strong>رقم الهاتف:</strong> ' + escapeHtmlEmail(customer.phone || "") + '</p>' +
     '<p><strong>بريد العميل:</strong> ' + escapeHtmlEmail(customer.email || "") + '</p>' +
     '<p>صورة الحوالة مرفقة مع الرسالة.</p></div>';
   const response = await fetch("https://api.resend.com/emails", {
@@ -482,7 +482,7 @@ app.post("/api/customer/balance-deposit/sham-dollar", requireCustomer, async (re
     if (!/^image\/(jpeg|png|webp)$/.test(imageMime)) return res.status(400).json({ status: "ERROR", message: "ارفع صورة بصيغة JPG أو PNG أو WEBP." });
     if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(imageData)) return res.status(400).json({ status: "ERROR", message: "صورة الحوالة غير صالحة." });
     if (imageData.length > 7 * 1024 * 1024) return res.status(413).json({ status: "ERROR", message: "حجم صورة الحوالة كبير جدًا." });
-    const customerResult = await query("SELECT customer_id,customer_number,name,email,balance FROM customers WHERE customer_id=$1 AND active=true",[req.customer.customer_id]);
+    const customerResult = await query("SELECT customer_id,customer_number,name,email,phone,balance FROM customers WHERE customer_id=$1 AND active=true",[req.customer.customer_id]);
     const customer = customerResult.rows[0];
     if (!customer) return res.status(401).json({ status: "ERROR", message: "جلسة العميل غير صالحة." });
     const last = balanceDepositRateLimits.get(String(customer.customer_id)) || 0;
