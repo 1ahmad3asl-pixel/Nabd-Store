@@ -56,20 +56,10 @@ const sectionState = {
     revision: 0
 };
 
-function setSectionScope(section, category, productId, options) {
+function setSectionScope(section, category, productId) {
     const next = createSectionScope(section, category, productId);
-    const previous = sectionState.current;
     sectionState.current = next;
     sectionState.revision += 1;
-
-    if (!options || options.recordHistory !== false) {
-        sectionState.history.push({
-            from: previous,
-            to: next
-        });
-        if (sectionState.history.length > 50) sectionState.history.shift();
-    }
-
     return next;
 }
 
