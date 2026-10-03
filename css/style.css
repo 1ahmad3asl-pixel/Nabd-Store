@@ -3877,6 +3877,27 @@ body{min-width:0;}
 }
 
 
+/* إصلاح حاسم لاستجابة مربعات الصفحة الرئيسية:
+   طبقة الـoverlay لا يجوز أن تستقبل اللمس وهي مغلقة. */
+.overlay{
+    pointer-events:none!important;
+    z-index:-1!important;
+}
+.overlay.active{
+    pointer-events:auto!important;
+    z-index:250!important;
+}
+.reference-category-grid{
+    position:relative!important;
+    z-index:20!important;
+    pointer-events:auto!important;
+}
+.reference-category-grid .category-tile{
+    position:relative!important;
+    z-index:21!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+}
 /* إصلاح استجابة اللمس للواجهة الرئيسية: منع أي طبقة مرئية من اعتراض أزرار الأقسام والقائمة. */
 .main-header{
     position:relative!important;
