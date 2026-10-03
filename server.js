@@ -1607,7 +1607,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       : {};
     const requestedQty = Number(req.body?.qty || 1);
     if (!productId || productId.length > 120) return res.status(400).json({status:"ERROR",message:"معرّف المنتج غير صالح."});
-    if (!Number.isInteger(requestedQty) || requestedQty < 1 || requestedQty > 1000000) {
+    if (!Number.isInteger(requestedQty) || requestedQty < 1 || requestedQty > 5000000000) {
       return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
     }
 
@@ -1631,6 +1631,9 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     const isPubgProduct = /pubg|ببجي/i.test(productText);
     const isReflectProduct = /reflect|ريفلكت|رفلكت/i.test(productText);
     const isMtnInvoiceProduct = /mtn/i.test(productText) && /فاتور/i.test(productText);
+    if (!isMtnInvoiceProduct && requestedQty > 1000000) {
+      return res.status(400).json({status:"ERROR",message:"الكمية غير صالحة."});
+    }
     const qty = isPubgProduct ? 1 : requestedQty;
     if (isReflectProduct && (qty < 50 || qty > 5000)) {
       return res.status(400).json({
@@ -1638,10 +1641,10 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
         message:"كمية Reflect يجب أن تكون من 50 إلى 5,000."
       });
     }
-    if (isMtnInvoiceProduct && (qty < 500 || qty > 1000000)) {
+    if (isMtnInvoiceProduct && (qty < 500 || qty > 5000000000)) {
       return res.status(400).json({
         status:"ERROR",
-        message:"كمية فواتير MTN يجب أن تكون من 500 إلى 1,000,000."
+        message:"كمية فواتير MTN يجب أن تكون من 500 إلى 5,000,000,000."
       });
     }
 
@@ -1670,7 +1673,7 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
 
     if (!isPubgProduct) {
       const enforcedMinQty = isJawakerServerQuantity ? 10000 : minQty;
-      const enforcedMaxQty = isJawakerServerQuantity ? 1000000 : maxQty;
+      const enforcedMaxQty = isMtnInvoiceProduct ? 5000000000 : (isJawakerServerQuantity ? 1000000 : maxQty);
       if (Number.isFinite(enforcedMinQty) && qty < enforcedMinQty) {
         return res.status(400).json({
           status:"ERROR",
