@@ -66,6 +66,7 @@ jobs:
           os.makedirs(root, exist_ok=True)
           user_agent = "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)"
           downloaded = []
+          missing = []
 
           # Avoid replacing any existing GitHub image.
           for key, (app_id, label) in games.items():
@@ -84,6 +85,12 @@ jobs:
                   with urllib.request.urlopen(image_req, timeout=60) as response:
                       data = response.read()
                       content_type = (response.headers.get("Content-Type") or "").split(";")[0].lower()
+              except urllib.error.HTTPError as exc:
+                  if exc.code == 404:
+                      missing.append((key, label))
+                      print(f"MISSING: {label} ({key}) - live endpoint returned 404")
+                      continue
+                  raise RuntimeError(f"Could not migrate {label} ({key}) from the live image endpoint: HTTP {exc.code}")
               except Exception as exc:
                   raise RuntimeError(f"Could not migrate {label} ({key}) from the live image endpoint: {exc}")
 
@@ -105,6 +112,10 @@ jobs:
               sys.exit(0)
 
           print(f"Migrated {len(downloaded)} image(s) into GitHub.")
+          if missing:
+              print("Images still missing from the live source:")
+              for key, label in missing:
+                  print(f"  - {label} ({key})")
 
       - name: Commit migrated images
         run: |
