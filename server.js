@@ -61,7 +61,7 @@ const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-stor
 const RESEND_API_KEY = String(process.env.RESEND_API_KEY || "").trim();
 const EMAIL_FROM = String(process.env.EMAIL_FROM || "").trim();
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "8mb" }));
 
 function requireSameOrigin(req, res, next) {
   if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
@@ -173,6 +173,56 @@ async function sendCustomerVerificationEmail(email, code) {
     try { const data=await response.json(); if(data?.message) message=String(data.message); } catch {}
     const error=new Error(message); error.statusCode=502; throw error;
   }
+
+function escapeHtmlEmail(value) {
+  return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName}) {
+  const receiver = String(process.env.TRANSFER_RECEIVER_EMAIL || "").trim();
+  if (!RESEND_API_KEY || !EMAIL_FROM || !receiver) {
+    const error = new Error("خدمة استقبال الحوالات غير مهيأة على الخادم.");
+    error.statusCode = 503;
+    throw error;
+  }
+  const safeAmount = Number(amount).toFixed(2);
+  const subject = "طلب إيداع رصيد - شام كاش دولار - " + safeAmount + "$";
+  const text =
+    "طلب إيداع رصيد عبر شام كاش دولار\n\n" +
+    "المبلغ: $" + safeAmount + "\n" +
+    "اسم العميل: " + String(customer.name || "") + "\n" +
+    "ID العميل: " + String(customer.customer_number || "") + "\n" +
+    "المعرّف الداخلي: " + String(customer.customer_id || "") + "\n" +
+    "بريد العميل: " + String(customer.email || "") + "\n\n" +
+    "تم إرفاق صورة الحوالة.";
+  const html =
+    '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
+    '<h2 style="margin:0 0 16px">طلب إيداع رصيد — شام كاش دولار</h2>' +
+    '<p><strong>المبلغ:</strong> $' + safeAmount + '</p>' +
+    '<p><strong>اسم العميل:</strong> ' + escapeHtmlEmail(customer.name || "") + '</p>' +
+    '<p><strong>ID العميل:</strong> ' + escapeHtmlEmail(customer.customer_number || "") + '</p>' +
+    '<p><strong>المعرّف الداخلي:</strong> ' + escapeHtmlEmail(customer.customer_id || "") + '</p>' +
+    '<p><strong>بريد العميل:</strong> ' + escapeHtmlEmail(customer.email || "") + '</p>' +
+    '<p>صورة الحوالة مرفقة مع الرسالة.</p></div>';
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
+    body: JSON.stringify({
+      from: EMAIL_FROM,
+      to: [receiver],
+      subject,
+      text,
+      html,
+      attachments: [{ filename: imageName, content: imageData.split(",").pop() }]
+    })
+  });
+  if (!response.ok) {
+    let message="تعذر إرسال طلب الإيداع إلى البريد.";
+    try { const data=await response.json(); if(data?.message) message=String(data.message); } catch {}
+    const error=new Error(message); error.statusCode=502; throw error;
+  }
+}
+
 }
 
 function hashPassword(password) {
@@ -390,9 +440,69 @@ app.post("/api/admin/logout", requireAdmin, async (req, res) => {
   res.json({ status: "OK" });
 });
 
+const balanceDepositRateLimits = new Map();
+
 /* =========================
    CUSTOMER AUTH
 ========================= */
+
+app.get("/api/customer/me", requireCustomer, async (req, res) => {
+  try {
+    const result = await query(
+      "SELECT customer_id,customer_number,name,email,balance FROM customers WHERE customer_id=$1",
+      [req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const customer = result.rows[0];
+    res.json({
+      status: "OK",
+      customer: {
+        customer_id: String(customer.customer_id),
+        customer_number: Number(customer.customer_number),
+        name: customer.name,
+        email: customer.email,
+        balance: Number(customer.balance || 0)
+      }
+    });
+  } catch (error) {
+    console.error("Customer me error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر تحميل بيانات الحساب." });
+  }
+});
+
+app.post("/api/customer/balance-deposit/sham-dollar", requireCustomer, async (req, res) => {
+  try {
+    const amount = Number(req.body?.amount);
+    const imageData = String(req.body?.image_data || "").trim();
+    const imageMime = String(req.body?.image_mime || "").trim().toLowerCase();
+    const imageNameRaw = String(req.body?.image_name || "transfer-receipt").trim();
+    if (!Number.isFinite(amount) || amount < 1) return res.status(400).json({ status: "ERROR", message: "الحد الأدنى للإيداع هو 1 دولار." });
+    if (amount > 100000) return res.status(400).json({ status: "ERROR", message: "المبلغ المدخل كبير جدًا." });
+    if (!/^image\/(jpeg|png|webp)$/.test(imageMime)) return res.status(400).json({ status: "ERROR", message: "ارفع صورة بصيغة JPG أو PNG أو WEBP." });
+    if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(imageData)) return res.status(400).json({ status: "ERROR", message: "صورة الحوالة غير صالحة." });
+    if (imageData.length > 7 * 1024 * 1024) return res.status(413).json({ status: "ERROR", message: "حجم صورة الحوالة كبير جدًا." });
+    const customerResult = await query("SELECT customer_id,customer_number,name,email,balance FROM customers WHERE customer_id=$1 AND active=true",[req.customer.customer_id]);
+    const customer = customerResult.rows[0];
+    if (!customer) return res.status(401).json({ status: "ERROR", message: "جلسة العميل غير صالحة." });
+    const last = balanceDepositRateLimits.get(String(customer.customer_id)) || 0;
+    if (Date.now() - last < 30 * 1000) return res.status(429).json({ status: "ERROR", message: "انتظر قليلًا قبل إرسال طلب إيداع جديد." });
+    balanceDepositRateLimits.set(String(customer.customer_id), Date.now());
+    const imageName = imageNameRaw.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 80) || "transfer-receipt";
+    await sendBalanceDepositEmail({
+      amount,
+      customer,
+      imageData,
+      imageMime,
+      imageName: imageName.includes(".") ? imageName : imageName + (imageMime === "image/png" ? ".png" : imageMime === "image/webp" ? ".webp" : ".jpg")
+    });
+    res.json({ status: "OK", message: "تم إرسال طلب الإيداع بنجاح. ستتم مراجعة الحوالة وإضافة الرصيد من الإدارة." });
+  } catch (error) {
+    console.error("Sham Cash balance deposit error:", error);
+    res.status(error.statusCode || 500).json({ status: "ERROR", message: error.message || "تعذر إرسال طلب الإيداع." });
+  }
+});
+
+
 
 app.post("/api/customer/email/send-code", async (req, res) => {
   try {
@@ -1609,6 +1719,18 @@ app.get("/admin/index.html", requireAdmin, (req, res) => {
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
+});
+
+app.get("/add-balance.html", async (req, res) => {
+  const auth = await customerAuth(req);
+  if (!auth) return res.redirect("/customer-login.html");
+  res.sendFile(path.join(__dirname, "add-balance.html"));
+});
+
+app.get("/sham-cash-dollar.html", async (req, res) => {
+  const auth = await customerAuth(req);
+  if (!auth) return res.redirect("/customer-login.html");
+  res.sendFile(path.join(__dirname, "sham-cash-dollar.html"));
 });
 
 app.use(express.static(path.join(__dirname), {
