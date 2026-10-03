@@ -73,6 +73,12 @@ jobs:
                   content = data.get("content")
                   if prop in ("og:image", "twitter:image") and content:
                       self.images.append(html.unescape(content))
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "img":
+                      data = dict(attrs)
+                      src = data.get("src")
+                      if src and not self.images:
+                          self.images.append(html.unescape(src))
 
           def get_image_url(key, kind, source):
               if kind == "image":
