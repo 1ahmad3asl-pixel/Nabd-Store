@@ -13,8 +13,7 @@
 <header class="top"><a class="back" href="/add-balance.html" aria-label="العودة">‹</a><h1>شام كاش دولار</h1></header>
 <section class="card">
 <div class="qr-wrap">
-<img class="qr" src="/assets/balance/sham-cash-qr.svg" alt="رمز شام كاش للتحويل">
-<img class="brand" src="https://apisyria.com/assets/img/shamcash.png" alt="شام كاش"><div class="wallet-id">6cea5cde8887992e8b639edbfbb10dd3</div>
+<img class="qr" src="/assets/balance/sham-cash-qr.svg" alt="رمز شام كاش للتحويل"><div class="wallet-id">6cea5cde8887992e8b639edbfbb10dd3</div>
 </div>
 <div id="message" class="message"></div>
 <form id="depositForm">
@@ -55,7 +54,7 @@ form.addEventListener("submit",async function(e){
   const r=await fetch("/api/customer/balance-deposit/sham-dollar",{method:"POST",credentials:"same-origin",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({amount:value,image_data:imageData,image_mime:file.type,image_name:file.name})});
   const data=await r.json().catch(()=>({}));
   if(!r.ok||data.status!=="OK")throw new Error(data.message||"تعذر إرسال الطلب.");
-  showMessage(data.message||"تم إرسال طلب الإيداع بنجاح.","success"); form.reset();preview.style.display="none";fileName.textContent="اضغط هنا لاختيار صورة الحوالة";
+  showMessage(data.message||"تم إرسال طلب الإيداع بنجاح.","success"); submit.textContent="تم الإرسال"; form.reset(); preview.style.display="none"; fileName.textContent="تم إرسال الطلب بنجاح"; setTimeout(function(){ window.location.reload(); },1600);
  }catch(error){showMessage(error.message||"تعذر إرسال الطلب.","error")}
  finally{submit.disabled=false}
 });
