@@ -2908,6 +2908,15 @@ html[data-theme="light"] .reference-category-grid .category-art::after{
     opacity:0;
     visibility:hidden;
 }
+
+/* أمان إضافي: حتى لو تعطل JavaScript، شاشة الترحيب تتلاشى تلقائيًا بعد ثانيتين. */
+.welcome-splash{
+    animation:nabd-welcome-auto-hide 2.38s ease forwards;
+}
+@keyframes nabd-welcome-auto-hide{
+    0%,84%{opacity:1;visibility:visible;}
+    100%{opacity:0;visibility:hidden;}
+}
 .welcome-splash-inner{
     display:flex;
     flex-direction:column;
