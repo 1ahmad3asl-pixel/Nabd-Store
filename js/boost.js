@@ -18,19 +18,35 @@ function esc(v){return typeof escapeHtml==="function"?escapeHtml(v):String(v??""
 function groupProducts(g){return products.filter(p=>{const t=n((p.category_name||"")+" "+(p.name||""));if(!/(رشق|boost|followers?|likes?|views?|members?|subscribers?|متابع|مشاهد|اعجاب|لايك|مشترك)/i.test(t))return false;return g.a.map(n).some(a=>t.includes(a));});}
 function els(){return{services:document.getElementById("servicesSection"),page:document.getElementById("internalPage"),title:document.getElementById("internalPageTitle"),icon:document.getElementById("internalPageIcon"),content:document.getElementById("internalPageContent")};}
 function push(view,data){if(typeof pushInternalHistory==="function")pushInternalHistory(view,data||{});else history.pushState(Object.assign({nabdInternal:true,view},data||{}),"",location.href);}
-function openBoost(fromHistory){
- if(!fromHistory)push("boost");
- const e=els();if(!e.services||!e.page||!e.content)return;
- e.services.hidden=true;e.page.hidden=false;if(e.title)e.title.textContent="رشق صفحات";if(e.icon)e.icon.textContent="🚀";
- if(!loaded){
-  e.content.innerHTML='<div class="products-loading"><div class="loading-spinner"></div><p>جاري تحميل خدمات رشق الصفحات...</p></div>';
-  loadProducts({force:false}).then(p=>{products=Array.isArray(p)?p:[];loaded=true;openBoost(true);}).catch(()=>{e.content.innerHTML='<div class="game-products-placeholder"><div class="game-products-placeholder-icon">🚀</div><h3>رشق صفحات</h3><p>تعذر تحميل الخدمات حاليًا.</p></div>';});
-  return;
- }
+function renderBoostGroups(e){
  const groups=GROUPS.map(g=>({key:g.key,title:g.title,products:groupProducts(g)}));
  e.content.innerHTML='<div class="boost-page-note">اختر المنصة للدخول إلى منتجات الرشق المتاحة.</div><div class="boost-category-grid">'+groups.map(g=>'<button class="boost-category-tile" type="button" data-boost-group="'+g.key+'"><span class="boost-category-title">'+esc(g.title)+'</span><span class="boost-category-count">'+g.products.length+' منتج</span></button>').join("")+'</div>';
  e.content.querySelectorAll("[data-boost-group]").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.key===b.dataset.boostGroup);if(g)openBoostProducts(g);}));
  scrollTo({top:0,behavior:"smooth"});
+}
+function openBoost(fromHistory){
+ if(!fromHistory)push("boost");
+ const e=els();if(!e.services||!e.page||!e.content)return;
+ e.services.hidden=true;e.page.hidden=false;if(e.title)e.title.textContent="رشق صفحات";if(e.icon)e.icon.textContent="🚀";
+
+ // لا نربط ظهور المستوى الثاني بنجاح API. المربعات تظهر فورًا،
+ // والمنتجات تُحدّث في الخلفية حتى لا تبقى الصفحة على "جاري التحميل".
+ products=Array.isArray(window.__nabdBoostProducts)?window.__nabdBoostProducts:products;
+ if(Array.isArray(products)&&products.length) loaded=true;
+ renderBoostGroups(e);
+
+ if(!loaded){
+  e.content.insertAdjacentHTML("afterbegin",'<div class="boost-sync-status" id="boostSyncStatus">جاري تحديث منتجات الرشق في الخلفية…</div>');
+  loadProducts({force:false}).then(p=>{
+   products=Array.isArray(p)?p:[];
+   loaded=true;
+   window.__nabdBoostProducts=products;
+   if(document.getElementById("internalPage")?.hidden===false) renderBoostGroups(els());
+  }).catch(()=>{
+   const status=document.getElementById("boostSyncStatus");
+   if(status) status.innerHTML='تعذر تحديث المنتجات الآن. يمكنك الدخول إلى المنصة والمحاولة مرة أخرى.';
+  });
+ }
 }
 function openBoostProducts(g,fromHistory){
  if(!fromHistory)push("boost-products",{boostGroupKey:g.key});
