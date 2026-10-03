@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/migrate-game-images.yml"
+      - ".github/game-image-migration.trigger"
   workflow_dispatch:
 
 permissions:
