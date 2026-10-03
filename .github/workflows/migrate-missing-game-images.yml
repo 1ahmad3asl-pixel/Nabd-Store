@@ -50,7 +50,6 @@ jobs:
               "cyber-fantasy": ("page", "https://www.appbrain.com/app/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android"),
               "dream-and-lethe-record": ("page", "https://play.google.com/store/apps/details?id=vng.games.dream.mobile&hl=en&gl=US"),
               "echocalypse-scarlet-covenant": ("page", "https://www.appbrain.com/app/echocalypse-scarlet-covenant/com.gaea.echocalypse.en"),
-              "starseed": ("page", "https://apkpure.net/starseed-asnia-trigger/com.com2us.starseedgl.android.google.jp.normal"),
               "extraordinary-ones": ("page", "https://apkpure.net/extraordinary-ones/com.netease.frxyna"),
               "marvel-mystic-mayhem": ("page", "https://play.google.com/store/apps/details?id=com.netease.mmm&hl=en&gl=US"),
               "garena-speed-drifters": ("page", "https://play.google.com/store/apps/details?id=com.garena.game.fctw&hl=en&gl=US"),
