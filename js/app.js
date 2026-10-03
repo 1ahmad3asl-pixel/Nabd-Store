@@ -3290,7 +3290,7 @@ function renderBalanceProductPicker(group) {
             String(group.balanceGroupKey || "").toLowerCase() === "mtn" &&
             (productTitle.includes("فاتور") || productTitle.includes("invoice") || subgroupTitle.includes("فاتور") || subgroupTitle.includes("invoice"));
         if(isMtnInvoice){
-            return{enabled:true,min:500,max:1000000,step:1};
+            return{enabled:true,min:500,max:5000000000,step:1};
         }
         const enabled=Number.isFinite(min)||Number.isFinite(max)||Number.isFinite(step)||!!(p&&(p.qty||p.quantity));
         return{enabled:enabled,min:Number.isFinite(min)&&min>0?min:1,max:Number.isFinite(max)&&max>0?max:999999999,step:Number.isFinite(step)&&step>0?step:1};
