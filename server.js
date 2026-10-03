@@ -1629,8 +1629,15 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
     // ببجي موبايل لا تستخدم حقل كمية: الطلب دائمًا لمنتج واحد.
     const productText = String(product.category_name || "") + " " + String(product.name || "");
     const isPubgProduct = /pubg|ببجي/i.test(productText);
+    const isReflectProduct = /reflect|ريفلكت|رفلكت/i.test(productText);
     const isMtnInvoiceProduct = /mtn/i.test(productText) && /فاتور/i.test(productText);
     const qty = isPubgProduct ? 1 : requestedQty;
+    if (isReflectProduct && (qty < 50 || qty > 5000)) {
+      return res.status(400).json({
+        status:"ERROR",
+        message:"كمية Reflect يجب أن تكون من 50 إلى 5,000."
+      });
+    }
     if (isMtnInvoiceProduct && (qty < 500 || qty > 1000000)) {
       return res.status(400).json({
         status:"ERROR",
