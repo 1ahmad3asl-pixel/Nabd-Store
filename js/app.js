@@ -53,7 +53,6 @@ function createSectionScope(section, category, productId) {
 
 const sectionState = {
     current: createSectionScope(NabdScope.HOME),
-    history: [],
     revision: 0
 };
 
@@ -72,17 +71,6 @@ function setSectionScope(section, category, productId, options) {
     }
 
     return next;
-}
-
-function getSectionScope(section) {
-    if (!section) return sectionState.current;
-    return sectionState.current.section === section
-        ? sectionState.current
-        : createSectionScope(section);
-}
-
-function isSameSection(section) {
-    return sectionState.current.section === String(section || "");
 }
 
 function captureSectionScope(section, category, productId) {
