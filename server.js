@@ -1,3 +1,4 @@
+const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const crypto = require("crypto");
@@ -1213,327 +1214,24 @@ function ceilPrice(value, decimals) {
   return Math.ceil(scaled - epsilon) / factor;
 }
 
-async function ensureOfficialGameImage(gameKey, appId, label) {
-  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
-  if (existing.rows.length) return;
-  try {
-    const pageUrl = "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=US";
-    const requestHeaders = {"Accept":"text/html,application/xhtml+xml","User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game icon fetcher)"};
-    let pageResponse = await fetch(pageUrl, {headers: requestHeaders});
-    if (!pageResponse.ok) {
-      // بعض الألعاب تكون متاحة على Google Play في مناطق معينة فقط؛
-      // جرّب صيغ Google Play الشائعة قبل اعتبار الصورة غير متاحة.
-      const fallbackUrls = [
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en",
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_US",
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en_GB",
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=VN",
-        "https://play.google.com/store/apps/details?id=" + appId + "&hl=en&gl=SG"
-      ];
-      for (const fallbackUrl of fallbackUrls) {
-        pageResponse = await fetch(fallbackUrl, {headers: requestHeaders});
-        if (pageResponse.ok) break;
-      }
+app.get("/api/game-images/:gameKey", (req, res) => {
+  const key = String(req.params.gameKey || "").trim().toLowerCase();
+  if (!/^[a-z0-9-]+$/.test(key)) return res.status(400).end();
+
+  const imageDir = path.join(__dirname, "public", "game-images");
+  const extensions = ["png", "jpg", "jpeg", "webp"];
+  let imagePath = null;
+  for (const ext of extensions) {
+    const candidate = path.join(imageDir, key + "." + ext);
+    if (fs.existsSync(candidate)) {
+      imagePath = candidate;
+      break;
     }
-    if (!pageResponse.ok) throw new Error("Google Play returned " + pageResponse.status);
-    const html = await pageResponse.text();
-    const metaRe = /<meta[^>]+(?:property|name)=["']([^"']+)["'][^>]+content=["']([^"']+)["'][^>]*>/gi;
-    let imageUrl = "", match;
-    while ((match = metaRe.exec(html))) {
-      if (String(match[1]).toLowerCase() === "og:image") {
-        imageUrl = match[2].replace(/&amp;/g, "&").replace(/&quot;/g, '"');
-        break;
-      }
-    }
-    if (!imageUrl) throw new Error("Official Google Play icon URL not found");
-    const imageResponse = await fetch(imageUrl, {headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game icon fetcher)"}});
-    if (!imageResponse.ok) throw new Error("Official image returned " + imageResponse.status);
-    const mimeType = String(imageResponse.headers.get("content-type") || "image/png").split(";")[0];
-    if (!mimeType.startsWith("image/")) throw new Error("Invalid official image type");
-    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
-    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) throw new Error("Official image size is invalid");
-    await query(
-      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
-      [gameKey, appId, imageBuffer, mimeType, imageUrl]
-    );
-    console.log("Official " + label + " image saved to database.");
-  } catch (error) {
-    console.warn("Official " + label + " image sync skipped:", error.message);
   }
-}
+  if (!imagePath) return res.status(404).end();
 
-async function ensurePubgOfficialImage() {
-  return ensureOfficialGameImage("pubg-mobile", "com.tencent.ig", "PUBG Mobile");
-}
-
-async function ensureRobloxOfficialImage() {
-  return ensureOfficialGameImage("roblox", "com.roblox.client", "Roblox");
-}
-
-async function ensureJawakerOfficialImage() {
-  return ensureOfficialGameImage("jawaker", "com.boundless.jawaker", "Jawaker");
-}
-async function ensureFreeFireOfficialImage() {
-  return ensureOfficialGameImage("free-fire", "com.dts.freefireth", "Free Fire");
-}
-async function ensureClashOfClansOfficialImage() {
-  return ensureOfficialGameImage("clash-of-clans", "com.supercell.clashofclans", "Clash of Clans");
-}
-async function ensureDragonheirOfficialImage() {
-  return ensureOfficialGameImage("dragonheir-silent-gods", "com.sgra.dragon", "Dragonheir: Silent Gods");
-}
-async function ensureCloudSongOfficialImage() {
-  return ensureOfficialGameImage("cloud-song", "vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers");
-}
-async function ensureYallaLudoOfficialImage() {
-  return ensureOfficialGameImage("yalla-ludo", "com.yalla.yallagames", "Yalla Ludo");
-}
-async function ensureLordsMobileOfficialImage() {
-  return ensureOfficialGameImage("lords-mobile", "com.igg.android.lordsmobile", "Lords Mobile");
-}
-async function ensureEightBallPoolOfficialImage() {
-  return ensureOfficialGameImage("8-ball-pool", "com.miniclip.eightballpool", "8 Ball Pool");
-}
-async function ensureGunsOfGloryOfficialImage() {
-  return ensureOfficialGameImage("guns-of-glory", "com.diandian.gog", "Guns of Glory");
-}
-async function ensureGangsOfGloryOfficialImage() {
-  const gameKey = "gangs-of-glory";
-  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
-  if (existing.rows.length) return;
-
-  // Google Play no longer serves this legacy package, so keep a stable
-  // app-icon fallback that is known to correspond to this exact package.
-  const fallbackImageUrl = "https://image-eo.winudf.com/v2/image1/Y29tLnNtLmdvZy5ody5keWdhbWVfaWNvbl8xNTk4MTUyNjEwXzA1Nw/icon.webp?fakeurl=1&type=.webp&w=120";
-
-  try {
-    const imageResponse = await fetch(fallbackImageUrl, {
-      headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store game icon fetcher)"}
-    });
-    if (!imageResponse.ok) throw new Error("Fallback game image returned " + imageResponse.status);
-
-    const mimeType = String(imageResponse.headers.get("content-type") || "image/webp").split(";")[0];
-    if (!mimeType.startsWith("image/")) throw new Error("Invalid fallback image type");
-
-    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
-    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) {
-      throw new Error("Fallback game image size is invalid");
-    }
-
-    await query(
-      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
-      [gameKey, "com.sm.gog.hw.dygame", imageBuffer, mimeType, fallbackImageUrl]
-    );
-    console.log("Gangs of Glory image saved using the package-matched fallback icon.");
-  } catch (error) {
-    console.warn("Gangs of Glory image sync skipped:", error.message);
-  }
-}
-async function ensureProjectEntropyOfficialImage() {
-  return ensureOfficialGameImage("project-entropy", "com.entropy.global", "Project Entropy");
-}
-async function ensureFarlight84OfficialImage() {
-  return ensureOfficialGameImage("farlight-84", "com.miraclegames.farlight84", "Farlight 84");
-}
-async function ensureCityOfCrimeGangWarOfficialImage() {
-  return ensureOfficialGameImage("city-of-crime-gang-war", "com.fingerfun.coc.gplay", "City of Crime: Gang Wars");
-}
-async function ensureMarvelRivalsOfficialImage() {
-  const gameKey = "marvel-rivals";
-  const existing = await query("SELECT game_key FROM game_images WHERE game_key=$1", [gameKey]);
-  if (existing.rows.length) return;
-  try {
-    const imageUrl = "https://www.marvelrivals.com/pc/gw/20241203010721/img/home_284984eb.jpg";
-    const imageResponse = await fetch(imageUrl, {headers: {"User-Agent":"Mozilla/5.0 (compatible; Nabd-Store official game image fetcher)"}});
-    if (!imageResponse.ok) throw new Error("Official Marvel Rivals image returned " + imageResponse.status);
-    const mimeType = String(imageResponse.headers.get("content-type") || "image/jpeg").split(";")[0];
-    if (!mimeType.startsWith("image/")) throw new Error("Invalid official image type");
-    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
-    if (imageBuffer.length < 1000 || imageBuffer.length > 5 * 1024 * 1024) throw new Error("Official image size is invalid");
-    await query(
-      "INSERT INTO game_images(game_key, app_id, image_data, mime_type, source_url) VALUES($1,$2,$3,$4,$5) ON CONFLICT(game_key) DO UPDATE SET app_id=EXCLUDED.app_id, image_data=EXCLUDED.image_data, mime_type=EXCLUDED.mime_type, source_url=EXCLUDED.source_url, updated_at=NOW()",
-      [gameKey, "marvel-rivals-official", imageBuffer, mimeType, imageUrl]
-    );
-    console.log("Official Marvel Rivals image saved to database.");
-  } catch (error) {
-    console.warn("Official Marvel Rivals image sync skipped:", error.message);
-  }
-}
-
-/* =========================
-   PUBLIC STORE
-========================= */
-
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", store: STORE_NAME, server: "online" });
-});
-
-app.get("/api/store", (req, res) => {
-  res.json({
-    name: adminSettings.store_name,
-    currency: adminSettings.currency,
-    profit_rate: Number(adminSettings.profit_rate)
-  });
-});
-
-app.get("/api/game-images-neon/:gameKey", async (req, res) => {
-  try {
-    const key = String(req.params.gameKey || "").trim().toLowerCase();
-    if (!/^[a-z0-9_-]{1,120}$/.test(key)) {
-      return res.status(400).json({ status: "ERROR", message: "Invalid image key." });
-    }
-
-    const result = await query(
-      "SELECT image_data, mime_type FROM game_images WHERE game_key=$1 LIMIT 1",
-      [key]
-    );
-    if (!result.rows[0] || !result.rows[0].image_data) {
-      return res.status(404).json({ status: "NOT_FOUND", message: "No stored Neon image for this game." });
-    }
-
-    const mime = String(result.rows[0].mime_type || "application/octet-stream").toLowerCase();
-    if (!/^image\/(png|jpe?g|webp|gif|avif|svg\+xml)$/.test(mime)) {
-      return res.status(415).json({ status: "ERROR", message: "Stored image MIME type is not supported." });
-    }
-
-    res.setHeader("Cache-Control", "no-store");
-    res.setHeader("X-Nabd-Image-Source", "neon-game-images");
-    res.type(mime);
-    res.send(result.rows[0].image_data);
-  } catch (error) {
-    console.error("Neon image export error:", error);
-    res.status(500).json({ status: "ERROR", message: "Unable to read stored Neon image." });
-  }
-});
-
-app.get("/api/game-images/:gameKey", async (req, res) => {
-  try {
-    const key = String(req.params.gameKey || "").trim().toLowerCase();
-    const imageMap = {
-      "pubg-mobile": ["com.tencent.ig", "PUBG Mobile"],
-      "roblox": ["com.roblox.client", "Roblox"],
-      "jawaker": ["com.boundless.jawaker", "Jawaker"],
-      "free-fire": ["com.dts.freefireth", "Free Fire"],
-      "clash-of-clans": ["com.supercell.clashofclans", "Clash of Clans"],
-      "dragonheir-silent-gods": ["com.sgra.dragon", "Dragonheir: Silent Gods"],
-      "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
-      "yalla-ludo": ["com.yalla.yallagames", "Yalla Ludo"],
-      "lords-mobile": ["com.igg.android.lordsmobile", "Lords Mobile"],
-      "8-ball-pool": ["com.miniclip.eightballpool", "8 Ball Pool"],
-      "guns-of-glory": ["com.diandian.gog", "Guns of Glory"],
-      "gangs-of-glory": ["com.sm.gog.hw.dygame", "Gangs of Glory"],
-      "project-entropy": ["com.entropy.global", "Project Entropy"],
-      "farlight-84": ["com.miraclegames.farlight84", "Farlight 84"],
-      "marvel-rivals": ["marvel-rivals-official", "Marvel Rivals"],
-      "city-of-crime-gang-war": ["com.fingerfun.coc.gplay", "City of Crime: Gang Wars"],
-      "genshin-impact": ["com.miHoYo.GenshinImpact", "Genshin Impact"],
-      "super-sus": ["com.je.supersus", "Super Sus"],
-      "crystal-of-atlan": ["com.hermes.p6gameos", "Crystal of Atlan"],
-      "bullet-echo": ["com.zeptolab.bulletecho.google", "Bullet Echo"],
-      "stumble-guys": ["com.kitkagames.fallbuddies", "Stumble Guys"],
-      "honkai-star-rail": ["com.HoYoverse.hkrpgoversea", "Honkai: Star Rail"],
-      "oxide-survival-island": ["com.catsbit.oxidesurvivalisland", "Oxide: Survival Island"],
-      "mobile-legends": ["com.mobile.legends", "Mobile Legends: Bang Bang"],
-      "whiteout-survival": ["com.gof.global", "Whiteout Survival"],
-      "blood-strike": ["com.netease.newspike", "Blood Strike"],
-      "acecraft": ["com.vizta.wefly", "ACECRAFT"],
-      "age-of-magic": ["com.playkot.ageofmagic", "Age of Magic"],
-      "ghost-story-love-destiny": ["com.netease.wxzcglobal", "Ghost Story: Love Destiny"],
-      "arena-breakout": ["com.proximabeta.mf.uamo", "Arena Breakout"],
-      "ludo-club": ["com.moonfrog.ludo.club", "Ludo Club"],
-      "afk-journey": ["com.farlightgames.igame.gp", "AFK Journey"],
-      "ballistic-hero-vng": ["com.vnggames.ballistichero", "Ballistic Hero VNG"],
-      "haikyu-fly-high": ["com.garena.game.haikyu", "Haikyu Fly High"],
-      "arknights-endfield": ["com.hypergryph.endfield", "Arknights: Endfield"],
-      "heaven-burns-red": ["com.heavenburnsred.global", "Heaven Burns Red"],
-      "rise-of-kingdoms": ["com.lilithgame.roc.gp", "Rise of Kingdoms: Lost Crusade"],
-      "top-war": ["com.Topwar.gp", "Top War: Battle Game"],
-      "the-ants": ["com.allstarunion.ta", "The Ants: Underground Kingdom"],
-      "kingdom-guard": ["com.tap4fun.odin.kingdomguard", "Kingdom Guard: Tower Defense"],
-      "astral-guardians": ["com.eyougame.idxj", "Astral Guardians"],
-      "cyber-fantasy": ["com.hkfancygame.kog.android", "Cyber Fantasy"],
-      "blade-x": ["com.yjmgames.bladex.aos", "Blade X: Odyssey of Heroes"],
-      "be-the-king": ["com.szckhd.jwgly.azyw", "Be The King: Judge Destiny"],
-      "captain-tsubasa": ["com.dgames.g65002005.google", "CAPTAIN TSUBASA: ACE"],
-      "idol-party": ["com.xipu.cwqmx.tg", "Idol Party"],
-      "hyper-front": ["com.battlefun.c1game.na", "Hyper Front"],
-      "infinite-lagrange": ["com.netease.lagrange", "Infinite Lagrange"],
-      "life-makeover-global": ["com.archosaur.seareal.yslzm.gp", "Life Makeover"],
-      "dragon-raja-sea": ["com.archosaur.sea.dr.gp", "Dragon Raja SEA"],
-      "crossout-mobile": ["com.gaijin.xom", "Crossout Mobile"],
-      "dynasty-heroes": ["com.dynasty.hero.an", "Dynasty Heroes: Samkok Legend"],
-      "starseed": ["com.com2us.starseedgl.android.google.global.normal", "STARSEED: Asnia Trigger"],
-      "magic-chess-gogo": ["com.mobilechess.gp", "Magic Chess: Go Go"],
-      "enhypen-world": ["com.takeonecompany.enhp", "ENHYPEN WORLD : ETERNAL MOMENT"],
-      "marvel-duel": ["com.netease.mduelna", "MARVEL Duel"],
-      "extraordinary-ones": ["com.netease.frxyna", "Extraordinary Ones"],
-      "eve-echoes": ["com.netease.eve.en", "EVE Echoes"],
-      "mirage-perfect-skyline": ["com.eyougame.xmqx.en", "Mirage:Perfect Skyline"],
-      "football-master-2": ["com.galasports.championsfc.fm2", "Football Master 2-Soccer Star"],
-      "marvel-mystic-mayhem": ["com.netease.mmm", "Marvel Mystic Mayhem"],
-      "stormshot": ["com.funplus.ss", "Stormshot"],
-      "onmyoji-arena": ["com.netease.g78na.gb", "Onmyoji Arena"],
-      "my-singing-monsters": ["com.bigbluebubble.singingmonsters.full", "My Singing Monsters"],
-      "eggy-party": ["com.netease.eggypartyen", "Eggy Party"],
-      "devil-may-cry": ["com.nebulajoy.act.dmcpoc", "Devil May Cry: Peak of Combat"],
-      "hero-clash": ["com.xgame.eu.gp", "Hero Clash"],
-      "division-resurgence": ["com.ubisoft.the.division.mobile.combat.shooting.open.world.rpg", "The Division Resurgence"],
-      "nikke": ["com.proximabeta.nikke", "GODDESS OF VICTORY: NIKKE"],
-      "age-of-empires-mobile": ["com.proximabeta.aoemobile", "Age of Empires Mobile"],
-      "call-of-dragons": ["com.farlightgames.samo.gp", "Call of Dragons"],
-      "hatsune-miku-colorful-stage": ["com.sega.ColorfulStage.en", "Hatsune Miku: Colorful Stage"],
-      "golden-spatula": ["com.tencent.tmgp.sgame", "Golden Spatula"],
-      "blockman-go": ["com.sandboxol.blockymods", "Blockman Go"],
-      "growtopia": ["com.rtsoft.growtopia", "Growtopia"],
-      "arena-of-valor": ["com.ngame.allstar.eu", "Arena of Valor"],
-      "zepeto": ["com.naver.zepeto", "ZEPETO"],
-      "king-shot": ["com.fingerfun.kingshot", "King Shot"],
-      "clash-of-plants": ["com.waterwish.garden.tales.clash.of.plants", "Garden Tales: Clash of Plants"],
-      "journey-renewed": ["com.xiyou.cyhk.gp", "Journey Renewed: Fate Fantasy"],
-      "civilization-eras-allies": ["com.t2k.prometheusroa", "Civilization: Eras & Allies"],
-      "kuroko-street-rivals": ["com.lmdgame.kuroko.sea", "Kuroko's Basketball: Street Rivals"],
-      "cloud-song": ["vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"],
-      "kings-choice-sea": ["com.onemt.and.kc.sea", "King's Choice"],
-      "crystalfall": ["com.igg.android.crystalfall", "CrystalFall"],
-      "crossout-mobile": ["com.gaijin.xom", "Crossout Mobile"],
-      "dragon-raja-sea": ["com.zloong.eu.dragonraja", "Dragon Raja"],
-      "dragon-nest-m-sea": ["com.sdg.dragonnest", "Dragon Nest M"],
-      "life-makeover-global": ["com.archosaur.sea.lifemakeover", "Life Makeover"],
-      "love-nikki": ["com.elex.nikkigp", "Love Nikki-Dress UP Queen"],
-      "dragonheir-silent-gods": ["com.s2a.dragonheir", "Dragonheir Lite"],
-      "dream-and-lethe-record": ["com.kingsgroup.dreamandlethe", "Dream and Lethe Record"],
-      "eggy-party": ["com.netease.partyglobal", "Eggy Party"],
-      "echocalypse-scarlet-covenant": ["com.gaea.echocalypse.en", "Echocalypse: Scarlet Covenant"],
-      "crossfire-legend": ["com.vnggames.cfl.crossfirelegends", "Crossfire: Legends"],
-      "legend-of-the-phoenix": ["com.duige.hzw.multilingual", "Legend of the Phoenix"],
-      "legacy-of-discord": ["com.gtarcade.lod", "Legacy of Discord-FuriousWings"],
-      "army-dudes": ["com.netease.retrorampage", "Deadly Dudes"],
-      "garena-speed-drifters": ["com.garena.game.drift", "Garena Speed Drifters"],
-      "mongil-star-dive": ["com.cjenm.mongil", "Mongil: Star Dive"],
-      "modern-strike-online": ["com.gamedevlab.modernstrike", "Modern Strike Online"],
-      "overmortal-idle-global": ["com.xsupergame.overmortal", "Overmortal: Idle Global"]
-    };
-    const config = imageMap[key];
-    if (!config) return res.status(404).end();
-
-    let result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
-    if (!result.rows.length) {
-      if (key === "marvel-rivals") {
-        await ensureMarvelRivalsOfficialImage();
-      } else {
-        await ensureOfficialGameImage(key, config[0], config[1]);
-      }
-      result = await query("SELECT image_data, mime_type FROM game_images WHERE game_key=$1", [key]);
-    }
-
-    if (!result.rows.length) return res.status(404).end();
-    res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
-    res.type(result.rows[0].mime_type);
-    res.send(result.rows[0].image_data);
-  } catch (error) {
-    console.error("Game image error:", error);
-    res.status(500).end();
-  }
+  res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
+  res.sendFile(imagePath);
 });
 
 app.get("/api/products", async (req, res) => {
@@ -1949,21 +1647,6 @@ initDb()
   .then(async () => {
     await loadSettings();
     await cleanupSessions();
-    await ensurePubgOfficialImage();
-    await ensureRobloxOfficialImage();
-    await ensureJawakerOfficialImage();
-    await ensureFreeFireOfficialImage();
-    await ensureClashOfClansOfficialImage();
-    await ensureDragonheirOfficialImage();
-    await ensureCloudSongOfficialImage();
-    await ensureYallaLudoOfficialImage();
-    await ensureLordsMobileOfficialImage();
-    await ensureEightBallPoolOfficialImage();
-    await ensureGunsOfGloryOfficialImage();
-    await ensureGangsOfGloryOfficialImage();
-    await ensureProjectEntropyOfficialImage();
-    await ensureFarlight84OfficialImage();
-    await ensureMarvelRivalsOfficialImage();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
