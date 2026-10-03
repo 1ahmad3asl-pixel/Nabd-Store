@@ -143,7 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    // لا نضع أي قفل عام على أحداث اللمس؛ عناصر المتجر التفاعلية يجب أن تستجيب مباشرة.    initializeStoreInteractionLock();
+    // شغّل شاشة الترحيب أولًا قبل أي مهيّئ آخر، حتى لا تبقى عالقة
+    // إذا حدث خطأ في مهيّئ لاحق أثناء تحميل الصفحة.
+    initializeWelcomeSplash();
+
+    // لا نضع أي قفل عام على أحداث اللمس؛ عناصر المتجر التفاعلية يجب أن تستجيب مباشرة.
+    initializeStoreInteractionLock();
 
     registerNabdServiceWorker();
     initializeInternalHistory();
@@ -155,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeSearch();
     initializeDhikrTicker();
     initializeDhikrHomeVisibility();
-    initializeWelcomeSplash();
     initializeTheme();
     initializeWhatsAppHitArea();
 
