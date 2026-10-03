@@ -3231,6 +3231,8 @@ function renderBalanceProductPicker(group) {
     const products=Array.isArray(group.products)?group.products:[];
     const available=products.filter(function(p){return p.available!==false&&p.available!==0;});
     const first=available[0]||products[0]||null;
+    // Reflect يحتوي على منتج واحد فقط؛ نختاره تلقائيًا ونخفي قائمة اختيار المنتج.
+    const isReflectSingleProduct = group && group.balanceGroupKey === "reflect" && available.length === 1;
 
     function getBalanceSaleUnitPrice(product){
         // /api/products already returns the final selling price from the live Nemer price
@@ -3260,7 +3262,7 @@ function renderBalanceProductPicker(group) {
         ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
-    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label"'+(isTurkcellBundleGroup(group)?' style="display:none"':'')+'>'+ (isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"'+(isTurkcellBundleGroup(group)?' style="display:none"':'')+'><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName"><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
+    content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label"'+(isTurkcellBundleGroup(group)||isReflectSingleProduct?' style="display:none"':'')+'>'+ (isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"'+(isTurkcellBundleGroup(group)||isReflectSingleProduct?' style="display:none"':'')+'><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
 
     let selectedIndex=first?products.indexOf(first):-1;
     function isTurkcellBundle(groupInfo){
@@ -3271,6 +3273,9 @@ function renderBalanceProductPicker(group) {
         // لا نُظهر حقل الكمية حتى لو أعادت بيانات المنتج حقول qty قديمة أو عامة.
         if(isTurkcellBundle(group)) return{enabled:false,min:1,max:1,step:1};
 
+        if(isReflectSingleProduct){
+            return{enabled:true,min:1,max:1000000,step:1};
+        }
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
         const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
         const subgroupTitle=normalizeBalanceText(group.title||"");
@@ -3319,11 +3324,19 @@ function renderBalanceProductPicker(group) {
                 return;
             }
             el.textContent="$0.000";
+            if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=true;
+            return;
+        }
+        // Reflect: الكمية المقبولة من 50 إلى 5,000 فقط. خارج هذا النطاق يظهر الإجمالي صفرًا ولا يُسمح بالطلب.
+        if(isReflectSingleProduct && (qty < 50 || qty > 5000)){
+            el.textContent="$0.000";
+            if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=true;
             return;
         }
 
         const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(saleUnit));
         el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
+        if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=total===null || (isReflectSingleProduct && (qty<50 || qty>5000));
     }
     function updateProduct(index){
         const p=products[index];if(!p)return;
@@ -3373,7 +3386,11 @@ function renderBalanceProductPicker(group) {
         const isFixedTurkcellBundle=isTurkcellBundle(group);
         const qty=qi?Number(qi.value):1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
-        if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح.");return;}
+        if(isReflectSingleProduct && (!Number.isInteger(qty)||qty<50||qty>5000)){
+            invalid=true;
+            if(qi) qi.classList.add("is-invalid");
+        }
+        if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":(isReflectSingleProduct?"كمية Reflect يجب أن تكون من 50 إلى 5,000.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح."));return;}
         submit.disabled=true;
         fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:isFixedTurkcellBundle?1:qty})})
             .then(async function(response){
