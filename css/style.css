@@ -3810,3 +3810,21 @@ body{min-width:0;}
         border-radius:14px!important;
     }
 }
+
+/* ===== شعارات رسمية لقسمي Papara وReflect داخل الأرصدة ===== */
+.balance-category-grid .game-tile-image img[src*="Papara_Logo.png"],
+.balance-subgroup-tile .game-tile-image img[src*="Papara_Logo.png"],
+.balance-category-grid .game-tile-image img[src*="reflect_footer.png"],
+.balance-subgroup-tile .game-tile-image img[src*="reflect_footer.png"]{
+    object-fit:contain!important;
+    object-position:center!important;
+    padding:18px!important;
+    background:#fff!important;
+    transform:none!important;
+}
+.balance-category-grid .game-tile-image img[src*="Papara_Logo.png"]{
+    padding:30px 18px!important;
+}
+.balance-category-grid .game-tile-image img[src*="reflect_footer.png"]{
+    padding:34px 18px!important;
+}
