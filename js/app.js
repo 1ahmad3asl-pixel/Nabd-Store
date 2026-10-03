@@ -3784,29 +3784,3 @@ function initializeWhatsAppHitArea() {
         }
     }, true);
 }
-/* =========================
-   STORE INTERACTION LOCK
-========================= */
-function initializeStoreInteractionLock() {
-    // امنع قائمة المتصفح/الضغط المطوّل الذي يكشف روابط الصور أو خيارات النسخ.
-    document.addEventListener("contextmenu", function (event) {
-        event.preventDefault();
-    }, {capture:true});
-
-    // امنع سحب الصور والروابط والنصوص من واجهة المتجر.
-    document.addEventListener("dragstart", function (event) {
-        if (event.target && event.target.closest && event.target.closest("img, a, svg, [draggable='true']")) {
-            event.preventDefault();
-        }
-    }, {capture:true});
-
-    // لا نسمح بتحديد نصوص الواجهة. حقول الإدخال تبقى قابلة للتحرير.
-    document.addEventListener("selectstart", function (event) {
-        const editable = event.target && event.target.closest &&
-            event.target.closest("input, textarea, select, [contenteditable='true']");
-        if (!editable) event.preventDefault();
-    }, {capture:true});
-
-    // لا نمنع pointerdown على الصور أو SVG؛ لأن ذلك يلغي أحداث اللمس
-    // والنقر على الأزرار التي تحتوي أيقونات أو صورًا داخلها.
-}
