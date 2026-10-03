@@ -66,19 +66,17 @@ jobs:
                   super().__init__()
                   self.images = []
               def handle_starttag(self, tag, attrs):
-                  if tag.lower() != "meta":
-                      return
                   data = dict(attrs)
-                  prop = str(data.get("property") or data.get("name") or "").lower()
-                  content = data.get("content")
-                  if prop in ("og:image", "twitter:image") and content:
-                      self.images.append(html.unescape(content))
-              def handle_starttag(self, tag, attrs):
-                  if tag.lower() == "img":
-                      data = dict(attrs)
+                  if tag.lower() == "meta":
+                      prop = str(data.get("property") or data.get("name") or "").lower()
+                      content = data.get("content")
+                      if prop in ("og:image", "twitter:image") and content:
+                          self.images.append(html.unescape(content))
+                  elif tag.lower() == "img" and not self.images:
                       src = data.get("src")
-                      if src and not self.images:
+                      if src:
                           self.images.append(html.unescape(src))
+
 
           def get_image_url(key, kind, source):
               if kind == "image":
