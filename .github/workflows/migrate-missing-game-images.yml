@@ -72,7 +72,7 @@ jobs:
                       content = data.get("content")
                       if prop in ("og:image", "twitter:image") and content:
                           self.images.append(html.unescape(content))
-                  elif tag.lower() == "img" and not self.images:
+                  elif tag.lower() == "img":
                       src = data.get("src")
                       if src:
                           self.images.append(html.unescape(src))
@@ -89,9 +89,10 @@ jobs:
                   page = response.read().decode("utf-8", "ignore")
               parser = MetaParser()
               parser.feed(page)
-              if not parser.images:
-                  raise RuntimeError("No image metadata found for " + key)
-              return parser.images[0]
+              candidates = [u for u in parser.images if not str(u).lower().split("?")[0].endswith(".svg")]
+              if not candidates:
+                  raise RuntimeError("No raster image metadata found for " + key)
+              return candidates[0]
 
           root = "public/game-images"
           os.makedirs(root, exist_ok=True)
