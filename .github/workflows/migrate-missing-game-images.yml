@@ -18,177 +18,132 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Download and validate only missing images
+      - name: Download and validate the complete missing image set
         run: |
           set -euo pipefail
           python3 -m pip install --disable-pip-version-check pillow
           python3 - <<PY
           import html
           import os
-          import re
-          import sys
           import tempfile
-          import urllib.parse
-          import urllib.request
           import urllib.error
+          import urllib.request
+          from html.parser import HTMLParser
+          from PIL import Image
 
-          games = {
-              "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
-              "king-shot": ("com.fingerfun.kingshot", "King Shot"),
-              "zepeto": ("com.naver.zepeto", "ZEPETO"),
-              "ghost-story-love-destiny": ("com.netease.wxzcglobal", "Ghost Story: Love Destiny"),
-              "golden-spatula": ("com.tencent.tmgp.sgame", "Golden Spatula"),
-              "arknights-endfield": ("com.hypergryph.endfield", "Arknights: Endfield"),
-              "heaven-burns-red": ("com.heavenburnsred.global", "Heaven Burns Red"),
-              "top-war": ("com.Topwar.gp", "Top War: Battle Game"),
-              "the-ants": ("com.allstarunion.ta", "The Ants: Underground Kingdom"),
-              "cyber-fantasy": ("com.hkfancygame.kog.android", "Cyber Fantasy"),
-              "blade-x": ("com.yjmgames.bladex.aos", "Blade X: Odyssey of Heroes"),
-              "hyper-front": ("com.battlefun.c1game.na", "Hyper Front"),
-              "clash-of-plants": ("com.waterwish.garden.tales.clash.of.plants", "Garden Tales: Clash of Plants"),
-              "journey-renewed": ("com.xiyou.cyhk.gp", "Journey Renewed: Fate Fantasy"),
-              "dragon-nest-m-sea": ("com.sdg.dragonnest", "Dragon Nest M"),
-              "dream-and-lethe-record": ("com.kingsgroup.dreamandlethe", "Dream and Lethe Record"),
-              "echocalypse-scarlet-covenant": ("com.gaea.echocalypse.en", "Echocalypse: Scarlet Covenant"),
-              "starseed": ("com.com2us.starseedgl.android.google.global.normal", "STARSEED: Asnia Trigger"),
-              "extraordinary-ones": ("com.netease.frxyna", "Extraordinary Ones"),
-              "marvel-mystic-mayhem": ("com.netease.mmm", "Marvel Mystic Mayhem"),
-              "garena-speed-drifters": ("com.garena.game.drift", "Garena Speed Drifters"),
-              "mongil-star-dive": ("com.cjenm.mongil", "Mongil: Star Dive"),
-              "modern-strike-online": ("com.gamedevlab.modernstrike", "Modern Strike Online"),
-              "overmortal-idle-global": ("com.xsupergame.overmortal", "Overmortal: Idle Global"),
-              "stormshot": ("com.funplus.ss", "Stormshot"),
-              "army-dudes": ("", "Army Dudes"),
-              "crystalfall": ("", "CrystalFall"),
+          sources = {
+              "cloud-song": ("image", "https://www.sipshop.co.id/_next/image?q=75&url=https%3A%2F%2Fclient-cdn.bangjeff.com%2Fsipshop.cloud%2Fproduct%2FCloud+SOng+Saga+of+Skywalkers.jpg&w=828"),
+              "king-shot": ("image", "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ee/d2/22/eed22297-9313-d8b0-52c8-95f42a2795b2/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/0x0ss-85.png"),
+              "zepeto": ("image", "https://i.pinimg.com/736x/68/16/95/68169598558a9f1a5b9a1c6a63f5e976.jpg"),
+              "ghost-story-love-destiny": ("image", "https://donquixoteshop.com/assets/img/products/ghost-story-love-destiny-vng-corporation.webp"),
+              "golden-spatula": ("image", "https://img2.tapimg.net/post/images/0eab7647432fe083ead369e7de72f0f8.png"),
+              "arknights-endfield": ("image", "https://www.mgametop.com/uploads/allimg/260509/6-260509010506CQG.webp"),
+              "heaven-burns-red": ("image", "https://kaleoz-media.seagmcdn.com/kaleoz-store/202411/oss-8dd57cf3b306f2ad68da8524bfa0e00d.png?x-oss-process=image%2Fformat%2Cjpg"),
+              "top-war": ("image", "https://www.rivergame.net/comm/img/topwar_icon.jpg"),
+              "the-ants": ("image", "https://lancaric.me/wp-content/uploads/2023/05/img1-1.jpeg"),
+              "blade-x": ("image", "https://app-time.ru/uploads/games/cover/2023/12/12122023202242.jpg"),
+              "hyper-front": ("image", "https://obs.line-scdn.net/r/ect/ect/image_1667913148041637836b57a4697t10a67cac"),
+              "journey-renewed": ("image", "https://img.joytify.com/?f=webp&onerror=redirect&q=75&src=https%3A%2F%2Fwww.joytify.com%2Fstatic%2Fcategory%2FJourney+Renewed+Fate+Fantasy.webp&w=720"),
+              "dragon-nest-m-sea": ("image", "https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/de/a8/ab/dea8abf5-86ca-8a2b-04cb-c43a34572e80/AppIcon-0-1x_U007emarketing-0-85-220-0-9.png/1024x1024bb.png"),
+              "army-dudes": ("page", "https://www.kongregate.com/en/games/skylerfunnydude/army-dudes-full-game"),
+              "crystalfall": ("image", "https://miro.medium.com/v2/1%2A3xsHSpMc09Fxskytt5yXag.png"),
+              "cyber-fantasy": ("page", "https://www.appbrain.com/app/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android"),
+              "clash-of-plants": ("page", "https://play.google.com/store/apps/details?id=com.waterwish.garden.tales.clash.of.plants&hl=en&gl=US"),
+              "dream-and-lethe-record": ("page", "https://play.google.com/store/apps/details?id=vng.games.dream.mobile&hl=en&gl=US"),
+              "echocalypse-scarlet-covenant": ("page", "https://play.google.com/store/apps/details?id=com.gaea.echocalypse.en&hl=en&gl=US"),
+              "starseed": ("page", "https://www.appbrain.com/app/starseed-asnia-trigger/com.com2us.starseedgl.android.google.global.normal"),
+              "extraordinary-ones": ("page", "https://apkpure.net/extraordinary-ones/com.netease.frxyna"),
+              "marvel-mystic-mayhem": ("page", "https://play.google.com/store/apps/details?id=com.netease.mmm&hl=en&gl=US"),
+              "garena-speed-drifters": ("page", "https://play.google.com/store/apps/details?id=com.garena.game.fctw&hl=en&gl=US"),
+              "mongil-star-dive": ("page", "https://play.google.com/store/apps/details?id=com.netmarble.monster2&hl=en&gl=US"),
+              "modern-strike-online": ("page", "https://play.google.com/store/apps/details?id=com.gamedevltd.modernstrike&hl=en&gl=US"),
+              "overmortal-idle-global": ("page", "https://apkpure.net/overmortal-idle-global/com.xsupergame.overmortal"),
+              "stormshot": ("page", "https://play.google.com/store/apps/details?id=com.sivona.stormshot.e&hl=en&gl=US"),
           }
 
-          fallback_pages = {
-              "cloud-song": "https://apkpure.net/cloud-song-saga-of-skywalkers/vng.game.sky.fantasy.song.sea",
-              "king-shot": "https://kingshot.en.uptodown.com/android",
-              "zepeto": "https://play.google.com/store/apps/details?id=me.zepeto.main&hl=en&gl=US",
-              "ghost-story-love-destiny": "https://play.google.com/store/apps/details?id=com.vnggames.ghoststory&hl=en&gl=US",
-              "golden-spatula": "https://play.google.com/store/apps/details?id=com.riot.FFGSSea&hl=en&gl=US",
-              "arknights-endfield": "https://play.google.com/store/apps/details?id=com.gryphline.endfield.gp&hl=en&gl=US",
-              "heaven-burns-red": "https://play.google.com/store/apps/details?id=com.YoStarEN.HBR&hl=en&gl=US",
-              "top-war": "https://play.google.com/store/apps/details?id=com.topwar.gp&hl=en&gl=US",
-              "the-ants": "https://play.google.com/store/apps/details?id=com.star.union.planetant&hl=en&gl=US",
-              "cyber-fantasy": "https://apkpure.net/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android",
-              "blade-x": "https://apkpure.net/blade-x-odyssey-of-heroes/com.yjmgames.bladex.aos",
-              "hyper-front": "https://apkpure.net/hyper-front/com.netease.bfc1game.na",
-              "clash-of-plants": "https://myandroid.org/apps/com-waterwish-garden-tales-clash-of-plants",
-              "journey-renewed": "https://apkpure.net/journey-renewed-fate-fantasy/com.xiyou.cyhk.gp",
-              "dragon-nest-m-sea": "https://apkpure.net/dragon-nest-m/com.sdg.dragonnest",
-              "dream-and-lethe-record": "https://apkpure.net/dream-and-lethe-record/com.kingsgroup.dreamandlethe",
-              "echocalypse-scarlet-covenant": "https://apkpure.net/echocalypse-scarlet-covenant/com.gaea.echocalypse.en",
-              "starseed": "https://apkpure.net/starseed-asnia-trigger/com.com2us.starseedgl.android.google.global.normal",
-              "extraordinary-ones": "https://apkpure.net/extraordinary-ones/com.netease.frxyna",
-              "marvel-mystic-mayhem": "https://apkpure.net/marvel-mystic-mayhem/com.netease.mmm",
-              "garena-speed-drifters": "https://play.google.com/store/apps/details?id=com.garena.game.fctw&hl=en&gl=US",
-              "mongil-star-dive": "https://play.google.com/store/apps/details?id=com.netmarble.monster2&hl=en&gl=US",
-              "modern-strike-online": "https://play.google.com/store/apps/details?id=com.gamedevltd.modernstrike&hl=en&gl=US",
-              "overmortal-idle-global": "https://apkpure.net/overmortal-idle-global/com.xsupergame.overmortal",
-              "stormshot": "https://play.google.com/store/apps/details?id=com.sivona.stormshot.e&hl=en&gl=US",
-              "army-dudes": "https://www.kongregate.com/en/games/skylerfunnydude/army-dudes-full-game",
-              "crystalfall": "https://crystalfall.playpark.com/",
-          }
+          class MetaParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.images = []
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() != "meta":
+                      return
+                  data = dict(attrs)
+                  prop = str(data.get("property") or data.get("name") or "").lower()
+                  content = data.get("content")
+                  if prop in ("og:image", "twitter:image") and content:
+                      self.images.append(html.unescape(content))
+
+          def get_image_url(key, kind, source):
+              if kind == "image":
+                  return source
+              req = urllib.request.Request(source, headers={
+                  "User-Agent": "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)",
+                  "Accept-Language": "en-US,en;q=0.9"
+              })
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  page = response.read().decode("utf-8", "ignore")
+              parser = MetaParser()
+              parser.feed(page)
+              if not parser.images:
+                  raise RuntimeError("No image metadata found for " + key)
+              return parser.images[0]
 
           root = "public/game-images"
           os.makedirs(root, exist_ok=True)
-          ua = "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)"
           downloaded = []
 
-          for key, (app_id, label) in games.items():
-              existing = []
-              for ext in ("png", "jpg", "jpeg", "webp"):
-                  p = os.path.join(root, key + "." + ext)
-                  if os.path.isfile(p) and os.path.getsize(p) > 1000:
-                      existing.append(p)
+          for key, (kind, source) in sources.items():
+              existing = [p for p in (
+                  os.path.join(root, key + ".png"),
+                  os.path.join(root, key + ".jpg"),
+                  os.path.join(root, key + ".jpeg"),
+                  os.path.join(root, key + ".webp")
+              ) if os.path.isfile(p) and os.path.getsize(p) > 1000]
               if existing:
                   print("SKIP existing:", key)
                   continue
 
-              page_url = fallback_pages.get(key) if not app_id else "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(app_id) + "&hl=en&gl=US"
-              req = urllib.request.Request(
-                  page_url,
-                  headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
-              )
-              try:
-                  with urllib.request.urlopen(req, timeout=45) as response:
-                      page = response.read().decode("utf-8", "ignore")
-              except urllib.error.HTTPError as exc:
-                  if exc.code != 404 or key not in fallback_pages:
-                      raise
-                  fallback_url = fallback_pages[key]
-                  print("Using verified fallback source:", label, "->", fallback_url)
-                  fallback_req = urllib.request.Request(
-                      fallback_url,
-                      headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
-                  )
-                  with urllib.request.urlopen(fallback_req, timeout=45) as response:
-                      page = response.read().decode("utf-8", "ignore")
-
-              from html.parser import HTMLParser
-
-              class MetaParser(HTMLParser):
-                  def __init__(self):
-                      super().__init__()
-                      self.images = []
-                  def handle_starttag(self, tag, attrs):
-                      if tag.lower() != "meta":
-                          return
-                      data = dict(attrs)
-                      prop = str(data.get("property") or data.get("name") or "").lower()
-                      content = data.get("content")
-                      if prop in ("og:image", "twitter:image") and content:
-                          self.images.append(html.unescape(content))
-
-              parser = MetaParser()
-              parser.feed(page)
-              candidates = parser.images
-              if not candidates:
-                  raise RuntimeError("No image metadata found for " + label + " (" + app_id + ")")
-
-              image_url = html.unescape(candidates[0]).replace("\\u0026", "&")
-              image_req = urllib.request.Request(image_url, headers={"User-Agent": ua})
-              with urllib.request.urlopen(image_req, timeout=45) as response:
+              image_url = get_image_url(key, kind, source)
+              req = urllib.request.Request(image_url, headers={
+                  "User-Agent": "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)",
+                  "Referer": source if kind == "page" else ""
+              })
+              with urllib.request.urlopen(req, timeout=60) as response:
                   data = response.read()
                   mime = (response.headers.get("Content-Type") or "").split(";")[0].lower()
 
-              if len(data) < 1000 or len(data) > 5 * 1024 * 1024:
-                  raise RuntimeError("Invalid image size for " + label + ": " + str(len(data)))
-
               ext = {"image/jpeg": "jpg", "image/webp": "webp", "image/png": "png"}.get(mime)
               if not ext:
-                  raise RuntimeError("Unsupported image type for " + label + ": " + mime)
+                  raise RuntimeError("Unsupported image type for " + key + ": " + mime)
+              if len(data) < 1000 or len(data) > 5 * 1024 * 1024:
+                  raise RuntimeError("Invalid image size for " + key + ": " + str(len(data)))
 
-              final_path = os.path.join(root, key + "." + ext)
               fd, temp_path = tempfile.mkstemp(prefix=key + ".", suffix=".pending." + ext, dir=root)
               os.close(fd)
               with open(temp_path, "wb") as f:
                   f.write(data)
-              downloaded.append((temp_path, final_path, label, len(data)))
-              print("DOWNLOADED:", label, "->", final_path, len(data), "bytes")
 
-          if not downloaded:
-              print("No missing images needed migration.")
-              sys.exit(0)
-
-          # Validate every downloaded file before publishing any of them.
-          from PIL import Image
-          for temp_path, final_path, label, size in downloaded:
               with Image.open(temp_path) as im:
                   im.verify()
 
-          # Publish only after every requested image downloaded and validated successfully.
-          if len(downloaded) != len(games):
-              raise RuntimeError("Not all missing game images were downloaded.")
-          for temp_path, final_path, label, size in downloaded:
+              final_path = os.path.join(root, key + "." + ext)
+              downloaded.append((temp_path, final_path, len(data)))
+              print("READY:", key, "->", final_path, len(data), "bytes")
+
+          if len(downloaded) != sum(1 for key in sources if not any(
+              os.path.isfile(os.path.join(root, key + "." + ext)) and os.path.getsize(os.path.join(root, key + "." + ext)) > 1000
+              for ext in ("png", "jpg", "jpeg", "webp")
+          )):
+              raise RuntimeError("Migration source set changed during execution.")
+
+          for temp_path, final_path, size in downloaded:
               os.replace(temp_path, final_path)
 
-          print("Successfully prepared", len(downloaded), "new GitHub game images.")
+          print("Prepared", len(downloaded), "new game images.")
           PY
 
-      - name: Commit only the completed GitHub image set
+      - name: Commit completed image set
         run: |
           set -euo pipefail
           git config user.name "Nabd-Store-ON"
