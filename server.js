@@ -671,17 +671,6 @@ app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
   res.json({ status: "OK", customer });
 });
 
-app.post("/api/customer/logout", async (req, res) => {
-  const auth = await customerAuth(req);
-  if (auth) await deleteCustomerSession(auth.token);
-  res.setHeader(
-    "Set-Cookie",
-    "nabd_customer_session=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0" +
-    (COOKIE_SECURE ? "; Secure" : "")
-  );
-  res.json({ status: "OK" });
-});
-
 app.get("/api/customer/google", (req, res) => {
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(503).send("تسجيل الدخول عبر Google غير مهيأ بعد.");
   const state = crypto.randomBytes(32).toString("hex");
