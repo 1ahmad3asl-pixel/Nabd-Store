@@ -50,12 +50,12 @@ jobs:
               "cyber-fantasy": ("page", "https://www.appbrain.com/app/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android"),
               "dream-and-lethe-record": ("page", "https://play.google.com/store/apps/details?id=vng.games.dream.mobile&hl=en&gl=US"),
               "echocalypse-scarlet-covenant": ("page", "https://www.appbrain.com/app/echocalypse-scarlet-covenant/com.gaea.echocalypse.en"),
-              "marvel-mystic-mayhem": ("page", "https://play.google.com/store/apps/details?id=com.netease.mmm&hl=en&gl=US"),
-              "garena-speed-drifters": ("page", "https://play.google.com/store/apps/details?id=com.garena.game.fctw&hl=en&gl=US"),
-              "mongil-star-dive": ("page", "https://play.google.com/store/apps/details?id=com.netmarble.monster2&hl=en&gl=US"),
-              "modern-strike-online": ("page", "https://play.google.com/store/apps/details?id=com.gamedevltd.modernstrike&hl=en&gl=US"),
-              "overmortal-idle-global": ("page", "https://apkpure.net/overmortal-idle-global/com.xsupergame.overmortal"),
-              "stormshot": ("page", "https://play.google.com/store/apps/details?id=com.sivona.stormshot.e&hl=en&gl=US"),
+              "marvel-mystic-mayhem": ("page", "https://www.appbrain.com/app/marvel-mystic-mayhem/com.netease.mmm"),
+              "garena-speed-drifters": ("page", "https://www.appbrain.com/app/garena-speed-drifters/com.garena.game.fctw"),
+              "mongil-star-dive": ("page", "https://www.appbrain.com/app/mongil-star-dive/com.netmarble.monster2"),
+              "modern-strike-online": ("page", "https://www.appbrain.com/app/modern-strike-online/com.gamedevltd.modernstrike"),
+              "overmortal-idle-global": ("page", "https://www.appbrain.com/app/overmortal-idle-global/com.xsupergame.overmortal"),
+              "stormshot": ("page", "https://www.appbrain.com/app/stormshot-isle-of-adventure/com.sivona.stormshot.e"),
           }
 
           class MetaParser(HTMLParser):
