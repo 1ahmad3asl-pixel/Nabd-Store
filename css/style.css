@@ -3875,3 +3875,29 @@ body{min-width:0;}
 .balance-category-grid .game-tile-image img[src*="rcell-official.svg"]{
     padding:30px!important;
 }
+
+
+/* إصلاح استجابة اللمس للواجهة الرئيسية: منع أي طبقة مرئية من اعتراض أزرار الأقسام والقائمة. */
+.main-header{
+    position:relative!important;
+    z-index:1000!important;
+}
+.header-actions,.menu-btn,.wallet-add-btn{
+    position:relative!important;
+    z-index:1001!important;
+    pointer-events:auto!important;
+}
+.reference-category-grid,.category-tile,.category-tile .category-title{
+    position:relative;
+    z-index:10;
+}
+.category-tile{
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+}
+.category-tile .category-art{
+    pointer-events:none!important;
+}
+.welcome-splash[hidden],.welcome-splash.is-hidden{
+    pointer-events:none!important;
+}
