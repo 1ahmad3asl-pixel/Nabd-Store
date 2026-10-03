@@ -95,6 +95,11 @@ function isCurrentSectionScope(snapshot) {
         snapshot.scope.key === sectionState.current.key;
 }
 
+// Small shared API for the section modules. No wrapper layers are required.
+window.NabdScope = NabdScope;
+window.captureSectionScope = captureSectionScope;
+window.isCurrentSectionScope = isCurrentSectionScope;
+
 
 async function loadSypExchangeRate() {
     const sourceEl = document.getElementById("sypSourceRate");
@@ -163,80 +168,54 @@ const elements = {
 };
 
 
-// Fallback click delegation for the main category tiles.
-// Keeps the Games entry responsive even if another initializer fails.
-document.addEventListener("pointerup", function(event) {
-    // Fallback حقيقي للمس: إذا اعترضت طبقة شفافة نقطة اللمس، ابحث عن
-    // زر القسم الموجود تحتها بدل الاعتماد على click وحده.
-    if (event.pointerType === "mouse") return;
-    const stack = typeof document.elementsFromPoint === "function"
-        ? document.elementsFromPoint(event.clientX, event.clientY)
-        : [];
-    const target = stack.find(function(node) {
-        return node && node.closest && node.closest(".category[data-category]");
-    });
-    const category = target && target.closest
-        ? target.closest(".category[data-category]")
+// One stable delegated handler for all first-level category tiles.
+// Keeping a single event path prevents duplicate touch/click routing.
+document.addEventListener("click", function (event) {
+    const button = event.target && event.target.closest
+        ? event.target.closest(".category[data-category]")
         : null;
-    if (!category) return;
-    if (event.target && event.target.closest && event.target.closest(".category[data-category]")) return;
+    if (!button) return;
 
-    const key = category.getAttribute("data-category");
-    if (key === "games") openGamesPage();
-    else if (key === "apps") openAppsPage();
-    else if (key === "balance") openBalancePage(false);
-    else if (key === "numbers") openNumbersPage();
-    else if (key === "digital" && typeof openDigitalPage === "function") openDigitalPage();
-}, {capture:true, passive:true});
+    const category = button.getAttribute("data-category") || "other";
 
-document.addEventListener("click", function(event) {
-    const gamesButton = event.target.closest('.category[data-category="games"]');
-    if (gamesButton) {
+    if (category === "games") {
         event.preventDefault();
         openGamesPage();
         return;
     }
-
-    // مستقل عن initializeCategories: يضمن أن قسم الأرصدة يستجيب
-    // حتى لو فشل initializer آخر في الصفحة.
-    const appsButton = event.target.closest('.category[data-category="apps"]');
-    if (appsButton) {
+    if (category === "apps") {
         event.preventDefault();
-        openAppsPage();
+        if (typeof openAppsPage === "function") openAppsPage();
         return;
     }
-
-    const balanceButton = event.target.closest('.category[data-category="balance"]');
-    if (balanceButton) {
+    if (category === "balance") {
         event.preventDefault();
-        event.stopPropagation();
-        try {
-            openBalancePage(false);
-        } catch (error) {
-            console.error("Balance page open error:", error);
-            const services=document.getElementById("servicesSection");
-            const internal=document.getElementById("internalPage");
-            if (services && internal) {
-                services.hidden=true;
-                internal.hidden=false;
-            }
-        }
+        openBalancePage(false);
         return;
     }
-    const numbersButton = event.target.closest('.category[data-category="numbers"]');
-    if (numbersButton) {
+    if (category === "numbers") {
         event.preventDefault();
         openNumbersPage();
         return;
     }
-
-    const digitalButton = event.target.closest('.category[data-category="digital"]');
-    if (digitalButton) {
+    if (category === "digital") {
         event.preventDefault();
-        if (typeof openDigitalPage === "function") openDigitalPage();
+        if (typeof openDigitalPage === "function") openDigitalPage(false);
+        return;
     }
-});
+    if (category === "boost") {
+        event.preventDefault();
+        if (typeof openBoost === "function") openBoost(false);
+        return;
+    }
 
+    document.querySelectorAll(".category").forEach(function (item) {
+        item.classList.remove("active");
+    });
+    button.classList.add("active");
+    state.selectedCategory = category;
+    renderProducts();
+});
 
 function registerNabdServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
@@ -262,7 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeWelcomeSplash();
 
     // لا نضع أي قفل عام على أحداث اللمس؛ عناصر المتجر التفاعلية يجب أن تستجيب مباشرة.
-    initializeStoreInteractionLock();
 
     registerNabdServiceWorker();
     initializeInternalHistory();
@@ -1062,44 +1040,10 @@ function getGameTiles() {
 }
 
 function initializeCategories() {
-    document.querySelectorAll(".category").forEach(function(button) {
-        if (button.getAttribute("data-category") === "all") return;
-
-        button.addEventListener("click", function() {
-            const category = button.getAttribute("data-category") || "other";
-
-            if (category === "games") {
-                openGamesPage();
-                return;
-            }
-            if (category === "apps") {
-                openAppsPage();
-                return;
-            }
-            if (category === "balance") {
-                openBalancePage();
-                return;
-            }
-            if (category === "numbers") {
-                openNumbersPage();
-                return;
-            }
-            if (category === "digital") {
-                if (typeof openDigitalPage === "function") openDigitalPage();
-                return;
-            }
-
-            document.querySelectorAll(".category").forEach(function(item) {
-                item.classList.remove("active");
-            });
-            button.classList.add("active");
-            state.selectedCategory = category;
-            renderProducts();
-        });
-    });
-
     const back = document.getElementById("internalBack");
-    if (back) back.addEventListener("click", function() {
+    if (!back) return;
+
+    back.addEventListener("click", function () {
         if (window.history.state && window.history.state.nabdInternal) {
             window.history.back();
         } else {
@@ -1107,7 +1051,6 @@ function initializeCategories() {
         }
     });
 }
-
 function cleanGameCategoryName(value) {
     return String(value || "")
         .replace(/[•·]+/g, "")
