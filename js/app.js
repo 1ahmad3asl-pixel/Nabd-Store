@@ -2881,13 +2881,13 @@ const BALANCE_CATALOG = [
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"/assets/balance/reflect.svg"
+        image:"https://reflectapp.com/wp-content/themes/reflectapp/images/reflect_footer.png?v=20261003"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"/assets/balance/papara.svg"
+        image:"https://upload.wikimedia.org/wikipedia/commons/d/dd/Papara_Logo.png?v=20261003"
     },
     {
         key:"paypal",
