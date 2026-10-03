@@ -19,13 +19,13 @@ const GROUPS = [
 
 let loaded = false;
 let products = [];
-let digitalScopeRevision = 0;
 function captureDigitalScope(groupKey){
-  digitalScopeRevision += 1;
-  return {revision:digitalScopeRevision, key:groupKey || "digital"};
+  if(typeof captureSectionScope === "function") return captureSectionScope(NabdScope.DIGITAL, groupKey || null);
+  return {revision:Date.now(),key:groupKey || "digital"};
 }
 function isCurrentDigitalScope(snapshot){
-  return !!snapshot && snapshot.revision === digitalScopeRevision;
+  if(typeof isCurrentSectionScope === "function") return isCurrentSectionScope(snapshot);
+  return !!snapshot;
 }
 
 function norm(v){
@@ -106,6 +106,7 @@ function openDigitalPage(fromHistory){
       loaded=true;
       if(isCurrentDigitalScope(scope)) openDigitalPage(true);
     }).catch(function(){
+      if(!isCurrentDigitalScope(scope)) return;
       content.innerHTML='<div class="digital-placeholder"><div class="digital-placeholder-icon">♾️</div><h3>اشتراكات رقمية</h3><p>تعذر تحميل المنتجات حاليًا.</p><button class="pubg-back" type="button" id="digitalRetry">↻ إعادة المحاولة</button></div>';
       const retry=document.getElementById("digitalRetry");
       if(retry) retry.onclick=function(){ loaded=false; openDigitalPage(true); };
