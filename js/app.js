@@ -1448,7 +1448,8 @@ function getNumberGroupImage(group) {
 }
 
 function openNumbersPage(fromHistory) {
-    if(!fromHistory) pushInternalHistory("numbers");
+    const snapshot = captureSectionScope(NabdScope.NUMBERS);
+    if(!fromHistory) pushInternalHistory("numbers", {scopeKey:snapshot.scope.key});
     const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),title=document.getElementById("internalPageTitle"),icon=document.getElementById("internalPageIcon"),content=document.getElementById("internalPageContent");
     if(!services||!internal||!content)return;
     services.hidden=true; internal.hidden=false; if(title)title.textContent="الأرقام"; if(icon)icon.textContent="📲";
@@ -1463,9 +1464,10 @@ function openNumbersPage(fromHistory) {
 }
 
 function openNumberGroupProducts(groupKey,fromHistory) {
+    const snapshot = captureSectionScope(NabdScope.NUMBERS, groupKey);
     const group=getNumberGroupDefinitions().find(function(g){return g.key===groupKey;});
     if(!group){openNumbersPage(!!fromHistory);return;}
-    if(!fromHistory)pushInternalHistory("number-products",{numberGroupKey:groupKey});
+    if(!fromHistory)pushInternalHistory("number-products",{numberGroupKey:groupKey,scopeKey:snapshot.scope.key});
     const services=document.getElementById("servicesSection"),internal=document.getElementById("internalPage"),content=document.getElementById("internalPageContent");
     if(!services||!internal||!content)return;
     services.hidden=true;internal.hidden=false;
@@ -1499,7 +1501,8 @@ function getAppServerTiles() {
 }
 
 function openAppsPage(fromHistory) {
-    if (!fromHistory) pushInternalHistory("apps");
+    const snapshot = captureSectionScope(NabdScope.APPS);
+    if (!fromHistory) pushInternalHistory("apps", {scopeKey:snapshot.scope.key});
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
     const title = document.getElementById("internalPageTitle");
@@ -1605,7 +1608,8 @@ function renderAppImage(appItem) {
 
 
 function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
-    if (!fromHistory) pushInternalHistory("app-server", {appServerTitle:titleText, appServerKey:serverKey});
+    const snapshot = captureSectionScope(NabdScope.APPS, serverKey);
+    if (!fromHistory) pushInternalHistory("app-server", {appServerTitle:titleText, appServerKey:serverKey, scopeKey:snapshot.scope.key});
     const content = document.getElementById("internalPageContent");
     const title = document.getElementById("internalPageTitle");
     const icon = document.getElementById("internalPageIcon");
@@ -1684,10 +1688,12 @@ function openAppServerPlaceholder(titleText, serverKey, fromHistory) {
 
 function openAppProducts(appItem, serverKey, fromHistory) {
     if (!appItem) return;
+    const snapshot = captureSectionScope(NabdScope.APPS, serverKey, appItem.title);
     if (!fromHistory) {
         pushInternalHistory("app-products", {
             appServerKey: serverKey,
-            appTitle: appItem.title
+            appTitle: appItem.title,
+            scopeKey: snapshot.scope.key
         });
     }
 
