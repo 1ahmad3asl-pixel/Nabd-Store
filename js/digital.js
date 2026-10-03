@@ -19,6 +19,14 @@ const GROUPS = [
 
 let loaded = false;
 let products = [];
+let digitalScopeRevision = 0;
+function captureDigitalScope(groupKey){
+  digitalScopeRevision += 1;
+  return {revision:digitalScopeRevision, key:groupKey || "digital"};
+}
+function isCurrentDigitalScope(snapshot){
+  return !!snapshot && snapshot.revision === digitalScopeRevision;
+}
 
 function norm(v){
   if(typeof normalizeGameText === "function") return normalizeGameText(String(v || ""));
@@ -83,6 +91,7 @@ function setPage(titleText){
 }
 
 function openDigitalPage(fromHistory){
+  const scope=captureDigitalScope();
   if(!fromHistory && typeof pushInternalHistory === "function") pushInternalHistory("digital");
   if(!setPage("اشتراكات رقمية")) return;
 
@@ -95,7 +104,7 @@ function openDigitalPage(fromHistory){
     request.then(function(p){
       products=Array.isArray(p)?p:[];
       loaded=true;
-      openDigitalPage(true);
+      if(isCurrentDigitalScope(scope)) openDigitalPage(true);
     }).catch(function(){
       content.innerHTML='<div class="digital-placeholder"><div class="digital-placeholder-icon">♾️</div><h3>اشتراكات رقمية</h3><p>تعذر تحميل المنتجات حاليًا.</p><button class="pubg-back" type="button" id="digitalRetry">↻ إعادة المحاولة</button></div>';
       const retry=document.getElementById("digitalRetry");
@@ -134,6 +143,7 @@ function openDigitalPage(fromHistory){
 
 function openDigitalProducts(group,fromHistory){
   if(!group) return;
+  const scope=captureDigitalScope(group.key);
   if(!fromHistory && typeof pushInternalHistory === "function"){
     pushInternalHistory("digital-products",{digitalGroupKey:group.key});
   }
@@ -166,7 +176,7 @@ function openDigitalProducts(group,fromHistory){
   content.querySelectorAll(".digital-buy-btn[data-digital-product-id]").forEach(function(btn){
     btn.addEventListener("click",function(){
       const p=list.find(function(item){return String(item.id)===String(btn.getAttribute("data-digital-product-id"));});
-      if(p && typeof openProductModal==="function") openProductModal(p);
+      if(p && isCurrentDigitalScope(scope) && typeof openProductModal==="function") openProductModal(p);
     });
   });
 
