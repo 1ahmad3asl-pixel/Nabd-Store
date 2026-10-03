@@ -1250,6 +1250,13 @@ function handleInternalHistoryState(state) {
         return;
     }
 
+    if (state.view === "boost" || state.view === "boost-products") {
+        if (typeof window.__nabdHandleBoostHistory === "function") {
+            window.__nabdHandleBoostHistory(state);
+            return;
+        }
+    }
+
     closeInternalPage();
 }
 
