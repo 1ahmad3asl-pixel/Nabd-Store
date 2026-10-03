@@ -13,9 +13,8 @@ const GROUPS=[
 ];
 let products=[];
 let loaded=false;
-let boostScopeRevision=0;
-function captureBoostScope(groupKey){ boostScopeRevision+=1; return {revision:boostScopeRevision,key:groupKey||"boost"}; }
-function isCurrentBoostScope(snapshot){ return !!snapshot && snapshot.revision===boostScopeRevision; }
+function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }
+function isCurrentBoostScope(snapshot){ if(typeof isCurrentSectionScope==="function") return isCurrentSectionScope(snapshot); return !!snapshot; }
 function n(v){return typeof normalizeGameText==="function"?normalizeGameText(String(v||"")):String(v||"").toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ـ/g,"").replace(/\s+/g," ").trim();}
 function esc(v){return typeof escapeHtml==="function"?escapeHtml(v):String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
 function groupProducts(g){return products.filter(p=>{const t=n((p.category_name||"")+" "+(p.name||""));if(!/(رشق|boost|followers?|likes?|views?|members?|subscribers?|متابع|مشاهد|اعجاب|لايك|مشترك)/i.test(t))return false;return g.a.map(n).some(a=>t.includes(a));});}
