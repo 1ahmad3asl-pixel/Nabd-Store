@@ -3273,11 +3273,14 @@ function renderBalanceProductPicker(group) {
         // لا نُظهر حقل الكمية حتى لو أعادت بيانات المنتج حقول qty قديمة أو عامة.
         if(isTurkcellBundle(group)) return{enabled:false,min:1,max:1,step:1};
 
-        if(isReflectSingleProduct){
-            return{enabled:true,min:1,max:1000000,step:1};
+        const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
+        // إعداد الكمية خاص بالمنتج نفسه، وليس بالتصنيف، حتى لا تنتقل حدود
+        // منتج إلى منتج آخر.
+        const isReflectProduct = /(^|\\s)(reflect|ريفلكت|رفلكت)(\\s|$)/i.test(productTitle);
+        if(isReflectProduct){
+            return{enabled:true,min:50,max:5000,step:1};
         }
         const v=p&&p.qty_values?p.qty_values:{},min=Number(v.min),max=Number(v.max),step=Number(v.step);
-        const productTitle=normalizeBalanceText((p&&p.category_name||"")+" "+(p&&p.name||""));
         const subgroupTitle=normalizeBalanceText(group.title||"");
         // فواتير MTN: نربط الحد بالمنتج نفسه، لا بعنوان المستوى الثالث.
         // هذا يمنع انتقال حد MTN إلى جواكر أو أي منتج آخر.
@@ -3328,7 +3331,8 @@ function renderBalanceProductPicker(group) {
             return;
         }
         // Reflect: الكمية المقبولة من 50 إلى 5,000 فقط. خارج هذا النطاق يظهر الإجمالي صفرًا ولا يُسمح بالطلب.
-        if(isReflectSingleProduct && (qty < 50 || qty > 5000)){
+        const qConfig=qtyConfig(p);
+        if(qConfig.enabled && (qty < qConfig.min || qty > qConfig.max || ((qty-qConfig.min)%qConfig.step)!==0)){
             el.textContent="$0.000";
             if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=true;
             return;
@@ -3336,7 +3340,7 @@ function renderBalanceProductPicker(group) {
 
         const total=ceilPrice(discountedUnit*qty,getPriceDecimalPlaces(saleUnit));
         el.textContent=total===null?"السعر غير متاح":formatBalancePrice(p,total);
-        if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=total===null || (isReflectSingleProduct && (qty<50 || qty>5000));
+        if(document.getElementById("balanceSubmitOrder")) document.getElementById("balanceSubmitOrder").disabled=total===null;
     }
     function updateProduct(index){
         const p=products[index];if(!p)return;
@@ -3346,7 +3350,13 @@ function renderBalanceProductPicker(group) {
         if(pr){const unit=getBalanceSaleUnitPrice(p);pr.textContent=unit===null?"السعر غير متاح":formatBalancePrice(p,unit);}
         if(f)f.innerHTML=renderBalanceRequiredFields(p,group.title,products,index);
         renderQty(p);updateTotal();
-        if(s)s.disabled=p.available===false||p.available===0||getBalanceSaleUnitPrice(p)===null;
+        if(s){
+            const q=qtyConfig(p);
+            const input=document.getElementById("balanceOrderQty");
+            const entered=input?Number(input.value):NaN;
+            const qtyInvalid=q.enabled && (!Number.isFinite(entered)||entered<q.min||entered>q.max||((entered-q.min)%q.step)!==0);
+            s.disabled=p.available===false||p.available===0||getBalanceSaleUnitPrice(p)===null||qtyInvalid;
+        }
     }
     renderQty(first);updateTotal();loadBalanceCustomerDiscount();
     const qh=document.getElementById("balanceQuantityField");if(qh)qh.addEventListener("input",updateTotal);
@@ -3386,11 +3396,12 @@ function renderBalanceProductPicker(group) {
         const isFixedTurkcellBundle=isTurkcellBundle(group);
         const qty=qi?Number(qi.value):1;
         if(qi&&(!Number.isFinite(qty)||qty<Number(qi.min)||qty>Number(qi.max)))invalid=true;
-        if(isReflectSingleProduct && (!Number.isInteger(qty)||qty<50||qty>5000)){
+        const selectedQtyConfig=qtyConfig(p);
+        if(selectedQtyConfig.enabled && (!Number.isInteger(qty)||qty<selectedQtyConfig.min||qty>selectedQtyConfig.max||((qty-selectedQtyConfig.min)%selectedQtyConfig.step)!==0)){
             invalid=true;
             if(qi) qi.classList.add("is-invalid");
         }
-        if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":(isReflectSingleProduct?"كمية Reflect يجب أن تكون من 50 إلى 5,000.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح."));return;}
+        if(invalid){showToast(isFixedTurkcellBundle?"يرجى إدخال رقم الهاتف بشكل صحيح.":(selectedQtyConfig.enabled?"الكمية المدخلة غير صحيحة لهذا المنتج.":"يرجى إدخال جميع المعلومات المطلوبة والكمية بشكل صحيح."));return;}
         submit.disabled=true;
         fetch(BACKEND_URL+"/api/orders",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify({product_id:p.id,params:params,qty:isFixedTurkcellBundle?1:qty})})
             .then(async function(response){
