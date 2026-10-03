@@ -3828,3 +3828,31 @@ body{min-width:0;}
 .balance-category-grid .game-tile-image img[src*="reflect_footer.png"]{
     padding:34px 18px!important;
 }
+
+/* ===== شعارات الأرصدة الرسمية: Reflect / Alfa / Rcell ===== */
+.balance-category-grid .game-tile-image img[src*="reflect_footer.png"],
+.balance-subgroup-tile .game-tile-image img[src*="reflect_footer.png"]{
+    object-fit:contain!important;
+    object-position:center!important;
+    padding:18px!important;
+    background:#111827!important;
+    border-radius:inherit!important;
+    transform:none!important;
+}
+.balance-category-grid .game-tile-image img[src*="alfa.com.lb/images/logo.png"],
+.balance-subgroup-tile .game-tile-image img[src*="alfa.com.lb/images/logo.png"],
+.balance-category-grid .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"],
+.balance-subgroup-tile .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"]{
+    object-fit:contain!important;
+    object-position:center!important;
+    padding:18px!important;
+    background:#fff!important;
+    transform:none!important;
+}
+.balance-category-grid .game-tile-image img[src*="alfa.com.lb/images/logo.png"]{
+    padding:0!important;
+    object-fit:cover!important;
+}
+.balance-category-grid .game-tile-image img[src*="rcell.me/images/logo/logo-shape.svg"]{
+    padding:30px!important;
+}
