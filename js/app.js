@@ -245,7 +245,7 @@ function initializeWelcomeSplash() {
             splash.hidden = true;
             splash.setAttribute("aria-hidden", "true");
         }, 380);
-    }, 1400);
+    }, 2000);
 }
 
 /* =========================
