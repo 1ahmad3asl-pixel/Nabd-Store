@@ -57,6 +57,38 @@ jobs:
               "modern-strike-online": ("com.gamedevlab.modernstrike", "Modern Strike Online"),
               "overmortal-idle-global": ("com.xsupergame.overmortal", "Overmortal: Idle Global"),
               "stormshot": ("com.funplus.ss", "Stormshot"),
+              "army-dudes": ("", "Army Dudes"),
+              "crystalfall": ("", "CrystalFall"),
+          }
+
+          fallback_pages = {
+              "cloud-song": "https://apkpure.net/cloud-song-saga-of-skywalkers/vng.game.sky.fantasy.song.sea",
+              "king-shot": "https://kingshot.en.uptodown.com/android",
+              "zepeto": "https://play.google.com/store/apps/details?id=me.zepeto.main&hl=en&gl=US",
+              "ghost-story-love-destiny": "https://play.google.com/store/apps/details?id=com.vnggames.ghoststory&hl=en&gl=US",
+              "golden-spatula": "https://play.google.com/store/apps/details?id=com.riot.FFGSSea&hl=en&gl=US",
+              "arknights-endfield": "https://play.google.com/store/apps/details?id=com.gryphline.endfield.gp&hl=en&gl=US",
+              "heaven-burns-red": "https://play.google.com/store/apps/details?id=com.YoStarEN.HBR&hl=en&gl=US",
+              "top-war": "https://play.google.com/store/apps/details?id=com.topwar.gp&hl=en&gl=US",
+              "the-ants": "https://play.google.com/store/apps/details?id=com.star.union.planetant&hl=en&gl=US",
+              "cyber-fantasy": "https://apkpure.net/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android",
+              "blade-x": "https://apkpure.net/blade-x-odyssey-of-heroes/com.yjmgames.bladex.aos",
+              "hyper-front": "https://apkpure.net/hyper-front/com.netease.bfc1game.na",
+              "clash-of-plants": "https://myandroid.org/apps/com-waterwish-garden-tales-clash-of-plants",
+              "journey-renewed": "https://apkpure.net/journey-renewed-fate-fantasy/com.xiyou.cyhk.gp",
+              "dragon-nest-m-sea": "https://apkpure.net/dragon-nest-m/com.sdg.dragonnest",
+              "dream-and-lethe-record": "https://apkpure.net/dream-and-lethe-record/com.kingsgroup.dreamandlethe",
+              "echocalypse-scarlet-covenant": "https://apkpure.net/echocalypse-scarlet-covenant/com.gaea.echocalypse.en",
+              "starseed": "https://apkpure.net/starseed-asnia-trigger/com.com2us.starseedgl.android.google.global.normal",
+              "extraordinary-ones": "https://apkpure.net/extraordinary-ones/com.netease.frxyna",
+              "marvel-mystic-mayhem": "https://apkpure.net/marvel-mystic-mayhem/com.netease.mmm",
+              "garena-speed-drifters": "https://play.google.com/store/apps/details?id=com.garena.game.fctw&hl=en&gl=US",
+              "mongil-star-dive": "https://play.google.com/store/apps/details?id=com.netmarble.monster2&hl=en&gl=US",
+              "modern-strike-online": "https://play.google.com/store/apps/details?id=com.gamedevltd.modernstrike&hl=en&gl=US",
+              "overmortal-idle-global": "https://apkpure.net/overmortal-idle-global/com.xsupergame.overmortal",
+              "stormshot": "https://play.google.com/store/apps/details?id=com.sivona.stormshot.e&hl=en&gl=US",
+              "army-dudes": "https://www.kongregate.com/en/games/skylerfunnydude/army-dudes-full-game",
+              "crystalfall": "https://crystalfall.playpark.com/",
           }
 
           root = "public/game-images"
@@ -74,7 +106,7 @@ jobs:
                   print("SKIP existing:", key)
                   continue
 
-              page_url = "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(app_id) + "&hl=en&gl=US"
+              page_url = fallback_pages.get(key) if not app_id else "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(app_id) + "&hl=en&gl=US"
               req = urllib.request.Request(
                   page_url,
                   headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
@@ -83,31 +115,22 @@ jobs:
                   with urllib.request.urlopen(req, timeout=45) as response:
                       page = response.read().decode("utf-8", "ignore")
               except urllib.error.HTTPError as exc:
-                  if exc.code != 404:
+                  if exc.code != 404 or key not in fallback_pages:
                       raise
-                  search_url = "https://play.google.com/store/search?q=" + urllib.parse.quote(label) + "&c=apps&hl=en&gl=US"
-                  search_req = urllib.request.Request(
-                      search_url,
+                  fallback_url = fallback_pages[key]
+                  print("Using verified fallback source:", label, "->", fallback_url)
+                  fallback_req = urllib.request.Request(
+                      fallback_url,
                       headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
                   )
-                  with urllib.request.urlopen(search_req, timeout=45) as response:
-                      search_page = response.read().decode("utf-8", "ignore")
-                  ids = re.findall(r'/store/apps/details\?id=([^&"\\]+)', search_page, re.I)
-                  if not ids:
-                      raise RuntimeError("Google Play app not found for " + label + " (" + app_id + ")")
-                  resolved_id = ids[0]
-                  print("RESOLVED package:", label, "->", resolved_id)
-                  page_url = "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(resolved_id) + "&hl=en&gl=US"
-                  req = urllib.request.Request(
-                      page_url,
-                      headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
-                  )
-                  with urllib.request.urlopen(req, timeout=45) as response:
+                  with urllib.request.urlopen(fallback_req, timeout=45) as response:
                       page = response.read().decode("utf-8", "ignore")
 
               patterns = [
                   r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
-                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']'
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+                  r'<meta[^>]+property=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']twitter:image["\']'
               ]
               candidates = []
               for pattern in patterns:
