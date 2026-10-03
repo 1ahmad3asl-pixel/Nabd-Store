@@ -45,11 +45,15 @@ function openBoostProducts(g,fromHistory){
  e.content.querySelectorAll(".boost-buy-btn[data-id]").forEach(b=>b.addEventListener("click",()=>{const p=list.find(x=>String(x.id)===String(b.dataset.id));if(p)openProductModal(p);}));
  scrollTo({top:0,behavior:"smooth"});
 }
-window.addEventListener("popstate",e=>{
- const s=e.state;if(!s||!s.nabdInternal)return;
+window.__nabdHandleBoostHistory=function(s){
+ if(!s||!s.nabdInternal)return;
  if(s.view==="boost")openBoost(true);
- else if(s.view==="boost-products"){const g=GROUPS.find(x=>x.key===s.boostGroupKey);if(g)openBoostProducts({key:g.key,title:g.title,products:groupProducts(g)},true);}
-});
+ else if(s.view==="boost-products"){
+  const g=GROUPS.find(x=>x.key===s.boostGroupKey);
+  if(g)openBoostProducts({key:g.key,title:g.title,products:groupProducts(g)},true);
+  else openBoost(true);
+ }
+};
 document.addEventListener("click",e=>{
  const b=e.target.closest('.category[data-category="boost"]');if(!b)return;
  e.preventDefault();e.stopPropagation();openBoost(false);
