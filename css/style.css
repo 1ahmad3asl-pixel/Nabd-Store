@@ -3901,3 +3901,8 @@ body{min-width:0;}
 .welcome-splash[hidden],.welcome-splash.is-hidden{
     pointer-events:none!important;
 }
+
+
+/* شاشة الترحيب للعرض فقط ولا يجوز لها اعتراض أي لمسة بعد ظهور الصفحة. */
+.welcome-splash{pointer-events:none!important;}
+.welcome-splash.is-hidden,.welcome-splash[hidden]{pointer-events:none!important;}
