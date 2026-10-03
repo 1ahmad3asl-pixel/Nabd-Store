@@ -78,8 +78,31 @@ jobs:
                   page_url,
                   headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
               )
-              with urllib.request.urlopen(req, timeout=45) as response:
-                  page = response.read().decode("utf-8", "ignore")
+              try:
+                  with urllib.request.urlopen(req, timeout=45) as response:
+                      page = response.read().decode("utf-8", "ignore")
+              except urllib.error.HTTPError as exc:
+                  if exc.code != 404:
+                      raise
+                  search_url = "https://play.google.com/store/search?q=" + urllib.parse.quote(label) + "&c=apps&hl=en&gl=US"
+                  search_req = urllib.request.Request(
+                      search_url,
+                      headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
+                  )
+                  with urllib.request.urlopen(search_req, timeout=45) as response:
+                      search_page = response.read().decode("utf-8", "ignore")
+                  ids = re.findall(r'/store/apps/details\?id=([^&"\\]+)', search_page, re.I)
+                  if not ids:
+                      raise RuntimeError("Google Play app not found for " + label + " (" + app_id + ")")
+                  resolved_id = ids[0]
+                  print("RESOLVED package:", label, "->", resolved_id)
+                  page_url = "https://play.google.com/store/apps/details?id=" + urllib.parse.quote(resolved_id) + "&hl=en&gl=US"
+                  req = urllib.request.Request(
+                      page_url,
+                      headers={"User-Agent": ua, "Accept-Language": "en-US,en;q=0.9"}
+                  )
+                  with urllib.request.urlopen(req, timeout=45) as response:
+                      page = response.read().decode("utf-8", "ignore")
 
               patterns = [
                   r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
