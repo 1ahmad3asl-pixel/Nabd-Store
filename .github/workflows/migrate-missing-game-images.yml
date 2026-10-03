@@ -54,7 +54,6 @@ jobs:
               "garena-speed-drifters": ("page", "https://www.appbrain.com/app/garena-speed-drifters/com.garena.game.fctw"),
               "mongil-star-dive": ("page", "https://www.appbrain.com/app/mongil-star-dive/com.netmarble.monster2"),
               "modern-strike-online": ("page", "https://www.appbrain.com/app/modern-strike-online/com.gamedevltd.modernstrike"),
-              "overmortal-idle-global": ("page", "https://www.appbrain.com/app/overmortal-idle-global/com.xsupergame.overmortal"),
               "stormshot": ("page", "https://www.appbrain.com/app/stormshot-isle-of-adventure/com.sivona.stormshot.e"),
           }
 
