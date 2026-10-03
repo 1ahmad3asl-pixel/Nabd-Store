@@ -28,7 +28,7 @@ jobs:
           import re
           import sys
           import tempfile
-          import urllib.request
+          import urllib.request\n          import urllib.parse
 
           games = {
               "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
