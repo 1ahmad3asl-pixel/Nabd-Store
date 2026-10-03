@@ -53,7 +53,7 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
   <div class="syp-rate-meta" id="sypRateMeta">جاري تحديث سعر الصرف...</div>
 </section>
 <section class="methods" aria-label="طرق الدفع">
-<a class="method" href="#" data-method="sham-dollar"><span class="icon">💵</span><span class="name">شام كاش دولار</span></a>
+<a class="method" href="/sham-cash-dollar.html" data-method="sham-dollar"><span class="icon">💵</span><span class="name">شام كاش دولار</span></a>
 <a class="method" href="#" data-method="sham-syp"><span class="icon">💴</span><span class="name">شام كاش سوري</span></a>
 <a class="method" href="#" data-method="binance"><span class="icon">🟡</span><span class="name">باينانس</span></a>
 <a class="method" href="#" data-method="syriatel"><span class="icon">📱</span><span class="name">سيرياتيل كاش</span></a>
@@ -61,7 +61,9 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 </main>
 <script>
 document.querySelectorAll("[data-method]").forEach(function(card){
- card.addEventListener("click",function(e){e.preventDefault();});
+ card.addEventListener("click",function(e){
+   if(card.getAttribute("data-method") !== "sham-dollar") e.preventDefault();
+ });
 });
 </script>
 <script>
