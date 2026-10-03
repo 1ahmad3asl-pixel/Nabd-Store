@@ -21,7 +21,8 @@ jobs:
       - name: Download and validate only missing images
         run: |
           set -euo pipefail
-          python3 - <<'PY'
+          python3 -m pip install --disable-pip-version-check pillow
+          python3 - <<'PY
           import html
           import os
           import re
@@ -139,42 +140,19 @@ jobs:
               print("No missing images needed migration.")
               sys.exit(0)
 
-          # Publish only after every requested image downloaded successfully.
+          # Validate every downloaded file before publishing any of them.
+          from PIL import Image
+          for temp_path, final_path, label, size in downloaded:
+              with Image.open(temp_path) as im:
+                  im.verify()
+
+          # Publish only after every requested image downloaded and validated successfully.
+          if len(downloaded) != len(games):
+              raise RuntimeError("Not all missing game images were downloaded.")
           for temp_path, final_path, label, size in downloaded:
               os.replace(temp_path, final_path)
 
           print("Successfully prepared", len(downloaded), "new GitHub game images.")
-          PY
-
-      - name: Validate image files
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          from PIL import Image
-          root = Path("public/game-images")
-          targets = [
-              "cloud-song","king-shot","zepeto","ghost-story-love-destiny","golden-spatula",
-              "arknights-endfield","heaven-burns-red","top-war","the-ants","cyber-fantasy",
-              "blade-x","hyper-front","clash-of-plants","journey-renewed","dragon-nest-m-sea",
-              "dream-and-lethe-record","echocalypse-scarlet-covenant","starseed","extraordinary-ones",
-              "marvel-mystic-mayhem","garena-speed-drifters","mongil-star-dive","modern-strike-online",
-              "overmortal-idle-global","stormshot"
-          ]
-          missing = []
-          for key in targets:
-              matches = [p for p in root.glob(key + ".*") if p.suffix.lower() in {".png",".jpg",".jpeg",".webp"}]
-              if not matches:
-                  missing.append(key)
-                  continue
-              for p in matches:
-                  if p.stat().st_size < 1000:
-                      raise RuntimeError("Image too small: " + str(p))
-                  with Image.open(p) as im:
-                      im.verify()
-                  print("VALID:", p)
-          if missing:
-              raise RuntimeError("Still missing images: " + ", ".join(missing))
           PY
 
       - name: Commit only the completed GitHub image set
