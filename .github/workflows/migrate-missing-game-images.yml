@@ -48,7 +48,7 @@ jobs:
               "army-dudes": ("page", "https://www.kongregate.com/en/games/skylerfunnydude/army-dudes-full-game"),
               "crystalfall": ("image", "https://miro.medium.com/v2/1%2A3xsHSpMc09Fxskytt5yXag.png"),
               "cyber-fantasy": ("page", "https://www.appbrain.com/app/astral-guardians-cyber-fantasy/com.hkfancygame.kog.android"),
-              "clash-of-plants": ("page", "https://play.google.com/store/apps/details?id=com.waterwish.garden.tales.clash.of.plants&hl=en&gl=US"),
+              "clash-of-plants": ("page", "https://www.appbrain.com/app/garden-tales-clash-of-plants/com.waterwish.garden.tales.clash.of.plants"),
               "dream-and-lethe-record": ("page", "https://play.google.com/store/apps/details?id=vng.games.dream.mobile&hl=en&gl=US"),
               "echocalypse-scarlet-covenant": ("page", "https://play.google.com/store/apps/details?id=com.gaea.echocalypse.en&hl=en&gl=US"),
               "starseed": ("page", "https://www.appbrain.com/app/starseed-asnia-trigger/com.com2us.starseedgl.android.google.global.normal"),
