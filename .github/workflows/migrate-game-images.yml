@@ -1,0 +1,125 @@
+name: Migrate game images to GitHub
+
+on:
+  push:
+    paths:
+      - ".github/workflows/migrate-game-images.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Download missing game images
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python3 <<'PY'
+          import html
+          import os
+          import re
+          import sys
+          import tempfile
+          import urllib.request
+
+          games = {
+              "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
+              "king-shot": ("com.fingerfun.kingshot", "King Shot"),
+              "zepeto": ("com.naver.zepeto", "ZEPETO"),
+              "ghost-story-love-destiny": ("com.netease.wxzcglobal", "Ghost Story: Love Destiny"),
+              "golden-spatula": ("com.tencent.tmgp.sgame", "Golden Spatula"),
+              "arknights-endfield": ("com.hypergryph.endfield", "Arknights: Endfield"),
+              "heaven-burns-red": ("com.heavenburnsred.global", "Heaven Burns Red"),
+              "top-war": ("com.Topwar.gp", "Top War: Battle Game"),
+              "the-ants": ("com.allstarunion.ta", "The Ants: Underground Kingdom"),
+              "cyber-fantasy": ("com.hkfancygame.kog.android", "Cyber Fantasy"),
+              "blade-x": ("com.yjmgames.bladex.aos", "Blade X: Odyssey of Heroes"),
+              "hyper-front": ("com.battlefun.c1game.na", "Hyper Front"),
+              "clash-of-plants": ("com.waterwish.garden.tales.clash.of.plants", "Garden Tales: Clash of Plants"),
+              "journey-renewed": ("com.xiyou.cyhk.gp", "Journey Renewed: Fate Fantasy"),
+              "dragon-nest-m-sea": ("com.sdg.dragonnest", "Dragon Nest M"),
+              "dream-and-lethe-record": ("com.kingsgroup.dreamandlethe", "Dream and Lethe Record"),
+              "echocalypse-scarlet-covenant": ("com.gaea.echocalypse.en", "Echocalypse: Scarlet Covenant"),
+              "starseed": ("com.com2us.starseedgl.android.google.global.normal", "STARSEED: Asnia Trigger"),
+              "extraordinary-ones": ("com.netease.frxyna", "Extraordinary Ones"),
+              "marvel-mystic-mayhem": ("com.netease.mmm", "Marvel Mystic Mayhem"),
+              "garena-speed-drifters": ("com.garena.game.drift", "Garena Speed Drifters"),
+              "mongil-star-dive": ("com.cjenm.mongil", "Mongil: Star Dive"),
+              "modern-strike-online": ("com.gamedevlab.modernstrike", "Modern Strike Online"),
+              "overmortal-idle-global": ("com.xsupergame.overmortal", "Overmortal: Idle Global"),
+              "stormshot": ("com.funplus.ss", "Stormshot"),
+              "cloud-song": ("vng.game.sky.fantasy.song.sea", "Cloud Song: Saga of Skywalkers"),
+          }
+
+          root = "public/game-images"
+          os.makedirs(root, exist_ok=True)
+          user_agent = "Mozilla/5.0 (compatible; Nabd-Store image migration/1.0)"
+          downloaded = []
+
+          # Avoid replacing any existing GitHub image.
+          for key, (app_id, label) in games.items():
+              existing = []
+              for ext in ("png", "jpg", "jpeg", "webp"):
+                  path = os.path.join(root, key + "." + ext)
+                  if os.path.isfile(path) and os.path.getsize(path) > 1000:
+                      existing.append(path)
+              if existing:
+                  print(f"SKIP existing: {key} -> {existing[0]}")
+                  continue
+
+              page_url = f"https://play.google.com/store/apps/details?id={urllib.parse.quote(app_id)}&hl=en&gl=US"
+              req = urllib.request.Request(page_url, headers={"User-Agent": user_agent, "Accept-Language": "en-US,en;q=0.9"})
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  page = response.read().decode("utf-8", "ignore")
+
+              candidates = re.findall(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', page, re.I)
+              if not candidates:
+                  candidates = re.findall(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', page, re.I)
+              if not candidates:
+                  raise RuntimeError(f"No og:image found for {label} ({app_id})")
+
+              image_url = html.unescape(candidates[0]).replace("\\u0026", "&")
+              image_req = urllib.request.Request(image_url, headers={"User-Agent": user_agent})
+              with urllib.request.urlopen(image_req, timeout=30) as response:
+                  data = response.read()
+                  content_type = (response.headers.get("Content-Type") or "").split(";")[0].lower()
+
+              if len(data) < 1000 or len(data) > 5 * 1024 * 1024:
+                  raise RuntimeError(f"Invalid image size for {label}: {len(data)} bytes")
+
+              ext = {"image/jpeg": "jpg", "image/webp": "webp", "image/png": "png"}.get(content_type, "png")
+              temp_path = os.path.join(root, key + ".pending." + ext)
+              with open(temp_path, "wb") as f:
+                  f.write(data)
+              downloaded.append((temp_path, os.path.join(root, key + "." + ext), label, len(data)))
+              print(f"DOWNLOADED: {label} -> {key}.{ext} ({len(data)} bytes)")
+
+          # Only publish files after every required download succeeded.
+          for temp_path, final_path, label, size in downloaded:
+              os.replace(temp_path, final_path)
+
+          if not downloaded:
+              print("No missing images needed migration.")
+              sys.exit(0)
+
+          print(f"Migrated {len(downloaded)} image(s) into GitHub.")
+
+      - name: Commit migrated images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/game-images
+          if git diff --cached --quiet; then
+            echo "No image changes to commit."
+            exit 0
+          fi
+          git commit -m "Migrate remaining game images to GitHub"
+          git push
