@@ -3709,10 +3709,6 @@ function initializeStoreInteractionLock() {
         if (!editable) event.preventDefault();
     }, {capture:true});
 
-    // تأكيد إضافي للصور حتى لا تتحول إلى هدف مستقل للّمس الطويل.
-    document.addEventListener("pointerdown", function (event) {
-        if (event.target && event.target.closest && event.target.closest("img, svg")) {
-            event.preventDefault();
-        }
-    }, {capture:true});
+    // لا نمنع pointerdown على الصور أو SVG؛ لأن ذلك يلغي أحداث اللمس
+    // والنقر على الأزرار التي تحتوي أيقونات أو صورًا داخلها.
 }
