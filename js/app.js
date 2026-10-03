@@ -17,6 +17,73 @@ const state = {
 };
 
 const BACKEND_URL = "";
+
+/*
+ * NABD ISOLATION CONTRACT
+ * -----------------------
+ * Every section/category/product owns its own scope key.
+ * Shared helpers may read data, but navigation, selection and UI state
+ * must always be resolved through the current scope. A change inside one
+ * scope must never mutate another scope implicitly.
+ */
+const NabdScope = Object.freeze({
+    HOME: "home",
+    GAMES: "games",
+    APPS: "apps",
+    BALANCE: "balance",
+    NUMBERS: "numbers",
+    DIGITAL: "digital",
+    BOOST: "boost",
+    OTHER: "other"
+});
+
+function createSectionScope(section, category, productId) {
+    const safeSection = String(section || NabdScope.HOME);
+    const safeCategory = category == null ? null : String(category);
+    const safeProductId = productId == null ? null : String(productId);
+    return Object.freeze({
+        section: safeSection,
+        category: safeCategory,
+        productId: safeProductId,
+        key: [safeSection, safeCategory, safeProductId].filter(function(value) {
+            return value !== null && value !== "";
+        }).join(":")
+    });
+}
+
+const sectionState = {
+    current: createSectionScope(NabdScope.HOME),
+    history: []
+};
+
+function setSectionScope(section, category, productId, options) {
+    const next = createSectionScope(section, category, productId);
+    const previous = sectionState.current;
+    sectionState.current = next;
+
+    if (!options || options.recordHistory !== false) {
+        sectionState.history.push({
+            from: previous,
+            to: next
+        });
+        if (sectionState.history.length > 50) sectionState.history.shift();
+    }
+
+    return next;
+}
+
+function getSectionScope(section) {
+    if (!section) return sectionState.current;
+    return sectionState.current.section === section
+        ? sectionState.current
+        : createSectionScope(section);
+}
+
+function isSameSection(section) {
+    return sectionState.current.section === String(section || "");
+}
+
+
 async function loadSypExchangeRate() {
     const sourceEl = document.getElementById("sypSourceRate");
     const storeEl = document.getElementById("sypStoreRate");
