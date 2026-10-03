@@ -86,6 +86,30 @@ const elements = {
 
 // Fallback click delegation for the main category tiles.
 // Keeps the Games entry responsive even if another initializer fails.
+document.addEventListener("pointerup", function(event) {
+    // Fallback حقيقي للمس: إذا اعترضت طبقة شفافة نقطة اللمس، ابحث عن
+    // زر القسم الموجود تحتها بدل الاعتماد على click وحده.
+    if (event.pointerType === "mouse") return;
+    const stack = typeof document.elementsFromPoint === "function"
+        ? document.elementsFromPoint(event.clientX, event.clientY)
+        : [];
+    const target = stack.find(function(node) {
+        return node && node.closest && node.closest(".category[data-category]");
+    });
+    const category = target && target.closest
+        ? target.closest(".category[data-category]")
+        : null;
+    if (!category) return;
+    if (event.target && event.target.closest && event.target.closest(".category[data-category]")) return;
+
+    const key = category.getAttribute("data-category");
+    if (key === "games") openGamesPage();
+    else if (key === "apps") openAppsPage();
+    else if (key === "balance") openBalancePage(false);
+    else if (key === "numbers") openNumbersPage();
+    else if (key === "digital" && typeof openDigitalPage === "function") openDigitalPage();
+}, {capture:true, passive:true});
+
 document.addEventListener("click", function(event) {
     const gamesButton = event.target.closest('.category[data-category="games"]');
     if (gamesButton) {
