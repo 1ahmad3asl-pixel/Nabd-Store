@@ -22,22 +22,6 @@
     </div>
 </div>
 
-<script>
-(function () {
-    var splash = document.getElementById("welcomeSplash");
-    if (!splash) return;
-    splash.hidden = false;
-    splash.classList.remove("is-hidden");
-    splash.setAttribute("aria-hidden", "false");
-    window.setTimeout(function () {
-        splash.classList.add("is-hidden");
-        window.setTimeout(function () {
-            splash.hidden = true;
-            splash.setAttribute("aria-hidden", "true");
-        }, 380);
-    }, 2000);
-})();
-</script>
 
 <header class="main-header"><!-- اسم المتجر -->
 <div class="header-logo">
