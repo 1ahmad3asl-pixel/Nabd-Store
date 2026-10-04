@@ -3314,7 +3314,7 @@ function renderBalanceProductPicker(group) {
     // Reflect يحتوي على منتج واحد فقط؛ نختاره تلقائيًا ونخفي قائمة اختيار المنتج.
     const isReflectSingleProduct = group && group.balanceGroupKey === "reflect" && available.length === 1;
     // فواتير MTN لها منتج واحد فقط؛ نختاره تلقائيًا ونخفي حقل اختيار المنتج.
-    const mtnContext = normalizeBalanceText(String(group && (group.balanceGroupKey || group.providerTitle || "") || "") + " " + String(group && group.title || ""));\n    const mtnInvoiceContext = normalizeBalanceText(String(group && group.providerTitle || "") + " " + String(group && group.title || "") + " " + String((first && first.category_name) || "") + " " + String((first && first.name) || ""));\n    const isMtnInvoiceProduct = group && /mtn/.test(mtnContext) && /فاتور|invoice/.test(mtnInvoiceContext);
+    const isMtnInvoiceProduct = group && String(group.balanceGroupKey || "").toLowerCase() === "mtn" && /فاتور|invoice/i.test(normalizeBalanceText(String((first && first.category_name) || "") + " " + String((first && first.name) || "") + " " + String(group.title || "")));
 
     function getBalanceSaleUnitPrice(product){
         // /api/products already returns the final selling price from the live Nemer price
