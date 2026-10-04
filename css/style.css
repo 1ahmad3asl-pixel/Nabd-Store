@@ -3927,3 +3927,24 @@ body{min-width:0;}
 /* شاشة الترحيب للعرض فقط ولا يجوز لها اعتراض أي لمسة بعد ظهور الصفحة. */
 .welcome-splash{pointer-events:none!important;}
 .welcome-splash.is-hidden,.welcome-splash[hidden]{pointer-events:none!important;}
+
+
+/* منع تحديد النصوص وسحب الصور في واجهة المتجر — حقول الإدخال فقط تبقى قابلة للتحديد. */
+html,body,body *{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+}
+img{
+    -webkit-user-drag:none;
+    user-drag:none;
+}
+input,textarea,[contenteditable="true"]{
+    -webkit-user-select:text;
+    -moz-user-select:text;
+    -ms-user-select:text;
+    user-select:text;
+    -webkit-touch-callout:default;
+}
