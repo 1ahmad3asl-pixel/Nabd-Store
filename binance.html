@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>باينانس - Nabd-Store</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif}
+.page{width:min(620px,92vw);margin:0 auto;padding:20px 0 44px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.back{width:44px;height:44px;border-radius:14px;background:#151515;border:1px solid #292929;color:#fff;font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+h1{margin:0;font-size:clamp(23px,5vw,32px);font-weight:900}
+.card{background:#111;border:1px solid #292929;border-radius:22px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.28)}
+.subtitle{text-align:center;color:#aaa;margin:0 0 22px;font-size:15px}
+.networks{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.network{min-height:150px;border:2px solid #f5c400;border-radius:17px;background:#141414;color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;font-size:18px;font-weight:900;transition:.2s;padding:16px}
+.network:hover{border-color:#f5c400;color:#f5c400;transform:translateY(-2px);box-shadow:0 4px 16px rgba(245,196,0,.16)}
+.network:active{transform:scale(.97)}
+@media(max-width:480px){.card{padding:18px}.network{min-height:130px;font-size:16px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="top">
+<a class="back" href="/add-balance.html" aria-label="العودة">‹</a>
+<h1>باينانس</h1>
+</header>
+<section class="card">
+<p class="subtitle">اختر شبكة التحويل</p>
+<div class="networks" aria-label="شبكات باينانس">
+<a class="network" href="#">USDT TRC20</a>
+<a class="network" href="#">USDT PEB20</a>
+</div>
+</section>
+</main>
+</body>
+</html>
