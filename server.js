@@ -257,6 +257,11 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     subject,
     text,
     html,
+    attachments: [{
+      ContentType: String(imageMime || "application/octet-stream"),
+      Filename: String(imageName || "transfer-image"),
+      Base64Content: base64
+    }],
     inlinedAttachments: [{
       ContentType: String(imageMime || "application/octet-stream"),
       Filename: String(imageName || "transfer-image"),
