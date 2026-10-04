@@ -6,7 +6,7 @@
 <title>اختر طريقة الدفع - Nabd-Store</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif}
+body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;transition:background .2s,color .2s}html[data-theme="light"] body{background:#f7f7f5;color:#171717}html[data-theme="light"] .back{background:#fff;color:#171717;border-color:#d9d9d4}html[data-theme="light"] .method{background:#fff;color:#171717}html[data-theme="light"] .method-name{color:#171717}html[data-theme="dark"] body{background:#080808;color:#fff}
 .page{width:min(920px,94vw);margin:0 auto;padding:22px 0 40px}
 .top{display:flex;align-items:center;gap:12px;margin-bottom:34px}
 .back{width:44px;height:44px;border-radius:14px;background:#151515;border:1px solid #292929;color:#fff;font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
@@ -38,24 +38,10 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 </section>
 </main>
 <script>
-(function(){
-var audioContext=null;
-function playClickSound(){
-try{
-var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
-if(!audioContext)audioContext=new C();
-if(audioContext.state==="suspended")audioContext.resume().catch(function(){});
-var o=audioContext.createOscillator(),g=audioContext.createGain(),t=audioContext.currentTime;
-o.type="sine";o.frequency.setValueAtTime(600,t);o.frequency.exponentialRampToValueAtTime(850,t+.055);
-g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.045,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.075);
-o.connect(g);g.connect(audioContext.destination);o.start(t);o.stop(t+.085);
-}catch(e){}
-}
 document.querySelectorAll(".method[data-href]").forEach(function(button){
-button.addEventListener("pointerdown",playClickSound,{passive:true});
 button.addEventListener("click",function(){var href=button.getAttribute("data-href");if(href)window.location.href=href;});
 });
-})();
 </script>
+<script src="/js/click-sound.js"></script>
 </body>
 </html>
