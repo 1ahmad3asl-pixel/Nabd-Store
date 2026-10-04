@@ -1,5 +1,5 @@
 /* Nabd-Store global click sound for standalone pages. */
-(function () {
+(function () {\n    try { document.documentElement.dataset.theme = localStorage.getItem("nabd-theme") === "light" ? "light" : "dark"; } catch (_) {}
     if (window.__nabdClickSoundReady) return;
     window.__nabdClickSoundReady = true;
 
