@@ -222,20 +222,17 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
 
   const safeAmount = Number(amount).toFixed(2);
   const subject = "طلب إيداع رصيد - شام كاش دولار - " + safeAmount + "$";
-  const text =
-    "طلب إيداع رصيد عبر شام كاش دولار\n\n" +
-    "المبلغ: $" + safeAmount + "\n" +
-    "اسم العميل: " + String(customer.name || "") + "\n" +
-    "ID العميل: " + String(customer.customer_number || "") + "\n" +
-    "رقم الهاتف: " + String(customer.phone || "") + "\n" +
-    "بريد العميل: " + String(customer.email || "") + "\n\n" +
-    "تم إرفاق صورة الحوالة.";
-
-  const inlineCid = "nabd-transfer-" + Date.now() + "-" + crypto.randomBytes(4).toString("hex");
-  const html =
-    '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
-    '<h2 style="margin:0 0 16px">طلب إيداع رصيد — شام كاش دولار</h2>' +
-    '<p><strong>المبلغ:</strong> 
+  const text = [
+    "طلب إيداع رصيد عبر شام كاش دولار",
+    "",
+    "المبلغ: $" + safeAmount,
+    "اسم العميل: " + String(customer.name || ""),
+    "ID العميل: " + String(customer.customer_number || ""),
+    "رقم الهاتف: " + String(customer.phone || ""),
+    "بريد العميل: " + String(customer.email || ""),
+    "",
+    "تم إرسال صورة الحوالة داخل الرسالة."
+  ].join("\n");
 
   const base64 = String(imageData || "").split(",").pop();
   if (!base64) {
@@ -243,6 +240,20 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     error.statusCode = 400;
     throw error;
   }
+
+  const inlineCid = "nabd-transfer-" + Date.now() + "-" + crypto.randomBytes(4).toString("hex");
+  const html =
+    '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
+    '<h2 style="margin:0 0 16px">طلب إيداع رصيد — شام كاش دولار</h2>' +
+    '<p><strong>المبلغ:</strong> $' + safeAmount + '</p>' +
+    '<p><strong>اسم العميل:</strong> ' + escapeHtmlEmail(customer.name || "") + '</p>' +
+    '<p><strong>ID العميل:</strong> ' + escapeHtmlEmail(customer.customer_number || "") + '</p>' +
+    '<p><strong>رقم الهاتف:</strong> ' + escapeHtmlEmail(customer.phone || "") + '</p>' +
+    '<p><strong>بريد العميل:</strong> ' + escapeHtmlEmail(customer.email || "") + '</p>' +
+    '<p><strong>صورة الحوالة:</strong></p>' +
+    '<div style="margin:12px 0;padding:10px;background:#f5f5f5;border-radius:12px;text-align:center">' +
+    '<img src="cid:' + inlineCid + '" alt="صورة الحوالة" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">' +
+    '</div></div>';
 
   const result = await sendMailjetEmail({
     to: receiver,
