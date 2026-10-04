@@ -60,7 +60,7 @@ const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim
 const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store.onrender.com").replace(/\/$/, "");
 const MAILJET_API_KEY = String(process.env.MAILJET_API_KEY || "").trim();
 const MAILJET_SECRET_KEY = String(process.env.MAILJET_SECRET_KEY || "").trim();
-const EMAIL_FROM = String(process.env.EMAIL_FROM || "").trim();
+const EMAIL_FROM = String(process.env.MAILJET_FROM_EMAIL || "").trim();
 
 app.use(express.json({ limit: "8mb" }));
 
@@ -158,7 +158,7 @@ function hashEmailVerificationValue(value) {
 
 async function sendMailjetEmail({to, subject, text, html, attachments = []}) {
   if (!MAILJET_API_KEY || !MAILJET_SECRET_KEY || !EMAIL_FROM) {
-    const error = new Error("خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و MAILJET_SECRET_KEY و EMAIL_FROM في إعدادات Render.");
+    const error = new Error("خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و MAILJET_SECRET_KEY و MAILJET_FROM_EMAIL في إعدادات Render.");
     error.statusCode = 503;
     throw error;
   }
@@ -1268,7 +1268,7 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
 app.post("/api/admin/email-broadcast", async (req, res) => {
   const subject = String(req.body?.subject || "").trim();
   const message = String(req.body?.message || "").trim();
-  if (!MAILJET_API_KEY || !EMAIL_FROM) return res.status(503).json({status:"ERROR",message:"خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و EMAIL_FROM في إعدادات Render."});
+  if (!MAILJET_API_KEY || !EMAIL_FROM) return res.status(503).json({status:"ERROR",message:"خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و MAILJET_FROM_EMAIL في إعدادات Render."});
   if (!subject || !message || subject.length > 150 || message.length > 10000) return res.status(400).json({status:"ERROR",message:"عنوان أو نص الرسالة غير صالح."});
 
   const result = await query("SELECT customer_id,name,email FROM customers WHERE email IS NOT NULL AND TRIM(email) <> '' ORDER BY customer_id");
