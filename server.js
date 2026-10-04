@@ -58,7 +58,7 @@ const COOKIE_SECURE = process.env.COOKIE_SECURE !== "false";
 const GOOGLE_CLIENT_ID = String(process.env.GOOGLE_CLIENT_ID || "").trim();
 const GOOGLE_CLIENT_SECRET = String(process.env.GOOGLE_CLIENT_SECRET || "").trim();
 const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "https://nabd-store.onrender.com").replace(/\/$/, "");
-const RESEND_API_KEY = String(process.env.RESEND_API_KEY || "").trim();
+const MAILJET_API_KEY = String(process.env.MAILJET_API_KEY || "").trim();
 const EMAIL_FROM = String(process.env.EMAIL_FROM || "").trim();
 
 app.use(express.json({ limit: "8mb" }));
@@ -156,16 +156,16 @@ function hashEmailVerificationValue(value) {
 }
 
 async function sendCustomerVerificationEmail(email, code) {
-  if (!RESEND_API_KEY || !EMAIL_FROM) {
-    const error = new Error("خدمة البريد غير مهيأة. أضف RESEND_API_KEY و EMAIL_FROM في إعدادات Render.");
+  if (!MAILJET_API_KEY || !EMAIL_FROM) {
+    const error = new Error("خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و EMAIL_FROM في إعدادات Render.");
     error.statusCode = 503;
     throw error;
   }
   const subject = "رمز التحقق من البريد الإلكتروني - Nabd-Store";
   const html = '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222"><h2 style="margin:0 0 14px">Nabd-Store</h2><p>رمز التحقق من بريدك الإلكتروني هو:</p><div style="font-size:30px;font-weight:800;letter-spacing:8px;margin:18px 0;padding:14px 18px;background:#f5f5f5;border-radius:12px;text-align:center">' + String(code) + '</div><p>صلاحية الرمز 10 دقائق. إذا لم تطلب إنشاء حساب، يمكنك تجاهل هذه الرسالة.</p></div>';
-  const response = await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.mailjet.com/emails", {
     method: "POST",
-    headers: {"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
+    headers: {"Authorization":"Bearer "+MAILJET_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
     body: JSON.stringify({from:EMAIL_FROM,to:[email],subject,text:"رمز التحقق من بريدك الإلكتروني في Nabd-Store هو: "+code+". صلاحية الرمز 10 دقائق.",html})
   });
   if (!response.ok) {
@@ -181,7 +181,7 @@ function escapeHtmlEmail(value) {
 
 async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName}) {
   const receiver = String(process.env.TRANSFER_RECEIVER_EMAIL || "").trim();
-  if (!RESEND_API_KEY || !EMAIL_FROM || !receiver) {
+  if (!MAILJET_API_KEY || !EMAIL_FROM || !receiver) {
     const error = new Error("خدمة استقبال الحوالات غير مهيأة على الخادم.");
     error.statusCode = 503;
     throw error;
@@ -205,9 +205,9 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     '<p><strong>رقم الهاتف:</strong> ' + escapeHtmlEmail(customer.phone || "") + '</p>' +
     '<p><strong>بريد العميل:</strong> ' + escapeHtmlEmail(customer.email || "") + '</p>' +
     '<p>صورة الحوالة مرفقة مع الرسالة.</p></div>';
-  const response = await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.mailjet.com/emails", {
     method: "POST",
-    headers: {"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
+    headers: {"Authorization":"Bearer "+MAILJET_API_KEY,"Content-Type":"application/json","Accept":"application/json"},
     body: JSON.stringify({
       from: EMAIL_FROM,
       to: [receiver],
@@ -223,7 +223,7 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     data = await response.json();
   } catch {}
 
-  // لا نعتبر الطلب ناجحًا إلا إذا قبلته Resend فعليًا وأعاد معرف الرسالة.
+  // لا نعتبر الطلب ناجحًا إلا إذا قبلته Mailjet فعليًا وأعاد معرف الرسالة.
   if (!response.ok || !data?.id) {
     const message = String(data?.message || "تعذر إرسال طلب الإيداع إلى البريد.");
     const error = new Error(message);
@@ -231,7 +231,7 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
     throw error;
   }
 
-  console.log("Sham Cash balance deposit email accepted by Resend:", data.id);
+  console.log("Sham Cash balance deposit email accepted by Mailjet:", data.id);
   return { id: String(data.id), statusCode: response.status };
 }
 
@@ -1237,7 +1237,7 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
 app.post("/api/admin/email-broadcast", async (req, res) => {
   const subject = String(req.body?.subject || "").trim();
   const message = String(req.body?.message || "").trim();
-  if (!RESEND_API_KEY || !EMAIL_FROM) return res.status(503).json({status:"ERROR",message:"خدمة البريد غير مهيأة. أضف RESEND_API_KEY و EMAIL_FROM في إعدادات Render."});
+  if (!MAILJET_API_KEY || !EMAIL_FROM) return res.status(503).json({status:"ERROR",message:"خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و EMAIL_FROM في إعدادات Render."});
   if (!subject || !message || subject.length > 150 || message.length > 10000) return res.status(400).json({status:"ERROR",message:"عنوان أو نص الرسالة غير صالح."});
 
   const result = await query("SELECT customer_id,name,email FROM customers WHERE email IS NOT NULL AND TRIM(email) <> '' ORDER BY customer_id");
@@ -1256,7 +1256,7 @@ app.post("/api/admin/email-broadcast", async (req, res) => {
   for (let i=0;i<recipients.length;i+=100) {
     const batch=recipients.slice(i,i+100).map(r=>({from:EMAIL_FROM,to:[r.email],subject,text:message,html:"<div dir=\"rtl\" style=\"font-family:Arial,sans-serif;line-height:1.8\">"+htmlMessage+"</div>"}));
     try {
-      const response=await fetch("https://api.resend.com/emails/batch",{method:"POST",headers:{"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(batch)});
+      const response=await fetch("https://api.mailjet.com/emails/batch",{method:"POST",headers:{"Authorization":"Bearer "+MAILJET_API_KEY,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(batch)});
       if(!response.ok){let details={};try{details=await response.json();}catch{};failed+=batch.length;failures.push(String(details.message||"فشل مزود البريد").slice(0,200));}
       else sent+=batch.length;
     } catch(error){failed+=batch.length;failures.push(String(error.message||"network error").slice(0,200));}
