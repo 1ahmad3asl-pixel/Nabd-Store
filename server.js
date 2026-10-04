@@ -212,7 +212,7 @@ function escapeHtmlEmail(value) {
   return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName, currencyLabel = "دولار"}) {
+async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName, currencyLabel = "دولار", methodLabel = "شام كاش"}) {
   const receiver = String(process.env.TRANSFER_RECEIVER_EMAIL || "").trim();
   if (!receiver) {
     const error = new Error("بريد استقبال الحوالات غير مهيأ على الخادم.");
@@ -221,9 +221,9 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
   }
 
   const safeAmount = Number(amount).toFixed(2);
-  const subject = "طلب إيداع رصيد - شام كاش " + currencyLabel + " - " + safeAmount + "$";
+  const subject = "طلب إيداع رصيد - " + methodLabel + " " + currencyLabel + " - " + safeAmount + "$";
   const text =
-    "طلب إيداع رصيد عبر شام كاش " + currencyLabel + "\n\n" +
+    "طلب إيداع رصيد عبر " + methodLabel + " " + currencyLabel + "\n\n" +
     "المبلغ: $" + safeAmount + "\n" +
     "اسم العميل: " + String(customer.name || "") + "\n" +
     "ID العميل: " + String(customer.customer_number || "") + "\n" +
@@ -234,7 +234,7 @@ async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, 
   const inlineCid = "nabd-transfer-" + Date.now() + "-" + crypto.randomBytes(4).toString("hex");
   const html =
     '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
-    '<h2 style="margin:0 0 16px">طلب إيداع رصيد — شام كاش " + escapeHtmlEmail(currencyLabel) + "</h2>' +
+    '<h2 style="margin:0 0 16px">طلب إيداع رصيد — ' + escapeHtmlEmail(methodLabel) + " " + escapeHtmlEmail(currencyLabel) + '</h2>' +
     '<p><strong>المبلغ:</strong> $' + safeAmount + '</p>' +
     '<p><strong>اسم العميل:</strong> ' + escapeHtmlEmail(customer.name || "") + '</p>' +
     '<p><strong>ID العميل:</strong> ' + escapeHtmlEmail(customer.customer_number || "") + '</p>' +
@@ -522,7 +522,7 @@ app.get("/api/customer/me", requireCustomer, async (req, res) => {
   }
 });
 
-async function processShamCashDeposit(req, res, currencyLabel, endpointLabel) {
+async function processBalanceDeposit(req, res, currencyLabel, endpointLabel, methodLabel = "شام كاش") {
   try {
     const amount = Number(req.body?.amount);
     const imageData = String(req.body?.image_data || "").trim();
@@ -540,7 +540,7 @@ async function processShamCashDeposit(req, res, currencyLabel, endpointLabel) {
     if (Date.now() - last < 30 * 1000) return res.status(429).json({ status: "ERROR", message: "انتظر قليلًا قبل إرسال طلب إيداع جديد." });
     balanceDepositRateLimits.set(String(customer.customer_id), Date.now());
     const imageName = imageNameRaw.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 80) || "transfer-receipt";
-    await sendBalanceDepositEmail({ amount, customer, imageData, imageMime, imageName, currencyLabel, endpointLabel });
+    await sendBalanceDepositEmail({ amount, customer, imageData, imageMime, imageName, currencyLabel, methodLabel, endpointLabel });
     res.json({ status: "OK", message: "تم إرسال طلب الإيداع بنجاح. ستتم مراجعة الحوالة وإضافة الرصيد من الإدارة." });
   } catch (error) {
     console.error(endpointLabel + " balance deposit error:", error);
@@ -549,11 +549,19 @@ async function processShamCashDeposit(req, res, currencyLabel, endpointLabel) {
 }
 
 app.post("/api/customer/balance-deposit/sham-dollar", requireCustomer, async (req, res) => {
-  await processShamCashDeposit(req, res, "دولار", "Sham Cash dollar");
+  await processBalanceDeposit(req, res, "دولار", "Sham Cash dollar", "Sham Cash");
 });
 
 app.post("/api/customer/balance-deposit/sham-syp", requireCustomer, async (req, res) => {
-  await processShamCashDeposit(req, res, "سوري", "Sham Cash Syrian");
+  await processBalanceDeposit(req, res, "سوري", "Sham Cash Syrian", "Sham Cash");
+});
+
+app.post("/api/customer/balance-deposit/binance-usdt-trc20", requireCustomer, async (req, res) => {
+  await processBalanceDeposit(req, res, "USDT", "Binance USDT TRC20", "Binance");
+});
+
+app.post("/api/customer/balance-deposit/binance-usdt-peb20", requireCustomer, async (req, res) => {
+  await processBalanceDeposit(req, res, "USDT", "Binance USDT PEB20", "Binance");
 });
 
 
