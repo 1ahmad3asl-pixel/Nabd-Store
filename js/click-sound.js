@@ -17,7 +17,7 @@
         return audioContext;
     }
 
-    function playClickSound() {
+    function playClickSound() {\n        if (localStorage.getItem("nabd-sound-enabled") === "off") return;
         try {
             const context = getAudioContext();
             if (!context) return;
