@@ -162,6 +162,7 @@ async function sendMailjetEmail({to, subject, text, html, attachments = []}) {
     error.statusCode = 503;
     throw error;
   }
+
   const message = {
     From: { Email: EMAIL_FROM, Name: STORE_NAME },
     To: [{ Email: String(to).trim() }],
@@ -170,14 +171,21 @@ async function sendMailjetEmail({to, subject, text, html, attachments = []}) {
     HTMLPart: String(html || "")
   };
   if (attachments.length) message.Attachments = attachments;
+
   const auth = Buffer.from(MAILJET_API_KEY + ":" + MAILJET_SECRET_KEY).toString("base64");
   const response = await fetch("https://api.mailjet.com/v3.1/send", {
     method: "POST",
-    headers: {"Authorization":"Basic " + auth,"Content-Type":"application/json","Accept":"application/json"},
-    body: JSON.stringify({Messages:[message]})
+    headers: {
+      "Authorization": "Basic " + auth,
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({ Messages: [message] })
   });
+
   let data = null;
   try { data = await response.json(); } catch {}
+
   if (!response.ok) {
     const detail = data?.ErrorMessage || data?.message || data?.Messages?.[0]?.Errors?.[0]?.ErrorMessage;
     const error = new Error(String(detail || "تعذر إرسال البريد الإلكتروني عبر Mailjet."));
@@ -189,23 +197,41 @@ async function sendMailjetEmail({to, subject, text, html, attachments = []}) {
 
 async function sendCustomerVerificationEmail(email, code) {
   const subject = "رمز التحقق من البريد الإلكتروني - Nabd-Store";
-  const html = '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222"><h2 style="margin:0 0 14px">Nabd-Store</h2><p>رمز التحقق من بريدك async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName}) {
+  const html = '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222"><h2 style="margin:0 0 14px">Nabd-Store</h2><p>رمز التحقق من بريدك الإلكتروني هو:</p><div style="font-size:30px;font-weight:800;letter-spacing:8px;margin:18px 0;padding:14px 18px;background:#f5f5f5;border-radius:12px;text-align:center">' + String(code) + '</div><p>صلاحية الرمز 10 دقائق. إذا لم تطلب إنشاء حساب، يمكنك تجاهل هذه الرسالة.</p></div>';
+
+  await sendMailjetEmail({
+    to: email,
+    subject,
+    text: "رمز التحقق من بريدك الإلكتروني في Nabd-Store هو: " + code + ". صلاحية الرمز 10 دقائق.",
+    html
+  });
+}
+
+function escapeHtmlEmail(value) {
+  return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+async function sendBalanceDepositEmail({amount, customer, imageData, imageMime, imageName}) {
   const receiver = String(process.env.TRANSFER_RECEIVER_EMAIL || "").trim();
   if (!receiver) {
     const error = new Error("بريد استقبال الحوالات غير مهيأ على الخادم.");
     error.statusCode = 503;
     throw error;
   }
+
   const safeAmount = Number(amount).toFixed(2);
   const subject = "طلب إيداع رصيد - شام كاش دولار - " + safeAmount + "$";
-  const text = "طلب إيداع رصيد عبر شام كاش دولار\n\n" +
+  const text =
+    "طلب إيداع رصيد عبر شام كاش دولار\n\n" +
     "المبلغ: $" + safeAmount + "\n" +
     "اسم العميل: " + String(customer.name || "") + "\n" +
     "ID العميل: " + String(customer.customer_number || "") + "\n" +
     "رقم الهاتف: " + String(customer.phone || "") + "\n" +
     "بريد العميل: " + String(customer.email || "") + "\n\n" +
     "تم إرفاق صورة الحوالة.";
-  const html = '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
+
+  const html =
+    '<div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#222">' +
     '<h2 style="margin:0 0 16px">طلب إيداع رصيد — شام كاش دولار</h2>' +
     '<p><strong>المبلغ:</strong> $' + safeAmount + '</p>' +
     '<p><strong>اسم العميل:</strong> ' + escapeHtmlEmail(customer.name || "") + '</p>' +
@@ -213,43 +239,31 @@ async function sendCustomerVerificationEmail(email, code) {
     '<p><strong>رقم الهاتف:</strong> ' + escapeHtmlEmail(customer.phone || "") + '</p>' +
     '<p><strong>بريد العميل:</strong> ' + escapeHtmlEmail(customer.email || "") + '</p>' +
     '<p>صورة الحوالة مرفقة مع الرسالة.</p></div>';
+
   const base64 = String(imageData || "").split(",").pop();
   if (!base64) {
     const error = new Error("صورة الحوالة غير صالحة.");
     error.statusCode = 400;
     throw error;
   }
+
   const result = await sendMailjetEmail({
     to: receiver,
     subject,
     text,
     html,
-    attachments: [{ContentType:String(imageMime || "application/octet-stream"),Filename:String(imageName || "transfer-image"),Base64Content:base64}]
+    attachments: [{
+      ContentType: String(imageMime || "application/octet-stream"),
+      Filename: String(imageName || "transfer-image"),
+      Base64Content: base64
+    }]
   });
-  const messageId = result?.Messages?.[0]?.To?.[0]?.MessageID || result?.Messages?.[0]?.MessageID || null;
+
+  const messageId = result?.Messages?.[0]?.To?.[0]?.MessageID ||
+    result?.Messages?.[0]?.MessageID || null;
+
   console.log("Sham Cash balance deposit email accepted by Mailjet:", messageId || "accepted");
-  return {id:messageId ? String(messageId) : null,statusCode:200};
-}
-ml,
-      attachments: [{ filename: imageName, content: imageData.split(",").pop() }]
-    })
-  });
-
-  let data = null;
-  try {
-    data = await response.json();
-  } catch {}
-
-  // لا نعتبر الطلب ناجحًا إلا إذا قبلته Mailjet فعليًا وأعاد معرف الرسالة.
-  if (!response.ok || !data?.id) {
-    const message = String(data?.message || "تعذر إرسال طلب الإيداع إلى البريد.");
-    const error = new Error(message);
-    error.statusCode = 502;
-    throw error;
-  }
-
-  console.log("Sham Cash balance deposit email accepted by Mailjet:", data.id);
-  return { id: String(data.id), statusCode: response.status };
+  return { id: messageId ? String(messageId) : null, statusCode: 200 };
 }
 
 function hashPassword(password) {
