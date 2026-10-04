@@ -53,7 +53,7 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 <script>
 document.querySelectorAll("[data-method]").forEach(function(card){
  card.addEventListener("click",function(e){
-   if(card.getAttribute("data-method") !== "sham-dollar") e.preventDefault();
+   if(card.getAttribute("data-method") !== "sham-dollar" && card.getAttribute("data-method") !== "sham-syp") e.preventDefault();
  });
 });
 </script>
