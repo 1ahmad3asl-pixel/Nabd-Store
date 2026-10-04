@@ -1,5 +1,13 @@
 /* Nabd-Store global click sound for standalone pages. */
-(function () {\n    try { document.documentElement.dataset.theme = localStorage.getItem("nabd-theme") === "light" ? "light" : "dark"; } catch (_) {}
+(function () {\n    function applySavedTheme() {
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem("nabd-theme") === "light" ? "light" : "dark";
+        } catch (_) {}
+    }
+    applySavedTheme();
+    window.addEventListener("storage", function (event) {
+        if (event.key === "nabd-theme") applySavedTheme();
+    });
     if (window.__nabdClickSoundReady) return;
     window.__nabdClickSoundReady = true;
 
@@ -45,6 +53,7 @@
             ? event.target.closest('button, a, [role="button"], label[for]')
             : null;
         if (!target || target.disabled || target.getAttribute("aria-disabled") === "true") return;
+        if (target.closest("#clickSound, #nightMode")) return;
         playClickSound();
     }, { passive: true });
 
