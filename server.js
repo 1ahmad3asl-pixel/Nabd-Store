@@ -564,6 +564,10 @@ app.post("/api/customer/balance-deposit/binance-usdt-peb20", requireCustomer, as
   await processBalanceDeposit(req, res, "USDT", "Binance USDT PEB20", "Binance");
 });
 
+app.post("/api/customer/balance-deposit/syriatel-cash", requireCustomer, async (req, res) => {
+  await processBalanceDeposit(req, res, "سوري", "Syriatel Cash", "Syriatel Cash");
+});
+
 
 app.post("/api/customer/email/send-code", async (req, res) => {
   try {
