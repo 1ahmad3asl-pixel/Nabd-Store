@@ -22,7 +22,7 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 .method-name{width:100%;text-align:center;font-size:14px;font-weight:900;color:#fff;line-height:1.35}
 .note{display:none}
 @media(max-width:560px){.methods{grid-template-columns:repeat(3,1fr);gap:14px 8px}.method{border-radius:15px}.method-logo{border-radius:13px}.method-name{font-size:12px}.icon{font-size:32px}}
-.syp-rate-card{margin:0 0 22px;padding:16px;border:1px solid #292929;border-radius:18px;background:#111;text-align:center}.syp-rate-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.syp-rate-label{font-size:12px;color:#aaa}.syp-rate-card h2{margin:4px 0 0;font-size:18px}.syp-rate-source{font-size:11px;color:#aaa}.syp-rate-values{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:14px}.syp-rate-value{display:flex;flex-direction:column;gap:3px}.syp-rate-value span{font-size:12px;color:#aaa}.syp-rate-value strong{font-size:22px}.syp-rate-value small{font-size:11px;color:#888}.syp-rate-plus{font-size:18px;font-weight:900;color:#f5c400}.syp-rate-meta{margin-top:12px;font-size:11px;color:#888}@media(max-width:560px){.syp-rate-values{gap:6px}.syp-rate-value strong{font-size:18px}.syp-rate-card h2{font-size:16px}}</style>
+</style>
 </head>
 <body>
 <main class="page">
@@ -31,18 +31,6 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 <h1>اختر طريقة الدفع</h1>
 </header>
 <p class="subtitle">اختر طريقة إدخال الرصيد التي تريد استخدامها</p>
-<section class="syp-rate-card" id="sypRateCard" aria-label="سعر صرف الليرة السورية">
-  <div class="syp-rate-card-head">
-    <div><span class="syp-rate-label">سعر الصرف</span><h2>الدولار مقابل الليرة السورية</h2></div>
-    <span class="syp-rate-source">LiraScope</span>
-  </div>
-  <div class="syp-rate-values">
-    <div class="syp-rate-value"><span>سعر الشراء</span><strong id="sypSourceRate">—</strong><small>ل.س / $</small></div>
-    <div class="syp-rate-plus" aria-hidden="true">+10</div>
-    <div class="syp-rate-value syp-rate-final"><span>السعر المعتمد في نبض ستور</span><strong id="sypStoreRate">—</strong><small>ل.س / $</small></div>
-  </div>
-  <div class="syp-rate-meta" id="sypRateMeta">جاري تحديث سعر الصرف...</div>
-</section>
 <section class="methods" aria-label="طرق الدفع">
 <div class="method-wrap"><a class="method" href="/sham-cash-dollar.html" data-method="sham-dollar"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش دولار</span></div>
 <div class="method-wrap"><a class="method" href="/sham-cash-syp.html" data-method="sham-syp"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش سوري</span></div>
@@ -56,24 +44,6 @@ document.querySelectorAll("[data-method]").forEach(function(card){
    if(card.getAttribute("data-method") !== "sham-dollar" && card.getAttribute("data-method") !== "sham-syp") e.preventDefault();
  });
 });
-</script>
-<script>
-(async function(){
-  const sourceEl=document.getElementById("sypSourceRate"),storeEl=document.getElementById("sypStoreRate"),metaEl=document.getElementById("sypRateMeta");
-  if(!sourceEl||!storeEl||!metaEl)return;
-  sourceEl.textContent="جاري التحديث...";storeEl.textContent="جاري التحديث...";
-  try{
-    const response=await fetch("/api/exchange-rate?_="+Date.now(),{headers:{"Accept":"application/json"},credentials:"same-origin",cache:"no-store"});
-    const data=await response.json();
-    if(!response.ok||data.status!=="OK"||!data.rate)throw new Error(data.message||"تعذر تحديث سعر الصرف.");
-    const buy=Number(data.rate.buy),rate=Number(data.rate.rate);
-    sourceEl.textContent=Number.isFinite(buy)?buy.toLocaleString("ar-SY"):"—";
-    storeEl.textContent=Number.isFinite(rate)?rate.toLocaleString("ar-SY"):"—";
-    metaEl.textContent="آخر تحديث: "+new Date().toLocaleTimeString("ar-SY",{hour:"2-digit",minute:"2-digit"});
-  }catch(error){
-    sourceEl.textContent="—";storeEl.textContent="—";metaEl.textContent="تعذر تحديث سعر الصرف حاليًا.";
-  }
-})();
 </script>
 </body>
 </html>
