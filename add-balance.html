@@ -14,13 +14,12 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 .subtitle{text-align:center;color:#aaa;margin:0 0 24px;font-size:15px}
 .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 12px;margin-bottom:20px;padding:3px 2px}
 .method-wrap{min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px}
-.method{width:100%;aspect-ratio:1/1;border:2px solid #f5c400;border-radius:17px;background:#141414;display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;text-decoration:none;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:.2s}
+.method{width:100%;aspect-ratio:1/1;border:2px solid #f5c400;border-radius:17px;background:#141414;display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:.2s;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .method:hover{border-color:#f5c400;color:#f5c400;transform:translateY(-2px);box-shadow:0 4px 16px rgba(245,196,0,.16)}
 .method:active{transform:scale(.97)}
 .icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:42px}
-.method-logo{width:100%;height:100%;object-fit:contain;display:block;border-radius:15px}
+.method-logo{width:100%;height:100%;object-fit:contain;display:block;border-radius:15px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-user-drag:none;pointer-events:none}
 .method-name{width:100%;text-align:center;font-size:14px;font-weight:900;color:#fff;line-height:1.35}
-.note{display:none}
 @media(max-width:560px){.methods{grid-template-columns:repeat(3,1fr);gap:14px 8px}.method{border-radius:15px}.method-logo{border-radius:13px}.method-name{font-size:12px}.icon{font-size:32px}}
 </style>
 </head>
@@ -32,12 +31,31 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 </header>
 <p class="subtitle">اختر طريقة إدخال الرصيد التي تريد استخدامها</p>
 <section class="methods" aria-label="طرق الدفع">
-<div class="method-wrap"><a class="method" href="/sham-cash-dollar.html" data-method="sham-dollar"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش دولار</span></div>
-<div class="method-wrap"><a class="method" href="/sham-cash-syp.html" data-method="sham-syp"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش سوري</span></div>
-<div class="method-wrap"><a class="method" href="/binance.html" data-method="binance"><span class="icon"><img class="method-logo" src="/public/assets/payment/binance.svg" alt="شعار باينانس الرسمي من Google Play"></span></a><span class="method-name">باينانس</span></div>
-<div class="method-wrap"><a class="method" href="/syriatel-cash.html" data-method="syriatel"><span class="icon"><img class="method-logo" src="/public/assets/payment/syriatel-cash.svg" alt="شعار سيريتل كاش الرسمي"></span></a><span class="method-name">سيرياتيل كاش</span></div>
+<div class="method-wrap"><button class="method" type="button" data-href="/sham-cash-dollar.html" aria-label="شام كاش دولار"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="" draggable="false"></span></button><span class="method-name">شام كاش دولار</span></div>
+<div class="method-wrap"><button class="method" type="button" data-href="/sham-cash-syp.html" aria-label="شام كاش سوري"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="" draggable="false"></span></button><span class="method-name">شام كاش سوري</span></div>
+<div class="method-wrap"><button class="method" type="button" data-href="/binance.html" aria-label="باينانس"><span class="icon"><img class="method-logo" src="/public/assets/payment/binance.svg" alt="" draggable="false"></span></button><span class="method-name">باينانس</span></div>
+<div class="method-wrap"><button class="method" type="button" data-href="/syriatel-cash.html" aria-label="سيرياتيل كاش"><span class="icon"><img class="method-logo" src="/public/assets/payment/syriatel-cash.svg" alt="" draggable="false"></span></button><span class="method-name">سيرياتيل كاش</span></div>
 </section>
 </main>
-
+<script>
+(function(){
+var audioContext=null;
+function playClickSound(){
+try{
+var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+if(!audioContext)audioContext=new C();
+if(audioContext.state==="suspended")audioContext.resume().catch(function(){});
+var o=audioContext.createOscillator(),g=audioContext.createGain(),t=audioContext.currentTime;
+o.type="sine";o.frequency.setValueAtTime(600,t);o.frequency.exponentialRampToValueAtTime(850,t+.055);
+g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.045,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.075);
+o.connect(g);g.connect(audioContext.destination);o.start(t);o.stop(t+.085);
+}catch(e){}
+}
+document.querySelectorAll(".method[data-href]").forEach(function(button){
+button.addEventListener("pointerdown",playClickSound,{passive:true});
+button.addEventListener("click",function(){var href=button.getAttribute("data-href");if(href)window.location.href=href;});
+});
+})();
+</script>
 </body>
 </html>
