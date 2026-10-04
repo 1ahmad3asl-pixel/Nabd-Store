@@ -34,14 +34,14 @@ h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
 <section class="methods" aria-label="طرق الدفع">
 <div class="method-wrap"><a class="method" href="/sham-cash-dollar.html" data-method="sham-dollar"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش دولار</span></div>
 <div class="method-wrap"><a class="method" href="/sham-cash-syp.html" data-method="sham-syp"><span class="icon"><img class="method-logo" src="/public/assets/payment/sham-cash.svg" alt="شعار شام كاش"></span></a><span class="method-name">شام كاش سوري</span></div>
-<div class="method-wrap"><a class="method" href="#" data-method="binance"><span class="icon"><img class="method-logo" src="/public/assets/payment/binance.svg" alt="شعار باينانس الرسمي من Google Play"></span></a><span class="method-name">باينانس</span></div>
+<div class="method-wrap"><a class="method" href="/binance.html" data-method="binance"><span class="icon"><img class="method-logo" src="/public/assets/payment/binance.svg" alt="شعار باينانس الرسمي من Google Play"></span></a><span class="method-name">باينانس</span></div>
 <div class="method-wrap"><a class="method" href="#" data-method="syriatel"><span class="icon"><img class="method-logo" src="/public/assets/payment/syriatel-cash.svg" alt="شعار سيريتل كاش الرسمي"></span></a><span class="method-name">سيرياتيل كاش</span></div>
 </section>
 </main>
 <script>
 document.querySelectorAll("[data-method]").forEach(function(card){
  card.addEventListener("click",function(e){
-   if(card.getAttribute("data-method") !== "sham-dollar" && card.getAttribute("data-method") !== "sham-syp") e.preventDefault();
+   if(card.getAttribute("data-method") === "syriatel") e.preventDefault();
  });
 });
 </script>
