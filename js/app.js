@@ -371,6 +371,8 @@ function getAudioContext() {
 
 function playClickSound() {
 
+    if (localStorage.getItem("nabd-sound-enabled") === "off") return;
+
     try {
 
         const context =
@@ -431,6 +433,8 @@ function playClickSound() {
 
 
 function playAddBalanceSound() {
+
+    if (localStorage.getItem("nabd-sound-enabled") === "off") return;
 
     try {
 
