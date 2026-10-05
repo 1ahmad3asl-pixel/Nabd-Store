@@ -1,5 +1,11 @@
 const fs = require("fs");
+const Sentry = require("@sentry/node");
 const express = require("express");
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN || "https://83be9c09b16a36e6746bc56c31b4c7b1@o4512200822816768.ingest.de.sentry.io/4512200936521808",
+  sendDefaultPii: false
+});
 const path = require("path");
 const crypto = require("crypto");
 const { parsePhoneNumberFromString, getCountries, getCountryCallingCode } = require("libphonenumber-js");
@@ -1829,6 +1835,8 @@ app.use("/api", (req, res) => {
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+
+Sentry.setupExpressErrorHandler(app);
 
 initDb()
   .then(async () => {
