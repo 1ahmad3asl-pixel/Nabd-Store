@@ -8,7 +8,7 @@
     "dev": "node server.js"
   },
   "dependencies": {
-    "express": "^4.22.3",
+    "express": "^5.2.1",
     "@sentry/node": "^10.20.0",
     "pg": "^8.23.0",
     "libphonenumber-js": "^1.13.13"
