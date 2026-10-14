@@ -1338,3 +1338,30 @@ td{padding:14px 12px!important;}
     opacity: .75;
     text-align: center;
 }
+
+
+/* Customer settings page */
+.customer-settings-page { align-items: flex-start !important; overflow-y: auto; }
+.customer-settings-dialog-card { width: min(100%, 760px); margin: auto; max-height: calc(100vh - 36px); overflow-y: auto; }
+.customer-settings-page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding-bottom:16px; border-bottom:1px solid var(--border, #333); }
+.customer-settings-page-header h2 { margin:5px 0 0; font-size:24px; }
+.customer-settings-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:18px 0; }
+.customer-settings-summary>div,.customer-settings-info-grid>div { min-width:0; padding:13px; border:1px solid var(--border,#333); border-radius:10px; }
+.customer-settings-summary span,.customer-settings-info-grid span { display:block; font-size:13px; opacity:.72; margin-bottom:7px; }
+.customer-settings-summary strong,.customer-settings-info-grid strong { display:block; overflow-wrap:anywhere; font-size:15px; }
+.customer-settings-section { padding:17px 0; border-top:1px solid var(--border,#333); }
+.customer-settings-section h3 { margin:0 0 14px; font-size:17px; }
+.customer-settings-form { display:grid; grid-template-columns:1fr; gap:9px; }
+.customer-settings-form label { font-size:14px; opacity:.82; }
+.customer-settings-form input,.customer-settings-form select { width:100%; min-height:43px; box-sizing:border-box; padding:10px 12px; border:1px solid var(--border,#444); border-radius:8px; background:transparent; color:inherit; font:inherit; }
+.customer-settings-form select option { color:#111; }
+.customer-settings-action { min-height:43px; padding:10px 14px; border:1px solid currentColor; border-radius:8px; background:transparent; color:inherit; font:inherit; cursor:pointer; }
+.customer-settings-action:disabled { opacity:.55; cursor:wait; }
+.customer-settings-info-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.customer-settings-info-grid small { display:block; margin-top:7px; font-size:12px; line-height:1.6; opacity:.7; }
+@media(max-width:560px) {
+ .customer-settings-dialog-card { padding:15px; }
+ .customer-settings-summary { grid-template-columns:1fr; }
+ .customer-settings-info-grid { grid-template-columns:1fr; }
+ .customer-settings-page-header h2 { font-size:21px; }
+}
