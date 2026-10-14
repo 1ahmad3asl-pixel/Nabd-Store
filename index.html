@@ -19,7 +19,7 @@
 /* إخفاء الهيدر العلوي أثناء فتح القائمة الجانبية */
 body:has(#drawer.active) .main-header{display:none!important}
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-avatar2"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-rect-tier3"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
 .welcome-choice{margin-top:24px;animation:welcomeChoiceIn .45s ease both}
@@ -460,72 +460,79 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
 }
 
 
-/* صورة العميل دائرية بإطار كامل، واسم المستوى أسفلها بلون المستوى */
+/* صورة العميل مستطيلة وإطارها متصل بشارة المستوى بلون المستوى */
 .drawer .drawer-user-profile{
-  gap:8px;
+  gap:0;
 }
 .drawer .drawer-avatar-frame{
   position:relative;
-  width:92px;
-  height:92px;
-  flex:0 0 92px;
+  width:104px;
+  height:104px;
+  flex:0 0 104px;
   padding:4px;
   box-sizing:border-box;
-  border:3px solid var(--tier-color,var(--primary)) !important;
-  border-radius:50% !important;
-  background:rgba(0,0,0,.16);
-  box-shadow:0 0 0 3px var(--tier-glow,rgba(245,196,0,.25)),0 5px 18px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.24);
+  border:4px solid var(--tier-color,var(--primary)) !important;
+  border-bottom:0 !important;
+  border-radius:10px 10px 0 0 !important;
+  background:var(--tier-dark,rgba(0,0,0,.16));
+  box-shadow:0 0 0 2px var(--tier-glow,rgba(245,196,0,.25)),0 5px 16px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.18);
+  overflow:hidden;
 }
 .drawer .drawer-avatar-frame .user-avatar{
   width:100%;
   height:100%;
   min-height:0;
   flex:1 1 auto;
-  border-radius:50% !important;
+  border-radius:4px !important;
   overflow:hidden;
-  background:var(--primary-light);
+  background:var(--tier-dark,var(--primary-light));
 }
 .drawer .drawer-avatar-frame .user-avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
-  border-radius:50% !important;
+  border-radius:4px !important;
 }
 .drawer .drawer-user-profile > .drawer-level-label{
   position:static;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:auto;
+  width:104px;
   max-width:100%;
-  min-height:25px;
+  min-height:28px;
   height:auto;
   margin:0;
-  padding:3px 14px 4px;
-  border:1px solid var(--tier-highlight,rgba(255,255,255,.3));
-  border-radius:999px;
-  background:linear-gradient(135deg,var(--tier-dark,var(--primary-dark)),var(--tier-color,var(--primary)) 62%,var(--tier-highlight,var(--primary)));
-  color:#fff;
+  padding:4px 8px 5px;
+  box-sizing:border-box;
+  border:4px solid var(--tier-color,var(--primary));
+  border-top:1px solid var(--tier-color,var(--primary));
+  border-radius:0 0 10px 10px;
+  background:var(--tier-dark,var(--primary-dark));
+  color:var(--tier-highlight,var(--primary-light));
   font-size:12px;
-  font-weight:800;
+  font-weight:900;
   line-height:1.3;
+  text-align:center;
   white-space:nowrap;
-  box-shadow:0 3px 12px var(--tier-glow,rgba(245,196,0,.22)),inset 0 1px 0 rgba(255,255,255,.3);
-  text-shadow:0 1px 2px rgba(0,0,0,.6);
+  box-shadow:0 4px 12px var(--tier-glow,rgba(245,196,0,.22));
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
 }
 .drawer .drawer-user-profile > .drawer-level-label.is-guest{
   color:var(--text);
-  border-color:rgba(150,150,150,.3);
+  border-color:rgba(150,150,150,.42);
   background:rgba(127,127,127,.13);
   box-shadow:none;
   text-shadow:none;
 }
 .drawer .drawer-avatar-frame.is-guest{
-  border:2px solid rgba(140,140,140,.38) !important;
+  border:3px solid rgba(140,140,140,.42) !important;
+  border-bottom:0 !important;
   background:transparent !important;
-  box-shadow:0 0 0 2px rgba(140,140,140,.1) !important;
+  box-shadow:none !important;
 }
+
 
 </style>
 <div id="customerLevelsModal" aria-hidden="true">
