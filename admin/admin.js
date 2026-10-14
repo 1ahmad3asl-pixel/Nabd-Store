@@ -1787,6 +1787,7 @@ async function loadTransactions() {
             const el = document.getElementById(id);
             if (el) el.textContent = formatAdminPrice(value);
         };
+        setWalletStat("walletCustomerBalance", budget.customer_balance ?? 0);
         setWalletStat("totalDeposits", budget.sales ?? 0);
         setWalletStat("totalWithdrawals", budget.customer_outflows ?? 0);
         setWalletStat("budgetNet", budget.net_profit ?? 0);
