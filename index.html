@@ -20,7 +20,7 @@
 body:has(#drawer.active) .main-header,
 body:has(#customerLevelsModal.is-open) .main-header{display:none!important}
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-levels-title-backfix1"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-levels-backfix2"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
 .welcome-choice{margin-top:24px;animation:welcomeChoiceIn .45s ease both}
@@ -635,7 +635,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   <section class="levels-panel" role="dialog" aria-modal="true" aria-labelledby="customerLevelsTitle">
     <div class="levels-title-row" aria-label="عنوان الصفحة والتنقل">
       <button type="button" class="levels-back" aria-label="العودة إلى القائمة الجانبية" title="العودة إلى القائمة الجانبية" data-levels-back><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-      <h2 class="levels-title" id="customerLevelsTitle">المستويات</h2>
+      <h2 class="levels-title" id="customerLevelsTitle"><span class="levels-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستويات</span></h2>
     </div>
     <p class="levels-subtitle">يتقدم المستوى حسب إجمالي المشتريات الناجحة.</p>
     <div id="customerLevelsContent"><div class="levels-message">جارٍ تحميل المستويات…</div></div>
@@ -751,7 +751,10 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   if(backButton) backButton.addEventListener("click",function(event){
     event.preventDefault();
     event.stopPropagation();
-    closeModal();
+    // أغلق نافذة المستويات أولًا، ثم أعد القائمة الجانبية دون نقل التركيز
+    // إلى زر داخل القائمة قبل إظهارها (قد يمنع ذلك التفاعل على بعض الهواتف).
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden","true");
     var drawer=document.getElementById("drawer");
     var overlay=document.getElementById("overlay");
     if(drawer) drawer.classList.add("active");
