@@ -14,6 +14,11 @@
     .catch(function(){location.replace("/terms.html?next=%2Fcustomer-login.html%3Fnext%3D%252F");});
 })();
 </script>
+
+<style>
+/* إخفاء الهيدر العلوي أثناء فتح القائمة الجانبية */
+body:has(#drawer.active) .main-header{display:none!important}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261003-fix4"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
