@@ -638,6 +638,23 @@ function renderCustomers(customers) {
                         </button>
                     </td>
 
+                    <td class="customer-settings-cell">
+                        <button
+                            class="customer-settings-icon"
+                            type="button"
+                            data-customer-id="${escapeAdminHtml(String(internalId))}"
+                            data-customer-name="${escapeAdminHtml(String(name))}"
+                            data-action="customer-settings"
+                            aria-label="إعدادات العميل ${escapeAdminHtml(String(name))}"
+                            title="إعدادات العميل"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"></path>
+                                <path d="m19.4 13.5 1.1.9-1.1 1.9-1.4-.5a7.8 7.8 0 0 1-1.7 1l-.2 1.5h-2.2l-.4-1.4a7.7 7.7 0 0 1-2 0l-.8 1.2-1.9-1.1.5-1.4a7.8 7.8 0 0 1-1-1.7l-1.5-.2v-2.2l1.4-.4a7.7 7.7 0 0 1 0-2l-1.2-.8 1.1-1.9 1.4.5a7.8 7.8 0 0 1 1.7-1l.2-1.5h2.2l.4 1.4a7.7 7.7 0 0 1 2 0l.8-1.2 1.9 1.1-.5 1.4a7.8 7.8 0 0 1 1 1.7l1.5.2v2.2l-1.4.4"></path>
+                            </svg>
+                        </button>
+                    </td>
+
                 </tr>
             `;
 
@@ -663,6 +680,15 @@ function renderCustomers(customers) {
             });
         });
 
+    table.querySelectorAll('[data-action="customer-settings"]').forEach(function(button) {
+        button.addEventListener("click", function() {
+            openCustomerSettings(
+                button.getAttribute("data-customer-id"),
+                button.getAttribute("data-customer-name") || "عميل"
+            );
+        });
+    });
+
     table
         .querySelectorAll(
             '[data-action="discount"]'
@@ -684,6 +710,26 @@ function renderCustomers(customers) {
 
         });
 
+}
+
+function openCustomerSettings(customerId, customerName) {
+    document.getElementById("customerSettingsDialog")?.remove();
+    const html =
+        "<div id='customerSettingsDialog' class='customer-info-dialog' role='dialog' aria-modal='true' aria-labelledby='customerSettingsTitle'>" +
+        "<div class='customer-info-card customer-settings-dialog-card'>" +
+        "<div class='card-heading'><div><span>إدارة العميل</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p class='customer-settings-customer-name'>" +
+        escapeAdminHtml(customerName) + " · ID " + escapeAdminHtml(String(customerId)) +
+        "</p></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
+        "<div class='customer-settings-placeholder'>ستُضاف إعدادات هذا العميل هنا.</div>" +
+        "</div></div>";
+    document.body.insertAdjacentHTML("beforeend", html);
+    const dialog = document.getElementById("customerSettingsDialog");
+    document.getElementById("closeCustomerSettings").addEventListener("click", function() {
+        dialog?.remove();
+    });
+    dialog.addEventListener("click", function(event) {
+        if (event.target === dialog) dialog.remove();
+    });
 }
 
 async function openCustomerInfo(customerId) {
