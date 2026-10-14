@@ -13,6 +13,8 @@
 <title>حساب العميل - Nabd-Store</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
+/* منع تحديد النص وقائمة النسخ/الاستدعاء المطولة في صفحة المصادقة فقط */
+html,body,body *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent}
 body{min-height:100vh;display:grid;place-items:center;background:var(--background);color:var(--text);padding:20px}
 .auth-card{width:min(430px,100%);text-align:center}
 .account-icon{font-size:46px;margin-bottom:8px}.auth-card h1{margin:0 0 6px;font-size:28px}
@@ -73,6 +75,16 @@ form.addEventListener("submit",async e=>{e.preventDefault();error.style.display=
  document.getElementById("guestLoginBtn").addEventListener("click",()=>{try{sessionStorage.setItem("nabd_guest_mode","1");}catch(_){}location.href="/";});
 const params=new URLSearchParams(location.search);
 setMode(params.get("mode")==="register"?"register":"login");
+</script>
+<script>
+(function lockTextSelection(){
+  const block=e=>e.preventDefault();
+  document.addEventListener("contextmenu",block,{capture:true});
+  document.addEventListener("selectstart",block,{capture:true});
+  document.addEventListener("copy",block,{capture:true});
+  document.addEventListener("cut",block,{capture:true});
+  document.addEventListener("dragstart",block,{capture:true});
+})();
 </script>
 <script src="/js/click-sound.js"></script>
 </body>
