@@ -3400,7 +3400,7 @@ function renderBalanceProductPicker(group) {
             const response=await fetch(BACKEND_URL+"/api/customer/auth/me",{headers:{Accept:"application/json"},credentials:"include",cache:"no-store"});
             if(!response.ok)return;
             const data=await response.json();
-            customerDiscount=Math.min(100,Math.max(0,Number(data.customer&&data.customer.discount||0)));
+            customerDiscount=Math.min(100,Math.max(0,Number(data.customer&&data.customer.effective_discount!=null?data.customer.effective_discount:(data.customer&&data.customer.discount||0))));
         }catch(error){
             customerDiscount=0;
         }finally{
