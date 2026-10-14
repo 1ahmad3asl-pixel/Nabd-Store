@@ -314,6 +314,7 @@ function initializeDashboard() {
 async function loadAdminDashboard() {
     setText("totalCustomers", "…");
     setText("totalOrders", "…");
+    setText("totalCustomerBalance", "…");
     setText("totalSales", "…");
     setText("totalProfit", "…");
     setText("apiBalance", "…");
@@ -325,6 +326,7 @@ async function loadAdminDashboard() {
         console.error("Admin dashboard load failed:", error);
         setText("totalCustomers", "—");
         setText("totalOrders", "—");
+        setText("totalCustomerBalance", "—");
         setText("totalSales", "—");
         setText("totalProfit", "—");
         setText("apiBalance", "—");
@@ -345,9 +347,14 @@ function updateDashboard(data) {
 
     setText(
         "totalOrders",
-        data.total_orders ??
-        data.orders_count ??
+        data.total_successful_orders ??
+        data.successful_orders_count ??
         0
+    );
+
+    setText(
+        "totalCustomerBalance",
+        formatAdminPrice(data.total_customer_balance ?? 0)
     );
 
     setText(
