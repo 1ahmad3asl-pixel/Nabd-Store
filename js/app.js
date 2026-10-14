@@ -597,10 +597,7 @@ function initializeMenu() {
 
                     if (action === "#home") {
 
-                        window.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        });
+                        window.location.reload();
 
                     } else {
 
