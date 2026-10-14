@@ -318,6 +318,7 @@ function initializeDashboard() {
 
 async function loadAdminDashboard() {
     setText("totalCustomers", "…");
+    setText("customersTotalCount", "…");
     setText("totalOrders", "…");
     setText("totalCustomerBalance", "…");
     setText("totalSales", "…");
@@ -330,6 +331,7 @@ async function loadAdminDashboard() {
     } catch (error) {
         console.error("Admin dashboard load failed:", error);
         setText("totalCustomers", "—");
+        setText("customersTotalCount", "—");
         setText("totalOrders", "—");
         setText("totalCustomerBalance", "—");
         setText("totalSales", "—");
@@ -345,6 +347,13 @@ function updateDashboard(data) {
 
     setText(
         "totalCustomers",
+        data.total_customers ??
+        data.customers_count ??
+        0
+    );
+
+    setText(
+        "customersTotalCount",
         data.total_customers ??
         data.customers_count ??
         0
@@ -417,8 +426,6 @@ function initializeCustomers() {
     const searchInput =
         document.getElementById("customerSearch");
 
-    const refresh =
-        document.getElementById("refreshCustomers");
 
     if (searchButton) {
 
@@ -450,19 +457,6 @@ function initializeCustomers() {
                     );
 
                 }
-
-            }
-        );
-
-    }
-
-    if (refresh) {
-
-        refresh.addEventListener(
-            "click",
-            function () {
-
-                loadCustomers();
 
             }
         );
