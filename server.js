@@ -1331,6 +1331,19 @@ app.post("/api/admin/email-broadcast", async (req, res) => {
   res.json({status:failed?"PARTIAL":"OK",sent,failed,skipped,total:recipients.length,failures:failures.slice(0,5)});
 });
 
+app.get("/api/customer/notifications", requireCustomer, async (req, res) => {
+  try {
+    const result = await query(
+      "SELECT id,title,message,created_at FROM notifications WHERE target='all' OR (target='customer' AND customer_id=$1) ORDER BY created_at DESC, id DESC",
+      [req.customer.customer_id]
+    );
+    res.json({ status: "OK", notifications: result.rows });
+  } catch (error) {
+    console.error("Customer notifications error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر تحميل إشعاراتك." });
+  }
+});
+
 app.post("/api/admin/notifications", async (req, res) => {
   const { target, customer_id, title, message } = req.body || {};
   const normalizedTarget = String(target || "all").trim().toLowerCase();
