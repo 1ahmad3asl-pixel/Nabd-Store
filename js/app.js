@@ -3103,8 +3103,8 @@ function findBalanceCatalogItem(product) {
     // Nemer can return the Syriatel S1/S2 product group without repeating
     // the provider name in every product/category label. These identifiers
     // are unique to the Syriatel balance levels in this catalog.
-    if (/(^|\\s)s ?[12](\\s|$)/i.test(combined) ||
-        /(?:وحدات|رصيد|شحن)\\s*s ?[12](?:\\s|$)/i.test(combined)) {
+    if (/(^|\s)s ?[12](\s|$)/i.test(combined) ||
+        /(?:وحدات|رصيد|شحن)\s*s ?[12](?:\s|$)/i.test(combined)) {
         return BALANCE_CATALOG.find(function(item) { return item.key === "syriatel"; }) || null;
     }
     return null;
@@ -3271,11 +3271,11 @@ function getBalanceSubgroups(group) {
                 syriatelGroups[2].products.push(product);
                 return;
             }
-            if (/(^|\\s)s ?1(\\s|$)/i.test(combined)) {
+            if (/(^|\s)s ?1(\s|$)/i.test(combined)) {
                 syriatelGroups[0].products.push(product);
                 return;
             }
-            if (/(^|\\s)s ?2(\\s|$)/i.test(combined)) {
+            if (/(^|\s)s ?2(\s|$)/i.test(combined)) {
                 syriatelGroups[1].products.push(product);
             }
         });
