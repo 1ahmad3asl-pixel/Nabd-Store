@@ -19,7 +19,7 @@ body{min-height:100vh;display:grid;place-items:center;background:var(--backgroun
 .auth-actions button{padding:13px;border:0;border-radius:11px;cursor:pointer;font-size:16px;font-weight:700}
 .login-btn{background:linear-gradient(135deg,#f5c400,#c99f00);color:#111}
 .register-btn{background:transparent;color:var(--primary);border:1px solid var(--primary)!important}
-.google-login,.guest-login{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;margin-top:12px;padding:13px;text-align:center;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--text);font-weight:700;background:var(--white);font:inherit;cursor:pointer;min-height:50px}.google-login{margin-top:12px}.google-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;box-sizing:border-box;border:1px solid #dadce0;border-radius:5px;background:#fff;color:#4285f4;font-family:Arial,sans-serif;font-size:20px;font-weight:800;line-height:1;flex:0 0 28px}.guest-login{margin-top:10px;background:transparent;color:var(--text)}
+.google-login,.guest-login{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;margin-top:12px;padding:13px;text-align:center;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--text);font-weight:700;background:var(--white);font:inherit;cursor:pointer;min-height:50px}.google-login{margin-top:12px}.google-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;box-sizing:border-box;border-radius:5px;background:#fff;flex:0 0 28px}.google-mark img{display:block;width:24px;height:24px;object-fit:contain}.guest-login{margin-top:10px;background:transparent;color:var(--text)}
 .auth-error{display:none;margin-top:14px;padding:11px;border-radius:10px;background:#ffe8e8;color:#a00;text-align:center}
 </style>
 </head>
@@ -36,7 +36,7 @@ body{min-height:100vh;display:grid;place-items:center;background:var(--backgroun
 <div id="verifiedBadge" class="verified-badge" hidden>✓ تم التحقق من البريد الإلكتروني</div>
 <div id="passwordSection" hidden><label for="password">كلمة المرور</label><div class="password-row"><input id="password" type="password" minlength="8" autocomplete="current-password" required><button class="password-toggle" id="passwordToggle" type="button">عرض</button></div></div>
 <div class="auth-actions"><button id="loginBtn" class="login-btn" type="submit">تسجيل الدخول</button><button id="registerBtn" class="register-btn" type="button">إنشاء حساب</button></div>
-<a class="google-login" href="/api/customer/google"><span class="google-mark" aria-hidden="true">G</span><span>تسجيل الدخول باستخدام Google</span></a>
+<a class="google-login" href="/api/customer/google"><span class="google-mark" aria-hidden="true"><img src="https://www.google.com/s2/favicons?domain=google.com&amp;sz=64" alt=""></span><span>تسجيل الدخول باستخدام Google</span></a>
 <button class="guest-login" id="guestLoginBtn" type="button">المتابعة كضيف</button>
 <div id="authError" class="auth-error"></div>
 </form>
