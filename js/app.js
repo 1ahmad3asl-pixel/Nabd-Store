@@ -630,7 +630,7 @@ function openMenu() {
     // حتى لا تبقى طبقتها فوق القائمة الجانبية وتحجب التفاعل معها.
     const customerLevelsModal = document.getElementById("customerLevelsModal");
     if (customerLevelsModal && customerLevelsModal.classList.contains("is-open")) {
-        const levelsCloseButton = customerLevelsModal.querySelector(".levels-close");
+        const levelsCloseButton = customerLevelsModal.querySelector(".levels-back");
         if (levelsCloseButton) {
             levelsCloseButton.click();
         } else {
