@@ -941,8 +941,12 @@ app.get("/api/admin/dashboard", async (req, res) => {
           (SELECT COUNT(*) FROM customers) AS customers,
           (SELECT COUNT(*) FROM orders) AS orders,
           (SELECT COUNT(*) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ) AS successful_orders,
+          (SELECT COUNT(*) FROM orders
             WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
           ) AS failed_orders,
+          COALESCE((SELECT SUM(balance) FROM customers),0) AS customer_balance,
           COALESCE((
             SELECT SUM(price) FROM orders
             WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
@@ -998,6 +1002,8 @@ app.get("/api/admin/dashboard", async (req, res) => {
       status: "OK",
       total_customers: Number(row.customers || 0),
       total_orders: Number(row.orders || 0),
+      total_successful_orders: Number(row.successful_orders || 0),
+      total_customer_balance: Number(Number(row.customer_balance || 0).toFixed(12)),
       failed_orders: Number(row.failed_orders || 0),
       total_sales: Number(Number(row.sales || 0).toFixed(12)),
       total_profit: Number(Number(row.profit || 0).toFixed(12)),
