@@ -49,6 +49,13 @@ const ADMIN_API = {
         );
     },
 
+    resetCustomerPassword(customerId) {
+        return this.request("/customers/" + encodeURIComponent(customerId) + "/reset-password", {
+            method: "POST",
+            body: JSON.stringify({})
+        });
+    },
+
     updateCustomerDiscount(customerId, discount) {
         return this.request(
             "/customers/" +
@@ -731,7 +738,7 @@ async function openCustomerSettings(customerId, customerName) {
         "<section class='customer-settings-section'><h3>تعديل خصم العميل</h3><form id='customerDiscountForm' class='customer-settings-form'><label for='customerDiscountValue'>نسبة الخصم (%)</label><input id='customerDiscountValue' type='number' min='0' max='100' step='0.01' required><button id='saveCustomerDiscount' class='customer-settings-action' type='submit'>حفظ الخصم</button></form></section>" +
         "<section class='customer-settings-section'><h3>معلومات العميل</h3><div class='customer-settings-info-grid'>" +
         "<div><span>رقم الهاتف</span><strong id='settingsCustomerPhone'>—</strong></div><div><span>البريد الإلكتروني</span><strong id='settingsCustomerEmail' dir='auto'>—</strong></div>" +
-        "<div><span>كلمة السر</span><strong>غير قابلة للعرض</strong><small>تُحفظ كلمة السر بشكل محمي ولا يمكن استرجاع النص الأصلي منها.</small></div>" +
+        "<div class='customer-password-reset'><span>كلمة السر</span><strong>لا يمكن عرض كلمة السر القديمة</strong><small>يمكن إنشاء كلمة مرور جديدة عند الحاجة. ستتوقف كلمة المرور الحالية عن العمل.</small><button id='resetCustomerPassword' class='customer-settings-action' type='button'>إنشاء كلمة مرور جديدة</button><div id='customerNewPasswordResult' hidden><label for='customerNewPassword'>كلمة المرور الجديدة — احفظها الآن</label><input id='customerNewPassword' type='text' readonly autocomplete='off' dir='ltr'><button id='copyCustomerNewPassword' class='customer-settings-action' type='button'>نسخ كلمة المرور</button></div></div>" +
         "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>مستوى العميل</span><strong id='settingsCustomerLevel'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
         "</div></section></div></div></div>";
     document.body.insertAdjacentHTML("beforeend", html);
@@ -779,6 +786,39 @@ async function openCustomerSettings(customerId, customerName) {
                 showAdminToast(error.message || "تعذر تحديث رصيد العميل.");
             } finally {
                 button.disabled = false;
+            }
+        });
+
+        document.getElementById("resetCustomerPassword").addEventListener("click", async function() {
+            if (!window.confirm("سيتم إلغاء كلمة المرور الحالية وإنشاء كلمة جديدة لهذا العميل. هل تريد المتابعة؟")) return;
+            const button = document.getElementById("resetCustomerPassword");
+            button.disabled = true;
+            try {
+                const result = await ADMIN_API.resetCustomerPassword(customerId);
+                const password = String(result.temporary_password || "");
+                if (!password) throw new Error("لم تصل كلمة المرور الجديدة من الخادم.");
+                const output = document.getElementById("customerNewPassword");
+                const resultPanel = document.getElementById("customerNewPasswordResult");
+                output.value = password;
+                resultPanel.hidden = false;
+                button.textContent = "إنشاء كلمة مرور أخرى";
+                showAdminToast("تم إنشاء كلمة مرور جديدة. انسخها وشاركها مع العميل بأمان.");
+            } catch(error) {
+                showAdminToast(error.message || "تعذر إنشاء كلمة مرور جديدة.");
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("copyCustomerNewPassword").addEventListener("click", async function() {
+            const output = document.getElementById("customerNewPassword");
+            try {
+                await navigator.clipboard.writeText(output.value);
+                showAdminToast("تم نسخ كلمة المرور.");
+            } catch(error) {
+                output.focus();
+                output.select();
+                showAdminToast("تعذر النسخ التلقائي. حدّد كلمة المرور وانسخها يدويًا.");
             }
         });
 
