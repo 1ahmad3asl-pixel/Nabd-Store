@@ -712,24 +712,98 @@ function renderCustomers(customers) {
 
 }
 
-function openCustomerSettings(customerId, customerName) {
+async function openCustomerSettings(customerId, customerName) {
     document.getElementById("customerSettingsDialog")?.remove();
     const html =
-        "<div id='customerSettingsDialog' class='customer-info-dialog' role='dialog' aria-modal='true' aria-labelledby='customerSettingsTitle'>" +
+        "<div id='customerSettingsDialog' class='customer-info-dialog customer-settings-page' role='dialog' aria-modal='true' aria-labelledby='customerSettingsTitle'>" +
         "<div class='customer-info-card customer-settings-dialog-card'>" +
-        "<div class='card-heading'><div><span>إدارة العميل</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p class='customer-settings-customer-name'>" +
+        "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p id='customerSettingsSubtitle' class='customer-settings-customer-name'>" +
         escapeAdminHtml(customerName) + " · ID " + escapeAdminHtml(String(customerId)) +
         "</p></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
-        "<div class='customer-settings-placeholder'>ستُضاف إعدادات هذا العميل هنا.</div>" +
-        "</div></div>";
+        "<div id='customerSettingsLoading' class='customer-settings-placeholder'>جارٍ تحميل بيانات العميل...</div>" +
+        "<div id='customerSettingsContent' hidden>" +
+        "<div class='customer-settings-summary'><div><span>رقم العميل (ID)</span><strong id='settingsCustomerId'>—</strong></div><div><span>اسم العميل</span><strong id='settingsCustomerName'>—</strong></div><div><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div></div>" +
+        "<section class='customer-settings-section'><h3>إدارة الرصيد</h3><form id='customerBalanceForm' class='customer-settings-form'>" +
+        "<label for='customerBalanceAction'>نوع العملية</label><select id='customerBalanceAction'><option value='credit'>إضافة رصيد</option><option value='debit'>خصم رصيد</option></select>" +
+        "<label for='customerBalanceAmount'>المبلغ</label><input id='customerBalanceAmount' type='number' min='0.001' max='1000000' step='0.001' required placeholder='أدخل المبلغ'>" +
+        "<label for='customerBalanceNote'>ملاحظة (اختياري)</label><input id='customerBalanceNote' type='text' maxlength='500' placeholder='سبب الإضافة أو الخصم'>" +
+        "<button id='saveCustomerBalance' class='customer-settings-action' type='submit'>تنفيذ العملية</button></form></section>" +
+        "<section class='customer-settings-section'><h3>تعديل خصم العميل</h3><form id='customerDiscountForm' class='customer-settings-form'><label for='customerDiscountValue'>نسبة الخصم (%)</label><input id='customerDiscountValue' type='number' min='0' max='100' step='0.01' required><button id='saveCustomerDiscount' class='customer-settings-action' type='submit'>حفظ الخصم</button></form></section>" +
+        "<section class='customer-settings-section'><h3>معلومات العميل</h3><div class='customer-settings-info-grid'>" +
+        "<div><span>رقم الهاتف</span><strong id='settingsCustomerPhone'>—</strong></div><div><span>البريد الإلكتروني</span><strong id='settingsCustomerEmail' dir='auto'>—</strong></div>" +
+        "<div><span>كلمة السر</span><strong>غير قابلة للعرض</strong><small>تُحفظ كلمة السر بشكل محمي ولا يمكن استرجاع النص الأصلي منها.</small></div>" +
+        "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>مستوى العميل</span><strong id='settingsCustomerLevel'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
+        "</div></section></div></div></div>";
     document.body.insertAdjacentHTML("beforeend", html);
     const dialog = document.getElementById("customerSettingsDialog");
-    document.getElementById("closeCustomerSettings").addEventListener("click", function() {
-        dialog?.remove();
-    });
-    dialog.addEventListener("click", function(event) {
-        if (event.target === dialog) dialog.remove();
-    });
+    const close = function(){ dialog?.remove(); };
+    document.getElementById("closeCustomerSettings").addEventListener("click", close);
+    dialog.addEventListener("click", function(event){ if(event.target === dialog) close(); });
+    try {
+        const response = await ADMIN_API.customer(customerId);
+        const customer = response.customer || {};
+        const displayId = customer.customer_number ?? customer.customer_id ?? customerId;
+        const displayName = customer.name ?? customer.username ?? customerName ?? "عميل";
+        const value = (input) => input === null || input === undefined || String(input).trim() === "" ? "غير مضاف" : String(input);
+        setText("settingsCustomerId", displayId);
+        setText("settingsCustomerName", displayName);
+        setText("settingsCustomerBalance", formatAdminPrice(customer.balance ?? 0));
+        setText("settingsCustomerPhone", [customer.phone_country, customer.phone].filter(Boolean).join(" ") || "غير مضاف");
+        setText("settingsCustomerEmail", value(customer.email));
+        setText("settingsCustomerOrders", customer.orders_count ?? 0);
+        setText("settingsCustomerLevel", customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد");
+        setText("settingsCustomerCreated", customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر");
+        setValue("customerDiscountValue", Number(customer.discount ?? customer.discount_percent ?? 0));
+        setText("customerSettingsSubtitle", String(displayName) + " · ID " + String(displayId));
+        document.getElementById("customerSettingsLoading").hidden = true;
+        document.getElementById("customerSettingsContent").hidden = false;
+
+        document.getElementById("customerBalanceForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const action = getValue("customerBalanceAction");
+            const amount = Number(getValue("customerBalanceAmount"));
+            const note = getValue("customerBalanceNote");
+            if (!Number.isFinite(amount) || amount <= 0 || amount > 1000000) return showAdminToast("أدخل مبلغًا أكبر من صفر ولا يتجاوز 1,000,000.");
+            const button = document.getElementById("saveCustomerBalance");
+            button.disabled = true;
+            try {
+                const result = await ADMIN_API.updateCustomerWallet(customerId, action, amount, note);
+                const wallet = result.wallet || result.customer || {};
+                setText("settingsCustomerBalance", formatAdminPrice(wallet.balance ?? (Number(customer.balance || 0) + (action === "credit" ? amount : -amount))));
+                customer.balance = wallet.balance ?? (Number(customer.balance || 0) + (action === "credit" ? amount : -amount));
+                setValue("customerBalanceAmount", "");
+                setValue("customerBalanceNote", "");
+                showAdminToast(action === "credit" ? "تمت إضافة الرصيد بنجاح." : "تم خصم الرصيد بنجاح.");
+                loadCustomers(getValue("customerSearch"), true);
+            } catch(error) {
+                showAdminToast(error.message || "تعذر تحديث رصيد العميل.");
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("customerDiscountForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const discount = Number(getValue("customerDiscountValue"));
+            if (!Number.isFinite(discount) || discount < 0 || discount > 100) return showAdminToast("يجب أن تكون نسبة الخصم بين 0 و100.");
+            const button = document.getElementById("saveCustomerDiscount");
+            button.disabled = true;
+            try {
+                const result = await ADMIN_API.updateCustomerDiscount(customerId, discount);
+                customer.discount = result.customer?.discount ?? discount;
+                setValue("customerDiscountValue", Number(customer.discount));
+                showAdminToast("تم حفظ خصم العميل.");
+                loadCustomers(getValue("customerSearch"), true);
+            } catch(error) {
+                showAdminToast(error.message || "تعذر حفظ خصم العميل.");
+            } finally {
+                button.disabled = false;
+            }
+        });
+    } catch(error) {
+        const loading = document.getElementById("customerSettingsLoading");
+        if (loading) loading.textContent = error.message || "تعذر تحميل بيانات العميل.";
+    }
 }
 
 async function openCustomerInfo(customerId) {
