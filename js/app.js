@@ -2852,10 +2852,15 @@ async function showCustomerNotificationsPage() {
     internal.classList.remove("balance-internal-page");
     internal.classList.add("notifications-internal-page");
 
+    const backButton = document.getElementById("internalBack");
+    if (backButton) {
+        backButton.setAttribute("aria-label", "العودة إلى الصفحة الرئيسية");
+        backButton.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
+    }
     title.textContent = "الإشعارات";
     icon.innerHTML = '<svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>';
     content.innerHTML = '<div class="notifications-page-message">جارٍ تحميل إشعاراتك…</div>';
-    window.scrollTo({top:0,behavior:"instant"});
+    window.scrollTo({top:0,behavior:"auto"});
 
     try {
         const response = await fetch(BACKEND_URL + "/api/customer/notifications", {
