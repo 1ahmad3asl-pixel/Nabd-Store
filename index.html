@@ -110,7 +110,7 @@ body:has(#drawer.active) .main-header{display:none!important}
 <nav class="drawer-nav">
 <a href="#home" class="drawer-link active"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></span><span>الصفحة الرئيسية</span></a>
 <a href="#notifications" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span>الإشعارات</span><span class="notification-badge" id="notificationBadge">0</span></a>
-<button type="button" class="drawer-link drawer-levels-trigger" id="openCustomerLevels" aria-haspopup="dialog" aria-controls="customerLevelsModal"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستوى</span></button>
+<button type="button" class="drawer-link drawer-levels-trigger" id="openCustomerLevels" aria-haspopup="dialog" aria-controls="customerLevelsModal"><span class="drawer-link-icon levels-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستويات</span></button>
 <a href="#orders" class="drawer-link"><span>📦</span><span>طلباتي</span></a>
 
 <a href="/customer-profile.html" class="drawer-link" data-page-link="profile"><span>👤</span><span>ملفي الشخصي</span></a>
@@ -428,6 +428,11 @@ title="الدعم الفني"
 #customerLevelsModal .level-range-end{text-align:right;color:var(--muted,#aaa);}
 #customerLevelsModal .level-track{height:10px;border-radius:99px;overflow:hidden;background:rgba(127,127,127,.22);}
 #customerLevelsModal .level-fill{height:100%;width:0;border-radius:inherit;background:var(--level-color,#f5c400);transition:width .35s ease;}
+#customerLevelsModal .levels-title{display:flex;align-items:center;gap:9px;}
+#customerLevelsModal .levels-title-icon,.drawer-levels-trigger .levels-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:inherit;background:transparent;border:0;box-shadow:none;padding:0;}
+#customerLevelsModal .levels-title-icon svg,.drawer-levels-trigger .levels-icon svg{display:block;}
+#customerLevelsModal .level-discount{margin-top:10px;text-align:center;font-size:13px;font-weight:900;color:var(--level-color,#f5c400);line-height:1.5;}
+html[data-theme="light"] #customerLevelsModal .level-discount{color:var(--level-dark,#8f6900);}
 #customerLevelsModal .levels-message{padding:18px 10px;text-align:center;color:var(--muted,#aaa);line-height:1.8;}
 #customerLevelsModal .levels-error{color:#e57373;}
 html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;color:#171717;}
@@ -437,7 +442,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   <div class="levels-backdrop" data-levels-close></div>
   <section class="levels-panel" role="dialog" aria-modal="true" aria-labelledby="customerLevelsTitle">
     <div class="levels-title-row">
-      <h2 class="levels-title" id="customerLevelsTitle">🏆 المستوى</h2>
+      <h2 class="levels-title" id="customerLevelsTitle"><span class="levels-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستويات</span></h2>
       <button type="button" class="levels-close" aria-label="إغلاق نافذة المستويات" data-levels-close>×</button>
     </div>
     <p class="levels-subtitle">يتقدم المستوى حسب إجمالي المشتريات الناجحة.</p>
@@ -495,7 +500,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
       var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
       var shownProgress=i<current?100:Math.round(progress);
       var progressText=i<current?"اكتمل هذا المستوى":(i===current?money(Math.max(0,Math.min(total,level.end)-level.start))+" / "+money(level.end-level.start):"بانتظار الوصول إليه");
-      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div></article>';
+      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-discount">'+(i===0?"لا يوجد خصم":i+"%")+'</div></article>';
     });
     content.innerHTML=html;
   }
