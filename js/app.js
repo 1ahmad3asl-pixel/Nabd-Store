@@ -3812,7 +3812,6 @@ function showToast(message) {
 
 
 function initializeTheme() {
-    initializeCustomerNotificationsPage();
     const saved = localStorage.getItem("nabd-theme") || "dark";
     document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
 }
