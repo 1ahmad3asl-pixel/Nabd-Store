@@ -404,16 +404,16 @@ title="الدعم الفني"
 #customerLevelsModal .levels-total-label{font-size:12px;color:var(--muted,#aaa);}
 #customerLevelsModal .levels-total-value{font-size:21px;font-weight:900;color:var(--primary,#f5c400);direction:ltr;unicode-bidi:plaintext;}
 #customerLevelsModal .levels-current{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:var(--primary,#f5c400);color:#111;white-space:nowrap;}
-#customerLevelsModal .level-card{padding:13px 13px 12px;margin-top:10px;border:3px solid var(--level-color,#888);border-radius:14px;background:rgba(127,127,127,.045);transition:box-shadow .2s ease,transform .2s ease;}
+#customerLevelsModal .level-card{padding:18px 16px 16px;margin-top:13px;border:4px solid var(--level-color,#888);border-radius:18px;background:linear-gradient(145deg,rgba(127,127,127,.09),rgba(127,127,127,.025));transition:box-shadow .2s ease,transform .2s ease;}
 #customerLevelsModal .level-card-1{--level-color:#c0c0c0;--level-glow:rgba(192,192,192,.22);}
 #customerLevelsModal .level-card-2{--level-color:#f2c94c;--level-glow:rgba(242,201,76,.22);}
 #customerLevelsModal .level-card-3{--level-color:#a56de2;--level-glow:rgba(165,109,226,.22);}
 #customerLevelsModal .level-card-4{--level-color:#409cff;--level-glow:rgba(64,156,255,.22);}
 #customerLevelsModal .level-card-5{--level-color:#ef5350;--level-glow:rgba(239,83,80,.22);}
 #customerLevelsModal .level-card.is-current{box-shadow:0 0 0 2px var(--level-glow),0 0 18px var(--level-glow);}
-#customerLevelsModal .level-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
-#customerLevelsModal .level-name{font-size:15px;font-weight:900;}
-#customerLevelsModal .level-state{font-size:11px;color:var(--muted,#aaa);white-space:nowrap;}
+#customerLevelsModal .level-card-head{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;margin-bottom:12px;text-align:center;}
+#customerLevelsModal .level-name{font-size:17px;font-weight:900;text-align:center;letter-spacing:.1px;}
+#customerLevelsModal .level-state{font-size:11px;color:var(--muted,#aaa);white-space:nowrap;text-align:center;}
 #customerLevelsModal .level-range{font-size:12px;color:var(--muted,#aaa);direction:rtl;margin-bottom:9px;}
 #customerLevelsModal .level-track{height:9px;border-radius:99px;overflow:hidden;background:rgba(127,127,127,.22);}
 #customerLevelsModal .level-fill{height:100%;width:0;border-radius:inherit;background:var(--level-color,#f5c400);transition:width .35s ease;}
@@ -443,8 +443,8 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   var badge=document.querySelector(".drawer-level-label");
   if(!modal||!trigger||!content) return;
   var levels=[
-    {name:"زبون عادي",short:"زبون عادي",start:0,end:50},
-    {name:"زبون مميز",short:"زبون مميز",start:50,end:125},
+    {name:"عميل عادي",short:"عميل عادي",start:0,end:50},
+    {name:"عميل مميز",short:"عميل مميز",start:50,end:125},
     {name:"سعر جملة",short:"سعر جملة",start:125,end:210},
     {name:"تاجر",short:"تاجر",start:210,end:300},
     {name:"مورد",short:"مورد",start:300,end:400}
@@ -466,7 +466,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
       var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
       var shownProgress=i<current?100:Math.round(progress);
       var progressText=i<current?"اكتمل هذا المستوى":(i===current?money(Math.max(0,Math.min(total,level.end)-level.start))+" / "+money(level.end-level.start):"بانتظار الوصول إليه");
-      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+(i+1)+'. '+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range">من '+money(level.start)+' إلى '+money(level.end)+'</div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-progress-note"><span>'+progressText+'</span><span>'+shownProgress+'%</span></div></article>';
+      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range">من '+money(level.start)+' إلى '+money(level.end)+'</div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-progress-note"><span>'+progressText+'</span><span>'+shownProgress+'%</span></div></article>';
     });
     content.innerHTML=html;
   }
