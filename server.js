@@ -1329,6 +1329,19 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
         [transactionId,customer.customer_id,delta.toFixed(12),type,before.toFixed(12),after.toFixed(12),"admin",transactionId,note || (action === "credit" ? "إضافة رصيد من الإدارة" : "خصم رصيد من الإدارة")]
       );
 
+      const notificationTitle = action === "credit"
+        ? "تمت إضافة رصيد إلى حسابك"
+        : "تم خصم رصيد من حسابك";
+      const amountLabel = "$" + amount.toFixed(3);
+      const balanceLabel = "$" + after.toFixed(3);
+      const notificationMessage = action === "credit"
+        ? `تمت إضافة مبلغ ${amountLabel} إلى حسابك. رصيدك الحالي: ${balanceLabel}.${note ? "\\nالملاحظة: " + note : ""}`
+        : `تم خصم مبلغ ${amountLabel} من حسابك. رصيدك الحالي: ${balanceLabel}.${note ? "\\nالملاحظة: " + note : ""}`;
+      await client.query(
+        "INSERT INTO notifications(target,customer_id,title,message) VALUES('customer',$1,$2,$3)",
+        [customer.customer_id,notificationTitle,notificationMessage]
+      );
+
       return {customer_id:String(customer.customer_number),customer_number:Number(customer.customer_number),name:customer.name,balance:after,transaction_id:transactionId};
     });
 
