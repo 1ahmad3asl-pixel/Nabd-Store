@@ -1385,6 +1385,15 @@ function getPriceDecimalPlaces(value) {
   return Math.max(3, Math.min(12, decimals));
 }
 
+function getTierDiscount(total) {
+  const amount = Number(total || 0);
+  if (amount >= 300) return 4;
+  if (amount >= 210) return 3;
+  if (amount >= 125) return 2;
+  if (amount >= 50) return 1;
+  return 0;
+}
+
 function ceilPrice(value, decimals) {
   const amount = Number(value);
   const places = Number.isInteger(decimals) ? Math.max(0, Math.min(12, decimals)) : 3;
@@ -1418,6 +1427,25 @@ app.get("/api/game-images/:gameKey", (req, res) => {
 app.get("/api/products", async (req, res) => {
   try {
     await loadSettings();
+    let customerDiscount = 0;
+    try {
+      const auth = await customerAuth(req);
+      if (auth && auth.session && auth.session.customer_id) {
+        const spendResult = await query(
+          "SELECT COALESCE(SUM(price),0) AS spend FROM orders WHERE customer_id=$1 AND status NOT IN ('failed','rejected','cancelled','canceled','error')",
+          [auth.session.customer_id]
+        );
+        const customerResult = await query(
+          "SELECT discount FROM customers WHERE customer_id=$1 AND active=TRUE",
+          [auth.session.customer_id]
+        );
+        const tierDiscount = getTierDiscount(Number(spendResult.rows[0]?.spend || 0));
+        const manualDiscount = Number(customerResult.rows[0]?.discount || 0);
+        customerDiscount = Math.min(100, Math.max(tierDiscount, manualDiscount));
+      }
+    } catch (customerPriceError) {
+      console.error("Customer tier discount lookup error:", customerPriceError);
+    }
     const products = await getNemerProducts();
     const pricedCount = Array.isArray(products)
       ? products.filter(product => normalizeNemerPrice(product.price) !== null).length
@@ -1430,10 +1458,16 @@ app.get("/api/products", async (req, res) => {
     const result = Array.isArray(products)
       ? products.map(product => {
           const originalPrice = normalizeNemerPrice(product.price);
-          const sellingPrice = originalPrice === null
+          const baseSellingPrice = originalPrice === null
             ? null
             : ceilPrice(
                 originalPrice * (1 + getProductProfitRate(product) / 100),
+                getPriceDecimalPlaces(product.price)
+              );
+          const sellingPrice = baseSellingPrice === null
+            ? null
+            : ceilPrice(
+                baseSellingPrice * (1 - customerDiscount / 100),
                 getPriceDecimalPlaces(product.price)
               );
           return {
@@ -1456,6 +1490,7 @@ app.get("/api/products", async (req, res) => {
       status: "OK",
       profit_rate: Number(adminSettings.profit_rate),
       number_profit_rate: Number(adminSettings.number_profit_rate),
+      customer_discount: customerDiscount,
       products: result
     });
   } catch (error) {
@@ -1620,7 +1655,13 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
         const error = new Error("حساب العميل غير متاح."); error.statusCode = 403; throw error;
       }
 
-      const discount = Math.min(100, Math.max(0, Number(customer.discount || 0)));
+      const spendResult = await client.query(
+        "SELECT COALESCE(SUM(price),0) AS spend FROM orders WHERE customer_id=$1 AND status NOT IN ('failed','rejected','cancelled','canceled','error')",
+        [customer.customer_id]
+      );
+      const tierDiscount = getTierDiscount(Number(spendResult.rows[0]?.spend || 0));
+      const manualDiscount = Number(customer.discount || 0);
+      const discount = Math.min(100, Math.max(tierDiscount, manualDiscount));
       const priceDecimals = getPriceDecimalPlaces(product.price);
       // احسب السعر النهائي كاملًا مع الكمية أولًا، ثم قرّبه للأعلى.
       // نفس totalPrice هو المبلغ الظاهر/المعتمد للخصم من المحفظة.
