@@ -410,6 +410,8 @@ title="الدعم الفني"
 #customerLevelsModal .levels-current.tier-4,.drawer-avatar-frame.tier-4{--tier-color:#1767b4;--tier-dark:#082647;--tier-highlight:#a8d8ff;--tier-glow:rgba(23,103,180,.44);}
 #customerLevelsModal .levels-current.tier-5,.drawer-avatar-frame.tier-5{--tier-color:#a9282c;--tier-dark:#3c090c;--tier-highlight:#ffb6b8;--tier-glow:rgba(169,40,44,.44);}
 .drawer-avatar-frame[class*="tier-"]{border:3px solid transparent!important;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(0,0,0,.18)) padding-box,linear-gradient(135deg,var(--tier-dark),var(--tier-color) 28%,var(--tier-highlight) 42%,var(--tier-dark) 70%,var(--tier-color)) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 0 13px var(--tier-glow);}
+#customerLevelsModal .levels-current.is-guest{background:rgba(127,127,127,.12);border-color:rgba(150,150,150,.32);color:inherit;box-shadow:none;text-shadow:none;}
+.drawer-avatar-frame.is-guest{border:2px solid rgba(140,140,140,.32)!important;background:transparent!important;box-shadow:none!important;}
 #customerLevelsModal .level-card{padding:18px 16px 16px;margin-top:13px;border:16px solid transparent;border-radius:18px;background:linear-gradient(155deg,rgba(255,255,255,.075),rgba(10,10,10,.72) 42%,rgba(0,0,0,.9)) padding-box,linear-gradient(135deg,var(--level-dark,#444) 0%,var(--level-color,#888) 24%,var(--level-highlight,#fff) 38%,var(--level-dark,#333) 62%,var(--level-color,#888) 82%,var(--level-dark,#222) 100%) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 15px rgba(0,0,0,.24);transition:box-shadow .2s ease,transform .2s ease;}
 #customerLevelsModal .level-card-1{--level-color:#aeb7c4;--level-dark:#424a56;--level-highlight:#f4f7fc;--level-glow:rgba(174,183,196,.34);}
 #customerLevelsModal .level-card-2{--level-color:#b8860b;--level-dark:#493000;--level-highlight:#ffe9a0;--level-glow:rgba(184,134,11,.36);}
@@ -435,7 +437,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   <div class="levels-backdrop" data-levels-close></div>
   <section class="levels-panel" role="dialog" aria-modal="true" aria-labelledby="customerLevelsTitle">
     <div class="levels-title-row">
-      <h2 class="levels-title" id="customerLevelsTitle">مستويات العميل</h2>
+      <h2 class="levels-title" id="customerLevelsTitle">🏆 المستوى</h2>
       <button type="button" class="levels-close" aria-label="إغلاق نافذة المستويات" data-levels-close>×</button>
     </div>
     <p class="levels-subtitle">يتقدم المستوى حسب إجمالي المشتريات الناجحة.</p>
@@ -469,16 +471,25 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     spend=total;
     var current=currentLevel(total);
     var tierClass="tier-"+(current+1);
+    var menuName=document.getElementById("menuUserName");
+    var guestMode=false;
+    try{guestMode=sessionStorage.getItem("nabd_guest_mode")==="1";}catch(_){}
+    if(menuName&&menuName.textContent.trim()==="ضيف") guestMode=true;
     if(badge) badge.textContent=levels[current].short;
     if(badge&&avatarFrame){
       for(var tier=1;tier<=5;tier++){
         badge.classList.remove("tier-"+tier);
         avatarFrame.classList.remove("tier-"+tier);
       }
-      badge.classList.add(tierClass);
-      avatarFrame.classList.add(tierClass);
+      badge.classList.toggle("is-guest",guestMode);
+      avatarFrame.classList.toggle("is-guest",guestMode);
+      if(!guestMode){
+        badge.classList.add(tierClass);
+        avatarFrame.classList.add(tierClass);
+      }
     }
-    var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="levels-current '+tierClass+'">'+levels[current].name+'</span></div>';
+    var badgeClass="levels-current "+(guestMode?"is-guest":tierClass);
+    var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="'+badgeClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
       var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
       var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
