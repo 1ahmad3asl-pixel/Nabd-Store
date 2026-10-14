@@ -433,9 +433,11 @@ title="الدعم الفني"
 #customerLevelsModal .levels-title-icon,.drawer-levels-trigger .levels-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:inherit;background:transparent;border:0;box-shadow:none;padding:0;}
 #customerLevelsModal .levels-title-icon svg,.drawer-levels-trigger .levels-icon svg{display:block;}
 #customerLevelsModal .level-discount{margin-top:10px;text-align:center;font-size:13px;font-weight:900;color:var(--level-color,#f5c400);line-height:1.5;}
-#customerLevelsModal .level-card.is-locked{min-height:96px;display:flex;align-items:center;justify-content:center;opacity:.72;border-style:dashed;background:rgba(127,127,127,.06);}
-#customerLevelsModal .locked-level-content{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--muted,#aaa);font-weight:900;font-size:15px;}
-#customerLevelsModal .locked-icon{font-size:17px;line-height:1;}
+#customerLevelsModal .level-card.is-locked{min-height:112px;display:flex;flex-direction:column;justify-content:center;opacity:1;border-style:solid;background:rgba(127,127,127,.035);}
+#customerLevelsModal .level-card.is-locked .level-card-head{width:100%;}
+#customerLevelsModal .locked-level-content{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--level-color,#aaa);font-weight:900;font-size:15px;padding:8px 0 0;}
+#customerLevelsModal .locked-icon{display:block;width:25px;height:25px;color:var(--level-color,#aaa);}
+#customerLevelsModal .level-discount.locked-level-message{margin-top:5px;color:var(--level-color,#aaa);font-size:12px;font-weight:800;}
 #customerLevelsModal .level-card.is-next-locked{opacity:.82;border-style:dashed;}
 #customerLevelsModal .level-card.is-next-locked .level-discount{color:var(--muted,#aaa);font-size:12px;}
 html[data-theme="light"] #customerLevelsModal .level-card.is-locked{background:rgba(0,0,0,.025);}
@@ -525,7 +527,8 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="'+badgeClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
       if(i!==current){
-        html+='<article class="level-card level-card-'+(i+1)+' is-locked" aria-label="مستوى مقفل"><div class="locked-level-content"><span class="locked-icon" aria-hidden="true">🔒</span><span class="locked-level-title">مقفل</span></div></article>';
+        var lockedLabel=i===1?'يفتح عند بلوغ المستوى':'مقفل';
+        html+='<article class="level-card level-card-'+(i+1)+' is-locked" aria-label="'+level.name+'، مقفل"><div class="level-card-head"><span class="level-name">'+level.name+'</span><span class="level-state">مقفل</span></div><div class="locked-level-content"><svg class="locked-icon" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div class="level-discount locked-level-message">'+lockedLabel+'</div></article>';
         return;
       }
       var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
