@@ -1153,3 +1153,55 @@ td{padding:14px 12px!important;}
   #dashboardSection .dashboard-api-balance span{font-size:15px!important;}
   #dashboardSection .dashboard-api-balance strong{font-size:19px!important;}
 }
+
+
+/* Customers section: compact summary, remove heading/refresh, full-width gold search action. */
+#customersSection .customers-total-summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  width:100%!important;
+  min-height:58px!important;
+  margin:0 0 18px!important;
+  padding:14px 18px!important;
+  border:1px solid #c99f00!important;
+  border-radius:12px!important;
+  background:#f5c400!important;
+  color:#080808!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  text-align:center!important;
+}
+#customersSection .customers-total-summary strong{
+  color:#080808!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  font-variant-numeric:tabular-nums!important;
+}
+#customersSection .search-bar{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:12px!important;
+  width:100%!important;
+}
+#customersSection .search-bar input{
+  width:100%!important;
+  min-height:48px!important;
+  box-sizing:border-box!important;
+}
+#customersSection .customers-search-button{
+  display:block!important;
+  width:100%!important;
+  min-height:50px!important;
+  margin:0!important;
+  background:#f5c400!important;
+  border:1px solid #c99f00!important;
+  color:#080808!important;
+  border-radius:10px!important;
+  font-size:17px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+#customersSection .customers-search-button:hover{background:#ffd83d!important;}
