@@ -1024,26 +1024,15 @@ app.get("/api/admin/dashboard", async (req, res) => {
 
 app.get("/api/admin/customers", async (req, res) => {
   const search = String(req.query.search || "").trim();
-  const result = search
-    ? await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,CASE
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
-          ELSE 'عميل — فضي'
-        END AS customer_level FROM customers WHERE CAST(customer_number AS TEXT) ILIKE $1 OR CAST(customer_id AS TEXT) ILIKE $1 OR name ILIKE $1 ORDER BY created_at DESC",
-        [`%${search}%`]
-      )
-    : await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,CASE
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
-          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
-          ELSE 'عميل — فضي'
-        END AS customer_level FROM customers ORDER BY created_at DESC"
-      );
+  const customerLevelSql = `CASE
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
+    ELSE 'عميل — فضي'
+  END AS customer_level`;
+  const sql = `SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,${customerLevelSql} FROM customers${search ? " WHERE CAST(customer_number AS TEXT) ILIKE $1 OR CAST(customer_id AS TEXT) ILIKE $1 OR name ILIKE $1" : ""} ORDER BY created_at DESC`;
+  const result = await query(sql, search ? [`%${search}%`] : []);
   res.json({ status: "OK", customers: result.rows });
 });
 
@@ -1455,7 +1444,7 @@ function getPriceDecimalPlaces(value) {
 
 function getTierDiscount(total) {
   const amount = Number(total || 0);
-  if (amount >= 300) return 4;
+  if (amount >= 300) return 5;
   if (amount >= 200) return 3;
   if (amount >= 115) return 2;
   if (amount >= 50) return 1;
