@@ -1072,3 +1072,15 @@ td{padding:14px 12px!important;}
 .customer-info-avatar.placeholder{display:inline-flex;align-items:center;justify-content:center;font-size:28px;}
 .drawer-user-details{display:flex;flex-direction:column;min-width:0;gap:2px;}
 .drawer-user-country{font-size:14px;line-height:1;min-height:16px;}
+
+/* لوحة الإدارة الرئيسية: واجهة مختصرة ببطاقتين في كل صف */
+.dashboard-page-heading{margin-bottom:12px}
+.dashboard-page-heading h1{font-size:21px;margin:0;color:var(--text)}
+.dashboard-refresh{display:block;width:100%;min-height:48px;margin:0 0 16px;background:var(--primary);border:1px solid var(--primary-dark);color:#080808;border-radius:9px;box-shadow:none;font-size:16px;font-weight:800}
+.dashboard-refresh:hover{filter:brightness(1.04)}
+#dashboardSection .statistics-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px}
+#dashboardSection .stat-card{min-width:0;min-height:88px;padding:16px;border-radius:10px;box-shadow:none;display:flex;align-items:center}
+#dashboardSection .stat-card>div{min-width:0;width:100%}
+#dashboardSection .stat-card span{font-size:13px;line-height:1.5;margin-bottom:8px}
+#dashboardSection .stat-card strong{font-size:clamp(16px,2.6vw,21px);overflow-wrap:anywhere}
+@media(max-width:380px){#dashboardSection .statistics-grid{gap:8px}#dashboardSection .stat-card{padding:12px}}

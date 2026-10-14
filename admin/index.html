@@ -10,7 +10,7 @@
 <link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp">
 <link rel="apple-touch-icon" href="/assets/category-nabd-store.webp">
 
-<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20260928-2">
+<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20261014-1">
 </head>
 
 <body>
@@ -46,53 +46,17 @@
 
         <section id="dashboardSection" class="admin-section active">
 
-            <div class="page-heading">
-
-                <div>
-                    <span>لوحة التحكم</span>
-                    <h1>مرحبًا بك أيها المدير 👋</h1>
-                </div>
-
-                <button id="refreshDashboard" class="refresh-button">
-                    🔄 تحديث
-                </button>
-
+            <div class="page-heading dashboard-page-heading">
+                <h1>لوحة الإدارة</h1>
             </div>
+            <button id="refreshDashboard" class="refresh-button dashboard-refresh" type="button">تحديث البيانات</button>
 
             <div class="statistics-grid">
-
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div>
-                        <span>العملاء</span>
-                        <strong id="totalCustomers">0</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">📦</div>
-                    <div>
-                        <span>الطلبات</span>
-                        <strong id="totalOrders">0</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">💵</div>
-                    <div>
-                        <span>المبيعات</span>
-                        <strong id="totalSales">$0.000</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">📈</div>
-                    <div>
-                        <span>الأرباح</span>
-                        <strong id="totalProfit">$0.000</strong>
-                    </div>
-                </div>
-
+                <div class="stat-card"><div><span>عدد العملاء</span><strong id="totalCustomers">0</strong></div></div>
+                <div class="stat-card"><div><span>إجمالي الطلبات الناجحة</span><strong id="totalOrders">0</strong></div></div>
+                <div class="stat-card"><div><span>إجمالي المبيعات</span><strong id="totalSales">$0.000</strong></div></div>
+                <div class="stat-card"><div><span>إجمالي الأرباح</span><strong id="totalProfit">$0.000</strong></div></div>
+                <div class="stat-card"><div><span>إجمالي رصيد الزبائن</span><strong id="totalCustomerBalance">$0.000</strong></div></div>
             </div>
 
             <div class="dashboard-grid">
