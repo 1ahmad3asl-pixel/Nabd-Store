@@ -3,6 +3,7 @@
 <style>html.nabd-auth-check body{visibility:hidden}</style>
 <script>
 (function(){
+  try{if(sessionStorage.getItem("nabd_guest_mode")==="1") return;}catch(_){}
   document.documentElement.classList.add("nabd-auth-check");
   fetch("/api/customer/auth/me",{headers:{Accept:"application/json"},credentials:"same-origin",cache:"no-store"})
     .then(function(response){if(!response.ok) throw new Error("not-authenticated");return response.json();})
