@@ -487,8 +487,7 @@ function normalizeCustomerSearch(value) {
 
 async function loadCustomers(search = "", forceReload = true) {
     try {
-        // نحمّل القائمة الكاملة عند الدخول/التحديث، ثم تتم الفلترة محليًا فورًا.
-        // يعتمد البحث على رقم العميل الظاهر، مع دعم المعرّف الداخلي والاسم.
+        // نحمّل القائمة الكاملة عند الدخول/التحديث، ثم نفلتر حصريًا باستخدام ID المعروض في الجدول.
         if (forceReload || !Array.isArray(adminState.allCustomers)) {
             const data = await ADMIN_API.customers("");
             adminState.allCustomers = Array.isArray(data)
@@ -500,12 +499,8 @@ async function loadCustomers(search = "", forceReload = true) {
         const customers = !normalizedSearch
             ? adminState.allCustomers.slice()
             : adminState.allCustomers.filter(function (customer) {
-                const visibleId = customer.customer_number ?? customer.number ?? customer.customer_id ?? customer.id ?? "";
-                const internalId = customer.customer_id ?? customer.id ?? "";
-                const name = customer.name ?? customer.username ?? "";
-                return normalizeCustomerSearch(visibleId).includes(normalizedSearch) ||
-                    normalizeCustomerSearch(internalId).includes(normalizedSearch) ||
-                    normalizeCustomerSearch(name).includes(normalizedSearch);
+                const customerId = customer.customer_number ?? customer.number ?? customer.customer_id ?? customer.id ?? "";
+                return normalizeCustomerSearch(customerId).includes(normalizedSearch);
             });
 
         adminState.customers = customers;
