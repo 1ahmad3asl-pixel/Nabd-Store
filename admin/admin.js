@@ -602,6 +602,10 @@ function renderCustomers(customers) {
                     </td>
 
                     <td>
+                        ${escapeAdminHtml(String(customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد"))}
+                    </td>
+
+                    <td>
                         <strong>
                             ${Number(discount).toFixed(2)}%
                         </strong>
@@ -621,11 +625,7 @@ function renderCustomers(customers) {
                         </span>
                     </td>
 
-                    <td>
-                        ${escapeAdminHtml(String(customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد"))}
-                    </td>
-
-
+                    <td class="customer-settings-cell">
                         <button
                             class="customer-settings-icon"
                             type="button"
