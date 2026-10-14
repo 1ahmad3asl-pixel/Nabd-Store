@@ -503,19 +503,15 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     var badgeClass="levels-current "+(guestMode?"is-guest":tierClass);
     var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="'+badgeClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
-      var locked=i>current+1;
-      var isNext=i===current+1;
-      if(locked){
+      if(i!==current){
         html+='<article class="level-card level-card-'+(i+1)+' is-locked" aria-label="مستوى مقفل"><div class="locked-level-content"><span class="locked-icon" aria-hidden="true">🔒</span><span class="locked-level-title">مقفل</span></div></article>';
         return;
       }
       var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
-      var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
-      var shownProgress=i<current?100:Math.round(progress);
-      var progressText=i<current?"اكتمل هذا المستوى":(i===current?money(Math.max(0,Math.min(total,level.end)-level.start))+" / "+money(level.end-level.start):"بانتظار الوصول إليه");
-      var cardName=isNext?"المستوى التالي":level.name;
-      var cardDiscount=isNext?"يُفتح عند بلوغ المستوى الحالي":(level.discount===0?"لا يوجد خصم":"خصم "+level.discount+"%");
-      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+(isNext?' is-next-locked':'')+'"><div class="level-card-head"><span class="level-name">'+cardName+'</span><span class="level-state">'+(isNext?"مقفل":state)+'</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+cardName+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-discount">'+cardDiscount+'</div></article>';
+      var shownProgress=Math.round(progress);
+      var cardName=level.name;
+      var cardDiscount=level.discount===0?"لا يوجد خصم":"خصم "+level.discount+"%";
+      html+='<article class="level-card level-card-'+(i+1)+' is-current"><div class="level-card-head"><span class="level-name">'+cardName+'</span><span class="level-state">مستواك الحالي</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+cardName+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-discount">'+cardDiscount+'</div></article>';
     });
     content.innerHTML=html;
   }
