@@ -533,6 +533,44 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
 }
 
 
+
+/* Compact levels-page header: remove excess top whitespace and keep title + back arrow visible */
+#customerLevelsModal .levels-panel{
+  padding-top:8px!important;
+}
+#customerLevelsModal .levels-title-row{
+  position:sticky!important;
+  top:0!important;
+  margin:0 0 4px!important;
+  padding:0 0 8px!important;
+  gap:8px!important;
+  min-height:40px!important;
+  background:var(--white,#111)!important;
+}
+#customerLevelsModal .levels-title{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0!important;
+  font-size:20px!important;
+  line-height:1.25!important;
+}
+#customerLevelsModal .levels-back{
+  width:36px!important;
+  height:36px!important;
+  min-width:36px!important;
+  min-height:36px!important;
+  flex:0 0 36px!important;
+  padding:0!important;
+}
+#customerLevelsModal .levels-subtitle{
+  margin:6px 0 10px!important;
+}
+@media(max-width:420px){
+  #customerLevelsModal .levels-panel{padding-top:6px!important;}
+  #customerLevelsModal .levels-title{font-size:19px!important;}
+}
+
 </style>
 <div id="customerLevelsModal" aria-hidden="true">
   <div class="levels-backdrop" data-levels-close></div>
