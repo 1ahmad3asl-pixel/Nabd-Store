@@ -1046,6 +1046,29 @@ app.get("/api/admin/customers/:id", async (req, res) => {
   res.json({ status: "OK", customer: result.rows[0] });
 });
 
+app.post("/api/admin/customers/:id/reset-password", async (req, res) => {
+  try {
+    const customerId = String(req.params.id || "").trim();
+    const temporaryPassword = crypto.randomBytes(12).toString("base64url");
+    const result = await query(
+      "UPDATE customers SET password_hash=$1,updated_at=NOW() WHERE customer_id=$2 RETURNING customer_id,customer_number,name,email",
+      [hashPassword(temporaryPassword), customerId]
+    );
+    if (!result.rows[0]) {
+      return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+    }
+    res.json({
+      status: "OK",
+      message: "تم إنشاء كلمة مرور جديدة. احفظها وشاركها مع العميل بطريقة آمنة.",
+      temporary_password: temporaryPassword,
+      customer: result.rows[0]
+    });
+  } catch (error) {
+    console.error("Admin customer password reset failed:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر إنشاء كلمة مرور جديدة للعميل." });
+  }
+});
+
 app.put("/api/admin/customers/:id/discount", async (req, res) => {
   const discount = Number(req.body?.discount);
   if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
