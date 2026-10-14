@@ -1211,6 +1211,7 @@ app.get("/api/admin/transactions", async (req, res) => {
        COALESCE(SUM(CASE WHEN type IN ('admin_credit','refund') THEN amount ELSE 0 END),0) AS customer_outflows,
        COALESCE(SUM(CASE WHEN type='admin_debit' THEN amount ELSE 0 END),0) AS admin_inflows,
        COALESCE(SUM(amount),0) AS net_cash,
+       COALESCE((SELECT SUM(balance) FROM customers),0) AS customer_balance,
        COALESCE((SELECT SUM(profit) FROM orders WHERE status NOT IN ('failed','rejected','cancelled','canceled','error')),0) AS net_profit
      FROM transactions`
   );
@@ -1222,6 +1223,7 @@ app.get("/api/admin/transactions", async (req, res) => {
       customer_outflows: Number(Number(totals.rows[0].customer_outflows).toFixed(12)),
       admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(12)),
       net_cash: Number(Number(totals.rows[0].net_cash).toFixed(12)),
+      customer_balance: Number(Number(totals.rows[0].customer_balance).toFixed(12)),
       net_profit: Number(Number(totals.rows[0].net_profit).toFixed(12))
     }
   });
