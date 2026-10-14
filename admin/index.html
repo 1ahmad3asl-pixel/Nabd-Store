@@ -10,7 +10,7 @@
 <link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp">
 <link rel="apple-touch-icon" href="/assets/category-nabd-store.webp">
 
-<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20261014-5">
+<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20261014-6">
 </head>
 
 <body>
@@ -106,10 +106,20 @@
 
         <section id="customersSection" class="admin-section">
 
-            <div id="customersTotalSummary" class="customers-total-summary">
-                <span>العملاء:</span>
-                <strong id="customersTotalCount">—</strong>
+            <div class="page-heading customers-page-heading">
+                <h1>العملاء</h1>
             </div>
+
+            <div class="stat-card customers-total-card">
+                <div>
+                    <span>عدد العملاء</span>
+                    <strong id="customersTotalCount">—</strong>
+                </div>
+            </div>
+
+            <button id="refreshCustomers" class="refresh-button customers-refresh-button" type="button">
+                🔄 تحديث البيانات
+            </button>
 
             <div class="admin-card">
 
