@@ -2828,6 +2828,98 @@ function renderCustomerOrders(container, orders) {
     }).join("");
 }
 
+async function showCustomerNotificationsPage() {
+    const modal = document.getElementById("customerNotificationsModal");
+    const content = document.getElementById("customerNotificationsContent");
+    if (!modal || !content) {
+        showModal("🔔 الإشعارات", '<div class="empty-state"><h3>تعذر فتح الإشعارات</h3><p>حدّث الصفحة وحاول مرة أخرى.</p></div>');
+        return;
+    }
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    content.innerHTML = '<div class="notifications-message">جارٍ تحميل إشعاراتك…</div>';
+
+    const drawer = document.getElementById("drawer");
+    const overlay = document.getElementById("overlay");
+    if (drawer) drawer.classList.remove("active");
+    if (overlay) overlay.classList.remove("active");
+
+    try {
+        const response = await fetch(BACKEND_URL + "/api/customer/notifications", {
+            headers: {Accept: "application/json"},
+            credentials: "include",
+            cache: "no-store"
+        });
+        let data = {};
+        try { data = await response.json(); } catch (_) {}
+
+        if (response.status === 401 || response.status === 403) {
+            content.innerHTML = '<div class="notifications-message"><div class="notifications-empty-icon">🔐</div><h3>سجّل الدخول أولًا</h3><p>سجّل الدخول إلى حسابك لتتمكن من مشاهدة الإشعارات التي وصلتك.</p><a class="buy-btn notifications-login" href="/customer-login.html">تسجيل الدخول</a></div>';
+            return;
+        }
+        if (!response.ok || data.status !== "OK") {
+            throw new Error(data.message || "تعذر تحميل الإشعارات.");
+        }
+
+        const notifications = Array.isArray(data.notifications) ? data.notifications.slice() : [];
+        notifications.sort(function(a, b) {
+            const dateDiff = new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+            return dateDiff || Number(b.id || 0) - Number(a.id || 0);
+        });
+
+        if (!notifications.length) {
+            content.innerHTML = '<div class="notifications-message"><div class="notifications-empty-icon">🔔</div><h3>لا توجد إشعارات حتى الآن</h3><p>ستظهر هنا إشعارات الحساب وتحديثات المتجر عند وصولها.</p></div>';
+            return;
+        }
+
+        content.innerHTML = '<div class="notifications-list">' + notifications.map(function(item) {
+            const title = escapeHtml(String(item.title || "إشعار من المتجر"));
+            const message = escapeHtml(String(item.message || "")).replace(/\r?\n/g, "<br>");
+            const rawDate = item.created_at ? new Date(item.created_at) : null;
+            const date = rawDate && !Number.isNaN(rawDate.getTime())
+                ? escapeHtml(rawDate.toLocaleString("ar", {year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}))
+                : "التاريخ غير متاح";
+            return '<article class="customer-notification-card"><div class="customer-notification-head"><span class="customer-notification-icon" aria-hidden="true">🔔</span><h3>' + title + '</h3></div><p class="customer-notification-message">' + message + '</p><div class="customer-notification-date"><span aria-hidden="true">🗓️</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + date + '</time></div></article>';
+        }).join("") + '</div>';
+    } catch (error) {
+        console.error("Customer notifications load failed:", error);
+        content.innerHTML = '<div class="notifications-message notifications-error"><div class="notifications-empty-icon">⚠️</div><h3>تعذر تحميل الإشعارات</h3><p>' + escapeHtml(error && error.message ? error.message : "حدث خطأ أثناء تحميل الإشعارات.") + '</p><button type="button" class="buy-btn" id="customerNotificationsRetry">إعادة المحاولة</button></div>';
+        const retry = document.getElementById("customerNotificationsRetry");
+        if (retry) retry.addEventListener("click", showCustomerNotificationsPage);
+    }
+}
+
+function closeCustomerNotificationsPage(returnToMenu) {
+    const modal = document.getElementById("customerNotificationsModal");
+    if (modal) {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+    }
+    document.body.style.overflow = "";
+    if (returnToMenu) {
+        const drawer = document.getElementById("drawer");
+        const overlay = document.getElementById("overlay");
+        if (drawer) drawer.classList.add("active");
+        if (overlay) overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+}
+
+function initializeCustomerNotificationsPage() {
+    const modal = document.getElementById("customerNotificationsModal");
+    if (!modal) return;
+    modal.querySelectorAll("[data-notifications-close]").forEach(function(element) {
+        element.addEventListener("click", function() { closeCustomerNotificationsPage(false); });
+    });
+    const back = modal.querySelector("[data-notifications-back]");
+    if (back) back.addEventListener("click", function() { closeCustomerNotificationsPage(true); });
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) closeCustomerNotificationsPage(false);
+    });
+}
+
 function handleAction(action) {
 
     switch (action) {
@@ -2838,34 +2930,7 @@ function handleAction(action) {
 
 
         case "notifications":
-
-            showModal(
-                "الإشعارات",
-                `
-                <div class="empty-state">
-
-                    <div
-                        style="
-                            font-size:40px;
-                            margin-bottom:10px;
-                        "
-                    >
-                        🔔
-                    </div>
-
-                    <h3>
-                        لا توجد إشعارات
-                    </h3>
-
-                    <p>
-                        ستظهر إشعارات طلباتك وتحديثات الحساب هنا.
-                    </p>
-
-                </div>
-                `
-
-            );
-
+            showCustomerNotificationsPage();
             break;
 
         default:
@@ -3754,6 +3819,7 @@ function showToast(message) {
 
 
 function initializeTheme() {
+    initializeCustomerNotificationsPage();
     const saved = localStorage.getItem("nabd-theme") || "dark";
     document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
 }
