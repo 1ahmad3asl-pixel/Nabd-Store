@@ -110,6 +110,7 @@ body:has(#drawer.active) .main-header{display:none!important}
 <nav class="drawer-nav">
 <a href="#home" class="drawer-link active"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></span><span>الصفحة الرئيسية</span></a>
 <a href="#notifications" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span>الإشعارات</span><span class="notification-badge" id="notificationBadge">0</span></a>
+<button type="button" class="drawer-link drawer-levels-trigger" id="openCustomerLevels" aria-haspopup="dialog" aria-controls="customerLevelsModal"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستوى</span></button>
 <a href="#orders" class="drawer-link"><span>📦</span><span>طلباتي</span></a>
 
 <a href="/customer-profile.html" class="drawer-link" data-page-link="profile"><span>👤</span><span>ملفي الشخصي</span></a>
@@ -387,7 +388,129 @@ title="الدعم الفني"
     class="toast"
     id="toast"
 >
-</div><!-- =========================
+</div>
+<style>
+/* نافذة مستويات العميل */
+.drawer-levels-trigger{width:100%;font:inherit;text-align:right;cursor:pointer;background:transparent;border:0;}
+#customerLevelsModal{position:fixed;inset:0;z-index:950;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;}
+#customerLevelsModal.is-open{display:flex;}
+#customerLevelsModal .levels-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);}
+#customerLevelsModal .levels-panel{position:relative;z-index:1;width:min(100%,520px);max-height:min(88dvh,760px);overflow:auto;background:var(--white,#111);color:var(--text,#f5f5f5);border:1px solid rgba(184,134,11,.45);border-radius:20px;padding:20px;box-sizing:border-box;box-shadow:0 24px 80px rgba(0,0,0,.45);}
+#customerLevelsModal .levels-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
+#customerLevelsModal .levels-title{margin:0;font-size:21px;font-weight:900;}
+#customerLevelsModal .levels-subtitle{margin:0 0 16px;color:var(--muted,#aaa);font-size:13px;line-height:1.7;}
+#customerLevelsModal .levels-close{width:36px;height:36px;flex:0 0 36px;border:1px solid var(--border,#444);border-radius:10px;background:transparent;color:inherit;font-size:25px;cursor:pointer;}
+#customerLevelsModal .levels-total{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;margin-bottom:14px;border-radius:14px;background:rgba(184,134,11,.11);border:1px solid rgba(184,134,11,.28);}
+#customerLevelsModal .levels-total-label{font-size:12px;color:var(--muted,#aaa);}
+#customerLevelsModal .levels-total-value{font-size:21px;font-weight:900;color:var(--primary,#f5c400);direction:ltr;unicode-bidi:plaintext;}
+#customerLevelsModal .levels-current{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:var(--primary,#f5c400);color:#111;white-space:nowrap;}
+#customerLevelsModal .level-card{padding:13px 13px 12px;margin-top:10px;border:1px solid var(--border,#333);border-radius:14px;background:rgba(127,127,127,.045);}
+#customerLevelsModal .level-card.is-current{border-color:var(--primary,#f5c400);box-shadow:inset 0 0 0 1px rgba(184,134,11,.18);}
+#customerLevelsModal .level-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+#customerLevelsModal .level-name{font-size:15px;font-weight:900;}
+#customerLevelsModal .level-state{font-size:11px;color:var(--muted,#aaa);white-space:nowrap;}
+#customerLevelsModal .level-range{font-size:12px;color:var(--muted,#aaa);direction:rtl;margin-bottom:9px;}
+#customerLevelsModal .level-track{height:9px;border-radius:99px;overflow:hidden;background:rgba(127,127,127,.22);}
+#customerLevelsModal .level-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#b8860b,#f5c400);transition:width .35s ease;}
+#customerLevelsModal .level-progress-note{display:flex;justify-content:space-between;gap:8px;margin-top:7px;font-size:11px;color:var(--muted,#aaa);}
+#customerLevelsModal .levels-message{padding:18px 10px;text-align:center;color:var(--muted,#aaa);line-height:1.8;}
+#customerLevelsModal .levels-error{color:#e57373;}
+html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;color:#171717;}
+@media(max-width:380px){#customerLevelsModal .levels-panel{padding:15px;}#customerLevelsModal .levels-title{font-size:19px;}}
+</style>
+<div id="customerLevelsModal" aria-hidden="true">
+  <div class="levels-backdrop" data-levels-close></div>
+  <section class="levels-panel" role="dialog" aria-modal="true" aria-labelledby="customerLevelsTitle">
+    <div class="levels-title-row">
+      <h2 class="levels-title" id="customerLevelsTitle">مستويات العميل</h2>
+      <button type="button" class="levels-close" aria-label="إغلاق نافذة المستويات" data-levels-close>×</button>
+    </div>
+    <p class="levels-subtitle">يتقدم مستواك حسب إجمالي مشترياتك الناجحة. تعبئة الرصيد وحدها لا تزيد التقدم.</p>
+    <div id="customerLevelsContent"><div class="levels-message">جارٍ تحميل المستويات…</div></div>
+  </section>
+</div>
+<script>
+(function(){
+  "use strict";
+  var modal=document.getElementById("customerLevelsModal");
+  var trigger=document.getElementById("openCustomerLevels");
+  var content=document.getElementById("customerLevelsContent");
+  var badge=document.querySelector(".drawer-level-label");
+  if(!modal||!trigger||!content) return;
+  var levels=[
+    {name:"زبون عادي",short:"زبون عادي",start:0,end:50},
+    {name:"زبون مميز",short:"زبون مميز",start:50,end:125},
+    {name:"سعر جملة",short:"سعر جملة",start:125,end:210},
+    {name:"تاجر",short:"تاجر",start:210,end:300},
+    {name:"مورد",short:"مورد",start:300,end:400}
+  ];
+  var failedStatuses=["failed","rejected","cancelled","canceled","error"];
+  var spend=0;
+  function money(n){return "$"+Number(n||0).toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3});}
+  function currentLevel(total){
+    for(var i=0;i<levels.length-1;i++){if(total<levels[i].end)return i;}
+    return levels.length-1;
+  }
+  function render(total){
+    spend=total;
+    var current=currentLevel(total);
+    if(badge) badge.textContent=levels[current].short;
+    var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="levels-current">'+levels[current].name+'</span></div>';
+    levels.forEach(function(level,i){
+      var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
+      var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
+      var shownProgress=i<current?100:Math.round(progress);
+      var progressText=i<current?"اكتمل هذا المستوى":(i===current?money(Math.max(0,Math.min(total,level.end)-level.start))+" / "+money(level.end-level.start):"بانتظار الوصول إليه");
+      html+='<article class="level-card'+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+(i+1)+'. '+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range">من '+money(level.start)+' إلى '+money(level.end)+'</div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-progress-note"><span>'+progressText+'</span><span>'+shownProgress+'%</span></div></article>';
+    });
+    content.innerHTML=html;
+  }
+  async function loadLevels(){
+    content.innerHTML='<div class="levels-message">جارٍ تحميل مشترياتك…</div>';
+    try{
+      var response=await fetch("/api/customer/orders",{headers:{Accept:"application/json"},credentials:"same-origin",cache:"no-store"});
+      if(response.status===401||response.status===403){
+        content.innerHTML='<div class="levels-message">سجّل الدخول إلى حسابك لعرض مستواك وتقدّم مشترياتك.</div>';
+        if(badge) badge.textContent="";
+        return;
+      }
+      if(!response.ok) throw new Error("orders-load-failed");
+      var data=await response.json();
+      if(data.status!=="OK"||!Array.isArray(data.orders)) throw new Error("orders-data-invalid");
+      var total=0;
+      data.orders.forEach(function(order){
+        var status=String(order.status||"").toLowerCase();
+        if(failedStatuses.indexOf(status)!==-1) return;
+        var amount=Number(order.price);
+        if(Number.isFinite(amount)&&amount>0) total+=amount;
+      });
+      render(Math.round((total+Number.EPSILON)*1000)/1000);
+    }catch(error){
+      content.innerHTML='<div class="levels-message levels-error">تعذّر تحميل مشترياتك الآن. أغلق النافذة وحاول مرة أخرى.</div>';
+    }
+  }
+  function openModal(){
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    loadLevels();
+    var close=modal.querySelector(".levels-close");
+    if(close) close.focus();
+  }
+  function closeModal(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    trigger.focus();
+  }
+  trigger.addEventListener("click",openModal);
+  modal.querySelectorAll("[data-levels-close]").forEach(function(el){el.addEventListener("click",closeModal);});
+  document.addEventListener("keydown",function(event){if(event.key==="Escape"&&modal.classList.contains("is-open"))closeModal();});
+  loadLevels();
+})();
+</script>
+
+<!-- =========================
      Modal
 ========================= --><div
     class="modal"
