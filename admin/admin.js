@@ -580,6 +580,23 @@ function renderCustomers(customers) {
             return `
                 <tr>
 
+                    <td class="customer-settings-cell">
+                        <button
+                            class="customer-settings-icon"
+                            type="button"
+                            data-customer-id="${escapeAdminHtml(String(internalId))}"
+                            data-customer-name="${escapeAdminHtml(String(name))}"
+                            data-action="customer-settings"
+                            aria-label="إعدادات العميل ${escapeAdminHtml(String(name))}"
+                            title="إعدادات العميل"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"></path>
+                                <path d="m19.4 13.5 1.1.9-1.1 1.9-1.4-.5a7.8 7.8 0 0 1-1.7 1l-.2 1.5h-2.2l-.4-1.4a7.7 7.7 0 0 1-2 0l-.8 1.2-1.9-1.1.5-1.4a7.8 7.8 0 0 1-1-1.7l-1.5-.2v-2.2l1.4-.4a7.7 7.7 0 0 1 0-2l-1.2-.8 1.1-1.9 1.4.5a7.8 7.8 0 0 1 1.7-1l.2-1.5h2.2l.4 1.4a7.7 7.7 0 0 1 2 0l.8-1.2 1.9 1.1-.5 1.4a7.8 7.8 0 0 1 1 1.7l1.5.2v2.2l-1.4.4"></path>
+                            </svg>
+                        </button>
+                    </td>
+
                     <td>
                         <strong>
                             ${escapeAdminHtml(String(id))}
@@ -623,23 +640,6 @@ function renderCustomers(customers) {
                                     : "محظور"
                             }
                         </span>
-                    </td>
-
-                    <td class="customer-settings-cell">
-                        <button
-                            class="customer-settings-icon"
-                            type="button"
-                            data-customer-id="${escapeAdminHtml(String(internalId))}"
-                            data-customer-name="${escapeAdminHtml(String(name))}"
-                            data-action="customer-settings"
-                            aria-label="إعدادات العميل ${escapeAdminHtml(String(name))}"
-                            title="إعدادات العميل"
-                        >
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"></path>
-                                <path d="m19.4 13.5 1.1.9-1.1 1.9-1.4-.5a7.8 7.8 0 0 1-1.7 1l-.2 1.5h-2.2l-.4-1.4a7.7 7.7 0 0 1-2 0l-.8 1.2-1.9-1.1.5-1.4a7.8 7.8 0 0 1-1-1.7l-1.5-.2v-2.2l1.4-.4a7.7 7.7 0 0 1 0-2l-1.2-.8 1.1-1.9 1.4.5a7.8 7.8 0 0 1 1.7-1l.2-1.5h2.2l.4 1.4a7.7 7.7 0 0 1 2 0l.8-1.2 1.9 1.1-.5 1.4a7.8 7.8 0 0 1 1 1.7l1.5.2v2.2l-1.4.4"></path>
-                            </svg>
-                        </button>
                     </td>
 
                 </tr>
