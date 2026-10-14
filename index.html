@@ -403,7 +403,13 @@ title="الدعم الفني"
 #customerLevelsModal .levels-total{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;margin-bottom:14px;border-radius:14px;background:rgba(184,134,11,.11);border:1px solid rgba(184,134,11,.28);}
 #customerLevelsModal .levels-total-label{font-size:12px;color:var(--muted,#aaa);}
 #customerLevelsModal .levels-total-value{font-size:21px;font-weight:900;color:var(--primary,#f5c400);direction:ltr;unicode-bidi:plaintext;}
-#customerLevelsModal .levels-current{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:var(--primary,#f5c400);color:#111;white-space:nowrap;}
+#customerLevelsModal .levels-current{font-size:12px;font-weight:800;padding:6px 9px;border:1px solid transparent;border-radius:999px;background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(0,0,0,.55)),linear-gradient(135deg,var(--tier-dark,#333),var(--tier-color,#888) 55%,var(--tier-dark,#222));color:#fff;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 2px 8px var(--tier-glow,rgba(0,0,0,.2));text-shadow:0 1px 2px rgba(0,0,0,.65);}
+#customerLevelsModal .levels-current.tier-1,.drawer-avatar-frame.tier-1{--tier-color:#aeb7c4;--tier-dark:#424a56;--tier-highlight:#f4f7fc;--tier-glow:rgba(174,183,196,.4);}
+#customerLevelsModal .levels-current.tier-2,.drawer-avatar-frame.tier-2{--tier-color:#b8860b;--tier-dark:#493000;--tier-highlight:#ffe9a0;--tier-glow:rgba(184,134,11,.42);}
+#customerLevelsModal .levels-current.tier-3,.drawer-avatar-frame.tier-3{--tier-color:#7542b8;--tier-dark:#291044;--tier-highlight:#d7b8ff;--tier-glow:rgba(117,66,184,.42);}
+#customerLevelsModal .levels-current.tier-4,.drawer-avatar-frame.tier-4{--tier-color:#1767b4;--tier-dark:#082647;--tier-highlight:#a8d8ff;--tier-glow:rgba(23,103,180,.44);}
+#customerLevelsModal .levels-current.tier-5,.drawer-avatar-frame.tier-5{--tier-color:#a9282c;--tier-dark:#3c090c;--tier-highlight:#ffb6b8;--tier-glow:rgba(169,40,44,.44);}
+.drawer-avatar-frame[class*="tier-"]{border:3px solid transparent!important;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(0,0,0,.18)) padding-box,linear-gradient(135deg,var(--tier-dark),var(--tier-color) 28%,var(--tier-highlight) 42%,var(--tier-dark) 70%,var(--tier-color)) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 0 13px var(--tier-glow);}
 #customerLevelsModal .level-card{padding:18px 16px 16px;margin-top:13px;border:16px solid transparent;border-radius:18px;background:linear-gradient(155deg,rgba(255,255,255,.075),rgba(10,10,10,.72) 42%,rgba(0,0,0,.9)) padding-box,linear-gradient(135deg,var(--level-dark,#444) 0%,var(--level-color,#888) 24%,var(--level-highlight,#fff) 38%,var(--level-dark,#333) 62%,var(--level-color,#888) 82%,var(--level-dark,#222) 100%) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 15px rgba(0,0,0,.24);transition:box-shadow .2s ease,transform .2s ease;}
 #customerLevelsModal .level-card-1{--level-color:#aeb7c4;--level-dark:#424a56;--level-highlight:#f4f7fc;--level-glow:rgba(174,183,196,.34);}
 #customerLevelsModal .level-card-2{--level-color:#b8860b;--level-dark:#493000;--level-highlight:#ffe9a0;--level-glow:rgba(184,134,11,.36);}
@@ -443,6 +449,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   var trigger=document.getElementById("openCustomerLevels");
   var content=document.getElementById("customerLevelsContent");
   var badge=document.querySelector(".drawer-level-label");
+  var avatarFrame=document.querySelector(".drawer-avatar-frame");
   if(!modal||!trigger||!content) return;
   var levels=[
     {name:"عميل",short:"عميل",start:0,end:50},
@@ -461,8 +468,17 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
   function render(total){
     spend=total;
     var current=currentLevel(total);
+    var tierClass="tier-"+(current+1);
     if(badge) badge.textContent=levels[current].short;
-    var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="levels-current">'+levels[current].name+'</span></div>';
+    if(badge&&avatarFrame){
+      for(var tier=1;tier<=5;tier++){
+        badge.classList.remove("tier-"+tier);
+        avatarFrame.classList.remove("tier-"+tier);
+      }
+      badge.classList.add(tierClass);
+      avatarFrame.classList.add(tierClass);
+    }
+    var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="levels-current '+tierClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
       var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
       var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
