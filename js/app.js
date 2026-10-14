@@ -626,6 +626,20 @@ function openMenu() {
         return;
     }
 
+    // إذا فُتحت القائمة من داخل نافذة المستويات، أغلق النافذة أولًا
+    // حتى لا تبقى طبقتها فوق القائمة الجانبية وتحجب التفاعل معها.
+    const customerLevelsModal = document.getElementById("customerLevelsModal");
+    if (customerLevelsModal && customerLevelsModal.classList.contains("is-open")) {
+        const levelsCloseButton = customerLevelsModal.querySelector(".levels-close");
+        if (levelsCloseButton) {
+            levelsCloseButton.click();
+        } else {
+            customerLevelsModal.classList.remove("is-open");
+            customerLevelsModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+    }
+
     elements.drawer.classList.add("active");
     elements.overlay.classList.add("active");
 
