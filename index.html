@@ -444,12 +444,33 @@ html[data-theme="light"] #customerLevelsModal .level-discount{color:var(--level-
 #customerLevelsModal .levels-error{color:#e57373;}
 html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;color:#171717;}
 @media(max-width:380px){#customerLevelsModal .levels-panel{padding:15px;}#customerLevelsModal .levels-title{font-size:19px;}}
+
+/* إصلاح نافذة المستويات والقائمة الجانبية على الهاتف */
+#customerLevelsModal{z-index:1200;padding:12px;overscroll-behavior:contain;touch-action:pan-y;}
+#customerLevelsModal .levels-panel{width:min(100%,480px);max-height:calc(100dvh - 24px);padding:clamp(14px,4vw,20px);overflow-y:auto;overscroll-behavior:contain;}
+#customerLevelsModal .levels-title-row{position:sticky;top:-1px;z-index:2;padding:2px 0 10px;background:var(--white,#111);border-bottom:1px solid rgba(184,134,11,.16);}
+#customerLevelsModal .levels-back{min-width:40px;min-height:40px;border-radius:12px;touch-action:manipulation;}
+#customerLevelsModal .levels-subtitle{margin-top:12px;}
+#customerLevelsModal .level-card{box-sizing:border-box;min-width:0;}
+#customerLevelsModal .levels-total{flex-wrap:wrap;}
+.drawer{z-index:1100;box-sizing:border-box;width:min(320px,88vw);max-width:88vw;padding-bottom:env(safe-area-inset-bottom);}
+.drawer-nav{padding:12px 10px 20px;}
+.drawer .drawer-link{min-height:48px;box-sizing:border-box;border-radius:12px;margin:3px 0;padding:12px 14px;gap:12px;display:flex;align-items:center;}
+.drawer .drawer-levels-trigger{font-weight:800;border:1px solid rgba(245,196,0,.24);background:rgba(245,196,0,.06);}
+.drawer .drawer-link:active{transform:scale(.99);}
+@media(max-width:420px){
+  #customerLevelsModal .levels-panel{border-radius:16px;}
+  #customerLevelsModal .levels-total-value{font-size:19px;}
+  #customerLevelsModal .level-card{padding:12px;}
+  .drawer .drawer-user-profile{padding:20px 14px 16px;}
+}
+
 </style>
 <div id="customerLevelsModal" aria-hidden="true">
   <div class="levels-backdrop" data-levels-close></div>
   <section class="levels-panel" role="dialog" aria-modal="true" aria-labelledby="customerLevelsTitle">
     <div class="levels-title-row">
-      <button type="button" class="levels-back" aria-label="الرجوع من المستويات" data-levels-close><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button type="button" class="levels-back" aria-label="العودة إلى القائمة" data-levels-back><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
       <h2 class="levels-title" id="customerLevelsTitle"><span class="levels-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستويات</span></h2>
     </div>
     <p class="levels-subtitle">يتقدم المستوى حسب إجمالي المشتريات الناجحة.</p>
@@ -544,7 +565,7 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     modal.setAttribute("aria-hidden","false");
     document.body.style.overflow="hidden";
     loadLevels();
-    var close=modal.querySelector(".levels-close");
+    var close=modal.querySelector(".levels-back");
     if(close) close.focus();
   }
   function closeModal(){
@@ -563,7 +584,18 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     if(overlay) overlay.classList.remove("active");
     document.body.style.overflow="hidden";
   });
-  modal.querySelectorAll("[data-levels-close]").forEach(function(el){el.addEventListener("click",closeModal);});
+  modal.querySelectorAll("[data-levels-close]").forEach(function(el){el.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();closeModal();});});
+  var backButton=modal.querySelector("[data-levels-back]");
+  if(backButton) backButton.addEventListener("click",function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    closeModal();
+    var drawer=document.getElementById("drawer");
+    var overlay=document.getElementById("overlay");
+    if(drawer) drawer.classList.add("active");
+    if(overlay) overlay.classList.add("active");
+    document.body.style.overflow="hidden";
+  });
   document.addEventListener("keydown",function(event){if(event.key==="Escape"&&modal.classList.contains("is-open"))closeModal();});
   loadLevels();
 })();
