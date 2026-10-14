@@ -120,6 +120,7 @@ const ADMIN_API = {
 
 const adminState = {
     customers: [],
+    allCustomers: null,
     orders: [],
     products: [],
     settings: {
@@ -433,7 +434,7 @@ function initializeCustomers() {
         refresh.addEventListener("click", function () {
             refresh.disabled = true;
             refresh.textContent = "⏳ جارٍ تحديث البيانات...";
-            loadCustomers(searchInput ? searchInput.value.trim() : "").finally(function () {
+            loadCustomers(searchInput ? searchInput.value.trim() : "", true).finally(function () {
                 refresh.disabled = false;
                 refresh.textContent = "🔄 تحديث البيانات";
             });
@@ -447,11 +448,7 @@ function initializeCustomers() {
             "click",
             function () {
 
-                loadCustomers(
-                    searchInput
-                        ? searchInput.value.trim()
-                        : ""
-                );
+                loadCustomers(searchInput ? searchInput.value.trim() : "", false);
 
             }
         );
@@ -461,54 +458,63 @@ function initializeCustomers() {
     if (searchInput) {
         let searchTimer;
 
-        // فلترة العملاء مباشرة حسب معرّف العميل أو اسمه فقط.
+        // فلترة فورية من القائمة المحمّلة، دون انتظار طلب شبكة لكل حرف.
         searchInput.addEventListener("input", function () {
             clearTimeout(searchTimer);
             searchTimer = setTimeout(function () {
-                loadCustomers(searchInput.value.trim());
-            }, 250);
+                loadCustomers(searchInput.value.trim(), false);
+            }, 100);
         });
 
         searchInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
                 clearTimeout(searchTimer);
-                loadCustomers(searchInput.value.trim());
+                loadCustomers(searchInput.value.trim(), false);
             }
         });
     }
 
 }
 
-async function loadCustomers(search = "") {
+function normalizeCustomerSearch(value) {
+    return String(value ?? "")
+        .trim()
+        .toLocaleLowerCase()
+        .replace(/[٠-٩]/g, digit => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
+        .replace(/[۰-۹]/g, digit => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
+        .replace(/[\\s\\u200e\\u200f-]/g, "");
+}
 
+async function loadCustomers(search = "", forceReload = true) {
     try {
-
-        const data =
-            await ADMIN_API.customers(search);
-
-        const customers =
-            Array.isArray(data)
+        // نحمّل القائمة الكاملة عند الدخول/التحديث، ثم تتم الفلترة محليًا فورًا.
+        // يعتمد البحث على رقم العميل الظاهر، مع دعم المعرّف الداخلي والاسم.
+        if (forceReload || !Array.isArray(adminState.allCustomers)) {
+            const data = await ADMIN_API.customers("");
+            adminState.allCustomers = Array.isArray(data)
                 ? data
-                : data.customers ||
-                  data.data ||
-                  [];
+                : data.customers || data.data || [];
+        }
 
-        adminState.customers =
-            customers;
+        const normalizedSearch = normalizeCustomerSearch(search);
+        const customers = !normalizedSearch
+            ? adminState.allCustomers.slice()
+            : adminState.allCustomers.filter(function (customer) {
+                const visibleId = customer.customer_number ?? customer.number ?? customer.customer_id ?? customer.id ?? "";
+                const internalId = customer.customer_id ?? customer.id ?? "";
+                const name = customer.name ?? customer.username ?? "";
+                return normalizeCustomerSearch(visibleId).includes(normalizedSearch) ||
+                    normalizeCustomerSearch(internalId).includes(normalizedSearch) ||
+                    normalizeCustomerSearch(name).includes(normalizedSearch);
+            });
 
+        adminState.customers = customers;
         // لا تغيّر إحصائية العملاء العامة بنتائج البحث؛ الإحصائيات الرئيسية تأتي من /dashboard.
         renderCustomers(customers);
-
     } catch (error) {
-
         console.error(error);
-
-        showAdminToast(
-            "تعذر تحميل العملاء."
-        );
-
+        showAdminToast("تعذر تحميل العملاء.");
     }
-
 }
 
 function renderCustomers(customers) {
