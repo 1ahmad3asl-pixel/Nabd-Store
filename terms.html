@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>أهلًا بكم في Nabd-Store</title>
+<link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;padding:24px 16px;display:grid;place-items:center;background:var(--background,#101010);color:var(--text,#f5f5f5);font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif}
+.terms-card{width:min(680px,100%);padding:clamp(22px,5vw,38px);border:1px solid rgba(218,174,24,.45);border-radius:22px;background:var(--card,rgba(25,25,25,.96));box-shadow:0 18px 55px rgba(0,0,0,.24)}
+.brand{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:26px;color:var(--primary,#e3b91c);font-size:clamp(24px,5vw,32px);font-weight:900}
+.brand img{width:54px;height:54px;object-fit:contain;border-radius:12px}
+.welcome-copy{font-size:16px;line-height:2.05;white-space:normal}
+.welcome-copy p{margin:0 0 16px}
+.welcome-copy p:last-child{margin-bottom:0}
+.consent{display:flex;align-items:flex-start;gap:11px;margin-top:25px;padding:15px;border:1px solid var(--border,rgba(255,255,255,.16));border-radius:13px;cursor:pointer;line-height:1.9}
+.consent input{width:21px;height:21px;flex:0 0 21px;margin:4px 0 0;accent-color:#d7ad13;cursor:pointer}
+.continue-btn{display:block;width:100%;min-height:52px;margin-top:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#f5c400,#c99f00);color:#111;font:inherit;font-size:17px;font-weight:900;cursor:pointer}
+.continue-btn:disabled{opacity:.42;cursor:not-allowed}
+@media(max-width:420px){body{padding:14px 10px}.terms-card{padding:21px 17px}.welcome-copy{font-size:15px;line-height:1.95}.brand img{width:46px;height:46px}}
+</style>
+</head>
+<body>
+<main class="terms-card">
+  <div class="brand"><img src="/assets/category-nabd-store.webp" alt="شعار Nabd-Store"><span>Nabd-Store</span></div>
+  <section class="welcome-copy" aria-label="رسالة الترحيب والتنبيه">
+    <p>اهلا فيكم زبائننا الكرام في متجرنا، وجهتكم الأولى في العالم الرقمي 🌐👑</p>
+    <p>نذكّر زبائننا الكرام أن خدماتنا (من ألعاب، بطاقات، دعم سوشيال ميديا....وغيرها) هي أدوات حيادية يمكن استخدامها في الخير أو الشر، ونحن لا نرضى بأي استخدام مخالف لأوامر الله أو فيه ضرر على الآخرين أو إلهاء عن عبادة الله.</p>
+    <p>نوصي دائماً بالاستخدام الواعي لما يرضي الله عز وجل، ونشهد الله أننا نبرأ ذمتنا من أي استخدام يخالف الشرع أو يسبب فتنة أو ضرر أو تلهية عن العبادة 🤲🏻.</p>
+  </section>
+  <label class="consent" for="termsAccepted"><input id="termsAccepted" type="checkbox"><span>لقد قرأت ما في الأعلى، وأنا أوافق عليه.</span></label>
+  <button class="continue-btn" id="continueBtn" type="button" disabled>المتابعة</button>
+</main>
+<script>
+(function(){
+  const checkbox=document.getElementById("termsAccepted");
+  const button=document.getElementById("continueBtn");
+  const params=new URLSearchParams(location.search);
+  const rawNext=params.get("next")||"/customer-login.html?next=%2F";
+  const safeNext=rawNext.startsWith("/")&&!rawNext.startsWith("//")?rawNext:"/customer-login.html?next=%2F";
+  try{if(localStorage.getItem("nabd_terms_accepted_v1")==="1"){location.replace(safeNext);return;}}catch(_){}
+  checkbox.addEventListener("change",function(){button.disabled=!checkbox.checked;});
+  button.addEventListener("click",function(){
+    if(!checkbox.checked)return;
+    try{localStorage.setItem("nabd_terms_accepted_v1","1");}catch(_){}
+    location.href=safeNext;
+  });
+})();
+</script>
+<script src="/js/click-sound.js"></script>
+</body>
+</html>
