@@ -178,6 +178,11 @@ function initializeAdminNavigation() {
 
         if (section) {
             event.preventDefault();
+            if (section === "dashboard") {
+                // الصفحة الرئيسية تعيد تحميل لوحة الإدارة كاملة لتحديث بياناتها من جديد.
+                window.location.reload();
+                return;
+            }
             showAdminSection(section);
         }
     });
