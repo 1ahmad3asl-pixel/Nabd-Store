@@ -1037,7 +1037,9 @@ function initializeCategories() {
     if (!back) return;
 
     back.addEventListener("click", function () {
-        if (window.history.state && window.history.state.nabdInternal) {
+        if (document.body.classList.contains("notifications-page-open")) {
+            closeInternalPage();
+        } else if (window.history.state && window.history.state.nabdInternal) {
             window.history.back();
         } else {
             closeInternalPage();
@@ -2463,7 +2465,11 @@ function openGameProductGroup(gameTitle, groupKey, fromHistory) {
 function closeInternalPage() {
     const services = document.getElementById("servicesSection");
     const internal = document.getElementById("internalPage");
-    if (internal) internal.hidden = true;
+    document.body.classList.remove("notifications-page-open");
+    if (internal) {
+        internal.hidden = true;
+        internal.classList.remove("notifications-internal-page");
+    }
     if (services) services.hidden = false;
     window.scrollTo({top: 0, behavior: "smooth"});
 }
@@ -2829,22 +2835,27 @@ function renderCustomerOrders(container, orders) {
 }
 
 async function showCustomerNotificationsPage() {
-    const modal = document.getElementById("customerNotificationsModal");
-    const content = document.getElementById("customerNotificationsContent");
-    if (!modal || !content) {
-        showModal("🔔 الإشعارات", '<div class="empty-state"><h3>تعذر فتح الإشعارات</h3><p>حدّث الصفحة وحاول مرة أخرى.</p></div>');
-        return;
-    }
-
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    content.innerHTML = '<div class="notifications-message">جارٍ تحميل إشعاراتك…</div>';
-
+    const services = document.getElementById("servicesSection");
+    const internal = document.getElementById("internalPage");
+    const title = document.getElementById("internalPageTitle");
+    const icon = document.getElementById("internalPageIcon");
+    const content = document.getElementById("internalPageContent");
     const drawer = document.getElementById("drawer");
     const overlay = document.getElementById("overlay");
+    if (!services || !internal || !title || !icon || !content) return;
+
+    document.body.classList.add("notifications-page-open");
     if (drawer) drawer.classList.remove("active");
     if (overlay) overlay.classList.remove("active");
+    services.hidden = true;
+    internal.hidden = false;
+    internal.classList.remove("balance-internal-page");
+    internal.classList.add("notifications-internal-page");
+
+    title.textContent = "الإشعارات";
+    icon.innerHTML = '<svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>';
+    content.innerHTML = '<div class="notifications-page-message">جارٍ تحميل إشعاراتك…</div>';
+    window.scrollTo({top:0,behavior:"instant"});
 
     try {
         const response = await fetch(BACKEND_URL + "/api/customer/notifications", {
@@ -2856,68 +2867,37 @@ async function showCustomerNotificationsPage() {
         try { data = await response.json(); } catch (_) {}
 
         if (response.status === 401 || response.status === 403) {
-            content.innerHTML = '<div class="notifications-message"><div class="notifications-empty-icon">🔐</div><h3>سجّل الدخول أولًا</h3><p>سجّل الدخول إلى حسابك لتتمكن من مشاهدة الإشعارات التي وصلتك.</p><a class="buy-btn notifications-login" href="/customer-login.html">تسجيل الدخول</a></div>';
+            content.innerHTML = '<div class="notifications-page-message"><div class="notifications-page-empty-icon"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></div><h3>سجّل الدخول أولًا</h3><p>سجّل الدخول إلى حسابك لتتمكن من مشاهدة الإشعارات التي وصلتك.</p><a class="buy-btn notifications-page-login" href="/customer-login.html">تسجيل الدخول</a></div>';
             return;
         }
-        if (!response.ok || data.status !== "OK") {
-            throw new Error(data.message || "تعذر تحميل الإشعارات.");
-        }
+        if (!response.ok || data.status !== "OK") throw new Error(data.message || "تعذر تحميل الإشعارات.");
 
         const notifications = Array.isArray(data.notifications) ? data.notifications.slice() : [];
-        notifications.sort(function(a, b) {
-            const dateDiff = new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
-            return dateDiff || Number(b.id || 0) - Number(a.id || 0);
+        notifications.sort(function(a,b) {
+            const diff = new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+            return diff || Number(b.id || 0) - Number(a.id || 0);
         });
 
         if (!notifications.length) {
-            content.innerHTML = '<div class="notifications-message"><div class="notifications-empty-icon">🔔</div><h3>لا توجد إشعارات حتى الآن</h3><p>ستظهر هنا إشعارات الحساب وتحديثات المتجر عند وصولها.</p></div>';
+            content.innerHTML = '<div class="notifications-page-message"><div class="notifications-page-empty-icon"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></div><h3>لا توجد إشعارات حتى الآن</h3><p>ستظهر هنا إشعارات الحساب وتحديثات المتجر عند وصولها.</p></div>';
             return;
         }
 
-        content.innerHTML = '<div class="notifications-list">' + notifications.map(function(item) {
-            const title = escapeHtml(String(item.title || "إشعار من المتجر"));
-            const message = escapeHtml(String(item.message || "")).replace(/\r?\n/g, "<br>");
+        content.innerHTML = '<div class="notifications-page-list">' + notifications.map(function(item) {
+            const safeTitle = escapeHtml(String(item.title || "إشعار من المتجر"));
+            const safeMessage = escapeHtml(String(item.message || "")).replace(/\r?\n/g,"<br>");
             const rawDate = item.created_at ? new Date(item.created_at) : null;
-            const date = rawDate && !Number.isNaN(rawDate.getTime())
-                ? escapeHtml(rawDate.toLocaleString("ar", {year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}))
+            const formattedDate = rawDate && !Number.isNaN(rawDate.getTime())
+                ? escapeHtml(rawDate.toLocaleString("ar",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}))
                 : "التاريخ غير متاح";
-            return '<article class="customer-notification-card"><div class="customer-notification-head"><span class="customer-notification-icon" aria-hidden="true">🔔</span><h3>' + title + '</h3></div><p class="customer-notification-message">' + message + '</p><div class="customer-notification-date"><span aria-hidden="true">🗓️</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + date + '</time></div></article>';
+            return '<article class="notifications-page-card"><div class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><h3>' + safeTitle + '</h3></div><p class="notifications-page-card-message">' + safeMessage + '</p><div class="notifications-page-date"><span aria-hidden="true">◷</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + formattedDate + '</time></div></article>';
         }).join("") + '</div>';
     } catch (error) {
         console.error("Customer notifications load failed:", error);
-        content.innerHTML = '<div class="notifications-message notifications-error"><div class="notifications-empty-icon">⚠️</div><h3>تعذر تحميل الإشعارات</h3><p>' + escapeHtml(error && error.message ? error.message : "حدث خطأ أثناء تحميل الإشعارات.") + '</p><button type="button" class="buy-btn" id="customerNotificationsRetry">إعادة المحاولة</button></div>';
-        const retry = document.getElementById("customerNotificationsRetry");
+        content.innerHTML = '<div class="notifications-page-message notifications-page-error"><h3>تعذر تحميل الإشعارات</h3><p>' + escapeHtml(error && error.message ? error.message : "حدث خطأ أثناء تحميل الإشعارات.") + '</p><button type="button" class="buy-btn" id="notificationsPageRetry">إعادة المحاولة</button></div>';
+        const retry = document.getElementById("notificationsPageRetry");
         if (retry) retry.addEventListener("click", showCustomerNotificationsPage);
     }
-}
-
-function closeCustomerNotificationsPage(returnToMenu) {
-    const modal = document.getElementById("customerNotificationsModal");
-    if (modal) {
-        modal.classList.remove("is-open");
-        modal.setAttribute("aria-hidden", "true");
-    }
-    document.body.style.overflow = "";
-    if (returnToMenu) {
-        const drawer = document.getElementById("drawer");
-        const overlay = document.getElementById("overlay");
-        if (drawer) drawer.classList.add("active");
-        if (overlay) overlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-}
-
-function initializeCustomerNotificationsPage() {
-    const modal = document.getElementById("customerNotificationsModal");
-    if (!modal) return;
-    modal.querySelectorAll("[data-notifications-close]").forEach(function(element) {
-        element.addEventListener("click", function() { closeCustomerNotificationsPage(false); });
-    });
-    const back = modal.querySelector("[data-notifications-back]");
-    if (back) back.addEventListener("click", function() { closeCustomerNotificationsPage(true); });
-    document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape" && modal.classList.contains("is-open")) closeCustomerNotificationsPage(false);
-    });
 }
 
 function handleAction(action) {
