@@ -459,22 +459,22 @@ function initializeCustomers() {
     }
 
     if (searchInput) {
+        let searchTimer;
 
-        searchInput.addEventListener(
-            "keydown",
-            function (event) {
+        // فلترة العملاء مباشرة حسب معرّف العميل أو اسمه فقط.
+        searchInput.addEventListener("input", function () {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function () {
+                loadCustomers(searchInput.value.trim());
+            }, 250);
+        });
 
-                if (event.key === "Enter") {
-
-                    loadCustomers(
-                        searchInput.value.trim()
-                    );
-
-                }
-
+        searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                clearTimeout(searchTimer);
+                loadCustomers(searchInput.value.trim());
             }
-        );
-
+        });
     }
 
 }
