@@ -91,36 +91,19 @@ body:has(#drawer.active) .main-header{display:none!important}
 
 <div class="overlay" id="overlay"></div><!-- =========================
      القائمة الجانبية
-========================= --><aside class="drawer" id="drawer"><div class="drawer-header">
-
-    <div class="drawer-logo">
-        Nabd-Store
+========================= --><aside class="drawer" id="drawer">
+<div class="drawer-user drawer-user-profile">
+    <div class="drawer-avatar-frame" aria-label="إطار مستوى العميل">
+        <div class="user-avatar" id="menuUserAvatar" aria-label="الصورة الشخصية">👤</div>
+        <span class="drawer-level-label" aria-hidden="true"></span>
     </div>
-
-    <button
-        class="close-btn"
-        id="closeMenu"
-        type="button"
-        aria-label="إغلاق القائمة"
-    >
-        ×
-    </button>
-
-</div>
-
-
-<div class="drawer-user">
-
-    <div class="user-avatar" id="menuUserAvatar" aria-label="الصورة الشخصية">
-        👤
-    </div>
-
     <div class="drawer-user-details">
-        <strong id="menuUserName">ضيف</strong>
-        <span id="menuUserCountry" class="drawer-user-country"></span>
+        <div class="drawer-user-name-row">
+            <strong id="menuUserName">ضيف</strong>
+            <span id="menuUserCountry" class="drawer-user-country"></span>
+        </div>
         <small id="menuCustomerId">لم يتم تسجيل الدخول</small>
     </div>
-
 </div>
 
 
