@@ -1087,6 +1087,6 @@ td{padding:14px 12px!important;}
 
 
 /* رصيد البطاقة أسفل الهيدر وفوق زر تحديث البيانات في الرئيسية */
-#dashboardSection .dashboard-api-balance{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0 0 10px;padding:12px 15px;background:var(--white);border:1px solid var(--primary-dark);border-radius:9px;color:var(--text);font-size:14px;font-weight:800}
-#dashboardSection .dashboard-api-balance span{color:var(--muted)}
-#dashboardSection .dashboard-api-balance strong{direction:ltr;display:inline-block;color:var(--primary);font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}
+#dashboardSection .dashboard-api-balance{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin:0 0 18px;padding:12px 15px;background:var(--white);border:1px solid var(--primary-dark);border-radius:9px;color:var(--text);font-size:14px;font-weight:800}
+#dashboardSection .dashboard-api-balance span{position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--muted)}
+#dashboardSection .dashboard-api-balance strong{direction:ltr;display:inline-block;color:var(--primary);font-size:21px;font-weight:900;font-variant-numeric:tabular-nums;text-align:center}
