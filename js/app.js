@@ -3091,13 +3091,23 @@ function findBalanceCatalogItem(product) {
     const categoryText = normalizeBalanceText(product && product.category_name);
     const productText = normalizeBalanceText(product && product.name);
     const combined = (categoryText + " " + productText).trim();
-    return BALANCE_CATALOG.find(function(item) {
+    const matched = BALANCE_CATALOG.find(function(item) {
         return item.aliases.some(function(alias) {
             const needle = normalizeBalanceText(alias);
             if (!needle) return false;
             return categoryText.includes(needle) || combined.includes(needle);
         });
-    }) || null;
+    });
+    if (matched) return matched;
+
+    // Nemer can return the Syriatel S1/S2 product group without repeating
+    // the provider name in every product/category label. These identifiers
+    // are unique to the Syriatel balance levels in this catalog.
+    if (/(^|\\s)s ?[12](\\s|$)/i.test(combined) ||
+        /(?:وحدات|رصيد|شحن)\\s*s ?[12](?:\\s|$)/i.test(combined)) {
+        return BALANCE_CATALOG.find(function(item) { return item.key === "syriatel"; }) || null;
+    }
+    return null;
 }
 
 function isBalanceProduct(product) {
@@ -3240,6 +3250,42 @@ function getBalanceSubgroups(group) {
                 providerTitle: group.title
             }
         ];
+    }
+
+    // Syriatel always has exactly three level-3 tiles. Build these explicitly
+    // so S1 never disappears just because Nemer omits its provider/category
+    // label on some products; each tile contains only its own matching API items.
+    if (group.key === "syriatel") {
+        const syriatelGroups = [
+            {key:"syriatel|s1", title:"وحدات سيريتيل S1", products:[]},
+            {key:"syriatel|s2", title:"وحدات سيريتيل S2", products:[]},
+            {key:"syriatel|invoices", title:"فواتير سيريتيل", products:[]}
+        ];
+        products.forEach(function(product) {
+            const combined = normalizeBalanceText(
+                String(product && product.category_name || "") + " " +
+                String(product && product.name || "")
+            );
+            const invoice = /فاتور|فواتير|تسديد|دفع|invoice|payment|bill|billing/.test(combined);
+            if (invoice) {
+                syriatelGroups[2].products.push(product);
+                return;
+            }
+            if (/(^|\\s)s ?1(\\s|$)/i.test(combined)) {
+                syriatelGroups[0].products.push(product);
+                return;
+            }
+            if (/(^|\\s)s ?2(\\s|$)/i.test(combined)) {
+                syriatelGroups[1].products.push(product);
+            }
+        });
+        syriatelGroups.forEach(function(subgroup) {
+            subgroup.image = group.image || "";
+            subgroup.balanceGroupKey = group.key;
+            subgroup.providerTitle = group.title;
+            subgroup.products = sortGameProducts(subgroup.products);
+        });
+        return syriatelGroups;
     }
 
     const groups = [];
