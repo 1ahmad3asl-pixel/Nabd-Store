@@ -1090,3 +1090,11 @@ td{padding:14px 12px!important;}
 #dashboardSection .dashboard-api-balance{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin:-4px 0 26px;padding:12px 15px;background:var(--white);border:1px solid var(--primary-dark);border-radius:9px;color:var(--text);font-size:14px;font-weight:800}
 #dashboardSection .dashboard-api-balance span{position:absolute;right:15px;top:50%;transform:translateY(-50%);color:#fff;font-size:16px;font-weight:900}
 #dashboardSection .dashboard-api-balance strong{direction:ltr;display:inline-block;color:var(--primary);font-size:21px;font-weight:900;font-variant-numeric:tabular-nums;text-align:center}
+
+
+/* Sidebar cleanup: gold header, no brand text or emoji icons, neatly aligned items. */
+.admin-tabs.admin-drawer .admin-drawer-header{background:linear-gradient(135deg,#f5d46b 0%,#d4a72c 52%,#b8860b 100%)!important;color:#17130a!important;border-bottom:1px solid #a87908!important;min-height:72px!important;height:72px!important;flex-basis:72px!important;justify-content:flex-start!important;}
+.admin-tabs.admin-drawer .admin-drawer-header #closeMenuButton{margin-right:auto!important;color:#17130a!important;border-color:rgba(23,19,10,.22)!important;background:rgba(255,255,255,.22)!important;}
+.admin-tabs.admin-drawer .admin-nav-item{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:0!important;text-align:right!important;padding:0 18px!important;min-height:48px!important;height:48px!important;margin:0 10px!important;width:calc(100% - 20px)!important;border-radius:10px!important;}
+.admin-tabs.admin-drawer .admin-nav-item span{width:auto!important;min-width:0!important;flex:0 1 auto!important;text-align:right!important;font-size:14px!important;}
+.admin-tabs.admin-drawer .admin-nav-logout{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:0!important;text-align:right!important;padding:0 18px!important;min-height:48px!important;height:48px!important;margin:8px 10px 0!important;width:calc(100% - 20px)!important;border-radius:10px!important;}
