@@ -622,30 +622,10 @@ function renderCustomers(customers) {
                     </td>
 
                     <td>
-                        <button
-                            class="small-button"
-                            data-customer-id="${escapeAdminHtml(String(internalId))}"
-                            data-action="info"
-                        >
-                            👤 المعلومات
-                        </button>
-                        <button
-                            class="small-button"
-                            data-customer-id="${escapeAdminHtml(String(internalId))}"
-                            data-action="wallet"
-                        >
-                            💰 المحفظة
-                        </button>
-                        <button
-                            class="small-button"
-                            data-customer-id="${escapeAdminHtml(String(internalId))}"
-                            data-action="discount"
-                        >
-                            تعديل الخصم
-                        </button>
+                        ${escapeAdminHtml(String(customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد"))}
                     </td>
 
-                    <td class="customer-settings-cell">
+
                         <button
                             class="customer-settings-icon"
                             type="button"
