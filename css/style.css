@@ -4035,3 +4035,63 @@ input,textarea,[contenteditable="true"]{
     text-align:center;
     overflow-wrap:anywhere;
 }
+
+
+/* Customer tier-colored avatar frame and visible tier caption */
+.drawer .drawer-avatar-frame{
+    width:96px;
+    height:116px;
+    flex:0 0 116px;
+    padding:4px 4px 25px;
+    align-items:stretch;
+    border-width:2px;
+    border-radius:19px;
+    transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.drawer .drawer-avatar-frame .user-avatar{
+    width:100%;
+    height:100%;
+    flex:1 1 auto;
+    border-radius:13px;
+}
+.drawer .drawer-avatar-frame .user-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:10px;
+}
+.drawer .drawer-level-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:21px;
+    height:21px;
+    bottom:2px;
+    left:4px;
+    right:4px;
+    padding:0 3px;
+    box-sizing:border-box;
+    border:0;
+    border-radius:0 0 11px 11px;
+    color:#fff;
+    font-size:10px;
+    line-height:1.2;
+    font-weight:800;
+    text-align:center;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    background:var(--primary);
+}
+.drawer .drawer-avatar-frame.tier-1{border-color:#b8c0cc;background:linear-gradient(145deg,rgba(208,216,226,.22),rgba(120,132,148,.06));box-shadow:0 0 0 3px rgba(184,192,204,.16),inset 0 0 12px rgba(208,216,226,.13)}
+.drawer .drawer-avatar-frame.tier-1 .drawer-level-label{background:linear-gradient(135deg,#8994a3,#c6ced8);color:#111}
+.drawer .drawer-avatar-frame.tier-2{border-color:#e7b923;background:linear-gradient(145deg,rgba(245,196,0,.20),rgba(184,134,11,.06));box-shadow:0 0 0 3px rgba(231,185,35,.18),inset 0 0 12px rgba(245,196,0,.16)}
+.drawer .drawer-avatar-frame.tier-2 .drawer-level-label{background:linear-gradient(135deg,#b8860b,#f5c400);color:#17120a}
+.drawer .drawer-avatar-frame.tier-3{border-color:#a875e8;background:linear-gradient(145deg,rgba(168,117,232,.20),rgba(105,62,164,.06));box-shadow:0 0 0 3px rgba(168,117,232,.18),inset 0 0 12px rgba(168,117,232,.15)}
+.drawer .drawer-avatar-frame.tier-3 .drawer-level-label{background:linear-gradient(135deg,#7040a8,#b88bea)}
+.drawer .drawer-avatar-frame.tier-4{border-color:#4597ef;background:linear-gradient(145deg,rgba(69,151,239,.20),rgba(30,91,160,.06));box-shadow:0 0 0 3px rgba(69,151,239,.18),inset 0 0 12px rgba(69,151,239,.15)}
+.drawer .drawer-avatar-frame.tier-4 .drawer-level-label{background:linear-gradient(135deg,#2168b6,#57b6ff)}
+.drawer .drawer-avatar-frame.tier-5{border-color:#e34b52;background:linear-gradient(145deg,rgba(227,75,82,.20),rgba(145,30,38,.06));box-shadow:0 0 0 3px rgba(227,75,82,.18),inset 0 0 12px rgba(227,75,82,.15)}
+.drawer .drawer-avatar-frame.tier-5 .drawer-level-label{background:linear-gradient(135deg,#a91f2c,#f06469)}
+.drawer .drawer-avatar-frame.is-guest{border-color:var(--primary);background:linear-gradient(145deg,rgba(245,196,0,.10),rgba(184,134,11,.025));box-shadow:0 0 0 3px rgba(184,134,11,.10),inset 0 0 12px rgba(184,134,11,.08)}
+.drawer .drawer-avatar-frame.is-guest .drawer-level-label{background:var(--primary);color:#111}
