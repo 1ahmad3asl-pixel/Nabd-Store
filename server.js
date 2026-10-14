@@ -1026,11 +1026,11 @@ app.get("/api/admin/customers", async (req, res) => {
   const search = String(req.query.search || "").trim();
   const result = search
     ? await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE CAST(customer_number AS TEXT) ILIKE $1 OR CAST(customer_id AS TEXT) ILIKE $1 OR name ILIKE $1 ORDER BY created_at DESC",
+        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,COALESCE(to_jsonb(customers)->>'customer_level',to_jsonb(customers)->>'level',to_jsonb(customers)->>'tier') AS customer_level FROM customers WHERE CAST(customer_number AS TEXT) ILIKE $1 OR CAST(customer_id AS TEXT) ILIKE $1 OR name ILIKE $1 ORDER BY created_at DESC",
         [`%${search}%`]
       )
     : await query(
-        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers ORDER BY created_at DESC"
+        "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,COALESCE(to_jsonb(customers)->>'customer_level',to_jsonb(customers)->>'level',to_jsonb(customers)->>'tier') AS customer_level FROM customers ORDER BY created_at DESC"
       );
   res.json({ status: "OK", customers: result.rows });
 });
