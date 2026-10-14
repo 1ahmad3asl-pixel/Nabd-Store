@@ -482,7 +482,7 @@ function normalizeCustomerSearch(value) {
         .toLocaleLowerCase()
         .replace(/[٠-٩]/g, digit => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
         .replace(/[۰-۹]/g, digit => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
-        .replace(/[\\s\\u200e\\u200f-]/g, "");
+        .replace(/\s/g, "").replace(/[\u200e\u200f-]/g, "");
 }
 
 async function loadCustomers(search = "", forceReload = true) {
