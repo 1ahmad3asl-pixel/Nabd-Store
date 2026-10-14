@@ -19,7 +19,7 @@
 /* إخفاء الهيدر العلوي أثناء فتح القائمة الجانبية */
 body:has(#drawer.active) .main-header{display:none!important}
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-customer-frame-unified1"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-levels-header-compact1"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
 .welcome-choice{margin-top:24px;animation:welcomeChoiceIn .45s ease both}
@@ -569,6 +569,51 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
 @media(max-width:420px){
   #customerLevelsModal .levels-panel{padding-top:6px!important;}
   #customerLevelsModal .levels-title{font-size:19px!important;}
+}
+
+
+/* Compact levels page header: remove wasted top space and keep title + back arrow visible */
+#customerLevelsModal{
+  align-items:flex-start!important;
+  padding: max(8px, env(safe-area-inset-top)) 10px 10px!important;
+}
+#customerLevelsModal .levels-panel{
+  width:min(100%,480px)!important;
+  max-height:calc(100dvh - max(8px, env(safe-area-inset-top)) - 10px)!important;
+  padding:10px clamp(12px,3.5vw,18px) 16px!important;
+  border-radius:16px!important;
+}
+#customerLevelsModal .levels-title-row{
+  position:sticky!important;
+  top:-1px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin:0 0 8px!important;
+  padding:2px 0 8px!important;
+  background:var(--white,#111)!important;
+  border-bottom:1px solid rgba(184,134,11,.16)!important;
+}
+#customerLevelsModal .levels-title{
+  margin:0!important;
+  font-size:19px!important;
+  line-height:1.3!important;
+  font-weight:900!important;
+}
+#customerLevelsModal .levels-back{
+  width:32px!important;
+  height:32px!important;
+  min-width:32px!important;
+  min-height:32px!important;
+  flex:0 0 32px!important;
+  padding:0!important;
+  border-radius:9px!important;
+}
+#customerLevelsModal .levels-back svg{width:16px!important;height:16px!important;}
+#customerLevelsModal .levels-subtitle{margin:8px 0 12px!important;}
+@media(max-width:420px){
+  #customerLevelsModal{padding: max(6px, env(safe-area-inset-top)) 8px 8px!important;}
+  #customerLevelsModal .levels-panel{max-height:calc(100dvh - max(6px, env(safe-area-inset-top)) - 8px)!important;}
 }
 
 </style>
