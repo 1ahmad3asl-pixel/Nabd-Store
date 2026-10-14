@@ -602,7 +602,7 @@ function renderCustomers(customers) {
                     </td>
 
                     <td>
-                        ${escapeAdminHtml(String(customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد"))}
+                        ${escapeAdminHtml(String(customer.customer_level ?? customer.level ?? customer.tier ?? "عميل — فضي"))}
                     </td>
 
                     <td>
