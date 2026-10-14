@@ -846,6 +846,12 @@ app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
     return res.status(401).json({ status: "ERROR", message: "الحساب غير موجود." });
   }
   const customer = result.rows[0];
+  const spendResult = await query(
+    "SELECT COALESCE(SUM(price),0) AS spend FROM orders WHERE customer_id=$1 AND status NOT IN ('failed','rejected','cancelled','canceled','error')",
+    [customer.customer_id]
+  );
+  const tierDiscount = getTierDiscount(Number(spendResult.rows[0]?.spend || 0));
+  customer.effective_discount = Math.min(100, Math.max(tierDiscount, Number(customer.discount || 0)));
   const parsedPhone = parseCustomerPhone(customer.phone);
   customer.phone_country_code = parsedPhone?.country_code || "";
   customer.customer_id = String(customer.customer_number);
@@ -1387,9 +1393,9 @@ function getPriceDecimalPlaces(value) {
 
 function getTierDiscount(total) {
   const amount = Number(total || 0);
-  if (amount >= 300) return 4;
-  if (amount >= 210) return 3;
-  if (amount >= 125) return 2;
+  if (amount >= 300) return 5;
+  if (amount >= 200) return 3;
+  if (amount >= 115) return 2;
   if (amount >= 50) return 1;
   return 0;
 }
