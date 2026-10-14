@@ -19,7 +19,7 @@
 /* إخفاء الهيدر العلوي أثناء فتح القائمة الجانبية */
 body:has(#drawer.active) .main-header{display:none!important}
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-sidebar-unified1"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261014-sidebar-unified2"><link rel="stylesheet" href="css/boost.css?v=20261003-fix4"><link rel="stylesheet" href="css/digital.css?v=20261003-fix4">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
 .welcome-choice{margin-top:24px;animation:welcomeChoiceIn .45s ease both}
@@ -107,15 +107,14 @@ body:has(#drawer.active) .main-header{display:none!important}
 </div>
 
 
-<nav class="drawer-nav">
-<a href="#home" class="drawer-link active"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></span><span>الصفحة الرئيسية</span></a>
+<nav class="drawer-nav" aria-label="القائمة الجانبية الرئيسية">
+<a href="#home" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></span><span>الصفحة الرئيسية</span></a>
 <a href="#notifications" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span>الإشعارات</span><span class="notification-badge" id="notificationBadge">0</span></a>
 <button type="button" class="drawer-link drawer-levels-trigger" id="openCustomerLevels" aria-haspopup="dialog" aria-controls="customerLevelsModal"><span class="drawer-link-icon levels-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 8-4 3-4-3-1-8Z"/><path d="M7 6H4v3c0 2 1 3 3 3M17 6h3v3c0 2-1 3-3 3"/></svg></span><span>المستويات</span></button>
-<a href="#orders" class="drawer-link"><span>📦</span><span>طلباتي</span></a>
-
-<a href="/customer-profile.html" class="drawer-link" data-page-link="profile"><span>👤</span><span>ملفي الشخصي</span></a>
-<a href="/settings.html" class="drawer-link" data-page-link="settings"><span>⚙️</span><span>الإعدادات</span></a>
-<a href="#wallet" class="drawer-link"><span>💳</span><span>المحفظة</span></a>
+<a href="#orders" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span>طلباتي</span></a>
+<a href="/customer-profile.html" class="drawer-link" data-page-link="profile"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span>ملفي الشخصي</span></a>
+<a href="/settings.html" class="drawer-link" data-page-link="settings"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.7 1l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.6-1.5-2.6 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.7-1l.3-1.8h3l.3 1.8a8 8 0 0 1 1.7 1l1.7-.6 1.5 2.6-1.4 1.1a7 7 0 0 1 0 2Z" transform="translate(-1 -1)"/></svg></span><span>الإعدادات</span></a>
+<a href="#wallet" class="drawer-link"><span class="drawer-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="15" rx="2"/><path d="M3 9h18M16 14h2"/><path d="M6 6V4h13"/></svg></span><span>المحفظة</span></a>
 </nav>
 
 </aside><!-- =========================
