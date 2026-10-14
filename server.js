@@ -1038,13 +1038,13 @@ app.get("/api/admin/customers", async (req, res) => {
 
 app.get("/api/admin/customers/:id", async (req, res) => {
   const result = await query(
-    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,CASE
+    `SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,CASE
           WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
           WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
           WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
           WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
           ELSE 'عميل — فضي'
-        END AS customer_level FROM customers WHERE customer_id=$1",
+        END AS customer_level FROM customers WHERE customer_id=$1`,
     [String(req.params.id)]
   );
   if (!result.rows[0]) {
