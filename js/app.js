@@ -2609,6 +2609,14 @@ function initializeSearch() {
 
 function initializeQuickMenu() {
 
+    const sidebarNotificationsLink = document.querySelector('.drawer-link[href="#notifications"]');
+    if (sidebarNotificationsLink) {
+        sidebarNotificationsLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            showCustomerNotificationsPage();
+        });
+    }
+
     document
         .querySelectorAll(".quick-item")
         .forEach(function (item) {
