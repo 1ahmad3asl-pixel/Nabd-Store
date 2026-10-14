@@ -426,6 +426,20 @@ function initializeCustomers() {
     const searchInput =
         document.getElementById("customerSearch");
 
+    const refresh =
+        document.getElementById("refreshCustomers");
+
+    if (refresh) {
+        refresh.addEventListener("click", function () {
+            refresh.disabled = true;
+            refresh.textContent = "⏳ جارٍ تحديث البيانات...";
+            loadCustomers(searchInput ? searchInput.value.trim() : "").finally(function () {
+                refresh.disabled = false;
+                refresh.textContent = "🔄 تحديث البيانات";
+            });
+        });
+    }
+
 
     if (searchButton) {
 
