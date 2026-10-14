@@ -1037,7 +1037,7 @@ app.get("/api/admin/customers", async (req, res) => {
 
 app.get("/api/admin/customers/:id", async (req, res) => {
   const result = await query(
-    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at FROM customers WHERE customer_id=$1",
+    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,COALESCE(to_jsonb(customers)->>'customer_level',to_jsonb(customers)->>'level',to_jsonb(customers)->>'tier') AS customer_level FROM customers WHERE customer_id=$1",
     [String(req.params.id)]
   );
   if (!result.rows[0]) {
