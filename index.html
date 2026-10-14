@@ -433,6 +433,12 @@ title="الدعم الفني"
 #customerLevelsModal .levels-title-icon,.drawer-levels-trigger .levels-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:inherit;background:transparent;border:0;box-shadow:none;padding:0;}
 #customerLevelsModal .levels-title-icon svg,.drawer-levels-trigger .levels-icon svg{display:block;}
 #customerLevelsModal .level-discount{margin-top:10px;text-align:center;font-size:13px;font-weight:900;color:var(--level-color,#f5c400);line-height:1.5;}
+#customerLevelsModal .level-card.is-locked{min-height:96px;display:flex;align-items:center;justify-content:center;opacity:.72;border-style:dashed;background:rgba(127,127,127,.06);}
+#customerLevelsModal .locked-level-content{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--muted,#aaa);font-weight:900;font-size:15px;}
+#customerLevelsModal .locked-icon{font-size:17px;line-height:1;}
+#customerLevelsModal .level-card.is-next-locked{opacity:.82;border-style:dashed;}
+#customerLevelsModal .level-card.is-next-locked .level-discount{color:var(--muted,#aaa);font-size:12px;}
+html[data-theme="light"] #customerLevelsModal .level-card.is-locked{background:rgba(0,0,0,.025);}
 html[data-theme="light"] #customerLevelsModal .level-discount{color:var(--level-dark,#8f6900);}
 #customerLevelsModal .levels-message{padding:18px 10px;text-align:center;color:var(--muted,#aaa);line-height:1.8;}
 #customerLevelsModal .levels-error{color:#e57373;}
@@ -497,11 +503,19 @@ html[data-theme="light"] #customerLevelsModal .levels-panel{background:#fff;colo
     var badgeClass="levels-current "+(guestMode?"is-guest":tierClass);
     var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="'+badgeClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
+      var locked=i>current+1;
+      var isNext=i===current+1;
+      if(locked){
+        html+='<article class="level-card level-card-'+(i+1)+' is-locked" aria-label="مستوى مقفل"><div class="locked-level-content"><span class="locked-icon" aria-hidden="true">🔒</span><span class="locked-level-title">مقفل</span></div></article>';
+        return;
+      }
       var progress=Math.max(0,Math.min(100,((total-level.start)/(level.end-level.start))*100));
       var state=i<current?"مكتمل":(i===current?"مستواك الحالي":"المستوى التالي");
       var shownProgress=i<current?100:Math.round(progress);
       var progressText=i<current?"اكتمل هذا المستوى":(i===current?money(Math.max(0,Math.min(total,level.end)-level.start))+" / "+money(level.end-level.start):"بانتظار الوصول إليه");
-      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+'"><div class="level-card-head"><span class="level-name">'+level.name+'</span><span class="level-state">'+state+'</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+level.name+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-discount">'+(level.discount===0?"لا يوجد خصم":"خصم "+level.discount+"%")+'</div></article>';
+      var cardName=isNext?"المستوى التالي":level.name;
+      var cardDiscount=isNext?"يُفتح عند بلوغ المستوى الحالي":(level.discount===0?"لا يوجد خصم":"خصم "+level.discount+"%");
+      html+='<article class="level-card level-card-'+(i+1)+(i===current?' is-current':'')+(isNext?' is-next-locked':'')+'"><div class="level-card-head"><span class="level-name">'+cardName+'</span><span class="level-state">'+(isNext?"مقفل":state)+'</span></div><div class="level-range"><span class="level-range-start">'+money(level.start)+'</span><span class="level-range-percent">'+shownProgress+'%</span><span class="level-range-end">'+money(level.end)+'</span></div><div class="level-track" role="progressbar" aria-label="'+cardName+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+shownProgress+'"><div class="level-fill" style="width:'+shownProgress+'%"></div></div><div class="level-discount">'+cardDiscount+'</div></article>';
     });
     content.innerHTML=html;
   }
