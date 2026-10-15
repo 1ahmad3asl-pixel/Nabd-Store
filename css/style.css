@@ -4472,3 +4472,6 @@ html[data-theme="dark"] .drawer{background:#111!important;color:#f5f5f5!importan
 @media(max-width:420px){
   .drawer .drawer-avatar-frame{width:116px!important;height:116px!important;flex-basis:116px!important;}
 }
+
+/* Notification details use their own Arabic close button; hide the duplicate X. */
+#modal.notification-detail-open .modal-close{display:none!important;}
