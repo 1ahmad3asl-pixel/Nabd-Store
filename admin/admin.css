@@ -1244,7 +1244,8 @@ td{padding:14px 12px!important;}
   font-weight:900!important;
   font-variant-numeric:tabular-nums!important;
 }
-#customersSection .customers-refresh-button{
+#customersSection .customers-refresh-button,
+#ordersSection .orders-refresh-button{
   display:block!important;
   width:100%!important;
   min-height:50px!important;
@@ -1259,8 +1260,10 @@ td{padding:14px 12px!important;}
   font-weight:900!important;
   box-shadow:none!important;
 }
-#customersSection .customers-refresh-button:hover{background:#ffd83d!important;}
-#customersSection .customers-refresh-button:disabled{opacity:.75!important;cursor:wait!important;}
+#customersSection .customers-refresh-button:hover,
+#ordersSection .orders-refresh-button:hover{background:#ffd83d!important;}
+#customersSection .customers-refresh-button:disabled,
+#ordersSection .orders-refresh-button:disabled{opacity:.75!important;cursor:wait!important;}
 
 
 /* Customer settings: monochrome, transparent icon at the far-left edge of each RTL row. */
