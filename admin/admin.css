@@ -1357,3 +1357,10 @@ td{padding:14px 12px!important;}
  .customer-settings-info-grid { grid-template-columns:1fr; }
  .customer-settings-page-header h2 { font-size:21px; }
 }
+
+
+/* Success confirmation for the general notification page */
+.general-notification-success{margin-top:18px;padding:16px;border:1px solid var(--primary);border-radius:10px;background:var(--card,transparent);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.general-notification-success[hidden]{display:none!important}
+.general-notification-success p{margin:0;line-height:1.7}
+.general-notification-success button{border:1px solid var(--border);border-radius:8px;padding:9px 18px;background:var(--background);color:var(--text);cursor:pointer;font:inherit}
