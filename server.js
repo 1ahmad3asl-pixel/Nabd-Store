@@ -1095,6 +1095,34 @@ app.put("/api/admin/customers/:id/discount", async (req, res) => {
   res.json({ status: "OK", customer: result.rows[0] });
 });
 
+app.post("/api/admin/customers/:id/notifications", async (req, res) => {
+  const customerId = String(req.params.id || "").trim();
+  const title = String(req.body?.title || "").trim();
+  const message = String(req.body?.message || "").trim();
+
+  if (!customerId) {
+    return res.status(400).json({status:"ERROR",message:"معرّف العميل غير صالح."});
+  }
+  if (!title || !message || title.length > 150 || message.length > 10000) {
+    return res.status(400).json({status:"ERROR",message:"أدخل عنوان الإشعار ونصه، مع الالتزام بالحد الأقصى للطول."});
+  }
+
+  try {
+    const customer = await query("SELECT customer_id FROM customers WHERE customer_id=$1 LIMIT 1",[customerId]);
+    if (!customer.rows[0]) {
+      return res.status(404).json({status:"ERROR",message:"العميل غير موجود."});
+    }
+    const result = await query(
+      "INSERT INTO notifications(target,customer_id,title,message) VALUES('customer',$1,$2,$3) RETURNING id,title,message,created_at",
+      [customer.rows[0].customer_id,title,message]
+    );
+    return res.json({status:"OK",notification:result.rows[0]});
+  } catch (error) {
+    console.error("Admin customer notification failed:",error);
+    return res.status(500).json({status:"ERROR",message:"تعذر إرسال الإشعار إلى العميل."});
+  }
+});
+
 app.get("/api/admin/orders", async (req, res) => {
   const result = await query(
     "SELECT o.*, c.name AS customer_name, c.customer_number FROM orders o LEFT JOIN customers c ON c.customer_id = o.customer_id ORDER BY o.created_at DESC"
