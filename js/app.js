@@ -3110,6 +3110,10 @@ function updateBalance(value) {
 
 function showModal(title, body) {
     if (!elements.modal || !elements.modalBody) return;
+    // Keep the modal outside page-level stacking contexts so it always overlays internal pages.
+    if (elements.modal.parentElement !== document.body) {
+        document.body.appendChild(elements.modal);
+    }
     elements.modalBody.innerHTML = "<h2 style=\"margin-bottom:18px;\">" + escapeHtml(title) + "</h2>" + body;
     elements.modal.classList.add("active");
     document.body.style.overflow = "hidden";
