@@ -706,12 +706,10 @@ async function openCustomerSettings(customerId, customerName) {
     const html =
         "<div id='customerSettingsDialog' class='customer-info-dialog customer-settings-page' role='dialog' aria-modal='true' aria-labelledby='customerSettingsTitle'>" +
         "<div class='customer-info-card customer-settings-dialog-card'>" +
-        "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p id='customerSettingsSubtitle' class='customer-settings-customer-name'>" +
-        escapeAdminHtml(customerName) + " · ID " + escapeAdminHtml(String(customerId)) +
-        "</p></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
+        "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
         "<div id='customerSettingsLoading' class='customer-settings-placeholder'>جارٍ تحميل بيانات العميل...</div>" +
         "<div id='customerSettingsContent' hidden>" +
-        "<div class='customer-settings-summary'><div><span>رقم العميل (ID)</span><strong id='settingsCustomerId'>—</strong></div><div><span>اسم العميل</span><strong id='settingsCustomerName'>—</strong></div><div><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div></div>" +
+        "<div class='customer-settings-summary'><div><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div></div>" +
         "<section class='customer-settings-section'><h3>إدارة الرصيد</h3><form id='customerBalanceForm' class='customer-settings-form'>" +
         "<label for='customerBalanceAction'>نوع العملية</label><select id='customerBalanceAction'><option value='credit'>إضافة رصيد</option><option value='debit'>خصم رصيد</option></select>" +
         "<label for='customerBalanceAmount'>المبلغ</label><input id='customerBalanceAmount' type='number' min='0.001' max='1000000' step='0.001' required placeholder='أدخل المبلغ'>" +
@@ -735,8 +733,6 @@ async function openCustomerSettings(customerId, customerName) {
         const displayId = customer.customer_number ?? customer.customer_id ?? customerId;
         const displayName = customer.name ?? customer.username ?? customerName ?? "عميل";
         const value = (input) => input === null || input === undefined || String(input).trim() === "" ? "غير مضاف" : String(input);
-        setText("settingsCustomerId", displayId);
-        setText("settingsCustomerName", displayName);
         setText("settingsCustomerBalance", formatAdminPrice(customer.balance ?? 0));
         setText("settingsCustomerPhone", [customer.phone_country, customer.phone].filter(Boolean).join(" ") || "غير مضاف");
         setText("settingsCustomerEmail", value(customer.email));
@@ -744,7 +740,6 @@ async function openCustomerSettings(customerId, customerName) {
         setText("settingsCustomerLevel", customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد");
         setText("settingsCustomerCreated", customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر");
         setValue("customerDiscountValue", Number(customer.discount ?? customer.discount_percent ?? 0));
-        setText("customerSettingsSubtitle", String(displayName) + " · ID " + String(displayId));
         document.getElementById("customerSettingsLoading").hidden = true;
         document.getElementById("customerSettingsContent").hidden = false;
 
