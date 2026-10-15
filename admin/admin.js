@@ -706,7 +706,7 @@ async function openCustomerSettings(customerId, customerName) {
     const html =
         "<div id='customerSettingsDialog' class='customer-info-dialog customer-settings-page' role='dialog' aria-modal='true' aria-labelledby='customerSettingsTitle'>" +
         "<div class='customer-info-card customer-settings-dialog-card'>" +
-        "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
+        "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p id='customerSettingsSubtitle' class='customer-settings-customer-name'></p></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
         "<div id='customerSettingsLoading' class='customer-settings-placeholder'>جارٍ تحميل بيانات العميل...</div>" +
         "<div id='customerSettingsContent' hidden>" +
         "<div class='customer-settings-summary'><div><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div></div>" +
@@ -732,6 +732,7 @@ async function openCustomerSettings(customerId, customerName) {
         const customer = response.customer || {};
         const displayId = customer.customer_number ?? customer.customer_id ?? customerId;
         const displayName = customer.name ?? customer.username ?? customerName ?? "عميل";
+        setText("customerSettingsSubtitle", String(displayName) + " · ID " + String(displayId));
         const value = (input) => input === null || input === undefined || String(input).trim() === "" ? "غير مضاف" : String(input);
         setText("settingsCustomerBalance", formatAdminPrice(customer.balance ?? 0));
         setText("settingsCustomerPhone", [customer.phone_country, customer.phone].filter(Boolean).join(" ") || "غير مضاف");
