@@ -4290,6 +4290,13 @@ html[data-theme="light"] #internalPage.notifications-internal-page .notification
 }
 #internalPage.notifications-internal-page .notifications-page-card-chevron{font-size:24px;line-height:1;color:var(--muted,#aaa);}
 #internalPage.notifications-internal-page .notifications-page-card-button .notifications-page-date{margin-top:10px;}
+#internalPage.notifications-internal-page .notifications-page-card-button.is-read{
+  opacity:.58;border-color:rgba(127,127,127,.18);border-right-color:var(--muted,#888);
+  background:rgba(127,127,127,.045);box-shadow:none;
+}
+#internalPage.notifications-internal-page .notifications-page-card-button.is-read .notifications-page-card-title,
+#internalPage.notifications-internal-page .notifications-page-card-button.is-read .notifications-page-card-chevron{color:var(--muted,#888);}
+#internalPage.notifications-internal-page .notifications-page-card-button.is-read .notifications-page-card-icon{background:rgba(127,127,127,.08);color:var(--muted,#888);}
 .wallet-notification-details{display:flex;flex-direction:column;gap:0;margin:0 0 16px;}
 .wallet-notification-detail-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(127,127,127,.2);}
 .wallet-notification-detail-row span{color:var(--muted,#aaa);font-size:13px;}
