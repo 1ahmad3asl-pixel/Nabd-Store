@@ -1132,7 +1132,10 @@ app.get("/api/admin/orders", async (req, res) => {
       COUNT(*) AS total,
       COUNT(*) FILTER (
         WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
-      ) AS failed
+      ) AS failed,
+      COUNT(*) FILTER (
+        WHERE LOWER(COALESCE(status,'')) NOT IN ('failed','rejected','cancelled','canceled','error')
+      ) AS successful
     FROM orders
   `);
   res.json({
@@ -1140,7 +1143,8 @@ app.get("/api/admin/orders", async (req, res) => {
     orders: result.rows,
     order_summary: {
       total: Number(summary.rows[0]?.total || 0),
-      failed: Number(summary.rows[0]?.failed || 0)
+      failed: Number(summary.rows[0]?.failed || 0),
+      successful: Number(summary.rows[0]?.successful || 0)
     }
   });
 });
