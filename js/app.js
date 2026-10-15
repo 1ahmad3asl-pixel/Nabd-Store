@@ -2901,7 +2901,7 @@ async function refreshCustomerNotifications(options) {
 
     const walletNotice = added.find(function(item) {
         const title = String(item.title || "");
-        return title.includes("إضافة رصيد") || title.includes("خصم رصيد");
+        return title.includes("إيداع رصيد") || title.includes("خصم رصيد") || title.includes("إضافة رصيد");
     });
     if (walletNotice) {
         // حدّث الرصيد المعروض مباشرة بعد وصول إشعار عملية المحفظة.
@@ -3003,15 +3003,43 @@ async function showCustomerNotificationsPage() {
             return;
         }
 
-        content.innerHTML = '<div class="notifications-page-list">' + notifications.map(function(item) {
+        content.innerHTML = '<div class="notifications-page-list">' + notifications.map(function(item, index) {
             const safeTitle = escapeHtml(String(item.title || "إشعار من المتجر"));
-            const safeMessage = escapeHtml(String(item.message || "")).replace(/\r?\n/g,"<br>");
             const rawDate = item.created_at ? new Date(item.created_at) : null;
             const formattedDate = rawDate && !Number.isNaN(rawDate.getTime())
                 ? escapeHtml(rawDate.toLocaleString("ar",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}))
                 : "التاريخ غير متاح";
-            return '<article class="notifications-page-card"><div class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><h3>' + safeTitle + '</h3></div><p class="notifications-page-card-message">' + safeMessage + '</p><div class="notifications-page-date"><span aria-hidden="true">◷</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + formattedDate + '</time></div></article>';
+            return '<button type="button" class="notifications-page-card notifications-page-card-button" data-notification-index="' + index + '" aria-label="' + safeTitle + '، اضغط لعرض التفاصيل"><span class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span class="notifications-page-card-title">' + safeTitle + '</span><span class="notifications-page-card-chevron" aria-hidden="true">›</span></span><span class="notifications-page-date"><span aria-hidden="true">◷</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + formattedDate + '</time></span></button>';
         }).join("") + '</div>';
+
+        content.querySelectorAll("[data-notification-index]").forEach(function(button) {
+            button.addEventListener("click", function() {
+                const item = notifications[Number(button.getAttribute("data-notification-index"))];
+                if (!item) return;
+                const titleText = String(item.title || "إشعار من المتجر");
+                const messageText = String(item.message || "");
+                const dateValue = item.created_at ? new Date(item.created_at) : null;
+                const dateText = dateValue && !Number.isNaN(dateValue.getTime())
+                    ? dateValue.toLocaleString("ar",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"})
+                    : "التاريخ غير متاح";
+                const isWalletNotice = /إيداع رصيد|خصم رصيد|إضافة رصيد/.test(titleText);
+                let detailsHtml = "";
+                if (isWalletNotice) {
+                    const rows = messageText.split(/\r?\n/).map(function(line) {
+                        const match = line.match(/^([^:：]+)[:：]\s*(.*)$/);
+                        return match ? {label:match[1].trim(),value:match[2].trim()} : null;
+                    }).filter(Boolean);
+                    detailsHtml = '<div class="wallet-notification-details">' + rows.map(function(row) {
+                        return '<div class="wallet-notification-detail-row"><span>' + escapeHtml(row.label) + '</span><strong>' + escapeHtml(row.value) + '</strong></div>';
+                    }).join("") + '</div>';
+                } else {
+                    detailsHtml = '<p class="notification-detail-message">' + escapeHtml(messageText).replace(/\r?\n/g,"<br>") + '</p>';
+                }
+                showModal(titleText, '<div class="notification-detail-modal">' + detailsHtml + '<div class="notification-detail-date">التاريخ: ' + escapeHtml(dateText) + '</div><button type="button" class="buy-btn notification-detail-close" id="notificationDetailClose">إغلاق</button></div>');
+                const closeButton = document.getElementById("notificationDetailClose");
+                if (closeButton) closeButton.addEventListener("click", closeModal);
+            });
+        });
     } catch (error) {
         console.error("Customer notifications load failed:", error);
         content.innerHTML = '<div class="notifications-page-message notifications-page-error"><h3>تعذر تحميل الإشعارات</h3><p>' + escapeHtml(error && error.message ? error.message : "حدث خطأ أثناء تحميل الإشعارات.") + '</p><button type="button" class="buy-btn" id="notificationsPageRetry">إعادة المحاولة</button></div>';
