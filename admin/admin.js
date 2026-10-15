@@ -1103,6 +1103,7 @@ async function loadOrders() {
 function updateOrderSummary(orders, summary) {
     const totalEl = document.getElementById("ordersTotalCount");
     const failedEl = document.getElementById("ordersFailedCount");
+    const successfulEl = document.getElementById("ordersSuccessfulCount");
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
     const total = summary && Number.isFinite(Number(summary.total))
         ? Number(summary.total)
@@ -1112,8 +1113,14 @@ function updateOrderSummary(orders, summary) {
         : orders.filter(function(order) {
             return failedStatuses.includes(String(order.status || "").toLowerCase());
         }).length;
+    const successful = summary && Number.isFinite(Number(summary.successful))
+        ? Number(summary.successful)
+        : orders.filter(function(order) {
+            return !failedStatuses.includes(String(order.status || "").toLowerCase());
+        }).length;
     if (totalEl) totalEl.textContent = String(total);
     if (failedEl) failedEl.textContent = String(failed);
+    if (successfulEl) successfulEl.textContent = String(successful);
 }
 function filterOrders() {
 
