@@ -1386,13 +1386,31 @@ app.post("/api/admin/email-broadcast", async (req, res) => {
 app.get("/api/customer/notifications", requireCustomer, async (req, res) => {
   try {
     const result = await query(
-      "SELECT id,title,message,created_at FROM notifications WHERE target='all' OR (target='customer' AND customer_id=$1) ORDER BY created_at DESC, id DESC",
+      "SELECT n.id,n.title,n.message,n.created_at,r.read_at FROM notifications n LEFT JOIN customer_notification_reads r ON r.notification_id=n.id AND r.customer_id=$1 WHERE n.target='all' OR (n.target='customer' AND n.customer_id=$1) ORDER BY n.created_at DESC, n.id DESC",
       [req.customer.customer_id]
     );
     res.json({ status: "OK", notifications: result.rows });
   } catch (error) {
     console.error("Customer notifications error:", error);
     res.status(500).json({ status: "ERROR", message: "تعذر تحميل إشعاراتك." });
+  }
+});
+
+app.post("/api/customer/notifications/:id/read", requireCustomer, async (req, res) => {
+  const notificationId = Number(req.params.id);
+  if (!Number.isSafeInteger(notificationId) || notificationId <= 0) {
+    return res.status(400).json({status:"ERROR",message:"معرّف الإشعار غير صالح."});
+  }
+  try {
+    const result = await query(
+      "INSERT INTO customer_notification_reads(notification_id,customer_id) SELECT n.id,$2 FROM notifications n WHERE n.id=$1 AND (n.target='all' OR (n.target='customer' AND n.customer_id=$2)) ON CONFLICT(notification_id,customer_id) DO UPDATE SET read_at=customer_notification_reads.read_at RETURNING read_at",
+      [notificationId, req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({status:"ERROR",message:"الإشعار غير موجود."});
+    res.json({status:"OK",read_at:result.rows[0].read_at});
+  } catch (error) {
+    console.error("Mark customer notification read error:", error);
+    res.status(500).json({status:"ERROR",message:"تعذر حفظ حالة قراءة الإشعار."});
   }
 });
 
