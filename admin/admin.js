@@ -70,6 +70,16 @@ const ADMIN_API = {
         );
     },
 
+    sendCustomerNotification(customerId, title, message) {
+        return this.request(
+            "/customers/" + encodeURIComponent(customerId) + "/notifications",
+            {
+                method: "POST",
+                body: JSON.stringify({ title, message })
+            }
+        );
+    },
+
     orders() {
         return this.request("/orders");
     },
@@ -716,6 +726,7 @@ async function openCustomerSettings(customerId, customerName) {
         "<label for='customerBalanceNote'>ملاحظة (اختياري)</label><input id='customerBalanceNote' type='text' maxlength='500' placeholder='سبب الإضافة أو الخصم'>" +
         "<button id='saveCustomerBalance' class='customer-settings-action' type='submit'>تنفيذ العملية</button></form></section>" +
         "<section class='customer-settings-section'><h3>تعديل خصم العميل</h3><form id='customerDiscountForm' class='customer-settings-form'><label for='customerDiscountValue'>نسبة الخصم (%)</label><input id='customerDiscountValue' type='number' min='0' max='100' step='0.01' required><button id='saveCustomerDiscount' class='customer-settings-action' type='submit'>حفظ الخصم</button></form></section>" +
+        "<section class='customer-settings-section'><h3>إرسال إشعار للعميل</h3><form id='customerNotificationForm' class='customer-settings-form'><label for='customerNotificationTitle'>عنوان الإشعار</label><input id='customerNotificationTitle' type='text' maxlength='150' required placeholder='اكتب عنوان الإشعار'><label for='customerNotificationMessage'>نص الإشعار</label><textarea id='customerNotificationMessage' rows='4' maxlength='10000' required placeholder='اكتب نص الإشعار'></textarea><button id='sendCustomerNotification' class='customer-settings-action' type='submit'>إرسال الإشعار لهذا العميل</button></form></section>" +
         "<section class='customer-settings-section'><h3>معلومات العميل</h3><div class='customer-settings-info-grid'>" +
         "<div><span>رقم الهاتف</span><strong id='settingsCustomerPhone'>—</strong></div><div><span>البريد الإلكتروني</span><strong id='settingsCustomerEmail' dir='auto'>—</strong></div>" +
         "<div class='customer-password-reset'><span>كلمة السر</span><strong>لا يمكن عرض كلمة السر القديمة</strong><small>يمكن إنشاء كلمة مرور جديدة عند الحاجة. ستتوقف كلمة المرور الحالية عن العمل.</small><button id='resetCustomerPassword' class='customer-settings-action' type='button'>إنشاء كلمة مرور جديدة</button><div id='customerNewPasswordResult' hidden><label for='customerNewPassword'>كلمة المرور الجديدة — احفظها الآن</label><input id='customerNewPassword' type='text' readonly autocomplete='off' dir='ltr'><button id='copyCustomerNewPassword' class='customer-settings-action' type='button'>نسخ كلمة المرور</button></div></div>" +
@@ -816,6 +827,26 @@ async function openCustomerSettings(customerId, customerName) {
                 loadCustomers(getValue("customerSearch"), true);
             } catch(error) {
                 showAdminToast(error.message || "تعذر حفظ خصم العميل.");
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("customerNotificationForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const title = getValue("customerNotificationTitle").trim();
+            const message = getValue("customerNotificationMessage").trim();
+            if (!title || !message) return showAdminToast("أدخل عنوان الإشعار ونصه.");
+            const button = document.getElementById("sendCustomerNotification");
+            if (!window.confirm("سيتم إرسال هذا الإشعار إلى هذا العميل فقط. هل تريد المتابعة؟")) return;
+            button.disabled = true;
+            try {
+                await ADMIN_API.sendCustomerNotification(customerId, title, message);
+                setValue("customerNotificationTitle", "");
+                setValue("customerNotificationMessage", "");
+                showAdminToast("تم إرسال الإشعار إلى هذا العميل.");
+            } catch(error) {
+                showAdminToast(error.message || "تعذر إرسال الإشعار.");
             } finally {
                 button.disabled = false;
             }
