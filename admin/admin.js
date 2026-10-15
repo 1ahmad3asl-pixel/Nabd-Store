@@ -1105,7 +1105,7 @@ function updateOrderSummary(orders, summary) {
     const failedEl = document.getElementById("ordersFailedCount");
     const successfulEl = document.getElementById("ordersSuccessfulCount");
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
-    const successfulStatuses = ["success", "completed"];
+    const successfulStatuses = ["success", "successful", "completed", "complete", "done", "delivered", "ok", "نجاح", "ناجح", "ناجحة"];
     const total = summary && Number.isFinite(Number(summary.total))
         ? Number(summary.total)
         : orders.length;
@@ -1139,7 +1139,7 @@ function filterOrders() {
     const search = normalizeOrderSearch(searchInput ? searchInput.value : "");
     const status = statusSelect ? statusSelect.value : "all";
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
-    const successfulStatuses = ["success", "completed"];
+    const successfulStatuses = ["success", "successful", "completed", "complete", "done", "delivered", "ok", "نجاح", "ناجح", "ناجحة"];
 
     const filtered = (Array.isArray(adminState.orders) ? adminState.orders : []).filter(function(order) {
         const orderId = order.order_id ?? order.order_number ?? "";
@@ -1148,7 +1148,7 @@ function filterOrders() {
             normalizeOrderSearch(orderId).includes(search) ||
             normalizeOrderSearch(customerNumber).includes(search);
 
-        const orderStatus = String(order.status || "").toLowerCase();
+        const orderStatus = String(order.status || "").trim().toLowerCase();
         const matchesStatus = status === "all" ||
             (status === "failed"
                 ? failedStatuses.includes(orderStatus)
