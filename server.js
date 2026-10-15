@@ -1330,13 +1330,14 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
       );
 
       const notificationTitle = action === "credit"
-        ? "تمت إضافة رصيد إلى حسابك"
-        : "تم خصم رصيد من حسابك";
+        ? "تم إيداع رصيد في حسابك ☑️"
+        : "تم خصم رصيد من حسابك ☑️";
       const amountLabel = "$" + amount.toFixed(3);
-      const balanceLabel = "$" + after.toFixed(3);
+      const beforeLabel = "$" + before.toFixed(3);
+      const afterLabel = "$" + after.toFixed(3);
       const notificationMessage = action === "credit"
-        ? `تمت إضافة مبلغ ${amountLabel} إلى حسابك. رصيدك الحالي: ${balanceLabel}.${note ? "\nالملاحظة: " + note : ""}`
-        : `تم خصم مبلغ ${amountLabel} من حسابك. رصيدك الحالي: ${balanceLabel}.${note ? "\nالملاحظة: " + note : ""}`;
+        ? `مبلغ الإيداع: ${amountLabel}\\nالرصيد قبل الإيداع: ${beforeLabel}\\nالرصيد بعد الإيداع: ${afterLabel}${note ? "\\nالملاحظة: " + note : ""}`
+        : `مبلغ الخصم: ${amountLabel}\\nالرصيد قبل الخصم: ${beforeLabel}\\nالرصيد بعد الخصم: ${afterLabel}${note ? "\\nالملاحظة: " + note : ""}`;
       await client.query(
         "INSERT INTO notifications(target,customer_id,title,message) VALUES('customer',$1,$2,$3)",
         [customer.customer_id,notificationTitle,notificationMessage]
