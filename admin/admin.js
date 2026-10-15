@@ -1122,62 +1122,40 @@ function updateOrderSummary(orders, summary) {
     if (failedEl) failedEl.textContent = String(failed);
     if (successfulEl) successfulEl.textContent = String(successful);
 }
+function normalizeOrderSearch(value) {
+    return String(value ?? "")
+        .trim()
+        .toLocaleLowerCase()
+        .replace(/[٠-٩]/g, digit => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
+        .replace(/[۰-۹]/g, digit => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
+        .replace(/\s/g, "")
+        .replace(/[\u200e\u200f-]/g, "");
+}
+
 function filterOrders() {
+    const searchInput = document.getElementById("orderSearch");
+    const statusSelect = document.getElementById("orderStatusFilter");
+    const search = normalizeOrderSearch(searchInput ? searchInput.value : "");
+    const status = statusSelect ? statusSelect.value : "all";
+    const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
 
-    const searchInput =
-        document.getElementById(
-            "orderSearch"
-        );
+    const filtered = (Array.isArray(adminState.orders) ? adminState.orders : []).filter(function(order) {
+        const orderId = order.order_number ?? order.order_id ?? order.id ?? "";
+        const customerNumber = order.customer_number ?? order.customerNumber ?? "";
+        const matchesSearch = !search ||
+            normalizeOrderSearch(orderId).includes(search) ||
+            normalizeOrderSearch(customerNumber).includes(search);
 
-    const statusSelect =
-        document.getElementById(
-            "orderStatusFilter"
-        );
+        const orderStatus = String(order.status || "").toLowerCase();
+        const matchesStatus = status === "all" ||
+            (status === "successful"
+                ? !failedStatuses.includes(orderStatus)
+                : orderStatus === status);
 
-    const search =
-        searchInput
-            ? searchInput.value
-                .trim()
-                .toLowerCase()
-            : "";
-
-    const status =
-        statusSelect
-            ? statusSelect.value
-            : "all";
-
-    const filtered =
-        adminState.orders.filter(
-            function (order) {
-
-                const orderText =
-                    JSON.stringify(order)
-                        .toLowerCase();
-
-                const matchesSearch =
-                    !search ||
-                    orderText.includes(search);
-
-                const orderStatus =
-                    String(
-                        order.status ||
-                        ""
-                    ).toLowerCase();
-
-                const matchesStatus =
-                    status === "all" ||
-                    orderStatus === status;
-
-                return (
-                    matchesSearch &&
-                    matchesStatus
-                );
-
-            }
-        );
+        return matchesSearch && matchesStatus;
+    });
 
     renderOrders(filtered);
-
 }
 
 function renderOrderCustomerFields(orderParams) {
