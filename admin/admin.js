@@ -1793,16 +1793,6 @@ function initializeNotifications() {
         "click",
         async function () {
 
-            const target =
-                getValue(
-                    "notificationTarget"
-                );
-
-            const customerId =
-                getValue(
-                    "notificationCustomerId"
-                );
-
             const title =
                 getValue(
                     "notificationTitle"
@@ -1823,34 +1813,16 @@ function initializeNotifications() {
 
             }
 
-            if (
-                target === "customer" &&
-                !customerId
-            ) {
-
-                showAdminToast(
-                    "أدخل Customer ID للعميل."
-                );
-
-                return;
-
-            }
-
             try {
 
+                const confirmed = window.confirm("سيتم إرسال هذا الإشعار إلى جميع العملاء. هل تريد المتابعة؟");
+                if (!confirmed) return;
+
                 await ADMIN_API.sendNotification({
-
-                    target: target,
-
-                    customer_id:
-                        target === "customer"
-                            ? customerId
-                            : null,
-
+                    target: "all",
+                    customer_id: null,
                     title: title,
-
                     message: message
-
                 });
 
                 showAdminToast(
