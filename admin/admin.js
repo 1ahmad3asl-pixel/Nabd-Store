@@ -1818,6 +1818,9 @@ function initializeNotifications() {
                 const confirmed = window.confirm("سيتم إرسال هذا الإشعار إلى جميع العملاء. هل تريد المتابعة؟");
                 if (!confirmed) return;
 
+                button.disabled = true;
+                button.textContent = "جارٍ الإرسال...";
+
                 await ADMIN_API.sendNotification({
                     target: "all",
                     customer_id: null,
@@ -1825,19 +1828,11 @@ function initializeNotifications() {
                     message: message
                 });
 
-                showAdminToast(
-                    "تم إرسال الإشعار."
-                );
+                setValue("notificationTitle", "");
+                setValue("notificationMessage", "");
 
-                setValue(
-                    "notificationTitle",
-                    ""
-                );
-
-                setValue(
-                    "notificationMessage",
-                    ""
-                );
+                const successNotice = document.getElementById("generalNotificationSuccess");
+                if (successNotice) successNotice.hidden = false;
 
             } catch (error) {
 
@@ -1848,10 +1843,26 @@ function initializeNotifications() {
                     "تعذر إرسال الإشعار."
                 );
 
+            } finally {
+                const successNotice = document.getElementById("generalNotificationSuccess");
+                if (!successNotice || successNotice.hidden) {
+                    button.disabled = false;
+                    button.textContent = "إرسال الإشعار";
+                }
             }
 
         }
     );
+
+    const closeSuccessButton = document.getElementById("closeGeneralNotificationSuccess");
+    if (closeSuccessButton) {
+        closeSuccessButton.addEventListener("click", function () {
+            const successNotice = document.getElementById("generalNotificationSuccess");
+            if (successNotice) successNotice.hidden = true;
+            button.disabled = false;
+            button.textContent = "إرسال الإشعار";
+        });
+    }
 
 }
 
