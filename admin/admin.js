@@ -445,7 +445,7 @@ function initializeCustomers() {
             refresh.textContent = "⏳ جارٍ تحديث البيانات...";
             loadCustomers(searchInput ? searchInput.value.trim() : "", true).finally(function () {
                 refresh.disabled = false;
-                refresh.textContent = "🔄 تحديث البيانات";
+                refresh.textContent = "تحديث البيانات";
             });
         });
     }
@@ -1041,7 +1041,7 @@ function initializeOrders() {
             refresh.textContent = "⏳ جارٍ تحديث البيانات...";
             loadOrders().finally(function () {
                 refresh.disabled = false;
-                refresh.textContent = "🔄 تحديث البيانات";
+                refresh.textContent = "تحديث البيانات";
             });
         });
     }
