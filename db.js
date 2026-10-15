@@ -238,6 +238,13 @@ async function cleanupSessions() {
   await query("DELETE FROM customer_sessions WHERE expires_at<=NOW()");
 }
 
+// Remove notifications older than one calendar month. Read-state rows are
+// deleted automatically by the notification foreign key (ON DELETE CASCADE).
+async function cleanupNotifications() {
+  const result = await query("DELETE FROM notifications WHERE created_at < NOW() - INTERVAL '1 month'");
+  return result.rowCount || 0;
+}
+
 module.exports = {
   query,
   withTransaction,
@@ -250,5 +257,6 @@ module.exports = {
   createCustomerSession,
   getCustomerSession,
   deleteCustomerSession,
-  cleanupSessions
+  cleanupSessions,
+  cleanupNotifications
 };
