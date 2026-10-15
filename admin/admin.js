@@ -409,12 +409,9 @@ function updateDashboard(data) {
     );
 
     if (Array.isArray(data.recent_orders)) {
-        adminState.orders =
-            data.recent_orders;
-
-        renderRecentOrders(
-            data.recent_orders
-        );
+        // طلبات لوحة التحكم الأخيرة مستقلة عن القائمة الكاملة في صفحة الطلبات.
+        // لا تستبدل adminState.orders هنا، لأن التحديث الدوري للوحة كان يحصر البحث بآخر 8 طلبات.
+        renderRecentOrders(data.recent_orders);
     }
 
     if (data.settings) {
@@ -1088,7 +1085,8 @@ async function loadOrders() {
             orders;
 
         updateOrderSummary(orders, data.order_summary || null);
-        renderOrders(orders);
+        // أعد تطبيق البحث وفلتر الحالة بعد التحميل/التحديث بدل عرض القائمة كاملة وإلغاء الفلترة.
+        filterOrders();
 
     } catch (error) {
 
@@ -1127,12 +1125,13 @@ function updateOrderSummary(orders, summary) {
 }
 function normalizeOrderSearch(value) {
     return String(value ?? "")
+        .normalize("NFKC")
         .trim()
         .toLocaleLowerCase()
         .replace(/[٠-٩]/g, digit => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
         .replace(/[۰-۹]/g, digit => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
-        .replace(/\s/g, "")
-        .replace(/[\u200e\u200f-]/g, "");
+        .replace(/[\u200e\u200f\u202a-\u202e]/g, "")
+        .replace(/[\s#_./\\-]+/g, "");
 }
 
 function filterOrders() {
@@ -1144,13 +1143,20 @@ function filterOrders() {
     const successfulStatuses = ["success", "successful", "completed", "complete", "done", "delivered", "ok", "نجاح", "ناجح", "ناجحة"];
 
     const filtered = (Array.isArray(adminState.orders) ? adminState.orders : []).filter(function(order) {
-        const orderId = order.order_id ?? order.order_number ?? "";
-        const customerNumber = order.customer_number ?? order.customerNumber ?? "";
-        const matchesSearch = !search ||
-            normalizeOrderSearch(orderId).includes(search) ||
-            normalizeOrderSearch(customerNumber).includes(search);
+        // ابحث في رقم الطلب الظاهر، ورقم العميل الظاهر، مع دعم أسماء الحقول البديلة من API/قاعدة البيانات.
+        const orderIds = [
+            order.order_id, order.order_number, order.id
+        ];
+        const customerIds = [
+            order.customer_number, order.customerNumber,
+            order.customer_id, order.customerId, order.customer_id_number
+        ];
+        const matchesSearch = !search || orderIds.concat(customerIds).some(function(value) {
+            return value !== null && value !== undefined &&
+                normalizeOrderSearch(value).includes(search);
+        });
 
-        const orderStatus = String(order.status || "").trim().toLowerCase();
+        const orderStatus = String(order.status || "").trim().toLocaleLowerCase();
         const matchesStatus = status === "all" ||
             (status === "failed"
                 ? failedStatuses.includes(orderStatus)
