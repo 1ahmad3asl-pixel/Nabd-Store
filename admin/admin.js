@@ -1036,12 +1036,14 @@ function initializeOrders() {
         );
 
     if (refresh) {
-
-        refresh.addEventListener(
-            "click",
-            loadOrders
-        );
-
+        refresh.addEventListener("click", function () {
+            refresh.disabled = true;
+            refresh.textContent = "⏳ جارٍ تحديث البيانات...";
+            loadOrders().finally(function () {
+                refresh.disabled = false;
+                refresh.textContent = "🔄 تحديث البيانات";
+            });
+        });
     }
 
     if (search) {
