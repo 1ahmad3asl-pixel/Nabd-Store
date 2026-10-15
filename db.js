@@ -170,6 +170,15 @@ async function initDb() {
       message TEXT NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
+
+    CREATE TABLE IF NOT EXISTS customer_notification_reads (
+      notification_id BIGINT NOT NULL REFERENCES notifications(id) ON DELETE CASCADE,
+      customer_id TEXT NOT NULL REFERENCES customers(customer_id) ON DELETE CASCADE,
+      read_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      PRIMARY KEY (notification_id, customer_id)
+    );
+    CREATE INDEX IF NOT EXISTS idx_customer_notification_reads_customer
+      ON customer_notification_reads(customer_id, read_at);
   `);
 }
 
