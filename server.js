@@ -1803,7 +1803,25 @@ app.post("/api/orders", requireCustomer, async (req, res) => {
       "UPDATE orders SET order_id=$1,status=$2,nemer_response=$3::jsonb WHERE id=$4",
       [externalOrderId, failed ? "failed" : apiStatus, JSON.stringify(order || {}), reservation.order_id]
     );
-    if (!failed) await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
+    if (!failed) {
+      await query("UPDATE customers SET orders_count=orders_count+1,updated_at=NOW() WHERE customer_id=$1",[reservation.customer_id]);
+      // Notify the customer only after Nemer accepted the order and the order record was updated.
+      // Notification failures must not turn an already accepted order into a failed purchase response.
+      try {
+        const productLabel = String(product.name || product.category_name || "منتج").trim();
+        const acceptedPrice = "$" + Number(reservation.total_price || 0).toFixed(3);
+        await query(
+          "INSERT INTO notifications(target,customer_id,title,message) VALUES('customer',$1,$2,$3)",
+          [
+            reservation.customer_id,
+            "تم قبول طلبك سيتم معالجته بأسرع وقت",
+            "نوع المنتج: " + productLabel + "\nسعر الطلب: " + acceptedPrice
+          ]
+        );
+      } catch (notificationError) {
+        console.error("Order accepted notification error:", notificationError);
+      }
+    }
 
     res.json({status:failed?"ERROR":"OK",store:STORE_NAME,order,charged:failed?0:reservation.total_price,balance:failed?Number(reservation.before.toFixed(12)):Number(reservation.after.toFixed(12))});
   } catch (error) {
