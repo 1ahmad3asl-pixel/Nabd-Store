@@ -1140,7 +1140,7 @@ function filterOrders() {
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
 
     const filtered = (Array.isArray(adminState.orders) ? adminState.orders : []).filter(function(order) {
-        const orderId = order.order_number ?? order.order_id ?? order.id ?? "";
+        const orderId = order.order_id ?? order.order_number ?? "";
         const customerNumber = order.customer_number ?? order.customerNumber ?? "";
         const matchesSearch = !search ||
             normalizeOrderSearch(orderId).includes(search) ||
@@ -1187,9 +1187,9 @@ function renderOrders(orders) {
         const status = String(order.status || "pending").toLowerCase();
         return `
             <tr>
-                <td>${escapeAdminHtml(String(order.id ?? order.order_id ?? "-"))}</td>
+                <td>${escapeAdminHtml(String(order.order_id ?? order.order_number ?? "-"))}</td>
                 <td>${escapeAdminHtml(String(order.customer_name ?? "-"))}</td>
-                <td>${escapeAdminHtml(String(order.customer_number ?? order.customer_id ?? "-"))}</td>
+                <td>${escapeAdminHtml(String(order.customer_number ?? "-"))}</td>
                 <td class="order-customer-fields">${renderOrderCustomerFields(order.order_params)}</td>
                 <td>${escapeAdminHtml(String(order.product_name ?? order.product ?? "-"))}</td>
                 <td>${formatAdminPrice(order.api_price ?? order.cost ?? 0)}</td>
@@ -1242,8 +1242,8 @@ function renderRecentOrders(orders) {
                         <td>
                             ${escapeAdminHtml(
                                 String(
-                                    order.id ??
                                     order.order_id ??
+                                    order.order_number ??
                                     "-"
                                 )
                             )}
@@ -1252,7 +1252,7 @@ function renderRecentOrders(orders) {
                         <td>
                             ${escapeAdminHtml(
                                 String(
-                                    order.customer_id ??
+                                    order.customer_number ??
                                     "-"
                                 )
                             )}
