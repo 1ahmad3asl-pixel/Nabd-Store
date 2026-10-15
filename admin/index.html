@@ -10,7 +10,7 @@
 <link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp">
 <link rel="apple-touch-icon" href="/assets/category-nabd-store.webp">
 
-<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20261016-customer-notification1">
+<link rel="stylesheet" href="/Aledaraa19/admin.css?v=20261016-general-notification1">
 </head>
 
 <body>
@@ -31,6 +31,7 @@
     <button class="admin-nav-item" data-section="products"><span>المنتجات</span></button>
     <button class="admin-nav-item" data-section="wallet"><span>الميزانية</span></button>
     <button class="admin-nav-item" data-section="announcementSettings"><span>شريط الإعلانات</span></button>
+    <button class="admin-nav-item" data-section="notifications"><span>إرسال إشعار عام</span></button>
     <button class="admin-nav-item" data-section="settings"><span>الإعدادات</span></button>
     <button class="admin-nav-logout" id="logoutButton" type="button">تسجيل الخروج</button>
 </nav>
@@ -434,7 +435,7 @@
 
                 <div>
                     <span>التواصل</span>
-                    <h1>الإشعارات</h1>
+                    <h1>إرسال إشعار عام</h1>
                 </div>
 
             </div>
@@ -442,32 +443,6 @@
             <div class="admin-card">
 
                 <div class="notification-form">
-
-                    <label>
-                        نوع الإشعار
-                    </label>
-
-                    <select id="notificationTarget">
-
-                        <option value="all">
-                            جميع العملاء
-                        </option>
-
-                        <option value="customer">
-                            عميل محدد
-                        </option>
-
-                    </select>
-
-                    <label>
-                        Customer ID
-                    </label>
-
-                    <input
-                        type="text"
-                        id="notificationCustomerId"
-                        placeholder="مثال: 1"
-                    >
 
                     <label>
                         عنوان الإشعار
@@ -613,7 +588,7 @@
 
 <div class="admin-toast" id="adminToast"></div>
 
-<script src="/Aledaraa19/admin.js?v=20261016-customer-notification1"></script>
+<script src="/Aledaraa19/admin.js?v=20261016-general-notification1"></script>
 
 <script src="/js/click-sound.js"></script>
 </body>
