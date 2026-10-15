@@ -227,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeQuickMenu();
     initializeModal();
     initializeSounds();
+    initializeCustomerNotifications();
     initializeSearch();
     initializeDhikrTicker();
     initializeDhikrHomeVisibility();
@@ -2840,6 +2841,112 @@ function renderCustomerOrders(container, orders) {
             </article>
         `;
     }).join("");
+}
+
+
+// إشعارات العميل: مزامنة دورية خفيفة لأن قاعدة البيانات تحفظ الإشعار بالفعل.
+// تظهر الرسالة والصوت داخل الموقع خلال ثوانٍ من تعديل الرصيد من لوحة الإدارة.
+let customerNotificationsTimer = null;
+let customerNotificationsInitialized = false;
+let customerNotificationsLatestId = 0;
+
+function updateCustomerNotificationBadge(count) {
+    const badge = elements.notificationBadge;
+    if (!badge) return;
+    const total = Math.max(0, Number(count) || 0);
+    badge.textContent = total > 99 ? "99+" : String(total);
+    badge.hidden = total === 0;
+    badge.setAttribute("aria-label", total + " إشعار");
+}
+
+async function refreshCustomerNotifications(options) {
+    const settings = options || {};
+    const response = await fetch(BACKEND_URL + "/api/customer/notifications", {
+        headers: {Accept: "application/json"},
+        credentials: "same-origin",
+        cache: "no-store"
+    });
+    if (response.status === 401 || response.status === 403) {
+        if (customerNotificationsTimer) {
+            clearInterval(customerNotificationsTimer);
+            customerNotificationsTimer = null;
+        }
+        return;
+    }
+    if (!response.ok) throw new Error("تعذر تحديث إشعارات العميل.");
+    const data = await response.json();
+    if (data.status !== "OK" || !Array.isArray(data.notifications)) return;
+
+    const notifications = data.notifications.slice().sort(function(a, b) {
+        return Number(b.id || 0) - Number(a.id || 0);
+    });
+    updateCustomerNotificationBadge(notifications.length);
+
+    const latestId = notifications.reduce(function(max, item) {
+        return Math.max(max, Number(item.id) || 0);
+    }, 0);
+
+    // أول تحميل يحدد نقطة البداية فقط حتى لا نصدر صوتًا لإشعارات قديمة.
+    if (!customerNotificationsInitialized) {
+        customerNotificationsLatestId = latestId;
+        customerNotificationsInitialized = true;
+        return;
+    }
+
+    if (latestId <= customerNotificationsLatestId) return;
+    const added = notifications.filter(function(item) {
+        return (Number(item.id) || 0) > customerNotificationsLatestId;
+    });
+    customerNotificationsLatestId = latestId;
+
+    const walletNotice = added.find(function(item) {
+        const title = String(item.title || "");
+        return title.includes("إضافة رصيد") || title.includes("خصم رصيد");
+    });
+    if (walletNotice) {
+        // حدّث الرصيد المعروض مباشرة بعد وصول إشعار عملية المحفظة.
+        try {
+            const meResponse = await fetch(BACKEND_URL + "/api/customer/auth/me", {
+                headers: {Accept: "application/json"},
+                credentials: "same-origin",
+                cache: "no-store"
+            });
+            if (meResponse.ok) {
+                const me = await meResponse.json();
+                if (me.customer && me.customer.balance !== undefined) {
+                    updateBalance(me.customer.balance);
+                }
+            }
+        } catch (_) {}
+
+        showToast(String(walletNotice.title || "تحديث رصيد") + " — " + String(walletNotice.message || ""));
+        playAddBalanceSound();
+    } else if (added.length) {
+        showToast(String(added[0].title || "إشعار جديد من المتجر"));
+    }
+
+    // إذا كان العميل يقرأ الإشعارات بالفعل، حدّث القائمة لتظهر الرسالة الجديدة.
+    if (document.body.classList.contains("notifications-page-open")) {
+        showCustomerNotificationsPage();
+    }
+}
+
+function initializeCustomerNotifications() {
+    if (customerNotificationsTimer) clearInterval(customerNotificationsTimer);
+    refreshCustomerNotifications().catch(function(error) {
+        console.warn("Customer notification polling skipped:", error);
+    });
+    customerNotificationsTimer = setInterval(function() {
+        if (document.visibilityState === "hidden") return;
+        refreshCustomerNotifications().catch(function(error) {
+            console.warn("Customer notification refresh skipped:", error);
+        });
+    }, 10000);
+    document.addEventListener("visibilitychange", function() {
+        if (document.visibilityState === "visible") {
+            refreshCustomerNotifications().catch(function() {});
+        }
+    });
 }
 
 async function showCustomerNotificationsPage() {
