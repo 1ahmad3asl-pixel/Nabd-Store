@@ -3009,10 +3009,11 @@ async function showCustomerNotificationsPage() {
             const safeTitle = escapeHtml(rawTitle);
             const readClass = item.read_at ? " is-read" : "";
             const readLabel = item.read_at ? "، مقروء" : "، غير مقروء";
-            const notificationIcon = /تم قبول طلبك/.test(rawTitle)
+            const isAcceptedOrderNotice = /تم قبول طلبك/.test(rawTitle);
+            const notificationIcon = isAcceptedOrderNotice
                 ? '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M7 2v4c0 2 5 6 5 6s5-4 5-6V2M7 22v-4c0-2 5-6 5-6s5 4 5 6v4"/></svg>'
                 : '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>';
-            return '<button type="button" class="notifications-page-card notifications-page-card-button' + readClass + '" data-notification-index="' + index + '" aria-label="' + safeTitle + readLabel + '، اضغط لعرض التفاصيل"><span class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true">' + notificationIcon + '</span><span class="notifications-page-card-title">' + safeTitle + '</span><span class="notifications-page-card-chevron" aria-hidden="true">›</span></span></button>';
+            return '<button type="button" class="notifications-page-card notifications-page-card-button' + readClass + '" data-notification-index="' + index + '" aria-label="' + safeTitle + readLabel + '، اضغط لعرض التفاصيل"><span class="notifications-page-card-head"><span class="notifications-page-card-icon' + (isAcceptedOrderNotice ? ' notifications-page-card-icon-order' : '') + '" aria-hidden="true">' + notificationIcon + '</span><span class="notifications-page-card-title">' + safeTitle + '</span><span class="notifications-page-card-chevron" aria-hidden="true">›</span></span></button>';
         }).join("") + '</div>';
 
         content.querySelectorAll("[data-notification-index]").forEach(function(button) {
