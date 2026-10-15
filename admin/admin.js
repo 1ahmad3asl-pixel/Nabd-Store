@@ -743,11 +743,11 @@ async function openCustomerSettings(customerId, customerName) {
         setText("settingsCustomerLevel", customerLevel);
         if (levelCard) {
             const normalizedLevel = customerLevel.toLocaleLowerCase("ar");
-            const levelStyle = /بلاتيني|ماسي|ألماسي/.test(normalizedLevel) ? "platinum"
+            const levelStyle = /فضي|silver/.test(normalizedLevel) ? "silver"
                 : /ذهبي|gold/.test(normalizedLevel) ? "gold"
-                : /فضي|silver/.test(normalizedLevel) ? "silver"
-                : /مميز|vip|premium/.test(normalizedLevel) ? "premium"
-                : /برونزي|bronze/.test(normalizedLevel) ? "bronze"
+                : /بنفسجي|purple|violet/.test(normalizedLevel) ? "purple"
+                : /أزرق|ازرق|blue/.test(normalizedLevel) ? "blue"
+                : /أحمر|احمر|red/.test(normalizedLevel) ? "red"
                 : "default";
             levelCard.className = "customer-level-card customer-level-" + levelStyle;
         }
