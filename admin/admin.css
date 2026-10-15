@@ -1364,3 +1364,48 @@ td{padding:14px 12px!important;}
 .general-notification-success[hidden]{display:none!important}
 .general-notification-success p{margin:0;line-height:1.7}
 .general-notification-success button{border:1px solid var(--border);border-radius:8px;padding:9px 18px;background:var(--background);color:var(--text);cursor:pointer;font:inherit}
+
+
+/* Compact customer-level tile beside the balance card in customer settings. */
+.customer-settings-summary{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:stretch!important;
+}
+.customer-settings-summary>.customer-settings-balance-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:78px;
+}
+.customer-settings-summary>.customer-level-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:104px;
+  min-width:104px;
+  min-height:78px;
+  padding:10px;
+  box-sizing:border-box;
+  border:1px solid transparent;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:none;
+}
+.customer-settings-summary>.customer-level-card strong{
+  display:block;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:900;
+  overflow-wrap:anywhere;
+}
+.customer-level-default{background:#343434!important;border-color:#555!important;color:#fff!important;}
+.customer-level-premium{background:#6f4a00!important;border-color:#d5a52b!important;color:#ffe7a0!important;}
+.customer-level-bronze{background:#744a2a!important;border-color:#b77c4c!important;color:#fff0df!important;}
+.customer-level-silver{background:#555b63!important;border-color:#aeb5be!important;color:#fff!important;}
+.customer-level-gold{background:#d9ad27!important;border-color:#f4d66e!important;color:#17130a!important;}
+.customer-level-platinum{background:#d9e0e8!important;border-color:#fff!important;color:#252b34!important;}
+@media(max-width:560px){
+ .customer-settings-summary{grid-template-columns:minmax(0,1fr) auto!important;}
+ .customer-settings-summary>.customer-level-card{width:96px;min-width:96px;min-height:74px;padding:8px;}
+ .customer-settings-summary>.customer-level-card strong{font-size:13px;}
+}
