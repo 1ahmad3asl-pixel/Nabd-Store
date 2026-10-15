@@ -709,7 +709,7 @@ async function openCustomerSettings(customerId, customerName) {
         "<div class='customer-settings-page-header'><div><span>إدارة العملاء</span><h2 id='customerSettingsTitle'>إعدادات العميل</h2><p id='customerSettingsSubtitle' class='customer-settings-customer-name'></p></div><button class='customer-settings-close' id='closeCustomerSettings' type='button' aria-label='إغلاق'>×</button></div>" +
         "<div id='customerSettingsLoading' class='customer-settings-placeholder'>جارٍ تحميل بيانات العميل...</div>" +
         "<div id='customerSettingsContent' hidden>" +
-        "<div class='customer-settings-summary'><div><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div></div>" +
+        "<div class='customer-settings-summary'><div class='customer-settings-balance-card'><span>الرصيد الحالي</span><strong id='settingsCustomerBalance'>—</strong></div><div class='customer-level-card customer-level-default' id='settingsCustomerLevelCard'><strong id='settingsCustomerLevel'>عميل</strong></div></div>" +
         "<section class='customer-settings-section'><h3>إدارة الرصيد</h3><form id='customerBalanceForm' class='customer-settings-form'>" +
         "<label for='customerBalanceAction'>نوع العملية</label><select id='customerBalanceAction'><option value='credit'>إضافة رصيد</option><option value='debit'>خصم رصيد</option></select>" +
         "<label for='customerBalanceAmount'>المبلغ</label><input id='customerBalanceAmount' type='number' min='0.001' max='1000000' step='0.001' required placeholder='أدخل المبلغ'>" +
@@ -720,7 +720,7 @@ async function openCustomerSettings(customerId, customerName) {
         "<section class='customer-settings-section'><h3>معلومات العميل</h3><div class='customer-settings-info-grid'>" +
         "<div><span>رقم الهاتف</span><strong id='settingsCustomerPhone'>—</strong></div><div><span>البريد الإلكتروني</span><strong id='settingsCustomerEmail' dir='auto'>—</strong></div>" +
         "<div class='customer-password-reset'><span>كلمة السر</span><strong>لا يمكن عرض كلمة السر القديمة</strong><small>يمكن إنشاء كلمة مرور جديدة عند الحاجة. ستتوقف كلمة المرور الحالية عن العمل.</small><button id='resetCustomerPassword' class='customer-settings-action' type='button'>إنشاء كلمة مرور جديدة</button><div id='customerNewPasswordResult' hidden><label for='customerNewPassword'>كلمة المرور الجديدة — احفظها الآن</label><input id='customerNewPassword' type='text' readonly autocomplete='off' dir='ltr'><button id='copyCustomerNewPassword' class='customer-settings-action' type='button'>نسخ كلمة المرور</button></div></div>" +
-        "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>مستوى العميل</span><strong id='settingsCustomerLevel'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
+        "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
         "</div></section></div></div></div>";
     document.body.insertAdjacentHTML("beforeend", html);
     const dialog = document.getElementById("customerSettingsDialog");
@@ -738,7 +738,19 @@ async function openCustomerSettings(customerId, customerName) {
         setText("settingsCustomerPhone", [customer.phone_country, customer.phone].filter(Boolean).join(" ") || "غير مضاف");
         setText("settingsCustomerEmail", value(customer.email));
         setText("settingsCustomerOrders", customer.orders_count ?? 0);
-        setText("settingsCustomerLevel", customer.customer_level ?? customer.level ?? customer.tier ?? "غير محدد");
+        const customerLevel = String(customer.customer_level ?? customer.level ?? customer.tier ?? "عميل").trim() || "عميل";
+        const levelCard = document.getElementById("settingsCustomerLevelCard");
+        setText("settingsCustomerLevel", customerLevel);
+        if (levelCard) {
+            const normalizedLevel = customerLevel.toLocaleLowerCase("ar");
+            const levelStyle = /بلاتيني|ماسي|ألماسي/.test(normalizedLevel) ? "platinum"
+                : /ذهبي|gold/.test(normalizedLevel) ? "gold"
+                : /فضي|silver/.test(normalizedLevel) ? "silver"
+                : /مميز|vip|premium/.test(normalizedLevel) ? "premium"
+                : /برونزي|bronze/.test(normalizedLevel) ? "bronze"
+                : "default";
+            levelCard.className = "customer-level-card customer-level-" + levelStyle;
+        }
         setText("settingsCustomerCreated", customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر");
         setValue("customerDiscountValue", Number(customer.discount ?? customer.discount_percent ?? 0));
         document.getElementById("customerSettingsLoading").hidden = true;
