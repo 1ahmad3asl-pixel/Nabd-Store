@@ -720,7 +720,7 @@ async function openCustomerSettings(customerId, customerName) {
         "<section class='customer-settings-section'><h3>معلومات العميل</h3><div class='customer-settings-info-grid'>" +
         "<div><span>رقم الهاتف</span><strong id='settingsCustomerPhone'>—</strong></div><div><span>البريد الإلكتروني</span><strong id='settingsCustomerEmail' dir='auto'>—</strong></div>" +
         "<div class='customer-password-reset'><span>كلمة السر</span><strong>لا يمكن عرض كلمة السر القديمة</strong><small>يمكن إنشاء كلمة مرور جديدة عند الحاجة. ستتوقف كلمة المرور الحالية عن العمل.</small><button id='resetCustomerPassword' class='customer-settings-action' type='button'>إنشاء كلمة مرور جديدة</button><div id='customerNewPasswordResult' hidden><label for='customerNewPassword'>كلمة المرور الجديدة — احفظها الآن</label><input id='customerNewPassword' type='text' readonly autocomplete='off' dir='ltr'><button id='copyCustomerNewPassword' class='customer-settings-action' type='button'>نسخ كلمة المرور</button></div></div>" +
-        "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
+        "<div><span>عدد الطلبات</span><strong id='settingsCustomerOrders'>—</strong></div><div><span>الرصيد المدفوع</span><strong id='settingsCustomerPaid'>—</strong></div><div><span>تاريخ التسجيل</span><strong id='settingsCustomerCreated'>—</strong></div>" +
         "</div></section></div></div></div>";
     document.body.insertAdjacentHTML("beforeend", html);
     const dialog = document.getElementById("customerSettingsDialog");
@@ -738,6 +738,7 @@ async function openCustomerSettings(customerId, customerName) {
         setText("settingsCustomerPhone", [customer.phone_country, customer.phone].filter(Boolean).join(" ") || "غير مضاف");
         setText("settingsCustomerEmail", value(customer.email));
         setText("settingsCustomerOrders", customer.orders_count ?? 0);
+        setText("settingsCustomerPaid", formatAdminPrice(customer.paid_balance ?? 0));
         const customerLevel = String(customer.customer_level ?? customer.level ?? customer.tier ?? "عميل").trim() || "عميل";
         const levelCard = document.getElementById("settingsCustomerLevelCard");
         setText("settingsCustomerLevel", customerLevel);
