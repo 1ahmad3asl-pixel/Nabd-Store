@@ -1105,6 +1105,7 @@ function updateOrderSummary(orders, summary) {
     const failedEl = document.getElementById("ordersFailedCount");
     const successfulEl = document.getElementById("ordersSuccessfulCount");
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
+    const successfulStatuses = ["success", "completed"];
     const total = summary && Number.isFinite(Number(summary.total))
         ? Number(summary.total)
         : orders.length;
@@ -1116,7 +1117,7 @@ function updateOrderSummary(orders, summary) {
     const successful = summary && Number.isFinite(Number(summary.successful))
         ? Number(summary.successful)
         : orders.filter(function(order) {
-            return !failedStatuses.includes(String(order.status || "").toLowerCase());
+            return successfulStatuses.includes(String(order.status || "").toLowerCase());
         }).length;
     if (totalEl) totalEl.textContent = String(total);
     if (failedEl) failedEl.textContent = String(failed);
@@ -1138,6 +1139,7 @@ function filterOrders() {
     const search = normalizeOrderSearch(searchInput ? searchInput.value : "");
     const status = statusSelect ? statusSelect.value : "all";
     const failedStatuses = ["failed", "rejected", "cancelled", "canceled", "error"];
+    const successfulStatuses = ["success", "completed"];
 
     const filtered = (Array.isArray(adminState.orders) ? adminState.orders : []).filter(function(order) {
         const orderId = order.order_id ?? order.order_number ?? "";
@@ -1148,9 +1150,11 @@ function filterOrders() {
 
         const orderStatus = String(order.status || "").toLowerCase();
         const matchesStatus = status === "all" ||
-            (status === "successful"
-                ? !failedStatuses.includes(orderStatus)
-                : orderStatus === status);
+            (status === "failed"
+                ? failedStatuses.includes(orderStatus)
+                : status === "successful"
+                    ? successfulStatuses.includes(orderStatus)
+                    : false);
 
         return matchesSearch && matchesStatus;
     });
