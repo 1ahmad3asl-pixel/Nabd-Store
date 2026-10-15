@@ -3115,6 +3115,8 @@ function showModal(title, body) {
         document.body.appendChild(elements.modal);
     }
     elements.modalBody.innerHTML = "<h2 style=\"margin-bottom:18px;\">" + escapeHtml(title) + "</h2>" + body;
+    // Keep the global X hidden only for notification details, where the Arabic close button is provided.
+    elements.modal.classList.toggle("notification-detail-open", !!elements.modalBody.querySelector(".notification-detail-modal"));
     elements.modal.classList.add("active");
     document.body.style.overflow = "hidden";
 }
