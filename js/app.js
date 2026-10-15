@@ -17,6 +17,7 @@ const state = {
 };
 
 const BACKEND_URL = "";
+let pendingNotificationRead = null;
 
 /*
  * NABD ISOLATION CONTRACT
@@ -3005,11 +3006,9 @@ async function showCustomerNotificationsPage() {
 
         content.innerHTML = '<div class="notifications-page-list">' + notifications.map(function(item, index) {
             const safeTitle = escapeHtml(String(item.title || "إشعار من المتجر"));
-            const rawDate = item.created_at ? new Date(item.created_at) : null;
-            const formattedDate = rawDate && !Number.isNaN(rawDate.getTime())
-                ? escapeHtml(rawDate.toLocaleString("ar",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}))
-                : "التاريخ غير متاح";
-            return '<button type="button" class="notifications-page-card notifications-page-card-button" data-notification-index="' + index + '" aria-label="' + safeTitle + '، اضغط لعرض التفاصيل"><span class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span class="notifications-page-card-title">' + safeTitle + '</span><span class="notifications-page-card-chevron" aria-hidden="true">›</span></span><span class="notifications-page-date"><span aria-hidden="true">◷</span><time datetime="' + escapeHtml(item.created_at || "") + '">' + formattedDate + '</time></span></button>';
+            const readClass = item.read_at ? " is-read" : "";
+            const readLabel = item.read_at ? "، مقروء" : "، غير مقروء";
+            return '<button type="button" class="notifications-page-card notifications-page-card-button' + readClass + '" data-notification-index="' + index + '" aria-label="' + safeTitle + readLabel + '، اضغط لعرض التفاصيل"><span class="notifications-page-card-head"><span class="notifications-page-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span class="notifications-page-card-title">' + safeTitle + '</span><span class="notifications-page-card-chevron" aria-hidden="true">›</span></span></button>';
         }).join("") + '</div>';
 
         content.querySelectorAll("[data-notification-index]").forEach(function(button) {
@@ -3035,6 +3034,7 @@ async function showCustomerNotificationsPage() {
                 } else {
                     detailsHtml = '<p class="notification-detail-message">' + escapeHtml(messageText).replace(/\r?\n/g,"<br>") + '</p>';
                 }
+                pendingNotificationRead = {id:item.id,button:button,title:titleText};
                 showModal(titleText, '<div class="notification-detail-modal">' + detailsHtml + '<div class="notification-detail-date">التاريخ: ' + escapeHtml(dateText) + '</div><button type="button" class="buy-btn notification-detail-close" id="notificationDetailClose">إغلاق</button></div>');
                 const closeButton = document.getElementById("notificationDetailClose");
                 if (closeButton) closeButton.addEventListener("click", closeModal);
@@ -3113,6 +3113,26 @@ function closeModal() {
     if (!elements.modal) return;
     elements.modal.classList.remove("active");
     document.body.style.overflow = "";
+    const pending = pendingNotificationRead;
+    pendingNotificationRead = null;
+    if (pending && pending.id) {
+        fetch(BACKEND_URL + "/api/customer/notifications/" + encodeURIComponent(pending.id) + "/read", {
+            method: "POST",
+            headers: {Accept: "application/json"},
+            credentials: "include",
+            cache: "no-store"
+        }).then(function(response) {
+            if (!response.ok) throw new Error("تعذر حفظ حالة القراءة");
+            return response.json();
+        }).then(function(data) {
+            if (data.status === "OK" && pending.button && pending.button.isConnected) {
+                pending.button.classList.add("is-read");
+                pending.button.setAttribute("aria-label", String(pending.title || "إشعار من المتجر") + "، مقروء، اضغط لعرض التفاصيل");
+            }
+        }).catch(function(error) {
+            console.warn("Could not persist notification read state:", error);
+        });
+    }
 }
 
 function formatQuantityBound(value){
