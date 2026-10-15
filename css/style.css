@@ -4216,7 +4216,8 @@ body.notifications-page-open .search-section,
 body.notifications-page-open #drawer,
 body.notifications-page-open #overlay,
 body.notifications-page-open .whatsapp-float,
-body.notifications-page-open #home > :not(#internalPage){display:none!important;}
+body.notifications-page-open #home > :not(#internalPage):not(#modal){display:none!important;}
+body.notifications-page-open #modal.active{display:flex!important;z-index:1400!important;}
 body.notifications-page-open #home{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;}
 #internalPage.notifications-internal-page,
 #internalPage.notifications-internal-page:not([hidden]){
