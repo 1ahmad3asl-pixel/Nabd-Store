@@ -1399,11 +1399,11 @@ td{padding:14px 12px!important;}
   overflow-wrap:anywhere;
 }
 .customer-level-default{background:#343434!important;border-color:#555!important;color:#fff!important;}
-.customer-level-premium{background:#6f4a00!important;border-color:#d5a52b!important;color:#ffe7a0!important;}
-.customer-level-bronze{background:#744a2a!important;border-color:#b77c4c!important;color:#fff0df!important;}
 .customer-level-silver{background:#555b63!important;border-color:#aeb5be!important;color:#fff!important;}
 .customer-level-gold{background:#d9ad27!important;border-color:#f4d66e!important;color:#17130a!important;}
-.customer-level-platinum{background:#d9e0e8!important;border-color:#fff!important;color:#252b34!important;}
+.customer-level-purple{background:#59358c!important;border-color:#9a75d1!important;color:#fff!important;}
+.customer-level-blue{background:#174a8b!important;border-color:#5b9ce8!important;color:#fff!important;}
+.customer-level-red{background:#8f2028!important;border-color:#e16a73!important;color:#fff!important;}
 @media(max-width:560px){
  .customer-settings-summary{grid-template-columns:minmax(0,1fr) auto!important;}
  .customer-settings-summary>.customer-level-card{width:96px;min-width:96px;min-height:74px;padding:8px;}
