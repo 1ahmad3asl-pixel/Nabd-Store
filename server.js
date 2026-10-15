@@ -29,7 +29,8 @@ const {
   createCustomerSession,
   getCustomerSession,
   deleteCustomerSession,
-  cleanupSessions
+  cleanupSessions,
+  cleanupNotifications
 } = require("./db");
 
 const app = express();
@@ -1972,6 +1973,13 @@ initDb()
   .then(async () => {
     await loadSettings();
     await cleanupSessions();
+    await cleanupNotifications();
+    // Repeat cleanup daily while the service is running; startup cleanup
+    // also catches up after a sleeping/restarted instance.
+    const notificationCleanupTimer = setInterval(() => {
+      cleanupNotifications().catch(error => console.error("Notification cleanup failed:", error));
+    }, 24 * 60 * 60 * 1000);
+    notificationCleanupTimer.unref?.();
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
