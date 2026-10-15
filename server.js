@@ -1382,36 +1382,6 @@ app.post("/api/admin/customers/:id/wallet", async (req, res) => {
   }
 });
 
-app.post("/api/admin/email-broadcast", async (req, res) => {
-  const subject = String(req.body?.subject || "").trim();
-  const message = String(req.body?.message || "").trim();
-  if (!MAILJET_API_KEY || !EMAIL_FROM) return res.status(503).json({status:"ERROR",message:"خدمة البريد غير مهيأة. أضف MAILJET_API_KEY و MAILJET_FROM_EMAIL في إعدادات Render."});
-  if (!subject || !message || subject.length > 150 || message.length > 10000) return res.status(400).json({status:"ERROR",message:"عنوان أو نص الرسالة غير صالح."});
-
-  const result = await query("SELECT customer_id,name,email FROM customers WHERE email IS NOT NULL AND TRIM(email) <> '' ORDER BY customer_id");
-  const recipients = [];
-  let skipped = 0;
-  for (const row of result.rows) {
-    const email = String(row.email || "").trim().toLowerCase();
-    if (!/^\S+@\S+\.\S+$/.test(email)) { skipped++; continue; }
-    recipients.push({email,name:String(row.name || "").trim()});
-  }
-
-  const escapeHtml = value => String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-  const htmlMessage = escapeHtml(message).replace(/\r?\n/g,"<br>");
-  let sent=0, failed=0;
-  const failures=[];
-  for (let i=0;i<recipients.length;i+=100) {
-    const batch=recipients.slice(i,i+100).map(r=>({from:EMAIL_FROM,to:[r.email],subject,text:message,html:"<div dir=\"rtl\" style=\"font-family:Arial,sans-serif;line-height:1.8\">"+htmlMessage+"</div>"}));
-    try {
-      const response=await fetch("https://api.mailjet.com/emails/batch",{method:"POST",headers:{"Authorization":"Bearer "+MAILJET_API_KEY,"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(batch)});
-      if(!response.ok){let details={};try{details=await response.json();}catch{};failed+=batch.length;failures.push(String(details.message||"فشل مزود البريد").slice(0,200));}
-      else sent+=batch.length;
-    } catch(error){failed+=batch.length;failures.push(String(error.message||"network error").slice(0,200));}
-  }
-  res.json({status:failed?"PARTIAL":"OK",sent,failed,skipped,total:recipients.length,failures:failures.slice(0,5)});
-});
-
 app.get("/api/customer/notifications", requireCustomer, async (req, res) => {
   try {
     const result = await query(
