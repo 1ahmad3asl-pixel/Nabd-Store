@@ -4276,6 +4276,29 @@ html[data-theme="light"] #internalPage.notifications-internal-page .notification
 html[data-theme="light"] #internalPage.notifications-internal-page .notifications-page-card-head h3,
 html[data-theme="light"] #internalPage.notifications-internal-page .notifications-page-card-message{color:#171717!important;}
 html[data-theme="light"] #internalPage.notifications-internal-page .notifications-page-card{background:linear-gradient(145deg,rgba(184,134,11,.08),#fff);}
+
+#internalPage.notifications-internal-page .notifications-page-card-button{
+  display:block;width:100%;text-align:right;color:inherit;font:inherit;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+}
+#internalPage.notifications-internal-page .notifications-page-card-button:focus-visible{
+  outline:2px solid var(--primary,#f5c400);outline-offset:3px;
+}
+#internalPage.notifications-internal-page .notifications-page-card-head{display:flex;align-items:center;gap:10px;margin-bottom:0;}
+#internalPage.notifications-internal-page .notifications-page-card-title{
+  flex:1;min-width:0;margin:3px 0 0;color:var(--text,#f5f5f5);font-size:15px;font-weight:900;line-height:1.7;overflow-wrap:anywhere;
+}
+#internalPage.notifications-internal-page .notifications-page-card-chevron{font-size:24px;line-height:1;color:var(--muted,#aaa);}
+#internalPage.notifications-internal-page .notifications-page-card-button .notifications-page-date{margin-top:10px;}
+.wallet-notification-details{display:flex;flex-direction:column;gap:0;margin:0 0 16px;}
+.wallet-notification-detail-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(127,127,127,.2);}
+.wallet-notification-detail-row span{color:var(--muted,#aaa);font-size:13px;}
+.wallet-notification-detail-row strong{color:var(--text,#f5f5f5);font-size:14px;text-align:left;overflow-wrap:anywhere;}
+.notification-detail-message{margin:0 0 16px;line-height:1.9;overflow-wrap:anywhere;}
+.notification-detail-date{margin:12px 0;color:var(--muted,#aaa);font-size:12px;line-height:1.8;}
+.notification-detail-close{width:100%;margin-top:8px;}
+html[data-theme="light"] #internalPage.notifications-internal-page .wallet-notification-detail-row strong{color:#171717;}
+
 @media(max-width:600px){
   #internalPage.notifications-internal-page{padding:calc(13px + env(safe-area-inset-top)) 13px calc(24px + env(safe-area-inset-bottom))!important;}
   #internalPage.notifications-internal-page .internal-page-header{top:calc(-13px - env(safe-area-inset-top));}
