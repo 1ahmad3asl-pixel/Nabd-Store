@@ -159,7 +159,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     initializeAdminMenu();
 initializeDashboard();
     initializeCustomers();
-    initializeOrders();
+    initializeBudgetRefresh();
+initializeOrders();
     initializeProducts();
     initializeSettings();
     initializeNotifications();
@@ -1906,7 +1907,21 @@ function initializeLogout() {
 
 }
 
-async function loadTransactions() {
+async function initializeBudgetRefresh() {
+    const refresh = document.getElementById("refreshBudget");
+    if (!refresh) return;
+
+    refresh.addEventListener("click", function () {
+        refresh.disabled = true;
+        refresh.textContent = "جارٍ تحديث البيانات...";
+        loadTransactions().finally(function () {
+            refresh.disabled = false;
+            refresh.textContent = "تحديث البيانات";
+        });
+    });
+}
+
+function loadTransactions() {
 
     try {
 
