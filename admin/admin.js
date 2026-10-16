@@ -1929,7 +1929,7 @@ async function loadTransactions() {
         };
         setWalletStat("walletCustomerBalance", budget.customer_balance ?? 0);
         setWalletStat("totalDeposits", budget.sales ?? 0);
-        setWalletStat("totalWithdrawals", budget.customer_outflows ?? 0);
+        setWalletStat("totalWithdrawals", budget.net_cash ?? 0);
         setWalletStat("budgetNet", budget.net_profit ?? 0);
 
     } catch (error) {
