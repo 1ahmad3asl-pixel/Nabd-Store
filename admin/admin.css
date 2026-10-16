@@ -1435,32 +1435,34 @@ td{padding:14px 12px!important;}
 }
 
 
-/* Budget section refresh action: full-width gold button */
+/* Budget section refresh action: enforce full-width gold styling */
 #walletSection .budget-refresh-row {
-    display: block;
-    width: 100%;
-    margin: 0 0 18px;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 18px !important;
 }
 #walletSection #refreshBudget {
-    display: block;
-    width: 100%;
-    min-height: 50px;
-    box-sizing: border-box;
-    padding: 12px 16px;
-    background: #f5c400;
-    border: 1px solid #c99f00;
-    color: #080808;
-    border-radius: 10px;
-    font-size: 17px;
-    font-weight: 900;
-    box-shadow: none;
+    display: block !important;
+    width: 100% !important;
+    min-height: 54px !important;
+    box-sizing: border-box !important;
+    padding: 13px 16px !important;
+    background: #f5c400 !important;
+    background-image: linear-gradient(135deg, #f5d451 0%, #f5c400 55%, #d4a300 100%) !important;
+    border: 1px solid #c99f00 !important;
+    color: #080808 !important;
+    border-radius: 10px !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    box-shadow: 0 4px 14px rgba(245, 196, 0, .16) !important;
 }
 #walletSection #refreshBudget:hover {
-    background: #ffd83d;
+    background: #ffd83d !important;
+    background-image: linear-gradient(135deg, #ffe680 0%, #ffd83d 55%, #e6b800 100%) !important;
 }
 #walletSection #refreshBudget:disabled {
-    opacity: .75;
-    cursor: wait;
+    opacity: .75 !important;
+    cursor: wait !important;
 }
 
 
