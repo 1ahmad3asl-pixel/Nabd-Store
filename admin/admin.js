@@ -1978,8 +1978,7 @@ function renderTransactions(
                     <td>
                         ${escapeAdminHtml(
                             String(
-                                item.id ??
-                                item.transaction_id ??
+                                item.transaction_number ??
                                 "-"
                             )
                         )}
@@ -1988,6 +1987,7 @@ function renderTransactions(
                     <td>
                         ${escapeAdminHtml(
                             String(
+                                item.customer_number ??
                                 item.customer_id ??
                                 "-"
                             )
