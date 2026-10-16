@@ -1529,15 +1529,18 @@ function initializeSettings() {
         saveDhikr.addEventListener("click", saveDhikrSettings);
     }
     if (dhikrInput) {
-        dhikrInput.addEventListener("keydown", function(event) {
-            if (event.key !== "Enter") return;
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            const start = dhikrInput.selectionStart ?? dhikrInput.value.length;
-            const end = dhikrInput.selectionEnd ?? start;
-            dhikrInput.setRangeText("\n", start, end, "end");
-            dhikrInput.dispatchEvent(new Event("input", {bubbles:true}));
+        dhikrInput.addEventListener("input", function() {
+            const normalized = normalizeAnnouncementText(dhikrInput.value);
+            if (dhikrInput.value !== normalized) {
+                const cursor = dhikrInput.selectionStart;
+                dhikrInput.value = normalized;
+                dhikrInput.setSelectionRange(Math.min(cursor, normalized.length), Math.min(cursor, normalized.length));
+                showAdminToast("الحد الأقصى 10 أسطر و15 حرفًا لكل سطر.");
+            }
+            updateAnnouncementCount();
         });
+        dhikrInput.value = normalizeAnnouncementText(dhikrInput.value);
+        updateAnnouncementCount();
     }
 
     document.querySelectorAll(".settings-tab").forEach(function(tab){
@@ -1628,30 +1631,48 @@ function applyAdminFont(font) {
     document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
 }
 
+function normalizeAnnouncementText(value) {
+    return String(value || "")
+        .split(/\r?\n/)
+        .slice(0, 10)
+        .map(line => Array.from(line).slice(0, 15).join(""))
+        .join("\n");
+}
+
+function updateAnnouncementCount() {
+    const input = document.getElementById("dhikrItems");
+    const counter = document.getElementById("dhikrItemsCount");
+    if (!input || !counter) return;
+    const lines = input.value.split(/\r?\n/);
+    const used = lines.filter(line => line.trim()).length;
+    counter.textContent = used + " من 10 أسطر";
+}
+
 async function saveDhikrSettings() {
     const input = document.getElementById("dhikrItems");
     if (!input) return;
     const items = input.value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
     if (!items.length) {
-        showAdminToast("أدخل ذكرًا واحدًا على الأقل.");
+        showAdminToast("أدخل إعلانًا واحدًا على الأقل.");
         return;
     }
-    if (items.length > 12) {
-        showAdminToast("يمكن إضافة 12 عبارة كحد أقصى.");
+    if (items.length > 10) {
+        showAdminToast("يمكن إضافة 10 إعلانات كحد أقصى.");
         return;
     }
-    if (items.some(item => item.length > 80)) {
-        showAdminToast("كل عبارة يجب ألا تتجاوز 80 حرفًا.");
+    if (items.some(item => Array.from(item).length > 15)) {
+        showAdminToast("يجب ألا يتجاوز كل إعلان 15 حرفًا.");
         return;
     }
     try {
         const data = await ADMIN_API.updateSettings({dhikr_items: items});
         adminState.settings = {...adminState.settings, ...(data.settings || {}), dhikr_items: items};
         updateSettingsUI();
+        updateAnnouncementCount();
         showAdminToast("تم حفظ شريط الإعلانات.");
     } catch (error) {
         console.error(error);
-        showAdminToast(error.message || "تعذر حفظ شريط الأذكار.");
+        showAdminToast(error.message || "تعذر حفظ شريط الإعلانات.");
     }
 }
 
