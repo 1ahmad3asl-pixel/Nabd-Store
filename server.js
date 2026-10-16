@@ -53,7 +53,8 @@ const adminSettings = {
   currency: process.env.CURRENCY || "USD",
   currency_decimals: 3,
   font_family: "Amasis MT Pro",
-  dhikr_items: ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"]
+  dhikr_items: ["سبحان اللّٰه","الحمد للّٰه","لا إله إلا اللّٰه","اللّٰه أكبر"],
+  credit_limit: 0
 };
 
 const adminLoginAttempts = new Map();
@@ -308,6 +309,8 @@ function cookieValue(req, name) {
 }
 
 async function loadSettings() {
+  adminSettings.credit_limit = Number(await getSetting("credit_limit", 0));
+  if (!Number.isFinite(adminSettings.credit_limit) || adminSettings.credit_limit < 0) adminSettings.credit_limit = 0;
   adminSettings.profit_rate = Number(await getSetting("profit_rate", PROFIT_RATE));
   adminSettings.number_profit_rate = Number(await getSetting("number_profit_rate", NUMBER_PROFIT_RATE));
   adminSettings.store_name = await getSetting("store_name", STORE_NAME);
@@ -1190,6 +1193,15 @@ app.get("/api/admin/settings", async (req, res) => {
 });
 
 app.put("/api/admin/settings", async (req, res) => {
+  if (req.body?.credit_limit !== undefined) {
+    const creditLimit = Number(req.body.credit_limit);
+    if (!Number.isFinite(creditLimit) || creditLimit < 0 || creditLimit > 1000000000) {
+      return res.status(400).json({ status: "ERROR", message: "حد الائتمان يجب أن يكون رقمًا بين 0 و1,000,000,000 دولار." });
+    }
+    adminSettings.credit_limit = Number(creditLimit.toFixed(12));
+    await setSetting("credit_limit", adminSettings.credit_limit);
+  }
+
   if (req.body?.profit_rate !== undefined) {
     const profit = Number(req.body.profit_rate);
     if (!Number.isFinite(profit) || profit < 0 || profit > 100) {
@@ -1261,6 +1273,7 @@ app.put("/api/admin/settings", async (req, res) => {
 });
 
 app.get("/api/admin/transactions", async (req, res) => {
+  await loadSettings();
   const [result, totals, profileResult] = await Promise.all([
     query(
     `SELECT t.*, c.customer_number, c.name AS customer_name,
@@ -1295,6 +1308,7 @@ app.get("/api/admin/transactions", async (req, res) => {
   ]);
   const apiBalance = profileResult;
   const customerBalance = Number(totals.rows[0].customer_balance || 0);
+  const creditLimit = Number(adminSettings.credit_limit || 0);
   res.json({
     status: "OK",
     transactions: result.rows,
@@ -1304,10 +1318,11 @@ app.get("/api/admin/transactions", async (req, res) => {
       admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(12)),
       net_cash: Number(Number(totals.rows[0].net_cash).toFixed(12)),
       customer_balance: Number(customerBalance.toFixed(12)),
+      credit_limit: Number(creditLimit.toFixed(12)),
       net_profit: Number(Number(totals.rows[0].net_profit).toFixed(12)),
       api_balance: apiBalance,
       api_balance_available: apiBalance !== null,
-      budget_deficit: apiBalance === null ? null : Number((apiBalance - customerBalance).toFixed(12))
+      budget_deficit: apiBalance === null ? null : Number((customerBalance + creditLimit - apiBalance).toFixed(12))
     }
   });
 });
