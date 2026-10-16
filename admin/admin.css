@@ -1570,3 +1570,11 @@ td{padding:14px 12px!important;}
     cursor: wait !important;
 }
 #productsSection .product-availability-filter-bar { margin: 0 0 14px !important; }
+
+
+/* Slightly enlarge sidebar labels while keeping the outline icons restrained. */
+.admin-tabs.admin-drawer .admin-nav-item span:last-child,
+.admin-tabs.admin-drawer .admin-nav-logout span:last-child {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+}
