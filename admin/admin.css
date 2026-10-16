@@ -1542,3 +1542,31 @@ td{padding:14px 12px!important;}
 #walletSection .credit-limit-editor-actions { display: flex; gap: 10px; }
 #walletSection .credit-limit-editor-actions button { flex: 1; min-height: 44px; }
 #walletSection #creditLimitStatus { margin: 0; font-size: 13px; line-height: 1.6; }
+
+
+/* Products section refresh action: match the full-width gold budget refresh button. */
+#productsSection #refreshProducts {
+    display: block !important;
+    width: 100% !important;
+    min-height: 54px !important;
+    box-sizing: border-box !important;
+    padding: 13px 16px !important;
+    margin: 0 0 18px !important;
+    background: #f5c400 !important;
+    background-image: linear-gradient(135deg, #f5d451 0%, #f5c400 55%, #d4a300 100%) !important;
+    border: 1px solid #c99f00 !important;
+    color: #080808 !important;
+    border-radius: 10px !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    box-shadow: 0 4px 14px rgba(245, 196, 0, .16) !important;
+}
+#productsSection #refreshProducts:hover {
+    background: #ffd83d !important;
+    background-image: linear-gradient(135deg, #ffe680 0%, #ffd83d 55%, #e6b800 100%) !important;
+}
+#productsSection #refreshProducts:disabled {
+    opacity: .75 !important;
+    cursor: wait !important;
+}
+#productsSection .product-availability-filter-bar { margin: 0 0 14px !important; }
