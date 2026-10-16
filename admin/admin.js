@@ -132,6 +132,7 @@ const adminState = {
     customers: [],
     allCustomers: null,
     orders: [],
+    transactions: [],
     products: [],
     settings: {
         profit_rate: 10,
@@ -1908,6 +1909,13 @@ function initializeLogout() {
 }
 
 async function initializeBudgetRefresh() {
+    const transactionFilter = document.getElementById("transactionTypeFilter");
+    if (transactionFilter) {
+        transactionFilter.addEventListener("change", function () {
+            renderTransactions(adminState.transactions, false);
+        });
+    }
+
     const refresh = document.getElementById("refreshBudget");
     if (!refresh) return;
 
@@ -1977,17 +1985,25 @@ async function loadTransactions() {
 }
 
 function renderTransactions(
-    transactions
+    transactions,
+    updateSource = true
 ) {
+    if (updateSource) {
+        adminState.transactions = Array.isArray(transactions) ? transactions : [];
+    }
 
-    const table =
-        document.getElementById(
-            "transactionsTable"
-        );
-
+    const table = document.getElementById("transactionsTable");
     if (!table) return;
 
-    if (!transactions.length) {
+    const filter = document.getElementById("transactionTypeFilter")?.value || "all";
+    const filteredTransactions = adminState.transactions.filter(function (item) {
+        const type = String(item.type || "").toLowerCase();
+        if (filter === "credit") return type === "admin_credit";
+        if (filter === "debit") return type === "admin_debit";
+        return true;
+    });
+
+    if (!filteredTransactions.length) {
 
         table.innerHTML = `
             <tr>
@@ -2002,7 +2018,7 @@ function renderTransactions(
     }
 
     table.innerHTML =
-        transactions.map(function (item) {
+        filteredTransactions.map(function (item) {
 
             return `
                 <tr>
