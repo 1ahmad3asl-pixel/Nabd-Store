@@ -1535,7 +1535,7 @@ function initializeSettings() {
                 const cursor = dhikrInput.selectionStart;
                 dhikrInput.value = normalized;
                 dhikrInput.setSelectionRange(Math.min(cursor, normalized.length), Math.min(cursor, normalized.length));
-                showAdminToast("الحد الأقصى 10 أسطر و15 حرفًا لكل سطر.");
+                showAdminToast("الحد الأقصى 10 أسطر و20 حرفًا لكل سطر.");
             }
             updateAnnouncementCount();
         });
@@ -1635,7 +1635,7 @@ function normalizeAnnouncementText(value) {
     return String(value || "")
         .split(/\r?\n/)
         .slice(0, 10)
-        .map(line => Array.from(line).slice(0, 15).join(""))
+        .map(line => Array.from(line).slice(0, 20).join(""))
         .join("\n");
 }
 
@@ -1660,8 +1660,8 @@ async function saveDhikrSettings() {
         showAdminToast("يمكن إضافة 10 إعلانات كحد أقصى.");
         return;
     }
-    if (items.some(item => Array.from(item).length > 15)) {
-        showAdminToast("يجب ألا يتجاوز كل إعلان 15 حرفًا.");
+    if (items.some(item => Array.from(item).length > 20)) {
+        showAdminToast("يجب ألا يتجاوز كل إعلان 20 حرفًا.");
         return;
     }
     try {
