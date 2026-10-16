@@ -531,13 +531,13 @@
   </div>
 
   <div class="settings-tabs" role="tablist" aria-label="إعدادات المتجر">
-    <button class="settings-tab active" type="button" data-settings-panel="storeSettingsPanel">🏪 المتجر</button>
-    <button class="settings-tab" type="button" data-settings-panel="pricingSettingsPanel">💰 التسعير</button>
+    <button class="settings-tab" type="button" data-settings-panel="storeSettingsPanel" hidden>🏪 المتجر</button>
+    <button class="settings-tab active" type="button" data-settings-panel="pricingSettingsPanel">💰 التسعير</button>
     <button class="settings-tab" type="button" data-settings-panel="appearanceSettingsPanel">🎨 المظهر</button>
-    <button class="settings-tab" type="button" data-settings-panel="dhikrSettingsPanel">📢 شريط الإعلانات</button>
+    <button class="settings-tab" type="button" data-settings-panel="dhikrSettingsPanel" hidden>📢 شريط الإعلانات</button>
   </div>
 
-  <div id="storeSettingsPanel" class="settings-panel active">
+  <div id="storeSettingsPanel" class="settings-panel">
     <div class="admin-card">
       <div class="card-heading"><h2>هوية المتجر والعملة</h2></div>
       <div class="settings-form-grid">
@@ -562,7 +562,7 @@
     </div>
   </div>
 
-  <div id="pricingSettingsPanel" class="settings-panel">
+  <div id="pricingSettingsPanel" class="settings-panel active">
     <div class="admin-card">
       <div class="card-heading"><h2>التسعير وتنسيق النقود</h2></div>
       <div class="settings-form-grid">
