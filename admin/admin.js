@@ -1965,7 +1965,9 @@ async function loadTransactions() {
                 deficitEl.textContent = "غير متاح";
             } else {
                 const deficitValue = Number(budget.budget_deficit);
-                const deficitSign = deficitValue > 0 ? "+" : deficitValue < 0 ? "−" : "";
+                // Positive raw value means a deficit; display it as a red negative amount.
+                // Negative raw value means a surplus; display it as a green positive amount.
+                const deficitSign = deficitValue > 0 ? "−" : deficitValue < 0 ? "+" : "";
                 deficitEl.textContent = deficitSign + formatAdminPrice(Math.abs(deficitValue));
                 deficitEl.classList.add(
                     deficitValue > 0 ? "budget-deficit-negative" :
