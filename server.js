@@ -1262,10 +1262,11 @@ app.put("/api/admin/settings", async (req, res) => {
 
 app.get("/api/admin/transactions", async (req, res) => {
   const result = await query(
-    `SELECT t.*, c.customer_number, c.name AS customer_name
+    `SELECT t.*, c.customer_number, c.name AS customer_name,
+            ROW_NUMBER() OVER (ORDER BY t.created_at ASC, t.id ASC) AS transaction_number
      FROM transactions t
      LEFT JOIN customers c ON c.customer_id=t.customer_id
-     ORDER BY t.created_at DESC
+     ORDER BY t.created_at DESC, t.id DESC
      LIMIT 500`
   );
   const totals = await query(
