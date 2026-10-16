@@ -1600,3 +1600,31 @@ td{padding:14px 12px!important;}
     flex: 0 0 22px !important;
     display: block !important;
 }
+
+
+/* Place monochrome navigation icons at the far-right edge of the drawer rows. */
+.admin-tabs.admin-drawer .admin-nav-item,
+.admin-tabs.admin-drawer .admin-nav-logout {
+    position: relative !important;
+    direction: rtl !important;
+    justify-content: flex-start !important;
+    text-align: right !important;
+    padding-right: 18px !important;
+    padding-left: 18px !important;
+}
+.admin-tabs.admin-drawer .admin-nav-item .admin-nav-icon,
+.admin-tabs.admin-drawer .admin-nav-logout .admin-nav-icon {
+    position: absolute !important;
+    right: 18px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+}
+.admin-tabs.admin-drawer .admin-nav-item span:last-child,
+.admin-tabs.admin-drawer .admin-nav-logout span:last-child {
+    display: block !important;
+    width: 100% !important;
+    text-align: right !important;
+    padding-right: 36px !important;
+}
