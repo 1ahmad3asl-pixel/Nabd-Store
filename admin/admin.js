@@ -1319,6 +1319,13 @@ function initializeProducts() {
 
     }
 
+    const availabilityFilter = document.getElementById("productAvailabilityFilter");
+    if (availabilityFilter) {
+        availabilityFilter.addEventListener("change", function () {
+            renderAdminProducts(adminState.products || []);
+        });
+    }
+
 }
 
 async function loadAdminProducts() {
@@ -1366,12 +1373,21 @@ function renderAdminProducts(products) {
 
     if (!table) return;
 
-    if (!products.length) {
+    const availabilityFilter = document.getElementById("productAvailabilityFilter");
+    const filterValue = availabilityFilter ? availabilityFilter.value : "all";
+    const filteredProducts = products.filter(function (product) {
+        const available = product.available !== false && product.available !== 0 && product.available !== "false" && product.available !== "0";
+        if (filterValue === "available") return available;
+        if (filterValue === "unavailable") return !available;
+        return true;
+    });
+
+    if (!filteredProducts.length) {
 
         table.innerHTML = `
             <tr>
                 <td colspan="6">
-                    لا توجد منتجات.
+                    ${products.length ? "لا توجد منتجات ضمن هذا التصنيف." : "لا توجد منتجات."}
                 </td>
             </tr>
         `;
@@ -1381,7 +1397,7 @@ function renderAdminProducts(products) {
     }
 
     table.innerHTML =
-        products.map(function (product) {
+        filteredProducts.map(function (product) {
 
             const apiPrice =
                 Number(
