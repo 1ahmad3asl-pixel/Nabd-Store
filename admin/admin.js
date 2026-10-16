@@ -1951,6 +1951,9 @@ async function loadTransactions() {
             if (el) el.textContent = formatAdminPrice(value);
         };
         setWalletStat("walletCustomerBalance", budget.customer_balance ?? 0);
+        setWalletStat("creditLimitAmount", budget.credit_limit ?? 0);
+        const creditInput = document.getElementById("creditLimitInput");
+        if (creditInput && document.activeElement !== creditInput) creditInput.value = String(Number(budget.credit_limit ?? 0));
         setWalletStat("totalDeposits", budget.sales ?? 0);
         setWalletStat("totalWithdrawals", budget.net_cash ?? 0);
         setWalletStat("budgetNet", budget.net_profit ?? 0);
@@ -1965,8 +1968,8 @@ async function loadTransactions() {
                 const deficitSign = deficitValue > 0 ? "+" : deficitValue < 0 ? "−" : "";
                 deficitEl.textContent = deficitSign + formatAdminPrice(Math.abs(deficitValue));
                 deficitEl.classList.add(
-                    deficitValue < 0 ? "budget-deficit-negative" :
-                    deficitValue > 0 ? "budget-deficit-positive" :
+                    deficitValue > 0 ? "budget-deficit-negative" :
+                    deficitValue < 0 ? "budget-deficit-positive" :
                     "budget-deficit-neutral"
                 );
             }
@@ -1983,6 +1986,50 @@ async function loadTransactions() {
     }
 
 }
+
+/* Persistent budget-only credit limit editor. */
+document.getElementById("creditLimitSettingsButton")?.addEventListener("click", function () {
+    const editor = document.getElementById("creditLimitEditor");
+    const input = document.getElementById("creditLimitInput");
+    if (!editor || !input) return;
+    const willOpen = editor.hidden;
+    editor.hidden = !willOpen;
+    this.setAttribute("aria-expanded", String(willOpen));
+    if (willOpen) input.focus();
+});
+document.getElementById("cancelCreditLimit")?.addEventListener("click", function () {
+    const editor = document.getElementById("creditLimitEditor");
+    const button = document.getElementById("creditLimitSettingsButton");
+    const status = document.getElementById("creditLimitStatus");
+    if (editor) editor.hidden = true;
+    if (button) button.setAttribute("aria-expanded", "false");
+    if (status) status.textContent = "";
+});
+document.getElementById("creditLimitEditor")?.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const input = document.getElementById("creditLimitInput");
+    const save = document.getElementById("saveCreditLimit");
+    const status = document.getElementById("creditLimitStatus");
+    const button = document.getElementById("creditLimitSettingsButton");
+    const value = Number(input?.value);
+    if (!Number.isFinite(value) || value < 0 || value > 1000000000) {
+        if (status) status.textContent = "أدخل قيمة صحيحة بين 0 و1,000,000,000 دولار.";
+        return;
+    }
+    if (save) { save.disabled = true; save.textContent = "جارٍ الحفظ..."; }
+    if (status) status.textContent = "";
+    try {
+        await ADMIN_API.updateSettings({ credit_limit: Number(value.toFixed(12)) });
+        if (status) status.textContent = "تم حفظ حد الائتمان.";
+        if (button) button.setAttribute("aria-expanded", "false");
+        this.hidden = true;
+        await loadTransactions();
+    } catch (error) {
+        if (status) status.textContent = error.message || "تعذر حفظ حد الائتمان.";
+    } finally {
+        if (save) { save.disabled = false; save.textContent = "حفظ"; }
+    }
+});
 
 function renderTransactions(
     transactions,
