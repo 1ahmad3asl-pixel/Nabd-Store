@@ -1441,3 +1441,9 @@ td{padding:14px 12px!important;}
     justify-content: flex-end;
     margin: 0 0 14px;
 }
+
+
+/* Budget deficit / surplus amount colors */
+#budgetDeficit.budget-deficit-negative { color: #dc3545 !important; }
+#budgetDeficit.budget-deficit-positive { color: #16a34a !important; }
+#budgetDeficit.budget-deficit-neutral { color: var(--text) !important; }
