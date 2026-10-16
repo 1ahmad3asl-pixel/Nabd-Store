@@ -1412,3 +1412,24 @@ td{padding:14px 12px!important;}
  .customer-settings-summary>.customer-level-card{width:96px;min-width:96px;min-height:74px;padding:8px;}
  .customer-settings-summary>.customer-level-card strong{font-size:13px;}
 }
+
+
+/* Budget dashboard: always display financial statistics two per row. */
+#walletSection .budget-statistics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px;
+}
+@media (max-width: 430px) {
+    #walletSection .budget-statistics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px;
+    }
+    #walletSection .budget-statistics-grid .stat-card {
+        min-width: 0;
+        padding: 12px 10px;
+    }
+    #walletSection .budget-statistics-grid .stat-card strong {
+        overflow-wrap: anywhere;
+        font-size: 15px;
+    }
+}
