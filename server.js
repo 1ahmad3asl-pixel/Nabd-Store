@@ -1272,7 +1272,10 @@ app.get("/api/admin/transactions", async (req, res) => {
   ),
     query(
     `SELECT
-       COALESCE(SUM(CASE WHEN type='purchase' THEN amount ELSE 0 END),0) AS sales,
+       COALESCE((
+         SELECT SUM(price) FROM orders
+         WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+       ),0) AS sales,
        COALESCE(SUM(CASE WHEN type IN ('admin_credit','refund') THEN amount ELSE 0 END),0) AS customer_outflows,
        COALESCE(SUM(CASE WHEN type='admin_debit' THEN amount ELSE 0 END),0) AS admin_inflows,
        COALESCE(SUM(amount),0) AS net_cash,
