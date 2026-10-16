@@ -128,6 +128,8 @@ const ADMIN_API = {
     }
 };
 
+let announcementDraftDirty = false;
+
 const adminState = {
     customers: [],
     allCustomers: null,
@@ -1529,17 +1531,12 @@ function initializeSettings() {
         saveDhikr.addEventListener("click", saveDhikrSettings);
     }
     if (dhikrInput) {
+        // لا نعدّل قيمة الحقل أثناء الكتابة؛ إعادة كتابة textarea مع كل حرف
+        // تفسد المؤشر وقد تتعارض مع لوحة المفاتيح العربية على الهاتف.
         dhikrInput.addEventListener("input", function() {
-            const normalized = normalizeAnnouncementText(dhikrInput.value);
-            if (dhikrInput.value !== normalized) {
-                const cursor = dhikrInput.selectionStart;
-                dhikrInput.value = normalized;
-                dhikrInput.setSelectionRange(Math.min(cursor, normalized.length), Math.min(cursor, normalized.length));
-                showAdminToast("الحد الأقصى 10 أسطر و20 حرفًا لكل سطر.");
-            }
+            announcementDraftDirty = true;
             updateAnnouncementCount();
         });
-        dhikrInput.value = normalizeAnnouncementText(dhikrInput.value);
         updateAnnouncementCount();
     }
 
@@ -1607,7 +1604,13 @@ function updateSettingsUI() {
     setValue("storeCurrency", adminState.settings.currency ?? "USD");
     setValue("currencyDecimals", Number(adminState.settings.currency_decimals ?? 3));
     setValue("adminFont", adminState.settings.font_family ?? "Dubai Medium");
-    setValue("dhikrItems", Array.isArray(adminState.settings.dhikr_items) ? adminState.settings.dhikr_items.join("\n") : "سبحان اللّٰه\nالحمد للّٰه\nلا إله إلا اللّٰه\nاللّٰه أكبر");
+    const dhikrInput = document.getElementById("dhikrItems");
+    if (dhikrInput && !announcementDraftDirty && document.activeElement !== dhikrInput) {
+        dhikrInput.value = Array.isArray(adminState.settings.dhikr_items)
+            ? adminState.settings.dhikr_items.join("\n")
+            : "سبحان اللّٰه\nالحمد للّٰه\nلا إله إلا اللّٰه\nاللّٰه أكبر";
+        updateAnnouncementCount();
+    }
     applyAdminFont(adminState.settings.font_family ?? "Dubai Medium");
     setText("adminFontPreview", adminState.settings.font_family ?? "Dubai Medium");
     setText("adminDecimalsPreview", (Number(adminState.settings.currency_decimals ?? 3) === 2 ? "2 خانتان عشريتان" : "3 خانات عشرية"));
@@ -1631,14 +1634,6 @@ function applyAdminFont(font) {
     document.documentElement.style.setProperty("--admin-font", '"' + selected + '", Tahoma, Arial, sans-serif');
 }
 
-function normalizeAnnouncementText(value) {
-    return String(value || "")
-        .split(/\r?\n/)
-        .slice(0, 10)
-        .map(line => Array.from(line).slice(0, 20).join(""))
-        .join("\n");
-}
-
 function updateAnnouncementCount() {
     const input = document.getElementById("dhikrItems");
     const counter = document.getElementById("dhikrItemsCount");
@@ -1650,29 +1645,44 @@ function updateAnnouncementCount() {
 
 async function saveDhikrSettings() {
     const input = document.getElementById("dhikrItems");
-    if (!input) return;
-    const items = input.value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+    const saveButton = document.getElementById("saveDhikrSettings");
+    if (!input || (saveButton && saveButton.disabled)) return;
+
+    const lines = input.value.split(/\r?\n/);
+    if (lines.length > 10) {
+        showAdminToast("يمكن إضافة 10 أسطر كحد أقصى.");
+        return;
+    }
+    if (lines.some(line => Array.from(line).length > 20)) {
+        showAdminToast("يجب ألا يتجاوز كل سطر 20 حرفًا. لم يتم حذف أي نص.");
+        return;
+    }
+
+    const items = lines.map(item => item.trim()).filter(Boolean);
     if (!items.length) {
         showAdminToast("أدخل إعلانًا واحدًا على الأقل.");
         return;
     }
-    if (items.length > 10) {
-        showAdminToast("يمكن إضافة 10 إعلانات كحد أقصى.");
-        return;
-    }
-    if (items.some(item => Array.from(item).length > 20)) {
-        showAdminToast("يجب ألا يتجاوز كل إعلان 20 حرفًا.");
-        return;
-    }
+
     try {
+        if (saveButton) {
+            saveButton.disabled = true;
+            saveButton.textContent = "جارٍ الحفظ...";
+        }
         const data = await ADMIN_API.updateSettings({dhikr_items: items});
         adminState.settings = {...adminState.settings, ...(data.settings || {}), dhikr_items: items};
-        updateSettingsUI();
+        announcementDraftDirty = false;
+        input.value = items.join("\n");
         updateAnnouncementCount();
         showAdminToast("تم حفظ شريط الإعلانات.");
     } catch (error) {
         console.error(error);
-        showAdminToast(error.message || "تعذر حفظ شريط الإعلانات.");
+        showAdminToast(error.message || "تعذر حفظ شريط الإعلانات. بقي النص كما كتبته.");
+    } finally {
+        if (saveButton) {
+            saveButton.disabled = false;
+            saveButton.textContent = "حفظ الإعلانات";
+        }
     }
 }
 
