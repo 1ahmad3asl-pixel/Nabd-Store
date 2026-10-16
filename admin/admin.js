@@ -201,8 +201,6 @@ function initializeAdminNavigation() {
 }
 
 function showAdminSection(section) {
-    const isAnnouncementSettings = section === "announcementSettings";
-
     document.querySelectorAll(".admin-section").forEach(function (item) {
         item.classList.remove("active");
     });
@@ -211,23 +209,8 @@ function showAdminSection(section) {
         item.classList.remove("active");
     });
 
-    // شريط الإعلانات قسم مستقل في التنقل، لكنه يستخدم لوحة الإعدادات الموجودة
-    // دون إعادة فتح صفحة الإعدادات أو الاعتماد على تبويبات داخلية محذوفة.
-    const sectionElement = document.getElementById(
-        (isAnnouncementSettings ? "settings" : section) + "Section"
-    );
-
-    if (sectionElement) {
-        sectionElement.classList.add("active");
-    }
-
-    if (isAnnouncementSettings) {
-        document.querySelectorAll(".settings-panel").forEach(function (panel) {
-            panel.classList.remove("active");
-        });
-        const announcementPanel = document.getElementById("dhikrSettingsPanel");
-        if (announcementPanel) announcementPanel.classList.add("active");
-    }
+    const sectionElement = document.getElementById(section + "Section");
+    if (sectionElement) sectionElement.classList.add("active");
 
     document.querySelectorAll(
         `.admin-nav-item[data-section="${section}"], .admin-tab[data-section="${section}"]`
