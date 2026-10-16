@@ -1261,15 +1261,16 @@ app.put("/api/admin/settings", async (req, res) => {
 });
 
 app.get("/api/admin/transactions", async (req, res) => {
-  const result = await query(
+  const [result, totals, profileResult] = await Promise.all([
+    query(
     `SELECT t.*, c.customer_number, c.name AS customer_name,
             ROW_NUMBER() OVER (ORDER BY t.created_at ASC, t.id ASC) AS transaction_number
      FROM transactions t
      LEFT JOIN customers c ON c.customer_id=t.customer_id
      ORDER BY t.created_at DESC, t.id DESC
      LIMIT 500`
-  );
-  const totals = await query(
+  ),
+    query(
     `SELECT
        COALESCE(SUM(CASE WHEN type='purchase' THEN amount ELSE 0 END),0) AS sales,
        COALESCE(SUM(CASE WHEN type IN ('admin_credit','refund') THEN amount ELSE 0 END),0) AS customer_outflows,
@@ -1278,7 +1279,18 @@ app.get("/api/admin/transactions", async (req, res) => {
        COALESCE((SELECT SUM(balance) FROM customers),0) AS customer_balance,
        COALESCE((SELECT SUM(profit) FROM orders WHERE status NOT IN ('failed','rejected','cancelled','canceled','error')),0) AS net_profit
      FROM transactions`
-  );
+    ),
+    getNemerProfile().then(profile => {
+      const rawBalance = profile?.balance ?? profile?.data?.balance ?? profile?.data?.data?.balance ?? profile?.wallet?.balance ?? profile?.data?.wallet?.balance ?? null;
+      const parsed = Number(rawBalance);
+      return Number.isFinite(parsed) ? parsed : null;
+    }).catch(error => {
+      console.error("Admin Nemer profile error:", error?.message || error);
+      return null;
+    })
+  ]);
+  const apiBalance = profileResult;
+  const customerBalance = Number(totals.rows[0].customer_balance || 0);
   res.json({
     status: "OK",
     transactions: result.rows,
@@ -1287,8 +1299,11 @@ app.get("/api/admin/transactions", async (req, res) => {
       customer_outflows: Number(Number(totals.rows[0].customer_outflows).toFixed(12)),
       admin_inflows: Number(Number(totals.rows[0].admin_inflows).toFixed(12)),
       net_cash: Number(Number(totals.rows[0].net_cash).toFixed(12)),
-      customer_balance: Number(Number(totals.rows[0].customer_balance).toFixed(12)),
-      net_profit: Number(Number(totals.rows[0].net_profit).toFixed(12))
+      customer_balance: Number(customerBalance.toFixed(12)),
+      net_profit: Number(Number(totals.rows[0].net_profit).toFixed(12)),
+      api_balance: apiBalance,
+      api_balance_available: apiBalance !== null,
+      budget_deficit: apiBalance === null ? null : Number((customerBalance - apiBalance).toFixed(12))
     }
   });
 });
