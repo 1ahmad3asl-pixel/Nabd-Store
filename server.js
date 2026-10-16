@@ -1282,6 +1282,7 @@ app.get("/api/admin/transactions", async (req, res) => {
     ),
     getNemerProfile().then(profile => {
       const rawBalance = profile?.balance ?? profile?.data?.balance ?? profile?.data?.data?.balance ?? profile?.wallet?.balance ?? profile?.data?.wallet?.balance ?? null;
+      if (rawBalance === null || rawBalance === undefined || rawBalance === "") return null;
       const parsed = Number(rawBalance);
       return Number.isFinite(parsed) ? parsed : null;
     }).catch(error => {
