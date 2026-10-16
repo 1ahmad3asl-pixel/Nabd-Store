@@ -1364,6 +1364,13 @@ async function loadAdminProducts() {
 
 }
 
+function isAdminProductAvailable(product) {
+    const value = product && product.available;
+    if (value === false || value === 0 || value === null || value === undefined) return false;
+    if (typeof value === "string" && ["false", "0", "no", "unavailable", "غير متوفر"].includes(value.trim().toLowerCase())) return false;
+    return true;
+}
+
 function renderAdminProducts(products) {
 
     const table =
@@ -1376,7 +1383,7 @@ function renderAdminProducts(products) {
     const availabilityFilter = document.getElementById("productAvailabilityFilter");
     const filterValue = availabilityFilter ? availabilityFilter.value : "all";
     const filteredProducts = products.filter(function (product) {
-        const available = product.available !== false && product.available !== 0 && product.available !== "false" && product.available !== "0";
+        const available = isAdminProductAvailable(product);
         if (filterValue === "available") return available;
         if (filterValue === "unavailable") return !available;
         return true;
@@ -1416,9 +1423,7 @@ function renderAdminProducts(products) {
             const sellingPrice =
                 apiPrice * (1 + profit);
 
-            const available =
-                product.available !== false &&
-                product.available !== 0;
+            const available = isAdminProductAvailable(product);
 
             return `
                 <tr>
