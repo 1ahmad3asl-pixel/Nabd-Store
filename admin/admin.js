@@ -1959,7 +1959,7 @@ function renderTransactions(
 
         table.innerHTML = `
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     لا توجد عمليات مالية.
                 </td>
             </tr>
@@ -1992,6 +1992,10 @@ function renderTransactions(
                                 "-"
                             )
                         )}
+                    </td>
+
+                    <td>
+                        ${escapeAdminHtml(String(item.customer_name || "-"))}
                     </td>
 
                     <td>
