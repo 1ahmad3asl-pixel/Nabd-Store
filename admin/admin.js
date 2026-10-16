@@ -201,66 +201,44 @@ function initializeAdminNavigation() {
 }
 
 function showAdminSection(section) {
-    if (section === "announcementSettings") {
-        section = "settings";
-        setTimeout(function () {
-            const tab = document.querySelector('.settings-tab[data-settings-panel="dhikrSettingsPanel"]');
-            if (tab) tab.click();
-        }, 0);
-    }
+    const isAnnouncementSettings = section === "announcementSettings";
 
+    document.querySelectorAll(".admin-section").forEach(function (item) {
+        item.classList.remove("active");
+    });
 
-    document
-        .querySelectorAll(".admin-section")
-        .forEach(function (item) {
+    document.querySelectorAll(".admin-nav-item, .admin-tab").forEach(function (item) {
+        item.classList.remove("active");
+    });
 
-            item.classList.remove("active");
-
-        });
-
-    document
-        .querySelectorAll(".admin-nav-item, .admin-tab")
-        .forEach(function (item) {
-
-            item.classList.remove("active");
-
-        });
-
-    const sectionElement =
-        document.getElementById(section + "Section");
+    // شريط الإعلانات قسم مستقل في التنقل، لكنه يستخدم لوحة الإعدادات الموجودة
+    // دون إعادة فتح صفحة الإعدادات أو الاعتماد على تبويبات داخلية محذوفة.
+    const sectionElement = document.getElementById(
+        (isAnnouncementSettings ? "settings" : section) + "Section"
+    );
 
     if (sectionElement) {
         sectionElement.classList.add("active");
     }
 
-    document
-        .querySelectorAll(`.admin-nav-item[data-section="${section}"], .admin-tab[data-section="${section}"]`)
-        .forEach(function (item) {
-            item.classList.add("active");
+    if (isAnnouncementSettings) {
+        document.querySelectorAll(".settings-panel").forEach(function (panel) {
+            panel.classList.remove("active");
         });
-
-    const sidebar =
-        document.getElementById("adminTabs");
-
-    // القائمة تُفتح وتُغلق عبر class "open" فقط.
-
-
-    if (section === "customers") {
-        loadCustomers();
+        const announcementPanel = document.getElementById("dhikrSettingsPanel");
+        if (announcementPanel) announcementPanel.classList.add("active");
     }
 
-    if (section === "orders") {
-        loadOrders();
-    }
+    document.querySelectorAll(
+        `.admin-nav-item[data-section="${section}"], .admin-tab[data-section="${section}"]`
+    ).forEach(function (item) {
+        item.classList.add("active");
+    });
 
-    if (section === "products") {
-        loadAdminProducts();
-    }
-
-    if (section === "wallet") {
-        loadTransactions();
-    }
-
+    if (section === "customers") loadCustomers();
+    if (section === "orders") loadOrders();
+    if (section === "products") loadAdminProducts();
+    if (section === "wallet") loadTransactions();
 }
 
 function initializeAdminTheme() {
