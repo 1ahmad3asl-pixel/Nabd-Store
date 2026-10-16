@@ -1304,7 +1304,7 @@ app.get("/api/admin/transactions", async (req, res) => {
       net_profit: Number(Number(totals.rows[0].net_profit).toFixed(12)),
       api_balance: apiBalance,
       api_balance_available: apiBalance !== null,
-      budget_deficit: apiBalance === null ? null : Number((customerBalance - apiBalance).toFixed(12))
+      budget_deficit: apiBalance === null ? null : Number((apiBalance - customerBalance).toFixed(12))
     }
   });
 });
