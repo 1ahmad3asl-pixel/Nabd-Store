@@ -1921,7 +1921,7 @@ async function initializeBudgetRefresh() {
     });
 }
 
-function loadTransactions() {
+async function loadTransactions() {
 
     try {
 
@@ -1949,9 +1949,19 @@ function loadTransactions() {
         setWalletStat("budgetApiBalance", budget.api_balance ?? 0);
         const deficitEl = document.getElementById("budgetDeficit");
         if (deficitEl) {
-            deficitEl.textContent = budget.api_balance_available
-                ? formatAdminPrice(budget.budget_deficit ?? 0)
-                : "غير متاح";
+            deficitEl.classList.remove("budget-deficit-negative", "budget-deficit-positive", "budget-deficit-neutral");
+            if (!budget.api_balance_available || budget.budget_deficit === null || budget.budget_deficit === undefined) {
+                deficitEl.textContent = "غير متاح";
+            } else {
+                const deficitValue = Number(budget.budget_deficit);
+                const deficitSign = deficitValue > 0 ? "+" : deficitValue < 0 ? "−" : "";
+                deficitEl.textContent = deficitSign + formatAdminPrice(Math.abs(deficitValue));
+                deficitEl.classList.add(
+                    deficitValue < 0 ? "budget-deficit-negative" :
+                    deficitValue > 0 ? "budget-deficit-positive" :
+                    "budget-deficit-neutral"
+                );
+            }
         }
 
     } catch (error) {
