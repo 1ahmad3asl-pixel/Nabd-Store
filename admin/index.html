@@ -397,6 +397,26 @@
 
             </div>
 
+            <div class="admin-card credit-limit-card">
+                <div class="credit-limit-info">
+                    <span class="credit-limit-title">حد الائتمان</span>
+                    <strong id="creditLimitAmount">$0.000</strong>
+                </div>
+                <button id="creditLimitSettingsButton" class="credit-limit-settings-button" type="button" aria-expanded="false" aria-controls="creditLimitEditor" aria-label="إعدادات حد الائتمان">
+                    <span aria-hidden="true">⚙</span>
+                    <span>إعدادات</span>
+                </button>
+                <form id="creditLimitEditor" class="credit-limit-editor" hidden>
+                    <label for="creditLimitInput">قيمة حد الائتمان بالدولار</label>
+                    <input id="creditLimitInput" type="number" min="0" max="1000000000" step="0.001" inputmode="decimal" value="0" required>
+                    <div class="credit-limit-editor-actions">
+                        <button id="saveCreditLimit" class="primary-button" type="submit">حفظ</button>
+                        <button id="cancelCreditLimit" class="small-button" type="button">إلغاء</button>
+                    </div>
+                    <p id="creditLimitStatus" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+
             <div class="admin-card">
 
                 <div class="card-heading">
