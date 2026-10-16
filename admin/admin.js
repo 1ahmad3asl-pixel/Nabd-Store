@@ -1931,6 +1931,13 @@ async function loadTransactions() {
         setWalletStat("totalDeposits", budget.sales ?? 0);
         setWalletStat("totalWithdrawals", budget.net_cash ?? 0);
         setWalletStat("budgetNet", budget.net_profit ?? 0);
+        setWalletStat("budgetApiBalance", budget.api_balance ?? 0);
+        const deficitEl = document.getElementById("budgetDeficit");
+        if (deficitEl) {
+            deficitEl.textContent = budget.api_balance_available
+                ? formatAdminPrice(budget.budget_deficit ?? 0)
+                : "غير متاح";
+        }
 
     } catch (error) {
 
