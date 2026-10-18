@@ -2696,9 +2696,13 @@ async function showCustomerOrdersModal() {
                     <div class="customer-orders-empty-icon">🔐</div>
                     <h3>سجّل الدخول أولًا</h3>
                     <p>يمكنك رؤية طلباتك بعد تسجيل الدخول إلى حسابك.</p>
-                    <button type="button" class="buy-btn customer-orders-login" onclick="window.location.href='/customer-login.html'">تسجيل الدخول</button>
+                    <button type="button" class="buy-btn customer-orders-login">تسجيل الدخول</button>
                 </div>
             `;
+            const loginButton = container.querySelector(".customer-orders-login");
+            if (loginButton) loginButton.addEventListener("click", function() {
+                window.location.href = "/customer-login.html";
+            });
             return;
         }
 
