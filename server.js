@@ -107,7 +107,7 @@ function securityHeaders(res) {
   res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
   res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://accounts.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://accounts.google.com https://openidconnect.googleapis.com https://nemer-card.com; font-src 'self' data:;");
+  res.setHeader("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://accounts.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; script-src-attr 'unsafe-inline'; connect-src 'self' https://accounts.google.com https://openidconnect.googleapis.com https://nemer-card.com; font-src 'self' data:;");
 }
 
 app.use((req, res, next) => {
