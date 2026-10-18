@@ -497,8 +497,7 @@ app.post("/api/admin/login", async (req, res) => {
       const attempt = result.rows[0];
       if (attempt?.is_blocked) {
         res.setHeader("Retry-After", String(Math.ceil(ADMIN_LOGIN_LOCKOUT_MS / 1000)));
-        return res.status(429).json({
-          status: "ERROR",
+        return res.status(429).json({          status: "ERROR",
           message: "تم إيقاف محاولات الدخول بعد 3 محاولات فاشلة. مدة الحظر 3 ساعات."
         });
       }
@@ -997,8 +996,7 @@ app.get("/api/customer/orders", requireCustomer, async (req, res) => {
 });
 
 /* =========================
-   ADMIN API
-========================= */
+   ADMIN API========================= */
 
 app.use("/api/admin", requireAdmin);
 
@@ -1497,8 +1495,7 @@ app.get("/api/customer/notifications", requireCustomer, async (req, res) => {
   } catch (error) {
     console.error("Customer notifications error:", error);
     res.status(500).json({ status: "ERROR", message: "تعذر تحميل إشعاراتك." });
-  }
-});
+  }});
 
 app.post("/api/customer/notifications/:id/read", requireCustomer, async (req, res) => {
   const notificationId = Number(req.params.id);
@@ -1997,8 +1994,7 @@ app.get("/Chvcdh678gjFbC55Z6gj5ho7/", requireAdmin, (req, res) => {
 app.get("/Chvcdh678gjFbC55Z6gj5ho7/index.html", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  res.sendFile(path.join(__dirname, "admin", "index.html"));
+  res.setHeader("Expires", "0");  res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
 app.get("/Chvcdh678gjFbC55Z6gj5ho7/manifest.json", requireAdmin, (req, res) => {
@@ -2046,6 +2042,27 @@ app.get("/sham-cash-dollar.html", async (req, res) => {
   const auth = await customerAuth(req);
   if (!auth) return res.redirect("/customer-login.html");
   res.sendFile(path.join(__dirname, "sham-cash-dollar.html"));
+});
+
+// Prevent Express static serving from exposing the private admin directory through legacy paths.
+app.use((req, res, next) => {
+  let requestPath;
+  try {
+    requestPath = decodeURIComponent(req.path).replace(/\\/g, "/");
+  } catch {
+    return res.status(400).end();
+  }
+
+  if (requestPath === "/admin/") {
+    return res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7");
+  }
+  if (requestPath === "/admin/login.html") {
+    return res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7/login.html");
+  }
+  if (requestPath === "/admin" || requestPath.startsWith("/admin/")) {
+    return res.status(404).end();
+  }
+  next();
 });
 
 app.use(express.static(path.join(__dirname), {
