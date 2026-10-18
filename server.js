@@ -2069,12 +2069,12 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   let requestPath;
   try {
-    requestPath = decodeURIComponent(req.path).replace(/\\\\/g, "/");
+    requestPath = decodeURIComponent(req.path);
   } catch {
     return res.status(400).end();
   }
 
-  requestPath = requestPath.replace(/\\/+$/, "").toLowerCase();
+  requestPath = requestPath.replace(/\/+$/, "").toLowerCase();
   const privateRootFiles = new Set([
     "/server.js",
     "/db.js",
