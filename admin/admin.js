@@ -373,12 +373,6 @@ function updateDashboard(data) {
         )
     );
 
-    if (Array.isArray(data.recent_orders)) {
-        // طلبات لوحة التحكم الأخيرة مستقلة عن القائمة الكاملة في صفحة الطلبات.
-        // لا تستبدل adminState.orders هنا، لأن التحديث الدوري للوحة كان يحصر البحث بآخر 8 طلبات.
-        renderRecentOrders(data.recent_orders);
-    }
-
     if (data.settings) {
         adminState.settings = {
             ...adminState.settings,
@@ -1164,92 +1158,6 @@ function renderOrders(orders) {
     }).join("");
 }
 
-function renderRecentOrders(orders) {
-
-    const table =
-        document.getElementById(
-            "recentOrders"
-        );
-
-    if (!table) return;
-
-    if (!orders.length) {
-
-        table.innerHTML = `
-            <tr>
-                <td colspan="5">
-                    لا توجد طلبات حاليًا.
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-    table.innerHTML =
-        orders
-            .slice(0, 8)
-            .map(function (order) {
-
-                const status =
-                    String(
-                        order.status ||
-                        "pending"
-                    ).toLowerCase();
-
-                return `
-                    <tr>
-
-                        <td>
-                            ${escapeAdminHtml(
-                                String(
-                                    order.order_id ??
-                                    order.order_number ??
-                                    "-"
-                                )
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeAdminHtml(
-                                String(
-                                    order.customer_number ??
-                                    "-"
-                                )
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeAdminHtml(
-                                String(
-                                    order.product_name ??
-                                    order.product ??
-                                    "-"
-                                )
-                            )}
-                        </td>
-
-                        <td>
-                            ${formatAdminPrice(
-                                order.price ??
-                                order.amount ??
-                                0
-                            )}
-                        </td>
-
-                        <td>
-                            ${getStatusHtml(status)}
-                        </td>
-
-                    </tr>
-                `;
-
-            })
-            .join("");
-
-}
-
 function initializeProducts() {
 
     const refresh =
@@ -1474,11 +1382,6 @@ function initializeAppearanceSettings() {
             if(panel) panel.classList.add("active");
         });
     });
-}
-
-function initializeAdminTheme(){
-    const saved=localStorage.getItem("nabd-admin-theme")||"dark";
-    document.documentElement.dataset.theme=saved==="light"?"light":"dark";
 }
 
 async function performAdminLogout(){
