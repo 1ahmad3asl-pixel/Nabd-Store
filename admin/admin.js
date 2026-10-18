@@ -514,6 +514,7 @@ function renderCustomers(customers) {
                 customer.discount ??
                 customer.discount_percent ??
                 0;
+            const avatarUrl = safeAdminAvatarUrl(customer.avatar_url);
 
             const active =
                 customer.active !== false &&
@@ -547,7 +548,7 @@ function renderCustomers(customers) {
 
                     <td>
                         <div class="customer-table-user">
-                            <span class="customer-table-avatar">${customer.avatar_url ? '<img src="'+escapeAdminHtml(String(customer.avatar_url))+'" alt="صورة العميل">' : '👤'}</span>
+                            <span class="customer-table-avatar">${avatarUrl ? '<img src="'+escapeAdminHtml(avatarUrl)+'" alt="صورة العميل">' : '👤'}</span>
                             <span>${escapeAdminHtml(String(name))}</span>
                         </div>
                     </td>
@@ -808,7 +809,8 @@ async function openCustomerInfo(customerId) {
         const name = String(customer.name || "عميل");
         const number = customer.customer_number ?? customer.customer_id ?? customerId;
         const created = customer.created_at ? new Date(customer.created_at).toLocaleString("ar") : "غير متوفر";
-        const avatar = customer.avatar_url ? '<img src="'+escapeAdminHtml(String(customer.avatar_url))+'" alt="صورة العميل" class="customer-info-avatar">' : '<span class="customer-info-avatar placeholder">👤</span>';
+        const avatarUrl = safeAdminAvatarUrl(customer.avatar_url);
+        const avatar = avatarUrl ? '<img src="'+escapeAdminHtml(avatarUrl)+'" alt="صورة العميل" class="customer-info-avatar">' : '<span class="customer-info-avatar placeholder">👤</span>';
         const html = "<div id='customerInfoDialog' class='customer-info-dialog'><div class='customer-info-card'><div class='card-heading'><div class='customer-info-title'><div>" + avatar + "</div><div><span>بيانات العميل</span><h2>" + escapeAdminHtml(name) + "</h2></div></div><button class='small-button' id='closeCustomerInfo'>إغلاق</button></div><div class='customer-info-grid'>" +
             "<div><span>رقم العميل</span><strong>" + escapeAdminHtml(String(number)) + "</strong></div>" +
             "<div><span>رقم الهاتف</span><strong dir='ltr'>" + escapeAdminHtml(phone) + "</strong></div>" +
@@ -2126,6 +2128,12 @@ function getValue(id) {
         ? element.value.trim()
         : "";
 
+}
+
+function safeAdminAvatarUrl(value) {
+    const url = String(value || "").trim();
+    if (!url || url.length > 500000) return "";
+    return /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/i.test(url) ? url : "";
 }
 
 function escapeAdminHtml(value) {
