@@ -410,7 +410,12 @@ function initializeCustomers() {
     }
 
     if (searchInput) {
-        // يبدأ البحث عند الضغط على «تم» في لوحة المفاتيح، دون زر بحث أو فلترة مع كل حرف.
+        // فلترة محلية فورية أثناء الكتابة دون إرسال طلب جديد إلى الخادم مع كل حرف.
+        searchInput.addEventListener("input", function () {
+            loadCustomers(searchInput.value.trim(), false);
+        });
+
+        // إبقاء سلوك زر «تم» مناسبًا للوحة مفاتيح الهاتف.
         searchInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();
@@ -419,7 +424,6 @@ function initializeCustomers() {
             }
         });
 
-        // يدعم لوحات المفاتيح التي ترسل حدث submit لحقل البحث.
         searchInput.addEventListener("search", function () {
             loadCustomers(searchInput.value.trim(), false);
         });
