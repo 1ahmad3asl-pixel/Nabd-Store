@@ -426,12 +426,26 @@ async function requireCustomer(req, res, next) {
 app.post("/api/admin/login", async (req, res) => {
   securityHeaders(res);
   const ip = clientIp(req);
-  const attempt = adminLoginAttempts.get(ip) || { count: 0, blockedUntil: 0 };
+  const now = Date.now();
 
-  if (attempt.blockedUntil > Date.now()) {
+  // Keep the in-memory limiter bounded and discard expired entries.
+  if (adminLoginAttempts.size > 10000) {
+    for (const [key, value] of adminLoginAttempts) {
+      if (!value.blockedUntil && now - (value.lastAttemptAt || 0) > 60 * 60 * 1000) {
+        adminLoginAttempts.delete(key);
+      }
+      if (adminLoginAttempts.size <= 8000) break;
+    }
+  }
+
+  const attempt = adminLoginAttempts.get(ip) || { count: 0, blockedUntil: 0, lastAttemptAt: now };
+
+  if (attempt.blockedUntil > now) {
+    const retryMinutes = Math.max(1, Math.ceil((attempt.blockedUntil - now) / 60000));
+    res.setHeader("Retry-After", String(Math.ceil((attempt.blockedUntil - now) / 1000)));
     return res.status(429).json({
       status: "ERROR",
-      message: "محاولات تسجيل الدخول كثيرة. حاول لاحقًا."
+      message: `تم إيقاف محاولات الدخول مؤقتًا بعد 3 محاولات فاشلة. حاول بعد ${retryMinutes} دقيقة.`
     });
   }
 
@@ -447,10 +461,18 @@ app.post("/api/admin/login", async (req, res) => {
 
   if (!safeEqual(email, ADMIN_EMAIL) || !safeEqual(password, ADMIN_PASSWORD)) {
     attempt.count += 1;
-    if (attempt.count >= 5) {
-      attempt.count = 0;
-      attempt.blockedUntil = Date.now() + 15 * 60 * 1000;
+    attempt.lastAttemptAt = now;
+    if (attempt.count >= 3) {
+      attempt.count = 3;
+      attempt.blockedUntil = now + 15 * 60 * 1000;
+      adminLoginAttempts.set(ip, attempt);
+      res.setHeader("Retry-After", "900");
+      return res.status(429).json({
+        status: "ERROR",
+        message: "تم إيقاف محاولات الدخول مؤقتًا بعد 3 محاولات فاشلة. حاول بعد 15 دقيقة."
+      });
     }
+
     adminLoginAttempts.set(ip, attempt);
     return res.status(401).json({
       status: "ERROR",
