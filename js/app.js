@@ -1396,7 +1396,7 @@ function openNumbersPage(fromHistory) {
     // المستوى الثاني يعرض التصنيفات فقط؛ جلب المنتجات يتم بعد الضغط على التصنيف.
     const groups=getNumberGroupDefinitions().map(function(g){return Object.assign({},g,{image:getNumberGroupImage(g)});});
     content.innerHTML='<div class="numbers-page-note">اختر نوع الرقم لجلب منتجاته المتاحة.</div><div class="game-category-grid numbers-category-grid">'+groups.map(function(g){
-        const img=g.image?'<img src="'+escapeHtml(g.image)+'" alt="" loading="lazy">':'<span class="numbers-placeholder">📲</span>';
+        const safeImage=safeImageUrl(g.image); const img=safeImage?'<img src="'+escapeHtml(safeImage)+'" alt="" loading="lazy">':'<span class="numbers-placeholder">📲</span>';
         return '<button class="game-category-tile numbers-category-tile" type="button" data-number-group="'+escapeHtml(g.key)+'"><span class="game-tile-image">'+img+'</span><span class="game-tile-title">'+escapeHtml(g.title)+'</span></button>';
     }).join("")+'</div>';
     content.querySelectorAll(".numbers-category-tile:not([disabled])").forEach(function(tile){tile.addEventListener("click",function(){openNumberGroupProducts(tile.getAttribute("data-number-group"));});});
@@ -1464,7 +1464,7 @@ function openAppsPage(fromHistory) {
             return '<button class="game-category-tile app-server-tile" type="button" data-app-server="' +
                 escapeHtml(tile.key) + '">' +
                 '<span class="game-tile-image app-server-image">' +
-                    '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">' +
+                    '<img src="' + escapeHtml(safeImageUrl(tile.image)) + '" alt="" loading="lazy">' +
                 '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
             '</button>';
@@ -1541,7 +1541,7 @@ function getServerTwoApps() {
 function renderAppImage(appItem) {
     if (appItem.image) {
         const src = String(appItem.image).startsWith("http") ? appItem.image : BACKEND_URL + appItem.image;
-        return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(appItem.title) + '" loading="lazy">';
+        const safeSrc = safeImageUrl(src); return safeSrc ? '<img src="' + escapeHtml(safeSrc) + '" alt="' + escapeHtml(appItem.title) + '" loading="lazy">' : '<span class="game-placeholder">📱</span>';
     }
     return '<span class="game-placeholder">📱</span>';
 }
@@ -1847,7 +1847,7 @@ function openGamesPage(fromHistory) {
                 escapeHtml(tile.title) + '">' +
                 '<span class="game-tile-image">' +
                     (tile.image
-                        ? '<img src="' + escapeHtml(tile.image) + '" alt="" loading="lazy">' 
+                        ? '<img src="' + escapeHtml(safeImageUrl(tile.image)) + '" alt="" loading="lazy">' 
                         : '<span class="game-placeholder">🎮</span>') +
                 '</span>' +
                 '<span class="game-tile-title">' + escapeHtml(tile.title) + '</span>' +
@@ -1937,9 +1937,9 @@ function openGamePlaceholder(gameTitle, fromHistory) {
             // المستوى الثالث يعرض صورة اللعبة، وليس صورة أول منتج داخلها.
             const gameImage = gameTile && gameTile.image ? gameTile.image : "";
             const imageHtml = gameImage
-                ? '<img src="' + escapeHtml(gameImage) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
+                ? '<img src="' + escapeHtml(safeImageUrl(gameImage)) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
                 : (group.image
-                    ? '<img src="' + escapeHtml(group.image) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
+                    ? '<img src="' + escapeHtml(safeImageUrl(group.image)) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
                     : '<span class="game-placeholder">🎮</span>');
 
             return '<button class="game-category-tile game-product-group-card" type="button" data-game-group="' +
@@ -2160,7 +2160,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
         const price = getGameProductPrice(product);
         const optionImage = getProductImage(product);
         const optionImageHtml = optionImage
-            ? '<span class="pubg-option-image"><img src="' + escapeHtml(optionImage) + '" alt="" loading="lazy"></span>'
+            ? '<span class="pubg-option-image"><img src="' + escapeHtml(safeImageUrl(optionImage)) + '" alt="" loading="lazy"></span>'
             : '<span class="pubg-option-image pubg-option-image-placeholder">📲</span>';
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
@@ -2182,7 +2182,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
         ? (String(image).startsWith("http") ? image : BACKEND_URL + image)
         : "";
     const imageHtml = imageSource
-        ? '<img src="' + escapeHtml(imageSource) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
+        ? '<img src="' + escapeHtml(safeImageUrl(imageSource)) + '" alt="' + escapeHtml(gameTitle) + '" loading="lazy">'
         : '<span class="game-placeholder">🎮</span>';
 
     const robloxProductNotice = normalizeGameText(gameTitle).includes("roblox")
@@ -3156,6 +3156,19 @@ function quantityRangePlaceholder(min,max){
     return formatQuantityBound(min)+" ← "+formatQuantityBound(max);
 }
 
+function safeImageUrl(value) {
+    const source = String(value || "").trim();
+    if (!source || source.length > 2048 || source.startsWith("//") || source.startsWith("/\\\\")) return "";
+    try {
+        const parsed = new URL(source, window.location.origin);
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+        if (parsed.username || parsed.password) return "";
+        return parsed.href;
+    } catch (error) {
+        return "";
+    }
+}
+
 function escapeHtml(value) {
     return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
 }
@@ -3311,7 +3324,7 @@ function openBalancePage(fromHistory) {
     const groups=getBalanceGroups();
     content.innerHTML='<div class="game-page balance-level-two"><div class="game-category-grid balance-category-grid">'+groups.map(function(group){
         const image=group.image || "";
-        const imageHtml=image?'<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
+        const safeImage=safeImageUrl(image); const imageHtml=safeImage?'<img src="'+escapeHtml(safeImage)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">':'<span class="game-placeholder">💵</span>';
         // المستوى الثاني لا يعطل التصنيف قبل تحميل API؛ الضغط عليه هو الذي يبدأ تحميل منتجاته.
         return '<button class="game-category-tile game-product-group-card balance-category-tile" type="button" data-balance-group="'+escapeHtml(group.key)+'"><span class="game-tile-image '+(["instapay","zain-cash","reflect","paypal","payoneer","alfa","rcell","asia-cell"].includes(group.key)?"balance-brand-image":"")+'">'+imageHtml+'</span><span class="game-tile-title">'+escapeHtml(group.title)+'</span></button>';
     }).join("")+'</div></div>';
@@ -3541,7 +3554,7 @@ function openBalanceSubgroups(groupKey, fromHistory) {
                     // لا نستخدم category_img أو أي صورة قادمة من API.
                     const image = subgroup.image || group.image || "";
                     const imageHtml=image
-                        ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(subgroup.title)+'" loading="lazy">'
+                        ? '<img src="'+escapeHtml(safeImageUrl(/^https?:\/\//i.test(String(image))?String(image):BACKEND_URL+(String(image).startsWith("/")?String(image):"/"+String(image))))+'" alt="'+escapeHtml(subgroup.title)+'" loading="lazy">'
                         : '<span class="game-placeholder">💵</span>';
                     return '<button class="game-category-tile game-product-group-card balance-subgroup-tile'+(available?'':' is-disabled')+'" type="button" data-balance-subgroup="'+escapeHtml(subgroup.key)+'"'+(available?'':' disabled')+'>' +
                         '<span class="game-tile-image">'+imageHtml+'</span>' +
@@ -3623,7 +3636,7 @@ function renderBalanceProductPicker(group) {
 
     const image=group.image||"";
     const imageHtml=image
-        ? '<img src="'+escapeHtml(String(image).startsWith("http")?image:BACKEND_URL+image)+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
+        ? '<img src="'+escapeHtml(safeImageUrl(/^https?:\/\//i.test(String(image))?String(image):BACKEND_URL+(String(image).startsWith("/")?String(image):"/"+String(image))))+'" alt="'+escapeHtml(group.title)+'" loading="lazy">'
         : '<span class="game-placeholder">💵</span>';
 
     content.innerHTML='<div class="pubg-picker universal-game-picker"><button class="pubg-back" type="button" id="balanceBackToSubgroups">← العودة إلى التصنيفات</button><div class="pubg-picker-head"><div class="pubg-picker-image'+(group.balanceGroupKey==="reflect"?' reflect-picker-image':'')+'">'+imageHtml+'</div><h2>'+escapeHtml(group.title)+'</h2><span>'+products.length+' منتج</span></div><div class="game-required-fields-title">المعلومات المطلوبة</div><div id="balanceParamFields">'+(first?renderBalanceRequiredFields(first,group.title,products,0):"")+'</div><div class="pubg-field-label"'+(isTurkcellBundleGroup(group)||isReflectSingleProduct||isMtnInvoiceProduct?' style="display:none"':'')+'>'+ (isTurkcellBundleGroup(group)?"الخدمة المختارة":"اختر المنتج")+'</div><div class="pubg-select" id="balanceSelect"'+(isTurkcellBundleGroup(group)||isReflectSingleProduct||isMtnInvoiceProduct?' style="display:none"':'')+'><button class="pubg-select-trigger" type="button" aria-expanded="false"><span id="balanceSelectedName">'+escapeHtml(first?(first.name||"اختر المنتج"):"اختر المنتج")+'</span><span class="pubg-select-arrow">▼</span></button><div class="pubg-options" id="balanceOptions" hidden>'+list+'</div></div><div id="balanceQuantityField"></div><div class="pubg-selected-summary"><span>السعر</span><strong id="balanceSelectedPrice">'+(first&&getBalanceSaleUnitPrice(first)!==null?formatBalancePrice(first,getBalanceSaleUnitPrice(first)):"السعر غير متاح")+'</strong></div><button class="buy-btn pubg-submit" id="balanceSubmitOrder" type="button"'+(!first||first.available===false||first.available===0||getBalanceSaleUnitPrice(first)===null?" disabled":"")+'>إرسال الطلب <span>→</span></button></div>';
@@ -3906,7 +3919,7 @@ function renderProducts() {
         const rawPrice = product.price;
         const hasLivePrice = state.productsLive && rawPrice !== null && rawPrice !== undefined && String(rawPrice).trim() !== "" && Number.isFinite(Number(rawPrice)) && Number(rawPrice) >= 0;
         const price = hasLivePrice ? Number(rawPrice) : 0;
-        const image = product.category_img || "";
+        const image = safeImageUrl(product.category_img || "");
         const icon = image ? "<img src=\"" + escapeHtml(image) + "\" alt=\"\" style=\"width:100%;height:100%;object-fit:contain;\">" : "🛍️";
         const purchaseEnabled = available && hasLivePrice;
         return "<article class=\"product " + (available ? "" : "product-unavailable") + "\"><div class=\"product-icon\">" + icon + "</div><h3>" + escapeHtml(product.name || "منتج") + "</h3><p>" + escapeHtml(product.category_name || "") + "</p><div class=\"price\">" + (hasLivePrice ? formatProductMoney(product, price) : "جاري تحديث السعر…") + "</div><button class=\"buy-btn\" type=\"button\" data-product-id=\"" + escapeHtml(String(product.id)) + "\" " + (purchaseEnabled ? "" : "disabled") + ">" + (available ? (hasLivePrice ? "شراء الآن" : "جاري تحديث السعر") : "غير متوفر") + "</button></article>";
