@@ -2084,6 +2084,8 @@ Sentry.setupExpressErrorHandler(app);
 
 initDb()
   .then(async () => {
+    await query(`CREATE TABLE IF NOT EXISTS admin_login_attempts (ip_hash TEXT PRIMARY KEY, failed_attempts INTEGER NOT NULL DEFAULT 0, last_attempt_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), blocked_until TIMESTAMPTZ)`);
+    await query("CREATE INDEX IF NOT EXISTS idx_admin_login_attempts_blocked_until ON admin_login_attempts(blocked_until)");
     await loadSettings();
     await cleanupSessions();
     await cleanupNotifications();
