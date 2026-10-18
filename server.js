@@ -388,8 +388,8 @@ async function requireAdmin(req, res, next) {
   try {
     const auth = await adminAuth(req);
     if (!auth) {
-      if (req.path === "/admin" || req.path === "/admin/index.html" || req.path === "/Aledaraa19" || req.path === "/Aledaraa19/" || req.path === "/Aledaraa19/index.html") {
-        return res.redirect("/Aledaraa19/login.html");
+      if (req.path === "/admin" || req.path === "/admin/index.html" || req.path === "/Chvcdh678gjFbC55Z6gj5ho7" || req.path === "/Chvcdh678gjFbC55Z6gj5ho7/" || req.path === "/Chvcdh678gjFbC55Z6gj5ho7/index.html") {
+        return res.redirect("/Chvcdh678gjFbC55Z6gj5ho7/login.html");
       }
       return res.status(401).json({
         status: "ERROR",
@@ -1914,46 +1914,46 @@ app.get("/api/orders/check", requireCustomer, async (req, res) => {
    ADMIN ALIAS
 ========================= */
 
-app.get("/Aledaraa19", requireAdmin, (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
-app.get("/Aledaraa19/", requireAdmin, (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
-app.get("/Aledaraa19/index.html", requireAdmin, (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/index.html", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "index.html"));
 });
 
-app.get("/Aledaraa19/manifest.json", requireAdmin, (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/manifest.json", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
   res.sendFile(path.join(__dirname, "admin", "manifest.json"));
 });
 
-app.get("/Aledaraa19/login.html", (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/login.html", (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   res.sendFile(path.join(__dirname, "admin", "login.html"));
 });
 
-app.get("/Aledaraa19/admin.css", (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/admin.css", (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.sendFile(path.join(__dirname, "admin", "admin.css"));
 });
 
-app.get("/Aledaraa19/admin.js", requireAdmin, (req, res) => {
+app.get("/Chvcdh678gjFbC55Z6gj5ho7/admin.js", requireAdmin, (req, res) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.sendFile(path.join(__dirname, "admin", "admin.js"));
 });
@@ -1962,20 +1962,12 @@ app.get("/Aledaraa19/admin.js", requireAdmin, (req, res) => {
    FRONTEND
 ========================= */
 
-app.get("/admin", requireAdmin, (req, res) => {
-  // لوحة الإدارة يجب أن تصل دائمًا من النسخة الحالية، دون كاش HTML.
-  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  res.sendFile(path.join(__dirname, "admin", "index.html"));
+app.get("/admin", (req, res) => {
+  res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7");
 });
 
-app.get("/admin/index.html", requireAdmin, (req, res) => {
-  // نفس السياسة لصفحة الإدارة المباشرة.
-  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  res.sendFile(path.join(__dirname, "admin", "index.html"));
+app.get("/admin/index.html", (req, res) => {
+  res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7");
 });
 
 app.get("/add-balance.html", async (req, res) => {
