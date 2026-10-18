@@ -25,7 +25,7 @@ button,input,select,textarea{font-family:inherit}
  z-index:900;display:flex;align-items:center;overflow-x:auto;overflow-y:hidden;box-shadow:0 2px 10px rgba(0,0,0,.12);
  scrollbar-width:none
 }
-.admin-tabs::-webkit-scrollbar{display:none}
+
 .admin-nav-item{
  flex:0 0 auto;height:46px;border:0;border-radius:10px;background:transparent;color:var(--text);
  display:flex;align-items:center;justify-content:center;gap:7px;padding:0 15px;cursor:pointer;font-size:13px;font-weight:800;
@@ -36,7 +36,7 @@ button,input,select,textarea{font-family:inherit}
 .admin-nav-logout{flex:0 0 auto;height:42px;border:0;border-radius:9px;background:transparent;color:var(--danger);padding:0 13px;cursor:pointer;font-size:12px;font-weight:800}
 .admin-nav-logout:hover{background:#2a1111}
 .admin-layout{display:block;min-height:100vh;padding-top:122px}
-.admin-main{width:100%;margin:0;padding:24px 22px 30px}
+
 .admin-section{display:none}.admin-section.active{display:block}
 .page-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:22px}
 .page-heading>div>span{color:var(--primary);font-size:12px;font-weight:bold}
@@ -73,7 +73,7 @@ th{background:#1b1b1b;color:#f5c400;font-weight:bold}td{color:var(--text)}
 @media(max-width:700px){
  .admin-header{height:62px;padding:0 12px}.admin-brand{font-size:18px}.admin-balance{font-size:12px}.admin-balance strong{font-size:18px}
  .admin-tabs{top:62px;height:54px}.admin-nav-item{height:46px;padding:0 11px;font-size:12px}.admin-nav-logout{padding:0 9px}
- .admin-layout{padding-top:116px}.admin-main{padding:18px 12px 25px}.page-heading{align-items:flex-start;flex-direction:column}.page-heading h1{font-size:21px}
+ .admin-layout{padding-top:116px}.page-heading{align-items:flex-start;flex-direction:column}.page-heading h1{font-size:21px}
  .statistics-grid{grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:13px;gap:9px}.stat-icon{width:40px;height:40px;font-size:18px}.stat-card strong{font-size:16px}.stat-card span{font-size:10px}
  .admin-card{padding:15px}.search-bar,.filter-bar{flex-direction:column}.product-management-info{grid-template-columns:1fr}
 }
@@ -279,7 +279,7 @@ html[data-theme="light"] th{background:#fff8df;color:#8f6900}
     gap:7px!important;overflow-y:auto!important;transform:translateX(110%)!important;
     transition:transform .25s ease!important;
 }
-.admin-tabs.open{transform:translateX(0)!important;}
+
 .admin-drawer-header{
     position:absolute;top:0;right:0;left:0;height:62px;padding:0 16px;
     display:flex;align-items:center;justify-content:space-between;
@@ -306,11 +306,11 @@ html[data-theme="light"] th{background:#fff8df;color:#8f6900}
     opacity:0;visibility:hidden;transition:.2s;
 }
 .admin-menu-overlay.open{opacity:1;visibility:visible;}
-.admin-layout{padding-top:70px!important;}
+
 .admin-main{padding-top:22px;}
 @media(max-width:700px){
     .admin-menu-button{top:10px;right:10px;width:40px;height:40px;}
-    .admin-tabs{width:min(290px,86vw)!important;}
+    
     .admin-header{padding-right:62px!important;}
 }
 
@@ -354,7 +354,7 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
  background:var(--primary)!important;color:#080808!important;border-bottom:1px solid var(--primary-dark)!important;
  z-index:2;
 }
-.admin-drawer-header strong{font-size:20px;font-weight:900}
+
 .admin-menu-close{
  width:38px;height:38px;border:0;border-radius:10px;background:rgba(0,0,0,.10);
  color:#080808;font-size:27px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -375,12 +375,12 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 }
 .admin-tabs .admin-nav-logout:hover{background:#2a1111!important}
 .admin-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1100;opacity:0;visibility:hidden;transition:.2s}
-.admin-menu-overlay.open{opacity:1;visibility:visible}
-.admin-layout{padding-top:70px!important}
+
+
 .admin-main{padding-top:22px}
 @media(max-width:700px){
- .admin-menu-button{top:10px;right:10px;width:40px;height:40px}
- .admin-header{padding-right:62px!important}
+ 
+ 
  .admin-tabs{width:min(290px,86vw)!important}
 }
 
@@ -388,20 +388,20 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-header{padding-right:68px;}
 .admin-menu-button{right:14px;left:auto;top:14px;width:42px;height:42px;border-radius:10px;background:rgba(0,0,0,.10);font-size:27px;}
 .admin-tabs{width:290px!important;max-width:86vw;right:0!important;left:auto!important;transform:translateX(110%)!important;border-left:1px solid var(--border)!important;border-right:0!important;border-radius:0!important;}
-.admin-tabs.open{transform:translateX(0)!important;}
+
 .admin-menu-overlay{z-index:1100;}
 .admin-tabs{z-index:1150!important;}
-@media(max-width:700px){.admin-header{padding-right:62px!important}.admin-menu-button{right:10px;top:10px;}}
+@media(max-width:700px){.admin-menu-button{right:10px;top:10px;}}
 
 
 /* ===== لوحة الإدارة: قائمة جانبية مثل واجهة المتجر ===== */
 .admin-menu-button{position:fixed;top:14px;right:12px;width:42px;height:42px;border:0;border-radius:10px;background:rgba(0,0,0,.12);color:#080808;font-size:27px;line-height:1;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1400}
 .admin-menu-button:hover{background:rgba(0,0,0,.18)}
 .admin-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1250;opacity:0;visibility:hidden;transition:.25s ease}
-.admin-menu-overlay.open{opacity:1;visibility:visible}
+
 .admin-tabs{position:fixed!important;top:0!important;right:-310px!important;left:auto!important;width:290px!important;max-width:85vw;height:100vh!important;background:var(--white)!important;border:0!important;border-left:1px solid var(--border)!important;z-index:1300!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;box-shadow:-5px 0 20px rgba(0,0,0,.35);transition:right .3s ease!important;scrollbar-width:none}
 .admin-tabs::-webkit-scrollbar{display:none}
-.admin-tabs.open{right:0!important}
+
 .admin-drawer-header{height:85px;padding:0 18px;background:var(--primary);color:#080808;display:flex;align-items:center;justify-content:space-between}
 .admin-drawer-header strong{font-size:20px;font-weight:900}
 .admin-menu-close{width:38px;height:38px;border:0;border-radius:10px;background:rgba(255,255,255,.16);color:#080808;font-size:28px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -411,8 +411,8 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-tabs .admin-nav-item.active:before{content:"";position:absolute;right:0;top:8px;bottom:8px;width:3px;background:var(--primary);border-radius:3px 0 0 3px}
 .admin-tabs .admin-nav-item span:first-child{width:22px;flex:0 0 22px;text-align:center}
 .admin-tabs .admin-nav-logout{width:100%;min-height:56px;padding:16px 20px;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;color:var(--danger);display:flex;align-items:center;justify-content:flex-start;gap:13px;font:inherit;cursor:pointer}
-.admin-tabs .admin-nav-logout:hover{background:#2a1111}
-.admin-layout{padding-top:70px!important}
+
+
 .admin-main{width:100%!important;margin:0!important;padding:24px 22px 30px!important}
 @media(max-width:600px){.admin-menu-button{top:10px;right:10px;width:42px;height:42px}.admin-tabs{width:290px!important}.admin-layout{padding-top:62px!important}.admin-main{padding:18px 12px 25px!important}}
 
@@ -523,12 +523,12 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
     visibility:hidden!important;
     transition:.25s!important;
 }
-.admin-menu-overlay.open{opacity:1!important;visibility:visible!important;}
-.admin-layout{padding-top:70px!important;}
+
+
 .admin-main{padding-top:22px!important;}
 @media(max-width:700px){
     .admin-menu-button{top:10px!important;right:10px!important;}
-    .admin-header{padding-right:60px!important;}
+    
 }
 
 
@@ -612,7 +612,7 @@ html,body,button,input,select,textarea,*{font-family:"Dubai Medium","Dubai",Taho
 .admin-menu-button:hover{background:rgba(0,0,0,.10)!important;}
 .admin-header-actions{display:none!important;}
 .admin-layout{padding-top:70px!important;}
-@media(max-width:600px){.admin-header{height:62px!important;padding:0 10px!important;gap:8px!important;}.admin-brand{font-size:17px!important;}.admin-balance{gap:4px!important;}.admin-balance span{font-size:10px!important;}.admin-balance strong{font-size:16px!important;}.admin-menu-button{width:40px!important;height:40px!important;font-size:26px!important;}.admin-layout{padding-top:62px!important;}}
+@media(max-width:600px){.admin-header{height:62px!important;padding:0 10px!important;gap:8px!important;}.admin-brand{font-size:17px!important;}.admin-balance{gap:4px!important;}.admin-balance span{font-size:10px!important;}.admin-balance strong{font-size:16px!important;}.admin-menu-button{width:40px!important;height:40px!important;font-size:26px!important;}}
 
 /* ===== الشريط العلوي: الاسم يسار، الرصيد وسط، القائمة يمين ===== */
 .admin-header{direction:ltr!important;display:grid!important;grid-template-columns:1fr auto 1fr!important;align-items:center!important;width:100%!important;}
