@@ -187,9 +187,9 @@
             </div>
 
             <div class="admin-stats-grid" style="margin-bottom:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
-                <div class="stat-card"><div class="stat-icon">📦</div><div><span>عدد الطلبات</span><strong id="ordersTotalCount">0</strong></div></div>
-                <div class="stat-card"><div class="stat-icon">⚠️</div><div><span>الطلبات الفاشلة</span><strong id="ordersFailedCount">0</strong></div></div>
-                <div class="stat-card"><div class="stat-icon">✓</div><div><span>الطلبات الناجحة</span><strong id="ordersSuccessfulCount">0</strong></div></div>
+                <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><div><span>عدد الطلبات</span><strong id="ordersTotalCount">0</strong></div></div>
+                <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.01"/></svg></div><div><span>الطلبات الفاشلة</span><strong id="ordersFailedCount">0</strong></div></div>
+                <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg></div><div><span>الطلبات الناجحة</span><strong id="ordersSuccessfulCount">0</strong></div></div>
             </div>
 
             <div class="admin-card">
@@ -199,7 +199,7 @@
                     <input
                         type="search"
                         id="orderSearch"
-                        placeholder="ابحث برقم الطلب أو العميل..."
+                        placeholder="أدخل ID الطلب"
                     >
 
                     <select id="orderStatusFilter">
