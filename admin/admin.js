@@ -392,9 +392,6 @@ function updateDashboard(data) {
 
 function initializeCustomers() {
 
-    const searchButton =
-        document.getElementById("searchCustomers");
-
     const searchInput =
         document.getElementById("customerSearch");
 
@@ -412,36 +409,19 @@ function initializeCustomers() {
         });
     }
 
-
-    if (searchButton) {
-
-        searchButton.addEventListener(
-            "click",
-            function () {
-
-                loadCustomers(searchInput ? searchInput.value.trim() : "", false);
-
-            }
-        );
-
-    }
-
     if (searchInput) {
-        let searchTimer;
-
-        // فلترة فورية من القائمة المحمّلة، دون انتظار طلب شبكة لكل حرف.
-        searchInput.addEventListener("input", function () {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(function () {
-                loadCustomers(searchInput.value.trim(), false);
-            }, 100);
-        });
-
+        // يبدأ البحث عند الضغط على «تم» في لوحة المفاتيح، دون زر بحث أو فلترة مع كل حرف.
         searchInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
-                clearTimeout(searchTimer);
+                event.preventDefault();
                 loadCustomers(searchInput.value.trim(), false);
+                searchInput.blur();
             }
+        });
+
+        // يدعم لوحات المفاتيح التي ترسل حدث submit لحقل البحث.
+        searchInput.addEventListener("search", function () {
+            loadCustomers(searchInput.value.trim(), false);
         });
     }
 
