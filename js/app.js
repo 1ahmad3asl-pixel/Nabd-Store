@@ -2158,9 +2158,9 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
         const price = getGameProductPrice(product);
-        const optionImage = getProductImage(product);
+        const optionImage = safeImageUrl(getProductImage(product));
         const optionImageHtml = optionImage
-            ? '<span class="pubg-option-image"><img src="' + escapeHtml(safeImageUrl(optionImage)) + '" alt="" loading="lazy"></span>'
+            ? '<span class="pubg-option-image"><img src="' + escapeHtml(optionImage) + '" alt="" loading="lazy"></span>'
             : '<span class="pubg-option-image pubg-option-image-placeholder">📲</span>';
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
@@ -3158,7 +3158,7 @@ function quantityRangePlaceholder(min,max){
 
 function safeImageUrl(value) {
     const source = String(value || "").trim();
-    if (!source || source.length > 2048 || source.startsWith("//") || source.startsWith("/\\\\")) return "";
+    if (!source || source.length > 2048 || source.startsWith("//") || source.startsWith("/\\")) return "";
     try {
         const parsed = new URL(source, window.location.origin);
         if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
