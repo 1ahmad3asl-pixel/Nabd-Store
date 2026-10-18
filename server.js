@@ -57,7 +57,10 @@ const adminSettings = {
   credit_limit: 0
 };
 
-const adminLoginAttempts = new Map();
+// Failed admin-login attempts are persisted in Postgres so restarts do not reset lockouts.
+const ADMIN_LOGIN_MAX_ATTEMPTS = 3;
+const ADMIN_LOGIN_LOCKOUT_MS = 3 * 60 * 60 * 1000;
+const ADMIN_LOGIN_LOCKOUT_HOURS = 3;
 const customerLoginAttempts = new Map();
 const orderRateLimits = new Map();
 const googleOAuthStates = new Map();
@@ -426,31 +429,7 @@ async function requireCustomer(req, res, next) {
 app.post("/api/admin/login", async (req, res) => {
   securityHeaders(res);
   const ip = clientIp(req);
-  const now = Date.now();
-
-  // Keep the in-memory limiter bounded and discard expired entries.
-  if (adminLoginAttempts.size > 10000) {
-    for (const [key, value] of adminLoginAttempts) {
-      if (!value.blockedUntil && now - (value.lastAttemptAt || 0) > 60 * 60 * 1000) {
-        adminLoginAttempts.delete(key);
-      }
-      if (adminLoginAttempts.size <= 8000) break;
-    }
-  }
-
-  const attempt = adminLoginAttempts.get(ip) || { count: 0, blockedUntil: 0, lastAttemptAt: now };
-
-  if (attempt.blockedUntil > now) {
-    const retryMinutes = Math.max(1, Math.ceil((attempt.blockedUntil - now) / 60000));
-    res.setHeader("Retry-After", String(Math.ceil((attempt.blockedUntil - now) / 1000)));
-    return res.status(429).json({
-      status: "ERROR",
-      message: `تم إيقاف محاولات الدخول مؤقتًا بعد 3 محاولات فاشلة. حاول بعد ${retryMinutes} دقيقة.`
-    });
-  }
-
-  const email = String(req.body?.email || "").trim().toLowerCase();
-  const password = String(req.body?.password || "");
+  const ipHash = crypto.createHmac("sha256", ADMIN_SESSION_SECRET).update(ip).digest("hex");
 
   if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
     return res.status(503).json({
@@ -459,39 +438,104 @@ app.post("/api/admin/login", async (req, res) => {
     });
   }
 
+  // Persist lockout state in Postgres, keyed by a keyed hash of the client IP.
+  // This keeps the limit effective across Render restarts and avoids storing raw IP addresses.
+  let lockout;
+  try {
+    const result = await query(
+      "SELECT failed_attempts, blocked_until, (blocked_until > NOW()) AS is_blocked, GREATEST(0, CEIL(EXTRACT(EPOCH FROM (blocked_until - NOW()))))::int AS retry_after_seconds FROM admin_login_attempts WHERE ip_hash=$1",
+      [ipHash]
+    );
+    lockout = result.rows[0] || null;
+  } catch (error) {
+    console.error("Admin login limiter database error:", error);
+    return res.status(503).json({
+      status: "ERROR",
+      message: "تعذر التحقق من حماية تسجيل الدخول. حاول لاحقًا."
+    });
+  }
+
+  if (lockout?.is_blocked) {
+    const retryAfter = Math.max(1, Number(lockout.retry_after_seconds || 1));
+    const retryHours = Math.floor(retryAfter / 3600);
+    const retryMinutes = Math.max(1, Math.ceil((retryAfter % 3600) / 60));
+    res.setHeader("Retry-After", String(retryAfter));
+    return res.status(429).json({
+      status: "ERROR",
+      message: retryHours > 0
+        ? `تم إيقاف محاولات الدخول بعد 3 محاولات فاشلة. حاول بعد ${retryHours} ساعة و${retryMinutes} دقيقة.`
+        : `تم إيقاف محاولات الدخول بعد 3 محاولات فاشلة. حاول بعد ${retryMinutes} دقيقة.`
+    });
+  }
+
+  const email = String(req.body?.email || "").trim().toLowerCase();
+  const password = String(req.body?.password || "");
+
   if (!safeEqual(email, ADMIN_EMAIL) || !safeEqual(password, ADMIN_PASSWORD)) {
-    attempt.count += 1;
-    attempt.lastAttemptAt = now;
-    if (attempt.count >= 3) {
-      attempt.count = 3;
-      attempt.blockedUntil = now + 15 * 60 * 1000;
-      adminLoginAttempts.set(ip, attempt);
-      res.setHeader("Retry-After", "900");
-      return res.status(429).json({
+    try {
+      const result = await query(
+        `INSERT INTO admin_login_attempts (ip_hash, failed_attempts, last_attempt_at, blocked_until)
+         VALUES ($1, 1, NOW(), NULL)
+         ON CONFLICT (ip_hash) DO UPDATE SET
+           failed_attempts = CASE
+             WHEN admin_login_attempts.blocked_until IS NOT NULL AND admin_login_attempts.blocked_until <= NOW() THEN 1
+             WHEN admin_login_attempts.last_attempt_at < NOW() - INTERVAL '3 hours' THEN 1
+             ELSE admin_login_attempts.failed_attempts + 1
+           END,
+           last_attempt_at = NOW(),
+           blocked_until = CASE
+             WHEN (CASE
+               WHEN admin_login_attempts.blocked_until IS NOT NULL AND admin_login_attempts.blocked_until <= NOW() THEN 1
+               WHEN admin_login_attempts.last_attempt_at < NOW() - INTERVAL '3 hours' THEN 1
+               ELSE admin_login_attempts.failed_attempts + 1
+             END) >= $2 THEN NOW() + INTERVAL '3 hours'
+             ELSE NULL
+           END
+         RETURNING failed_attempts, blocked_until, (blocked_until > NOW()) AS is_blocked`,
+        [ipHash, ADMIN_LOGIN_MAX_ATTEMPTS]
+      );
+      const attempt = result.rows[0];
+      if (attempt?.is_blocked) {
+        res.setHeader("Retry-After", String(Math.ceil(ADMIN_LOGIN_LOCKOUT_MS / 1000)));
+        return res.status(429).json({
+          status: "ERROR",
+          message: "تم إيقاف محاولات الدخول بعد 3 محاولات فاشلة. مدة الحظر 3 ساعات."
+        });
+      }
+    } catch (error) {
+      console.error("Failed to record admin login attempt:", error);
+      return res.status(503).json({
         status: "ERROR",
-        message: "تم إيقاف محاولات الدخول مؤقتًا بعد 3 محاولات فاشلة. حاول بعد 15 دقيقة."
+        message: "تعذر تسجيل محاولة الدخول والتحقق من الحماية. حاول لاحقًا."
       });
     }
 
-    adminLoginAttempts.set(ip, attempt);
     return res.status(401).json({
       status: "ERROR",
       message: "البريد الإلكتروني أو كلمة المرور غير صحيحة."
     });
   }
 
-  adminLoginAttempts.delete(ip);
-  const token = adminToken();
-  await createSession(token, new Date(Date.now() + 24 * 60 * 60 * 1000));
+  try {
+    await query("DELETE FROM admin_login_attempts WHERE ip_hash=$1", [ipHash]);
+    const token = adminToken();
+    await createSession(token, new Date(Date.now() + 24 * 60 * 60 * 1000));
 
-  res.setHeader(
-    "Set-Cookie",
-    "nabd_admin_session=" + token +
-    "; HttpOnly; Path=/; SameSite=Lax; Max-Age=86400" +
-    (COOKIE_SECURE ? "; Secure" : "")
-  );
+    res.setHeader(
+      "Set-Cookie",
+      "nabd_admin_session=" + token +
+      "; HttpOnly; Path=/; SameSite=Lax; Max-Age=86400" +
+      (COOKIE_SECURE ? "; Secure" : "")
+    );
 
-  res.json({ status: "OK", admin: { email: ADMIN_EMAIL } });
+    res.json({ status: "OK", admin: { email: ADMIN_EMAIL } });
+  } catch (error) {
+    console.error("Admin login session error:", error);
+    res.status(503).json({
+      status: "ERROR",
+      message: "تعذر إنشاء جلسة الإدارة. حاول لاحقًا."
+    });
+  }
 });
 
 app.get("/api/exchange-rate", async (req, res) => {
