@@ -2065,6 +2065,31 @@ app.use((req, res, next) => {
   next();
 });
 
+// Keep backend implementation and project-only metadata out of the public static root.
+app.use((req, res, next) => {
+  let requestPath;
+  try {
+    requestPath = decodeURIComponent(req.path).replace(/\\\\/g, "/");
+  } catch {
+    return res.status(400).end();
+  }
+
+  requestPath = requestPath.replace(/\\/+$/, "").toLowerCase();
+  const privateRootFiles = new Set([
+    "/server.js",
+    "/db.js",
+    "/api.js",
+    "/package.json",
+    "/package-lock.json",
+    "/project_rules.md"
+  ]);
+
+  if (privateRootFiles.has(requestPath) || requestPath === "/node_modules" || requestPath.startsWith("/node_modules/")) {
+    return res.status(404).end();
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname), {
   setHeaders: (res, filePath) => {
     // لوحة الإدارة لا تُخزّن: CSS/JS والصور الخاصة بها يجب أن تتحدث فورًا.
