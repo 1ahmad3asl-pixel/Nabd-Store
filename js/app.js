@@ -577,41 +577,56 @@ function initializeMenu() {
     }
 
 
-    document
-        .querySelectorAll(".drawer-link")
-        .forEach(function (link) {
+    const drawerLinks = document.querySelectorAll(".drawer-link");
 
-            link.addEventListener(
-                "click",
-                function (event) {
-
-                    const href = link.getAttribute("href") || "";
-                    if (href.startsWith("/")) {
-                        closeMenu();
-                        return;
-                    }
-
-                    event.preventDefault();
-
-                    const action = href;
-
-                    closeMenu();
-
-                    if (action === "#home") {
-
-                        window.location.reload();
-
-                    } else {
-
-                        handleAction(
-                            action.replace("#", "")
-                        );
-                    }
-
-                }
-            );
-
+    function setActiveDrawerLink(activeLink) {
+        drawerLinks.forEach(function (item) {
+            const isActive = item === activeLink;
+            item.classList.toggle("active", isActive);
+            if (isActive) {
+                item.setAttribute("aria-current", "page");
+            } else {
+                item.removeAttribute("aria-current");
+            }
         });
+    }
+
+    // الصفحة الرئيسية هي الحالة المحددة افتراضيًا عند فتح المتجر.
+    const levelsModal = document.getElementById("customerLevelsModal");
+    const activeInternalPage = document.getElementById("internalPage");
+    if (!levelsModal || !levelsModal.classList.contains("is-open")) {
+        if (!activeInternalPage || activeInternalPage.hidden) {
+            const homeLink = document.querySelector('.drawer-link[href="#home"]');
+            if (homeLink) setActiveDrawerLink(homeLink);
+        }
+    }
+
+    drawerLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const href = link.getAttribute("href") || "";
+
+            // صفحة المستويات تملك معالج فتح مستقلًا؛ نحدّد الزر فقط هنا.
+            if (link.classList.contains("drawer-levels-trigger")) {
+                setActiveDrawerLink(link);
+                return;
+            }
+
+            if (href.startsWith("/")) {
+                closeMenu();
+                return;
+            }
+
+            event.preventDefault();
+            setActiveDrawerLink(link);
+            closeMenu();
+
+            if (href === "#home") {
+                window.location.reload();
+            } else {
+                handleAction(href.replace("#", ""));
+            }
+        });
+    });
 
 }
 
