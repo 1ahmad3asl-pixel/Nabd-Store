@@ -6,6 +6,7 @@
   var content=document.getElementById("customerLevelsContent");
   var badge=document.querySelector(".drawer-level-label");
   var avatarFrame=document.querySelector(".drawer-avatar-frame");
+  var previousActiveDrawerLink=null;
   if(!modal||!trigger||!content) return;
   var levels=[
     {name:"عميل",short:"عميل",start:0,end:50,discount:0},
@@ -79,6 +80,22 @@
       content.innerHTML='<div class="levels-message levels-error">تعذّر تحميل مشترياتك الآن. أغلق النافذة وحاول مرة أخرى.</div>';
     }
   }
+  function restoreDrawerActiveState(){
+    var drawerLinks=document.querySelectorAll(".drawer-link");
+    var target=previousActiveDrawerLink;
+    if(!target || target===trigger){
+      var internalPage=document.getElementById("internalPage");
+      if(!internalPage || internalPage.hidden) target=document.querySelector('.drawer-link[href="#home"]');
+      else target=null;
+    }
+    drawerLinks.forEach(function(link){
+      var active=!!target && link===target;
+      link.classList.toggle("active",active);
+      if(active) link.setAttribute("aria-current","page");
+      else link.removeAttribute("aria-current");
+    });
+    previousActiveDrawerLink=null;
+  }
   function openModal(){
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden","false");
@@ -91,12 +108,15 @@
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden","true");
     document.body.style.overflow="";
+    restoreDrawerActiveState();
     trigger.focus();
   }
   trigger.addEventListener("click",function(event){
     event.preventDefault();
     event.stopPropagation();
     var drawerLinks=document.querySelectorAll(".drawer-link");
+    previousActiveDrawerLink=document.querySelector(".drawer-link.active");
+    if(previousActiveDrawerLink===trigger) previousActiveDrawerLink=null;
     drawerLinks.forEach(function(link){
       var active=link===trigger;
       link.classList.toggle("active",active);
@@ -119,6 +139,7 @@
     // إلى زر داخل القائمة قبل إظهارها (قد يمنع ذلك التفاعل على بعض الهواتف).
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden","true");
+    restoreDrawerActiveState();
     var drawer=document.getElementById("drawer");
     var overlay=document.getElementById("overlay");
     if(drawer) drawer.classList.add("active");
