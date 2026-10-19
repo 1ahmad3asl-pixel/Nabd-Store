@@ -27,3 +27,11 @@ jobs:
 
       - name: Check server syntax
         run: node --check server.js
+
+      - name: Check all JavaScript syntax
+        shell: bash
+        run: |
+          find . -type f -name '*.js' \
+            -not -path './node_modules/*' \
+            -not -path './.git/*' \
+            -print0 | xargs -0 -r -n 1 node --check
