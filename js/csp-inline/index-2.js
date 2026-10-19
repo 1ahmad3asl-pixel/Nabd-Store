@@ -26,24 +26,16 @@
     spend=total;
     var current=currentLevel(total);
     var tierClass="tier-"+(current+1);
-    var menuName=document.getElementById("menuUserName");
-    var guestMode=false;
-    try{guestMode=sessionStorage.getItem("nabd_guest_mode")==="1";}catch(_){}
-    if(menuName&&menuName.textContent.trim()==="ضيف") guestMode=true;
     if(badge) badge.textContent=levels[current].short;
     if(badge&&avatarFrame){
       for(var tier=1;tier<=5;tier++){
         badge.classList.remove("tier-"+tier);
         avatarFrame.classList.remove("tier-"+tier);
       }
-      badge.classList.toggle("is-guest",guestMode);
-      avatarFrame.classList.toggle("is-guest",guestMode);
-      if(!guestMode){
-        badge.classList.add(tierClass);
-        avatarFrame.classList.add(tierClass);
-      }
+      badge.classList.add(tierClass);
+      avatarFrame.classList.add(tierClass);
     }
-    var badgeClass="levels-current "+(guestMode?"is-guest":tierClass);
+    var badgeClass="levels-current "+tierClass;
     var html='<div class="levels-total"><div><div class="levels-total-label">إجمالي المشتريات المحتسبة</div><div class="levels-total-value">'+money(total)+'</div></div><span class="'+badgeClass+'">'+levels[current].name+'</span></div>';
     levels.forEach(function(level,i){
       var isCurrent=i===current;

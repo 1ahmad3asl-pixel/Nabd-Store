@@ -11,17 +11,6 @@ body:has(#customerLevelsModal.is-open) .main-header{display:none!important}
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nabd-Store</title><link rel="manifest" href="/manifest.json"><link rel="icon" type="image/webp" href="/assets/category-nabd-store.webp"><link rel="apple-touch-icon" href="/assets/category-nabd-store.webp"><link rel="stylesheet" href="css/style.css?v=20261019-cache1"><link rel="stylesheet" href="css/boost.css?v=20261019-cache1"><link rel="stylesheet" href="css/digital.css?v=20261019-cache1">
 <style>
 .welcome-splash-inner{width:min(92vw,430px);text-align:center}
-.welcome-choice{margin-top:24px;animation:welcomeChoiceIn .45s ease both}
-.welcome-choice-title{font-size:17px;font-weight:700;margin-bottom:14px}
-.welcome-choice-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.welcome-choice-btn{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;border-radius:13px;text-decoration:none;font:inherit;font-weight:800;cursor:pointer;box-sizing:border-box}
-.welcome-register-btn,.welcome-google-btn{grid-column:1 / -1}
-.welcome-register-btn{background:linear-gradient(135deg,#f5c400,#c99f00);color:#111}
-.welcome-google-btn{background:#fff;color:#222;border:1px solid rgba(255,255,255,.55)}
-.welcome-login-btn{background:rgba(255,255,255,.08);color:inherit;border:1px solid currentColor}
-.welcome-guest-btn{background:rgba(255,255,255,.08);color:inherit;border:1px solid currentColor}
-@keyframes welcomeChoiceIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:380px){.welcome-choice-actions{grid-template-columns:1fr}.welcome-choice-btn{min-height:46px}}
 </style>
 </head><body><div class="welcome-splash" id="welcomeSplash" hidden aria-hidden="true">
     <div class="welcome-splash-inner">
@@ -88,7 +77,7 @@ body:has(#customerLevelsModal.is-open) .main-header{display:none!important}
     <span class="drawer-level-label" aria-label="مستوى العميل"></span>
     <div class="drawer-user-details">
         <div class="drawer-user-name-row">
-            <strong id="menuUserName">ضيف</strong>
+            <strong id="menuUserName">عميل</strong>
             <span id="menuUserCountry" class="drawer-user-country"></span>
         </div>
         <small id="menuCustomerId">لم يتم تسجيل الدخول</small>
