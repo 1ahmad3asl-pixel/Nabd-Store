@@ -1,5 +1,6 @@
 /* Nabd-Store global click sound for standalone pages. */
-(function () {\n    function applySavedTheme() {
+(function () {
+    function applySavedTheme() {
         try {
             document.documentElement.dataset.theme = localStorage.getItem("nabd-theme") === "light" ? "light" : "dark";
         } catch (_) {}
@@ -77,7 +78,8 @@ html[data-theme="dark"] .login-card { background:#111 !important; color:#fff !im
         return audioContext;
     }
 
-    function playClickSound() {\n        if (localStorage.getItem("nabd-sound-enabled") === "off") return;
+    function playClickSound() {
+        if (localStorage.getItem("nabd-sound-enabled") === "off") return;
         try {
             const context = getAudioContext();
             if (!context) return;
