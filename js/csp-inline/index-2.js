@@ -96,6 +96,13 @@
   trigger.addEventListener("click",function(event){
     event.preventDefault();
     event.stopPropagation();
+    var drawerLinks=document.querySelectorAll(".drawer-link");
+    drawerLinks.forEach(function(link){
+      var active=link===trigger;
+      link.classList.toggle("active",active);
+      if(active) link.setAttribute("aria-current","page");
+      else link.removeAttribute("aria-current");
+    });
     openModal();
     var drawer=document.getElementById("drawer");
     var overlay=document.getElementById("overlay");
