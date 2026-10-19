@@ -3965,7 +3965,7 @@ async function requireCustomerLoginForPurchase() {
     } catch (error) {}
     showModal(
         "تسجيل الدخول مطلوب",
-        '<div class="empty-state"><div style="font-size:42px;margin-bottom:10px">🔐</div><h3>سجّل الدخول لإتمام الشراء</h3><p>يمكنك مشاهدة المنتجات والأسعار كضيف، لكن شراء أي منتج يتطلب تسجيل الدخول إلى حسابك.</p><a class="buy-btn" href="/customer-login.html" style="display:inline-flex;text-decoration:none;align-items:center;justify-content:center;margin-top:12px">تسجيل الدخول</a></div>'
+        '<div class="empty-state"><div style="font-size:42px;margin-bottom:10px">🔐</div><h3>سجّل الدخول لإتمام الشراء</h3><p>يجب تسجيل الدخول إلى حسابك لمتابعة الشراء.</p><a class="buy-btn" href="/customer-login.html" style="display:inline-flex;text-decoration:none;align-items:center;justify-content:center;margin-top:12px">تسجيل الدخول</a></div>'
     );
     return false;
 }
