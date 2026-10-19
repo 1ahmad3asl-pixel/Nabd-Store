@@ -283,7 +283,10 @@ transition:
     background .18s ease,
     color .18s ease;
 }
-.drawer-link:hover, .drawer-link.active{ background:var(--primary-light); color:var(--primary); }
+.drawer-link:hover{background:rgba(245,196,0,.07);color:var(--primary);}
+.drawer-link.active{background:rgba(245,196,0,.13);color:var(--primary);border-right:3px solid var(--primary);padding-right:17px;box-shadow:inset 0 0 0 1px rgba(245,196,0,.08);}
+.drawer-link.active .drawer-link-icon{color:var(--primary);}
+.drawer-link:focus-visible{outline:2px solid var(--primary);outline-offset:-2px;}
 .notification-badge{ margin-right:auto;
 min-width:22px;
 height:22px;
