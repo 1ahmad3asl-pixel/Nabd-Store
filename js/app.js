@@ -199,7 +199,7 @@ document.addEventListener("click", function (event) {
 function registerNabdServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
     window.addEventListener("load", function () {
-        navigator.serviceWorker.register("/sw.js", {scope:"/"})
+        navigator.serviceWorker.register("/sw.js?v=20261019-js1", {scope:"/"})
             .catch(function (error) {
                 console.warn("Service worker registration skipped:", error);
             });
