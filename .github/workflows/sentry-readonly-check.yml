@@ -1,0 +1,74 @@
+name: Sentry read-only check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sentry-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check Sentry delivery using read-only token
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_BASE_URL: https://de.sentry.io
+        run: |
+          set -euo pipefail
+          if [ -z "${SENTRY_AUTH_TOKEN:-}" ]; then
+            echo "::error::Repository secret SENTRY_AUTH_TOKEN is missing."
+            exit 1
+          fi
+
+          projects_file="$(mktemp)"
+          issues_file="$(mktemp)"
+          trap 'rm -f "$projects_file" "$issues_file"' EXIT
+
+          curl --silent --show-error --fail \
+            -H "Authorization: Bearer $SENTRY_AUTH_TOKEN" \
+            -H "Accept: application/json" \
+            "$SENTRY_BASE_URL/api/0/projects/" > "$projects_file"
+
+          read -r ORG_SLUG PROJECT_SLUG < <(python3 - "$projects_file" <<'PY'
+          import json, sys
+          data = json.load(open(sys.argv[1], encoding="utf-8"))
+          matches = [p for p in data if p.get("slug") == "nabd-store"]
+          if not matches:
+              print("NOT_FOUND NOT_FOUND")
+              raise SystemExit(0)
+          p = matches[0]
+          print((p.get("organization") or {}).get("slug", "NOT_FOUND"), p["slug"])
+          PY
+          )
+
+          if [ "$PROJECT_SLUG" = "NOT_FOUND" ] || [ "$ORG_SLUG" = "NOT_FOUND" ]; then
+            echo "::error::Project nabd-store was not found in the Sentry projects visible to this token."
+            exit 1
+          fi
+
+          curl --silent --show-error --fail --get \
+            -H "Authorization: Bearer $SENTRY_AUTH_TOKEN" \
+            -H "Accept: application/json" \
+            --data-urlencode "statsPeriod=24h" \
+            --data-urlencode "query=Sentry delivery verification" \
+            "$SENTRY_BASE_URL/api/0/projects/$ORG_SLUG/$PROJECT_SLUG/issues/" > "$issues_file"
+
+          python3 - "$issues_file" <<'PY'
+          import json, sys
+          data = json.load(open(sys.argv[1], encoding="utf-8"))
+          matches = [i for i in data if "sentry delivery verification" in (i.get("title") or "").lower()]
+          with open(__import__("os").environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("## Nabd-Store Sentry delivery check\n\n")
+              if matches:
+                  out.write("**Result:** A matching Sentry issue was found in the last 24 hours.\n\n")
+                  for i in matches[:5]:
+                      out.write(f"- Title: {i.get('title', 'N/A')}\n")
+                      out.write(f"- Status: {i.get('status', 'N/A')}\n")
+                      out.write(f"- Events: {i.get('count', 'N/A')}\n")
+                      out.write(f"- Last seen: {i.get('lastSeen', 'N/A')}\n\n")
+              else:
+                  out.write("**Result:** No matching issue was found in the last 24 hours. This does not by itself prove the token is invalid; check the workflow log for API errors and confirm the verification flag was enabled at startup.\n")
+          print("Sentry API check completed. See the workflow summary for the redacted result.")
+          PY
