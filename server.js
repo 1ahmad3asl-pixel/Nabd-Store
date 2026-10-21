@@ -2138,6 +2138,10 @@ initDb()
       cleanupNotifications().catch(error => console.error("Notification cleanup failed:", error));
     }, 24 * 60 * 60 * 1000);
     notificationCleanupTimer.unref?.();
+    if (process.env.SENTRY_VERIFY_EVENT === "true") {
+      Sentry.captureMessage("Sentry delivery verification — Nabd-Store", "warning");
+      await Sentry.flush(5000);
+    }
     app.listen(PORT, () => {
       console.log(adminSettings.store_name + " server running on port " + PORT);
     });
