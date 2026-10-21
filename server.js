@@ -1,11 +1,12 @@
-const fs = require("fs");
+// Initialize Sentry before loading Express or any other application modules.
 const Sentry = require("@sentry/node");
-const express = require("express");
-
 Sentry.init({
   dsn: process.env.SENTRY_DSN || "https://83be9c09b16a36e6746bc56c31b4c7b1@o4512200822816768.ingest.de.sentry.io/4512200936521808",
   sendDefaultPii: false
 });
+
+const fs = require("fs");
+const express = require("express");
 const path = require("path");
 const crypto = require("crypto");
 const { parsePhoneNumberFromString, getCountries, getCountryCallingCode } = require("libphonenumber-js");
