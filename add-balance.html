@@ -6,17 +6,18 @@
 <script src="/js/nabd-preferences.js?v=20261019-js1"></script>
 <title>اختر طريقة الدفع - Nabd-Store</title>
 <style>
+:root{--primary:#f5c400;--primary-dark:#c99f00;--primary-light:#fff8d6;--background:#090909;--text:#f5f5f5;--muted:#a8a8a8;--white:#141414;--border:#292929;--shadow:0 4px 18px rgba(0,0,0,.45)}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#080808;color:#fff;font-family:Arial,sans-serif;transition:background .2s,color .2s}html[data-theme="light"] body{background:#f7f7f5;color:#171717}html[data-theme="light"] .back{background:#fff;color:#171717;border-color:#d9d9d4}html[data-theme="light"] .method{background:#fff;color:#171717}html[data-theme="light"] .method-name{color:#171717}html[data-theme="light"] .subtitle{color:#555}html[data-theme="dark"] body{background:#080808;color:#fff}
+body{margin:0;min-height:100vh;background:var(--background);color:var(--text);font-family:"Dubai Medium","Dubai",Tahoma,Arial,sans-serif;transition:background .2s,color .2s}html[data-theme="light"] body{background:#f7f7f5;color:#171717}html[data-theme="light"] .back{background:#fff;color:#171717;border-color:#d9d9d4}html[data-theme="light"] .method{background:#fff;color:#171717}html[data-theme="light"] .method-name{color:#171717}html[data-theme="light"] .subtitle{color:#555}html[data-theme="dark"] body{background:#080808;color:#fff}
 .page{width:min(920px,94vw);margin:0 auto;padding:22px 0 40px}
 .top{display:flex;align-items:center;gap:12px;margin-bottom:34px}
-.back{width:44px;height:44px;border-radius:14px;background:#151515;border:1px solid #292929;color:#fff;font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.back{width:44px;height:44px;border-radius:14px;background:var(--white);border:1px solid var(--border);color:var(--text);font-size:24px;text-decoration:none;display:flex;align-items:center;justify-content:center}
 h1{margin:0;font-size:clamp(24px,5vw,34px);font-weight:900}
-.subtitle{text-align:center;color:#aaa;margin:0 0 24px;font-size:15px}
+.subtitle{text-align:center;color:var(--muted);margin:0 0 24px;font-size:15px}
 .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 12px;margin-bottom:20px;padding:3px 2px}
 .method-wrap{min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px}
-.method{width:100%;aspect-ratio:1/1;border:2px solid #f5c400;border-radius:17px;background:#141414;display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:.2s;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.method:hover{border-color:#f5c400;color:#f5c400;transform:translateY(-2px);box-shadow:0 4px 16px rgba(245,196,0,.16)}
+.method{width:100%;aspect-ratio:1/1;border:2px solid var(--primary);border-radius:17px;background:var(--white);display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:.2s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.method:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 16px rgba(245,196,0,.16)}
 .method:active{transform:scale(.97)}
 .icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:42px}
 .method-logo{width:100%;height:100%;object-fit:contain;display:block;border-radius:15px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-user-drag:none;pointer-events:none}
