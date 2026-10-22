@@ -423,6 +423,34 @@ async function requireCustomer(req, res, next) {
   }
 }
 
+async function requireCompleteCustomer(req, res, next) {
+  try {
+    const auth = await customerAuth(req);
+    if (!auth) {
+      return res.status(401).json({ status: "ERROR", message: "يجب تسجيل الدخول بحساب العميل." });
+    }
+    const result = await query("SELECT name,phone FROM customers WHERE customer_id=$1", [auth.session.customer_id]);
+    const customer = result.rows[0];
+    if (!customer) return res.status(401).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const phone = parseCustomerPhone(customer.phone);
+    const name = String(customer.name || "").trim();
+    if (name.length < 2 || name.length > 80 || !phone || !phone.phone) {
+      return res.status(428).json({
+        status: "ERROR",
+        code: "PROFILE_INCOMPLETE",
+        message: "أكمل اسمك ورقم هاتفك أولًا للمتابعة.",
+        profile_url: "/customer-profile.html"
+      });
+    }
+    req.customer = auth.session;
+    req.customerSessionToken = auth.token;
+    next();
+  } catch (error) {
+    console.error("Customer profile guard error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر التحقق من الملف الشخصي." });
+  }
+}
+
 /* =========================
    ADMIN LOGIN
 ========================= */
@@ -624,23 +652,23 @@ async function processBalanceDeposit(req, res, currencyLabel, endpointLabel, met
   }
 }
 
-app.post("/api/customer/balance-deposit/sham-dollar", requireCustomer, async (req, res) => {
+app.post("/api/customer/balance-deposit/sham-dollar", requireCompleteCustomer, async (req, res) => {
   await processBalanceDeposit(req, res, "دولار", "Sham Cash dollar", "Sham Cash");
 });
 
-app.post("/api/customer/balance-deposit/sham-syp", requireCustomer, async (req, res) => {
+app.post("/api/customer/balance-deposit/sham-syp", requireCompleteCustomer, async (req, res) => {
   await processBalanceDeposit(req, res, "سوري", "Sham Cash Syrian", "Sham Cash");
 });
 
-app.post("/api/customer/balance-deposit/binance-usdt-trc20", requireCustomer, async (req, res) => {
+app.post("/api/customer/balance-deposit/binance-usdt-trc20", requireCompleteCustomer, async (req, res) => {
   await processBalanceDeposit(req, res, "USDT", "Binance USDT TRC20", "Binance");
 });
 
-app.post("/api/customer/balance-deposit/binance-usdt-peb20", requireCustomer, async (req, res) => {
+app.post("/api/customer/balance-deposit/binance-usdt-peb20", requireCompleteCustomer, async (req, res) => {
   await processBalanceDeposit(req, res, "USDT", "Binance USDT PEB20", "Binance");
 });
 
-app.post("/api/customer/balance-deposit/syriatel-cash", requireCustomer, async (req, res) => {
+app.post("/api/customer/balance-deposit/syriatel-cash", requireCompleteCustomer, async (req, res) => {
   await processBalanceDeposit(req, res, "سوري", "Syriatel Cash", "Syriatel Cash");
 });
 
@@ -839,8 +867,8 @@ app.get("/api/customer/phone-country", requireCustomer, (req, res) => {
 
 app.put("/api/customer/profile", requireCustomer, async (req, res) => {
   const phoneData = parseCustomerPhone(req.body?.phone);
-  if (!phoneData) {
-    return res.status(400).json({ status: "ERROR", message: "رقم الهاتف غير صحيح. استخدم الرقم بصيغة دولية مثل +963..." });
+  if (!phoneData || !phoneData.phone) {
+    return res.status(400).json({ status: "ERROR", message: "رقم الهاتف مطلوب وغير صحيح. استخدم الرقم بصيغة دولية مثل +963..." });
   }
   const name = String(req.body?.name || "").trim();
   if (name.length < 2 || name.length > 80) {
@@ -924,6 +952,8 @@ app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
   customer.effective_discount = Math.min(100, Math.max(tierDiscount, Number(customer.discount || 0)));
   const parsedPhone = parseCustomerPhone(customer.phone);
   customer.phone_country_code = parsedPhone?.country_code || "";
+  const customerName = String(customer.name || "").trim();
+  customer.profile_complete = customerName.length >= 2 && customerName.length <= 80 && Boolean(parsedPhone && parsedPhone.phone);
   customer.customer_id = String(customer.customer_number);
   customer.customer_number = Number(customer.customer_number);
   res.json({ status: "OK", customer });
@@ -983,7 +1013,7 @@ app.post("/api/customer/logout", requireCustomer, async (req, res) => {
   res.json({ status: "OK" });
 });
 
-app.get("/api/customer/orders", requireCustomer, async (req, res) => {
+app.get("/api/customer/orders", requireCompleteCustomer, async (req, res) => {
   try {
     const result = await query(
       "SELECT id,order_id,product_id,product_name,api_price,price,discount,status,order_params,nemer_response,created_at FROM orders WHERE customer_id=$1 ORDER BY created_at DESC",
@@ -1693,7 +1723,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-app.post("/api/orders", requireCustomer, async (req, res) => {
+app.post("/api/orders", requireCompleteCustomer, async (req, res) => {
   try {
     const productId = String(req.body?.product_id || "").trim();
     const rawParams = req.body?.params && typeof req.body.params === "object" && !Array.isArray(req.body.params)
@@ -1947,7 +1977,7 @@ async function refundWalletAfterFailedOrder(reservation) {
   });
 }
 
-app.get("/api/orders/check", requireCustomer, async (req, res) => {
+app.get("/api/orders/check", requireCompleteCustomer, async (req, res) => {
   try {
     let orderIds = req.query.orders;
     if (!orderIds) {
