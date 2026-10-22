@@ -1,4 +1,3 @@
-
 (function(){
   const checkbox=document.getElementById("termsAccepted");
   const button=document.getElementById("continueBtn");
@@ -12,11 +11,10 @@
       if(parsedNext.origin===location.origin){safeNext=parsedNext.pathname+parsedNext.search+parsedNext.hash;}
     }catch(_){}
   }
-  try{if(localStorage.getItem("nabd_terms_accepted_v1")==="1"){location.replace(safeNext);return;}}catch(_){}
   checkbox.addEventListener("change",function(){button.disabled=!checkbox.checked;});
   button.addEventListener("click",function(){
     if(!checkbox.checked)return;
-    try{localStorage.setItem("nabd_terms_accepted_v1","1");}catch(_){}
+    try{sessionStorage.setItem("nabd_terms_continue_once_v1","1");}catch(_){}
     location.href=safeNext;
   });
 })();
