@@ -12,6 +12,10 @@ document.addEventListener("click",function(event){
         if(!r.ok) return;
         const data=await r.json();
         const customer=data.customer||{};
+        if(!customer.profile_complete && !location.pathname.endsWith("/customer-profile.html")){
+            location.replace("/customer-profile.html");
+            return;
+        }
         const name=document.getElementById("menuUserName");
         const country=document.getElementById("menuUserCountry");
         const id=document.getElementById("menuCustomerId");
