@@ -1389,15 +1389,15 @@ function getNumberGroupProducts(group) {
 function getNumberGroupImage(group) {
     // Use the WhatsApp brand asset for both WhatsApp number servers.
     if(group && (group.key==="whatsapp-s1" || group.key==="whatsapp-s2")){
-        return BACKEND_URL + "/public/images/store/whatsapp.svg";
+        return BACKEND_URL + "/public/images/numbers/whatsapp.svg";
     }
-    if(group && group.key==="facebook") return BACKEND_URL + "/public/images/store/facebook.svg";
-    if(group && group.key==="gmail") return BACKEND_URL + "/public/images/store/gmail.svg";
-    if(group && group.key==="icloud") return BACKEND_URL + "/public/images/store/icloud.svg";
-    if(group && group.key==="imo") return BACKEND_URL + "/public/images/store/imo.svg";
-    if(group && group.key==="instagram") return BACKEND_URL + "/public/images/store/instagram.svg";
-    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/public/images/store/whatsapp.svg";
-    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/public/images/store/whatsapp.svg";
+    if(group && group.key==="facebook") return BACKEND_URL + "/public/images/numbers/facebook.svg";
+    if(group && group.key==="gmail") return BACKEND_URL + "/public/images/numbers/gmail.svg";
+    if(group && group.key==="icloud") return BACKEND_URL + "/public/images/numbers/icloud.svg";
+    if(group && group.key==="imo") return BACKEND_URL + "/public/images/numbers/imo.svg";
+    if(group && group.key==="instagram") return BACKEND_URL + "/public/images/numbers/instagram.svg";
+    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/public/images/numbers/whatsapp.svg";
+    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/public/images/numbers/whatsapp.svg";
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
@@ -1448,10 +1448,10 @@ function openNumberGroupProducts(groupKey,fromHistory) {
 }
 function getAppServerTiles() {
     return [
-        { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/public/images/store/app-server-1.svg" },
-        { key:"server-2", title:"تطبيقات سيرفر 2", image:BACKEND_URL + "/public/images/store/app-server-2.svg" },
-        { key:"server-3", title:"تطبيقات سيرفر 3", image:BACKEND_URL + "/public/images/store/app-server-3.svg" },
-        { key:"server-4", title:"تطبيقات سيرفر 4", image:BACKEND_URL + "/public/images/store/app-server-4.svg" }
+        { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/public/images/apps/app-server-1.svg" },
+        { key:"server-2", title:"تطبيقات سيرفر 2", image:BACKEND_URL + "/public/images/apps/app-server-2.svg" },
+        { key:"server-3", title:"تطبيقات سيرفر 3", image:BACKEND_URL + "/public/images/apps/app-server-3.svg" },
+        { key:"server-4", title:"تطبيقات سيرفر 4", image:BACKEND_URL + "/public/images/apps/app-server-4.svg" }
     ];
 }
 
