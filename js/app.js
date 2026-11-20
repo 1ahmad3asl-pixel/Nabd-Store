@@ -890,143 +890,143 @@ function getProductsForGame(gameTitle) {
 
 function getStoredGameImageUrl(gameTitle) {
     const text = normalizeGameText(gameTitle);
-    if (text.includes("yalla ludo gold codes")) return "/public/game-images/yalla-ludo.png";
-    if (text.includes("yalla ludo diamonds codes")) return "/public/game-images/yalla-ludo.png";
-    if (text.includes("pubg") || text.includes("ببجي")) return "/public/game-images/pubg-mobile.png";
-    if (text.includes("roblox") || text.includes("روبلوكس")) return "/public/game-images/roblox.png";
-    if (text.includes("jawaker") || text.includes("جواكر")) return "/public/game-images/jawaker.png";
-    if (text.includes("free fire") || text.includes("فري فاير")) return "/public/game-images/free-fire.png";
-    if (text.includes("clash of clans") || text.includes("كلاش")) return "/public/game-images/clash-of-clans.png";
-    if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return "/public/game-images/dragonheir-silent-gods.jpg";
-    if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return "/public/game-images/cloud-song.jpg";
+    if (text.includes("yalla ludo gold codes")) return "/public/images/games/yalla-ludo.png";
+    if (text.includes("yalla ludo diamonds codes")) return "/public/images/games/yalla-ludo.png";
+    if (text.includes("pubg") || text.includes("ببجي")) return "/public/images/games/pubg-mobile.png";
+    if (text.includes("roblox") || text.includes("روبلوكس")) return "/public/images/games/roblox.png";
+    if (text.includes("jawaker") || text.includes("جواكر")) return "/public/images/games/jawaker.png";
+    if (text.includes("free fire") || text.includes("فري فاير")) return "/public/images/games/free-fire.png";
+    if (text.includes("clash of clans") || text.includes("كلاش")) return "/public/images/games/clash-of-clans.png";
+    if (text.includes("dragonheir") || text.includes("silent gods") || text.includes("دراغون هير")) return "/public/images/games/dragonheir-silent-gods.jpg";
+    if (text.includes("cloud song") || text.includes("skywalkers") || text.includes("كلاود سونغ")) return "/public/images/games/cloud-song.jpg";
     if (text.includes("yalla ludo gold") || text.includes("يلا لودو جولد") || text.includes("يلا لودو غولد")) {
         // Yalla Ludo Gold ليس تطبيقًا مستقلاً؛ يستخدم نفس أيقونة Yalla Ludo الرسمية.
-        return "/public/game-images/yalla-ludo.png";
+        return "/public/images/games/yalla-ludo.png";
     }
     if (text.includes("yalla ludo") || text.includes("يلا لودو")) {
-        return "/public/game-images/yalla-ludo.png";
+        return "/public/images/games/yalla-ludo.png";
     }
     if (text.includes("lords mobile") || text.includes("لوردز موبايل") || text.includes("لوردس موبايل")) {
-        return "/public/game-images/lords-mobile.png";
+        return "/public/images/games/lords-mobile.png";
     }
     if (text.includes("8ball pool") || text.includes("8 ball pool") || text.includes("eight ball pool") || text.includes("ثمانية بول") || text.includes("ثمنية بول")) {
-        return "/public/game-images/8-ball-pool.png";
+        return "/public/images/games/8-ball-pool.png";
     }
     if (text.includes("gun of glory") || text.includes("guns of glory")) {
-        return "/public/game-images/guns-of-glory.jpg";
+        return "/public/images/games/guns-of-glory.jpg";
     }
     if (text.includes("gangs of glory") || text.includes("غانغز اوف غلوري") || text.includes("غانجز أوف غلوري")) {
-        return "/public/game-images/gangs-of-glory.webp";
+        return "/public/images/games/gangs-of-glory.webp";
     }
     if (text.includes("project entropy") || text.includes("بروجكت انتروبي") || text.includes("بروجيكت انتروبي")) {
-        return "/public/game-images/project-entropy.png";
+        return "/public/images/games/project-entropy.png";
     }
     if (text.includes("farlight 84") || text.includes("farlight84") || text.includes("فارلايت 84")) {
-        return "/public/game-images/farlight-84.png";
+        return "/public/images/games/farlight-84.png";
     }
     if (text.includes("city of crime gang war") || text.includes("city of crime gang wars")) {
-        return "/public/game-images/city-of-crime-gang-war.png";
+        return "/public/images/games/city-of-crime-gang-war.png";
     }
     if (text.includes("marvel rivals") || text.includes("marvel reveals") || text.includes("مارفل ريفيلز") || text.includes("مارفل رايفلز")) {
-        return "/public/game-images/marvel-rivals.jpg";
+        return "/public/images/games/marvel-rivals.jpg";
     }
     if (text.includes("genshin impact")) {
-        return "/public/game-images/genshin-impact.png";
+        return "/public/images/games/genshin-impact.png";
     }
     if (text.includes("super sus")) {
-        return "/public/game-images/super-sus.png";
+        return "/public/images/games/super-sus.png";
     }
     if (text.includes("crystal of atlan") || text.includes("crystal atlan") || text.includes("كريستال اوف اتلان") || text.includes("كريستال أوف أتلان")) {
-        return "/public/game-images/crystal-of-atlan.png";
+        return "/public/images/games/crystal-of-atlan.png";
     }
     if (text.includes("bullet echo") || text.includes("بوليت إيكو") || text.includes("بولت إيكو")) {
-        return "/public/game-images/bullet-echo.png";
+        return "/public/images/games/bullet-echo.png";
     }
     if (text.includes("stumble guys")) {
-        return "/public/game-images/stumble-guys.png";
+        return "/public/images/games/stumble-guys.png";
     }
-    if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return "/public/game-images/honkai-star-rail.png";
-    if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return "/public/game-images/mobile-legends.png";
-    if (text.includes("oxide") || text.includes("survival island")) return "/public/game-images/oxide-survival-island.png";
-    if (text.includes("king shot") || text.includes("kingshot")) return "/public/game-images/king-shot.png";
-    if (text.includes("zepeto")) return "/public/game-images/zepeto.jpg";
-    if (text.includes("blood strike") || text.includes("bloodstrike")) return "/public/game-images/blood-strike.png";
-    if (text.includes("acecraft") || text.includes("ace craft")) return "/public/game-images/acecraft.png";
-    if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return "/public/game-images/age-of-empires-mobile.png";
-    if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return "/public/game-images/nikke.png";
-    if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return "/public/game-images/division-resurgence.png";
-    if (text.includes("arena breakout") || text.includes("arena breakout mobile") || text.includes("أرينا بريك أوت")) return "/public/game-images/arena-breakout.png";
-    if (text.includes("ludo club") || text.includes("لودو كلوب")) return "/public/game-images/ludo-club.png";
-    if (text.includes("afk journey")) return "/public/game-images/afk-journey.png";
-    if (text.includes("age of magic")) return "/public/game-images/age-of-magic.png";
-    if (text.includes("ghost story love destiny")) return "/public/game-images/ghost-story-love-destiny.webp";
-    if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return "/public/game-images/arena-of-valor.png";
-    if (text.includes("growtopia") || text.includes("غروتوبيا")) return "/public/game-images/growtopia.png";
-    if (text.includes("golden spatula") || text.includes("غولدن سباتولا")) return "/public/game-images/golden-spatula.png";
-    if (text.includes("hatsune miku") || text.includes("colorful stage") || text.includes("هتسوني ميكو")) return "/public/game-images/hatsune-miku-colorful-stage.png";
-    if (text.includes("arknights endfield") || text.includes("arknights") || text.includes("أركنايتس إندفيلد")) return "/public/game-images/arknights-endfield.webp";
-    if (text.includes("haikyu fly high") || text.includes("haikyu") || text.includes("هايكيو فلاي هاي")) return "/public/game-images/haikyu-fly-high.png";
-    if (text.includes("ballistic hero vng") || text.includes("ballistic hero") || text.includes("بالستك هيرو")) return "/public/game-images/ballistic-hero-vng.png";
-    if (text.includes("heaven burns red") || text.includes("هيفن برنز ريد")) return "/public/game-images/heaven-burns-red.jpg";
-    if (text.includes("rise of kingdoms") || text.includes("رايز أوف كينغدومز")) return "/public/game-images/rise-of-kingdoms.png";
-    if (text.includes("top war") || text.includes("توب وور")) return "/public/game-images/top-war.jpg";
-    if (text.includes("the ants") || text.includes("النمل: المملكة تحت الأرض")) return "/public/game-images/the-ants.jpg";
-    if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return "/public/game-images/kingdom-guard.jpg";
-    if (text.includes("call of dragons") || text.includes("كول أوف دراغونز")) return "/public/game-images/call-of-dragons.jpg";
-    if (text.includes("astral guardians")) return "/public/game-images/astral-guardians.png";
-    if (text.includes("cyber fantasy")) return "/public/game-images/cyber-fantasy.png";
-    if (text.includes("blockman go") || text.includes("بلوكمان جو")) return "/public/game-images/blockman-go.png";
-    if (text.includes("blade x") || text.includes("odyssey of heroes")) return "/public/game-images/blade-x.jpg";
-    if (text.includes("be the king")) return "/public/game-images/be-the-king.png";
-    if (text.includes("captain tsubasa")) return "/public/game-images/captain-tsubasa.jpg";
-    if (text.includes("idol party")) return "/public/game-images/idol-party.png";
-    if (text.includes("hyper front")) return "/public/game-images/hyper-front.png";
-    if (text.includes("infinite lagrange")) return "/public/game-images/infinite-lagrange.png";
+    if (text.includes("honkai") || text.includes("star rail") || text.includes("هونكاي")) return "/public/images/games/honkai-star-rail.png";
+    if (text.includes("mobile legends") || text.includes("mlbb") || text.includes("موبايل ليجندز")) return "/public/images/games/mobile-legends.png";
+    if (text.includes("oxide") || text.includes("survival island")) return "/public/images/games/oxide-survival-island.png";
+    if (text.includes("king shot") || text.includes("kingshot")) return "/public/images/games/king-shot.png";
+    if (text.includes("zepeto")) return "/public/images/games/zepeto.jpg";
+    if (text.includes("blood strike") || text.includes("bloodstrike")) return "/public/images/games/blood-strike.png";
+    if (text.includes("acecraft") || text.includes("ace craft")) return "/public/images/games/acecraft.png";
+    if (text.includes("age of empires mobile") || text.includes("age of empires") || text.includes("عصر الامبراطوريات موبايل")) return "/public/images/games/age-of-empires-mobile.png";
+    if (text.includes("goddess of victory") || text.includes("goddess of victory nikke") || text.includes("nikke") || text.includes("نيكي")) return "/public/images/games/nikke.png";
+    if (text.includes("division resurgence") || text.includes("the division resurgence") || text.includes("ذا ديفيجن ريزرجنس")) return "/public/images/games/division-resurgence.png";
+    if (text.includes("arena breakout") || text.includes("arena breakout mobile") || text.includes("أرينا بريك أوت")) return "/public/images/games/arena-breakout.png";
+    if (text.includes("ludo club") || text.includes("لودو كلوب")) return "/public/images/games/ludo-club.png";
+    if (text.includes("afk journey")) return "/public/images/games/afk-journey.png";
+    if (text.includes("age of magic")) return "/public/images/games/age-of-magic.png";
+    if (text.includes("ghost story love destiny")) return "/public/images/games/ghost-story-love-destiny.webp";
+    if (text.includes("arena of valor") || text.includes("أرينا أوف فالور")) return "/public/images/games/arena-of-valor.png";
+    if (text.includes("growtopia") || text.includes("غروتوبيا")) return "/public/images/games/growtopia.png";
+    if (text.includes("golden spatula") || text.includes("غولدن سباتولا")) return "/public/images/games/golden-spatula.png";
+    if (text.includes("hatsune miku") || text.includes("colorful stage") || text.includes("هتسوني ميكو")) return "/public/images/games/hatsune-miku-colorful-stage.png";
+    if (text.includes("arknights endfield") || text.includes("arknights") || text.includes("أركنايتس إندفيلد")) return "/public/images/games/arknights-endfield.webp";
+    if (text.includes("haikyu fly high") || text.includes("haikyu") || text.includes("هايكيو فلاي هاي")) return "/public/images/games/haikyu-fly-high.png";
+    if (text.includes("ballistic hero vng") || text.includes("ballistic hero") || text.includes("بالستك هيرو")) return "/public/images/games/ballistic-hero-vng.png";
+    if (text.includes("heaven burns red") || text.includes("هيفن برنز ريد")) return "/public/images/games/heaven-burns-red.jpg";
+    if (text.includes("rise of kingdoms") || text.includes("رايز أوف كينغدومز")) return "/public/images/games/rise-of-kingdoms.png";
+    if (text.includes("top war") || text.includes("توب وور")) return "/public/images/games/top-war.jpg";
+    if (text.includes("the ants") || text.includes("النمل: المملكة تحت الأرض")) return "/public/images/games/the-ants.jpg";
+    if (text.includes("kingdom guard") || text.includes("كينغدوم غارد")) return "/public/images/games/kingdom-guard.jpg";
+    if (text.includes("call of dragons") || text.includes("كول أوف دراغونز")) return "/public/images/games/call-of-dragons.jpg";
+    if (text.includes("astral guardians")) return "/public/images/games/astral-guardians.png";
+    if (text.includes("cyber fantasy")) return "/public/images/games/cyber-fantasy.png";
+    if (text.includes("blockman go") || text.includes("بلوكمان جو")) return "/public/images/games/blockman-go.png";
+    if (text.includes("blade x") || text.includes("odyssey of heroes")) return "/public/images/games/blade-x.jpg";
+    if (text.includes("be the king")) return "/public/images/games/be-the-king.png";
+    if (text.includes("captain tsubasa")) return "/public/images/games/captain-tsubasa.jpg";
+    if (text.includes("idol party")) return "/public/images/games/idol-party.png";
+    if (text.includes("hyper front")) return "/public/images/games/hyper-front.png";
+    if (text.includes("infinite lagrange")) return "/public/images/games/infinite-lagrange.png";
     if (text.includes("clash of plants")) return "";
-    if (text.includes("journey renewed") || text.includes("fate fantasy")) return "/public/game-images/journey-renewed.webp";
-    if (text.includes("civilization") || text.includes("eras & allies")) return "/public/game-images/civilization-eras-allies.png";
-    if (text.includes("kuroko street rivals") || text.includes("kuroko")) return "/public/game-images/kuroko-street-rivals.png";
-    if (text.includes("cloud song") || text.includes("skywalkers")) return "/public/game-images/cloud-song.jpg";
-    if (text.includes("king's choice") || text.includes("kings choice")) return "/public/game-images/kings-choice-sea.png";
-    if (text.includes("crossfire legend")) return "/public/game-images/crossfire-legend.png";
-    if (text.includes("legend of the phoenix")) return "/public/game-images/legend-of-the-phoenix.png";
-    if (text.includes("legacy of discord") || text.includes("furiouswings")) return "/public/game-images/legacy-of-discord.png";
-    if (text.includes("army dudes")) return "/public/game-images/army-dudes.png";
-    if (text.includes("crystalfall")) return "/public/game-images/crystalfall.png";
-    if (text.includes("crossout mobile") || text.includes("crossout")) return "/public/game-images/crossout-mobile.jpg";
-    if (text.includes("dragon raja")) return "/public/game-images/dragon-raja-sea.png";
-    if (text.includes("dragon nest m") || text.includes("dragon nest")) return "/public/game-images/dragon-nest-m-sea.png";
-    if (text.includes("life makeover")) return "/public/game-images/life-makeover-global.png";
-    if (text.includes("love nikki")) return "/public/game-images/love-nikki.png";
-    if (text.includes("dragonheir") || text.includes("dragonheir silent gods")) return "/public/game-images/dragonheir-silent-gods.jpg";
-    if (text.includes("dream and lethe") || text.includes("dream & lethe")) return "/public/game-images/dream-and-lethe-record.png";
-    if (text.includes("eggy party")) return "/public/game-images/eggy-party.png";
+    if (text.includes("journey renewed") || text.includes("fate fantasy")) return "/public/images/games/journey-renewed.webp";
+    if (text.includes("civilization") || text.includes("eras & allies")) return "/public/images/games/civilization-eras-allies.png";
+    if (text.includes("kuroko street rivals") || text.includes("kuroko")) return "/public/images/games/kuroko-street-rivals.png";
+    if (text.includes("cloud song") || text.includes("skywalkers")) return "/public/images/games/cloud-song.jpg";
+    if (text.includes("king's choice") || text.includes("kings choice")) return "/public/images/games/kings-choice-sea.png";
+    if (text.includes("crossfire legend")) return "/public/images/games/crossfire-legend.png";
+    if (text.includes("legend of the phoenix")) return "/public/images/games/legend-of-the-phoenix.png";
+    if (text.includes("legacy of discord") || text.includes("furiouswings")) return "/public/images/games/legacy-of-discord.png";
+    if (text.includes("army dudes")) return "/public/images/games/army-dudes.png";
+    if (text.includes("crystalfall")) return "/public/images/games/crystalfall.png";
+    if (text.includes("crossout mobile") || text.includes("crossout")) return "/public/images/games/crossout-mobile.jpg";
+    if (text.includes("dragon raja")) return "/public/images/games/dragon-raja-sea.png";
+    if (text.includes("dragon nest m") || text.includes("dragon nest")) return "/public/images/games/dragon-nest-m-sea.png";
+    if (text.includes("life makeover")) return "/public/images/games/life-makeover-global.png";
+    if (text.includes("love nikki")) return "/public/images/games/love-nikki.png";
+    if (text.includes("dragonheir") || text.includes("dragonheir silent gods")) return "/public/images/games/dragonheir-silent-gods.jpg";
+    if (text.includes("dream and lethe") || text.includes("dream & lethe")) return "/public/images/games/dream-and-lethe-record.png";
+    if (text.includes("eggy party")) return "/public/images/games/eggy-party.png";
     if (text.includes("echocalypse") || text.includes("scarlet covenant")) return "";
-    if (text.includes("hero clash") || text.includes("هيرو كلاش")) return "/public/game-images/hero-clash.png";
-    if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return "/public/game-images/devil-may-cry.png";
-    if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return "/public/game-images/eggy-party.png";
-    if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return "/public/game-images/my-singing-monsters.jpg";
+    if (text.includes("hero clash") || text.includes("هيرو كلاش")) return "/public/images/games/hero-clash.png";
+    if (text.includes("devil may cry") || text.includes("devil may cry peak of combat") || text.includes("peak of combat") || text.includes("ديفل ماي كراي")) return "/public/images/games/devil-may-cry.png";
+    if (text.includes("eggy party") || text.includes("egg party") || text.includes("إيجي بارتي")) return "/public/images/games/eggy-party.png";
+    if (text.includes("my singing monsters") || text.includes("my singing") || text.includes("monsters") || text.includes("ماي سينغينغ مونسترز")) return "/public/images/games/my-singing-monsters.jpg";
 
-    if (text.includes("dynasty heroes") || text.includes("legend samkok")) return "/public/game-images/dynasty-heroes.png";
+    if (text.includes("dynasty heroes") || text.includes("legend samkok")) return "/public/images/games/dynasty-heroes.png";
     if (text.includes("starseed") || text.includes("asnia trigger")) return "";
-    if (text.includes("magic chess") || text.includes("magic chess gogo") || text.includes("magic chess go go")) return "/public/game-images/magic-chess-gogo.png";
-    if (text.includes("enhypen world") || text.includes("enhypen")) return "/public/game-images/enhypen-world.png";
-    if (text.includes("marvel duel")) return "/public/game-images/marvel-duel.png";
+    if (text.includes("magic chess") || text.includes("magic chess gogo") || text.includes("magic chess go go")) return "/public/images/games/magic-chess-gogo.png";
+    if (text.includes("enhypen world") || text.includes("enhypen")) return "/public/images/games/enhypen-world.png";
+    if (text.includes("marvel duel")) return "/public/images/games/marvel-duel.png";
     if (text.includes("extraordinary ones")) return "";
-    if (text.includes("eve echoes") || text.includes("eve echo")) return "/public/game-images/eve-echoes.png";
-    if (text.includes("mirage perfect skyline") || text.includes("mirage:perfect skyline") || text.includes("mirage")) return "/public/game-images/mirage-perfect-skyline.png";
-    if (text.includes("football master 2") || text.includes("football master")) return "/public/game-images/football-master-2.jpg";
-    if (text.includes("marvel mystic mayhem")) return "/public/game-images/marvel-mystic-mayhem.png";
-    if (text.includes("garena speed drifters") || text.includes("speed drifters")) return "/public/game-images/garena-speed-drifters.png";
-    if (text.includes("mongil star dive")) return "/public/game-images/mongil-star-dive.png";
-    if (text.includes("modern strike online")) return "/public/game-images/modern-strike-online.png";
-    if (text.includes("overmortal idle global") || text.includes("overmortal")) return "";    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return "/public/game-images/onmyoji-arena.png";
-    if (text.includes("stormshot") || text.includes("storm shot") || text.includes("ستورمشوت")) return "/public/game-images/stormshot.png";
-    if (text.includes("crossout mobile") || text.includes("crossout") || text.includes("كروس أوت موبايل")) return "/public/game-images/crossout-mobile.jpg";
-    if (text.includes("dragon raja sea") || text.includes("dragon raja") || text.includes("دراغون راجا")) return "/public/game-images/dragon-raja-sea.png";
-    if (text.includes("life makeover global") || text.includes("life makeover") || text.includes("لايف ميك أوفر")) return "/public/game-images/life-makeover-global.png";
+    if (text.includes("eve echoes") || text.includes("eve echo")) return "/public/images/games/eve-echoes.png";
+    if (text.includes("mirage perfect skyline") || text.includes("mirage:perfect skyline") || text.includes("mirage")) return "/public/images/games/mirage-perfect-skyline.png";
+    if (text.includes("football master 2") || text.includes("football master")) return "/public/images/games/football-master-2.jpg";
+    if (text.includes("marvel mystic mayhem")) return "/public/images/games/marvel-mystic-mayhem.png";
+    if (text.includes("garena speed drifters") || text.includes("speed drifters")) return "/public/images/games/garena-speed-drifters.png";
+    if (text.includes("mongil star dive")) return "/public/images/games/mongil-star-dive.png";
+    if (text.includes("modern strike online")) return "/public/images/games/modern-strike-online.png";
+    if (text.includes("overmortal idle global") || text.includes("overmortal")) return "";    if (text.includes("onmyoji arena") || text.includes("onmyoji") || text.includes("أونميوجي أرينا")) return "/public/images/games/onmyoji-arena.png";
+    if (text.includes("stormshot") || text.includes("storm shot") || text.includes("ستورمشوت")) return "/public/images/games/stormshot.png";
+    if (text.includes("crossout mobile") || text.includes("crossout") || text.includes("كروس أوت موبايل")) return "/public/images/games/crossout-mobile.jpg";
+    if (text.includes("dragon raja sea") || text.includes("dragon raja") || text.includes("دراغون راجا")) return "/public/images/games/dragon-raja-sea.png";
+    if (text.includes("life makeover global") || text.includes("life makeover") || text.includes("لايف ميك أوفر")) return "/public/images/games/life-makeover-global.png";
     if (text.includes("whiteout survival")) {
-        return "/public/game-images/whiteout-survival.png";
+        return "/public/images/games/whiteout-survival.png";
     }
     return "";
 }
@@ -1389,15 +1389,15 @@ function getNumberGroupProducts(group) {
 function getNumberGroupImage(group) {
     // Use the WhatsApp brand asset for both WhatsApp number servers.
     if(group && (group.key==="whatsapp-s1" || group.key==="whatsapp-s2")){
-        return BACKEND_URL + "/assets/whatsapp.svg";
+        return BACKEND_URL + "/public/images/store/whatsapp.svg";
     }
-    if(group && group.key==="facebook") return BACKEND_URL + "/assets/facebook.svg";
-    if(group && group.key==="gmail") return BACKEND_URL + "/assets/gmail.svg";
-    if(group && group.key==="icloud") return BACKEND_URL + "/assets/icloud.svg";
-    if(group && group.key==="imo") return BACKEND_URL + "/assets/imo.svg";
-    if(group && group.key==="instagram") return BACKEND_URL + "/assets/instagram.svg";
-    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/assets/whatsapp.svg";
-    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/assets/whatsapp.svg";
+    if(group && group.key==="facebook") return BACKEND_URL + "/public/images/store/facebook.svg";
+    if(group && group.key==="gmail") return BACKEND_URL + "/public/images/store/gmail.svg";
+    if(group && group.key==="icloud") return BACKEND_URL + "/public/images/store/icloud.svg";
+    if(group && group.key==="imo") return BACKEND_URL + "/public/images/store/imo.svg";
+    if(group && group.key==="instagram") return BACKEND_URL + "/public/images/store/instagram.svg";
+    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/public/images/store/whatsapp.svg";
+    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/public/images/store/whatsapp.svg";
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
@@ -1448,10 +1448,10 @@ function openNumberGroupProducts(groupKey,fromHistory) {
 }
 function getAppServerTiles() {
     return [
-        { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/assets/app-server-1.svg" },
-        { key:"server-2", title:"تطبيقات سيرفر 2", image:BACKEND_URL + "/assets/app-server-2.svg" },
-        { key:"server-3", title:"تطبيقات سيرفر 3", image:BACKEND_URL + "/assets/app-server-3.svg" },
-        { key:"server-4", title:"تطبيقات سيرفر 4", image:BACKEND_URL + "/assets/app-server-4.svg" }
+        { key:"server-1", title:"تطبيقات سيرفر 1", image:BACKEND_URL + "/public/images/store/app-server-1.svg" },
+        { key:"server-2", title:"تطبيقات سيرفر 2", image:BACKEND_URL + "/public/images/store/app-server-2.svg" },
+        { key:"server-3", title:"تطبيقات سيرفر 3", image:BACKEND_URL + "/public/images/store/app-server-3.svg" },
+        { key:"server-4", title:"تطبيقات سيرفر 4", image:BACKEND_URL + "/public/images/store/app-server-4.svg" }
     ];
 }
 
@@ -3199,7 +3199,7 @@ const BALANCE_CATALOG = [
         key:"turkey-balance",
         title:"رصيد تركي",
         aliases:["رصيد تركي","الرصيد التركي","تركيا","تركي","turkish balance","turkey balance","turkey","try","tl"],
-        image:"/assets/balance/turkey-balance.svg"
+        image:"/public/images/balance/turkey-balance.svg"
     },
     {
         key:"syriatel",
@@ -3211,73 +3211,73 @@ const BALANCE_CATALOG = [
         key:"mtn",
         title:"MTN",
         aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
-        image:"/assets/balance/mtn.svg"
+        image:"/public/images/balance/mtn.svg"
     },
     {
         key:"zain-cash",
         title:"زين كاش",
         aliases:["زين كاش","zain cash","zaincash","zain"],
-        image:"/assets/balance/zain-cash.svg"
+        image:"/public/images/balance/zain-cash.svg"
     },
     {
         key:"instapay",
         title:"InstaPay",
         aliases:["instapay","insta pay","انستا باي","إنستا باي"],
-        image:"/assets/balance/instapay.svg"
+        image:"/public/images/balance/instapay.svg"
     },
     {
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"/assets/balance/reflect-official.png"
+        image:"/public/images/balance/reflect-official.png"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"/assets/balance/papara-official.png"
+        image:"/public/images/balance/papara-official.png"
     },
     {
         key:"paypal",
         title:"PayPal",
         aliases:["paypal","باي بال","بايبال"],
-        image:"/assets/balance/paypal.svg"
+        image:"/public/images/balance/paypal.svg"
     },
     {
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"/assets/balance/payoneer.svg"
+        image:"/public/images/balance/payoneer.svg"
     },
     {
         key:"touch",
         title:"Touch",
         aliases:["touch","touch lebanon","تاتش","تتش"],
-        image:"/assets/balance/touch.svg"
+        image:"/public/images/balance/touch.svg"
     },
     {
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"/assets/balance/alfa-official.png"
+        image:"/public/images/balance/alfa-official.png"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"/assets/balance/rcell-official.svg"
+        image:"/public/images/balance/rcell-official.svg"
     },
     {
         key:"whish-money",
         title:"Whish Money",
         aliases:["whish money","whish","ويش موني","ويش","wish money"],
-        image:"/assets/balance/whish-money.svg"
+        image:"/public/images/balance/whish-money.svg"
     },
     {
         key:"asia-cell",
         title:"آسيا سيل",
         aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
-        image:"/assets/balance/asia-cell.svg"
+        image:"/public/images/balance/asia-cell.svg"
     }
 ];
 function normalizeBalanceText(value) {

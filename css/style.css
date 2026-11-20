@@ -3250,7 +3250,7 @@ input, textarea, select, [contenteditable="true"]{
    تُستخدم داخل مربعات المستوى الأول فقط مع الحفاظ على أبعاد المربع.
 */
 .reference-category-grid .category-art{
-  background:#000 url("/assets/category-nabd-store.webp") center center / cover no-repeat!important;
+  background:#000 url("/public/images/categories/category-nabd-store.webp") center center / cover no-repeat!important;
   border-color:#b8860b!important;
   box-shadow:inset 0 0 0 2px rgba(255,210,70,.18),inset 0 0 24px rgba(245,196,0,.16),0 0 14px rgba(184,134,11,.28)!important;
 }
@@ -3333,7 +3333,7 @@ input, textarea, select, [contenteditable="true"]{
 
 /* ===== Nabd-Store level-one category supplied artwork ===== */
 .reference-category-grid .category-art{
-  background:#000 url('../assets/category-nabd-store.webp') center center / cover no-repeat!important;
+  background:#000 url('../public/images/categories/category-nabd-store.webp') center center / cover no-repeat!important;
   background-size:cover!important;
 }
 .reference-category-grid .category-art::before,
@@ -3347,7 +3347,7 @@ input, textarea, select, [contenteditable="true"]{
 
 /* شعار الصورة داخل هيدر واجهة العميل */
  .header-logo{display:flex;align-items:center;gap:7px;margin-inline-end:-18px;}
-.header-logo-image{width:48px;height:48px;display:block;object-fit:cover;object-position:center;border-radius:9px;flex:0 0 48px;background:#000 url('../assets/category-nabd-store.webp') center center / cover no-repeat!important;}
+.header-logo-image{width:48px;height:48px;display:block;object-fit:cover;object-position:center;border-radius:9px;flex:0 0 48px;background:#000 url('../public/images/categories/category-nabd-store.webp') center center / cover no-repeat!important;}
 @media (max-width:520px){
   .header-logo-image{width:44px;height:44px;flex-basis:44px;border-radius:8px;}
   .header-logo{gap:6px;font-size:20px;}
@@ -3374,7 +3374,7 @@ input, textarea, select, [contenteditable="true"]{
     margin:0;
     z-index:0;
     pointer-events:none;
-    background-image:url('../assets/level1-category/nabd-store-level1.webp?v=20260929-2');
+    background-image:url('/public/images/categories/nabd-store-level1.webp?v=20260929-2');
     background-position:center;
     background-repeat:no-repeat;
     background-size:cover;

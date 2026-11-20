@@ -12,12 +12,12 @@
   "background_color": "#0f172a",
   "icons": [
     {
-      "src": "/assets/category-nabd-store.webp",
+      "src": "/public/images/categories/category-nabd-store.webp",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/assets/category-nabd-store.webp",
+      "src": "/public/images/categories/category-nabd-store.webp",
       "type": "image/webp",
       "purpose": "maskable"
     }

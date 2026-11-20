@@ -1629,7 +1629,7 @@ app.get("/api/game-images/:gameKey", (req, res) => {
   const key = String(req.params.gameKey || "").trim().toLowerCase();
   if (!/^[a-z0-9-]+$/.test(key)) return res.status(400).end();
 
-  const imageDir = path.join(__dirname, "public", "game-images");
+  const imageDir = path.join(__dirname, "public", "images", "games");
   const extensions = ["png", "jpg", "jpeg", "webp"];
   let imagePath = null;
   for (const ext of extensions) {
