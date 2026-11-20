@@ -3199,7 +3199,7 @@ const BALANCE_CATALOG = [
         key:"turkey-balance",
         title:"رصيد تركي",
         aliases:["رصيد تركي","الرصيد التركي","تركيا","تركي","turkish balance","turkey balance","turkey","try","tl"],
-        image:"/public/images/الأرصدة/turkey-balance.svg"
+        image:"/public/images/الأرصدة/turkey-balance.jpg"
     },
     {
         key:"syriatel",
@@ -3211,73 +3211,73 @@ const BALANCE_CATALOG = [
         key:"mtn",
         title:"MTN",
         aliases:["mtn","mtn syria","mtn cash","ام تي ان"],
-        image:"/public/images/الأرصدة/mtn.svg"
+        image:"/public/images/الأرصدة/mtn.jpg"
     },
     {
         key:"zain-cash",
         title:"زين كاش",
         aliases:["زين كاش","zain cash","zaincash","zain"],
-        image:"/public/images/الأرصدة/zain-cash.svg"
+        image:"/public/images/الأرصدة/zain-cash.jpg"
     },
     {
         key:"instapay",
         title:"InstaPay",
         aliases:["instapay","insta pay","انستا باي","إنستا باي"],
-        image:"/public/images/الأرصدة/instapay.svg"
+        image:"/public/images/الأرصدة/instapay.jpg"
     },
     {
         key:"reflect",
         title:"Reflect",
         aliases:["reflect","ريفلكت","رفلكت"],
-        image:"/public/images/الأرصدة/reflect-official.png"
+        image:"/public/images/الأرصدة/reflect-official.jpg"
     },
     {
         key:"papara",
         title:"Papara",
         aliases:["papara","بابارا"],
-        image:"/public/images/الأرصدة/papara-official.png"
+        image:"/public/images/الأرصدة/papara-official.jpg"
     },
     {
         key:"paypal",
         title:"PayPal",
         aliases:["paypal","باي بال","بايبال"],
-        image:"/public/images/الأرصدة/paypal.svg"
+        image:"/public/images/الأرصدة/paypal.jpg"
     },
     {
         key:"payoneer",
         title:"Payoneer",
         aliases:["payoneer","بايونير"],
-        image:"/public/images/الأرصدة/payoneer.svg"
+        image:"/public/images/الأرصدة/payoneer.jpg"
     },
     {
         key:"touch",
         title:"Touch",
         aliases:["touch","touch lebanon","تاتش","تتش"],
-        image:"/public/images/الأرصدة/touch.svg"
+        image:"/public/images/الأرصدة/touch.jpg"
     },
     {
         key:"alfa",
         title:"Alfa",
         aliases:["alfa","alfa lebanon","ألفا","الفا"],
-        image:"/public/images/الأرصدة/alfa-official.png"
+        image:"/public/images/الأرصدة/alfa-official.jpg"
     },
     {
         key:"rcell",
         title:"Rcell",
         aliases:["rcell","r cell","ارسل","آر سيل"],
-        image:"/public/images/الأرصدة/rcell-official.svg"
+        image:"/public/images/الأرصدة/rcell-official.jpg"
     },
     {
         key:"whish-money",
         title:"Whish Money",
         aliases:["whish money","whish","ويش موني","ويش","wish money"],
-        image:"/public/images/الأرصدة/whish-money.svg"
+        image:"/public/images/الأرصدة/whish-money.jpg"
     },
     {
         key:"asia-cell",
         title:"آسيا سيل",
         aliases:["اسيا سيل","آسيا سيل","asiacell","asia cell","asia-cell","asiacell cash"],
-        image:"/public/images/الأرصدة/asia-cell.svg"
+        image:"/public/images/الأرصدة/asia-cell.jpg"
     }
 ];
 function normalizeBalanceText(value) {
