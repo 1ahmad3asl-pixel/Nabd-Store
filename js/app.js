@@ -1389,15 +1389,15 @@ function getNumberGroupProducts(group) {
 function getNumberGroupImage(group) {
     // Use the WhatsApp brand asset for both WhatsApp number servers.
     if(group && (group.key==="whatsapp-s1" || group.key==="whatsapp-s2")){
-        return BACKEND_URL + "/public/images/الأرقام/whatsapp.svg";
+        return BACKEND_URL + "/public/images/الأرقام/whatsapp.jpg";
     }
-    if(group && group.key==="facebook") return BACKEND_URL + "/public/images/الأرقام/facebook.svg";
-    if(group && group.key==="gmail") return BACKEND_URL + "/public/images/الأرقام/gmail.svg";
-    if(group && group.key==="icloud") return BACKEND_URL + "/public/images/الأرقام/icloud.svg";
-    if(group && group.key==="imo") return BACKEND_URL + "/public/images/الأرقام/imo.svg";
-    if(group && group.key==="instagram") return BACKEND_URL + "/public/images/الأرقام/instagram.svg";
-    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/public/images/الأرقام/whatsapp.svg";
-    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/public/images/الأرقام/whatsapp.svg";
+    if(group && group.key==="facebook") return BACKEND_URL + "/public/images/الأرقام/facebook.jpg";
+    if(group && group.key==="gmail") return BACKEND_URL + "/public/images/الأرقام/gmail.jpg";
+    if(group && group.key==="icloud") return BACKEND_URL + "/public/images/الأرقام/icloud.jpg";
+    if(group && group.key==="imo") return BACKEND_URL + "/public/images/الأرقام/imo.jpg";
+    if(group && group.key==="instagram") return BACKEND_URL + "/public/images/الأرقام/instagram.jpg";
+    if(group && group.key==="whatsapp-badawi") return BACKEND_URL + "/public/images/الأرقام/whatsapp.jpg";
+    if(group && group.key==="whatsapp-ban") return BACKEND_URL + "/public/images/الأرقام/whatsapp.jpg";
     const p=getNumberGroupProducts(group).find(function(item){return String(item.category_img||"").trim();});
     return p ? String(p.category_img) : "";
 }
