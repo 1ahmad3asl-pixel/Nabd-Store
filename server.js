@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 24995)
-Total output lines: 2097
-
 // Initialize Sentry before loading Express or any other application modules.
 const Sentry = require("@sentry/node");
 Sentry.init({
@@ -880,7 +877,368 @@ app.get("/api/customer/phone-country", requireCustomer, (req, res) => {
 app.put("/api/customer/profile", requireCustomer, async (req, res) => {
   const phoneData = parseCustomerPhone(req.body?.phone);
   if (!phoneData || !phoneData.phone) {
-    return res.status(400).json({ status: "ERROR", message: "رقم الهاتف مطلوب وغير…4995 tokens truncated…E LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+    return res.status(400).json({ status: "ERROR", message: "رقم الهاتف مطلوب وغير صحيح. استخدم الرقم بصيغة دولية مثل +963..." });
+  }
+  const name = String(req.body?.name || "").trim();
+  if (name.length < 2 || name.length > 80) {
+    return res.status(400).json({ status: "ERROR", message: "الاسم غير صالح." });
+  }
+  const result = await query(
+    "UPDATE customers SET name=$1,phone=$2,phone_country=$3,updated_at=NOW() WHERE customer_id=$4 RETURNING customer_id,customer_number,name,email,phone,phone_country,balance,orders_count,discount,created_at",
+    [name, phoneData.phone, phoneData.country, req.customer.customer_id]
+  );
+  if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+  const customer = result.rows[0];
+  const parsedPhone = parseCustomerPhone(customer.phone);
+  customer.phone_country_code = parsedPhone?.country_code || "";
+  customer.customer_id = String(customer.customer_number);
+  customer.customer_number = Number(customer.customer_number);
+  customer.profile_complete = true;
+  res.json({ status: "OK", customer });
+});
+
+app.put("/api/customer/avatar", requireCustomer, async (req, res) => {
+  try {
+    const avatar = String(req.body?.avatar_url || "").trim();
+    if (!avatar) return res.status(400).json({ status: "ERROR", message: "اختر صورة أولًا." });
+    if (avatar.length > 500000) return res.status(413).json({ status: "ERROR", message: "حجم الصورة كبير جدًا." });
+    if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/i.test(avatar)) {
+      return res.status(400).json({ status: "ERROR", message: "صيغة الصورة غير مدعومة." });
+    }
+    const base64 = avatar.slice(avatar.indexOf(",") + 1);
+    const bytes = Buffer.from(base64, "base64");
+    if (!bytes.length || bytes.length > 350000) {
+      return res.status(413).json({ status: "ERROR", message: "حجم الصورة كبير جدًا." });
+    }
+    const result = await query(
+      "UPDATE customers SET avatar_url=$1,updated_at=NOW() WHERE customer_id=$2 RETURNING customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at",
+      [avatar, req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const customer = result.rows[0];
+    const parsedPhone = parseCustomerPhone(customer.phone);
+    customer.phone_country_code = parsedPhone?.country_code || "";
+    customer.customer_id = String(customer.customer_number);
+    customer.customer_number = Number(customer.customer_number);
+    res.json({ status: "OK", customer });
+  } catch (error) {
+    console.error("Customer avatar error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر حفظ الصورة الشخصية." });
+  }
+});
+
+app.delete("/api/customer/avatar", requireCustomer, async (req, res) => {
+  try {
+    const result = await query(
+      "UPDATE customers SET avatar_url=NULL,updated_at=NOW() WHERE customer_id=$1 RETURNING customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at",
+      [req.customer.customer_id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ status: "ERROR", message: "الحساب غير موجود." });
+    const customer = result.rows[0];
+    customer.customer_id = String(customer.customer_number);
+    customer.customer_number = Number(customer.customer_number);
+    res.json({ status: "OK", customer });
+  } catch (error) {
+    console.error("Customer avatar delete error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر حذف الصورة الشخصية." });
+  }
+});
+
+app.get("/api/customer/auth/me", requireCustomer, async (req, res) => {
+  const result = await query(
+    "SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,created_at FROM customers WHERE customer_id=$1",
+    [req.customer.customer_id]
+  );
+  if (!result.rows[0]) {
+    return res.status(401).json({ status: "ERROR", message: "الحساب غير موجود." });
+  }
+  const customer = result.rows[0];
+  const spendResult = await query(
+    "SELECT COALESCE(SUM(price),0) AS spend FROM orders WHERE customer_id=$1 AND status NOT IN ('failed','rejected','cancelled','canceled','error')",
+    [customer.customer_id]
+  );
+  const tierDiscount = getTierDiscount(Number(spendResult.rows[0]?.spend || 0));
+  customer.effective_discount = getEffectiveDiscount(tierDiscount, Number(customer.discount || 0));
+  const parsedPhone = parseCustomerPhone(customer.phone);
+  customer.phone_country_code = parsedPhone?.country_code || "";
+  const customerName = String(customer.name || "").trim();
+  customer.profile_complete = customerName.length >= 2 && customerName.length <= 80 && Boolean(parsedPhone && parsedPhone.phone);
+  customer.customer_id = String(customer.customer_number);
+  customer.customer_number = Number(customer.customer_number);
+  res.json({ status: "OK", customer });
+});
+
+app.get("/api/customer/google", (req, res) => {
+  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(503).send("تسجيل الدخول عبر Google غير مهيأ بعد.");
+  const state = crypto.randomBytes(32).toString("hex");
+  googleOAuthStates.set(state, Date.now() + 10 * 60 * 1000);
+  res.setHeader("Set-Cookie", "nabd_google_oauth_state=" + state + "; HttpOnly; Path=/api/customer/google; SameSite=Lax; Max-Age=600" + (COOKIE_SECURE ? "; Secure" : ""));
+  const redirectUri = googleRedirectUri();
+  const params = new URLSearchParams({client_id:GOOGLE_CLIENT_ID,redirect_uri:redirectUri,response_type:"code",scope:"openid email profile",state,access_type:"online",prompt:"select_account"});
+  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString());
+});
+
+app.get("/api/customer/google/callback", async (req, res) => {
+  const state = String(req.query.state || "");
+  const expires = googleOAuthStates.get(state);
+  const stateCookie = cookieValue(req, "nabd_google_oauth_state");
+  googleOAuthStates.delete(state);
+  res.setHeader("Set-Cookie", "nabd_google_oauth_state=; HttpOnly; Path=/api/customer/google; SameSite=Lax; Max-Age=0" + (COOKIE_SECURE ? "; Secure" : ""));
+  if (!expires || expires < Date.now() || !stateCookie || !safeEqual(state, stateCookie) || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) return res.status(400).send("جلسة Google غير صالحة أو تسجيل الدخول غير مهيأ.");
+  try {
+    const redirectUri = googleRedirectUri();
+    const tokenResponse = await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code:String(req.query.code||""),client_id:GOOGLE_CLIENT_ID,client_secret:GOOGLE_CLIENT_SECRET,redirect_uri:redirectUri,grant_type:"authorization_code"})});
+    const tokens = await tokenResponse.json();
+    if (!tokenResponse.ok || !tokens.access_token) throw new Error("تعذر الحصول على رمز Google.");
+    const userResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo",{headers:{Authorization:"Bearer "+tokens.access_token}});
+    const googleUser = await userResponse.json();
+    if (!userResponse.ok || !googleUser.email) throw new Error("تعذر قراءة حساب Google.");
+    const email = String(googleUser.email).trim().toLowerCase();
+    let result = await query("SELECT customer_id,customer_number,name,email,active FROM customers WHERE LOWER(email)=LOWER($1)",[email]);
+    let customer = result.rows[0];
+    if (customer && !customer.active) return res.status(403).send("هذا الحساب غير فعال.");
+    if (!customer) {
+      const internalId = "CUS-" + crypto.randomUUID();
+      result = await query("INSERT INTO customers(customer_id,name,email,password_hash) VALUES($1,$2,$3,NULL) RETURNING customer_id,customer_number,name,email,active",[internalId,String(googleUser.name||"عميل").slice(0,80),email]);
+      customer = result.rows[0];
+    }
+    const token = crypto.randomBytes(32).toString("hex");
+    await createCustomerSession(token, customer.customer_id, new Date(Date.now()+30*24*60*60*1000));
+    res.setHeader("Set-Cookie","nabd_customer_session="+token+"; HttpOnly; Path=/; SameSite=Lax; Max-Age=2592000"+(COOKIE_SECURE?"; Secure":""));
+    res.redirect("/customer-profile.html");
+  } catch (error) {
+    console.error("Google login error:", error);
+    res.status(500).send("تعذر تسجيل الدخول عبر Google.");
+  }
+});
+
+app.post("/api/customer/logout", requireCustomer, async (req, res) => {
+  await deleteCustomerSession(req.customerSessionToken);
+  res.setHeader(
+    "Set-Cookie",
+    "nabd_customer_session=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0" +
+    (process.env.NODE_ENV === "production" ? "; Secure" : "")
+  );
+  res.json({ status: "OK" });
+});
+
+app.get("/api/customer/orders", requireCompleteCustomer, async (req, res) => {
+  try {
+    const result = await query(
+      "SELECT id,order_id,product_id,product_name,api_price,price,discount,status,order_params,nemer_response,created_at FROM orders WHERE customer_id=$1 ORDER BY created_at DESC",
+      [req.customer.customer_id]
+    );
+    res.json({ status: "OK", orders: result.rows });
+  } catch (error) {
+    console.error("Customer orders error:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر تحميل طلباتك." });
+  }
+});
+
+/* =========================
+   ADMIN API========================= */
+
+app.use("/api/admin", requireAdmin);
+
+app.get("/api/admin/dashboard", async (req, res) => {
+  try {
+    const [profileResult, statsResult, recentResult] = await Promise.allSettled([
+      getNemerProfile(),
+      query(`
+        SELECT
+          (SELECT COUNT(*) FROM customers) AS customers,
+          (SELECT COUNT(*) FROM orders) AS orders,
+          (SELECT COUNT(*) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ) AS successful_orders,
+          (SELECT COUNT(*) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
+          ) AS failed_orders,
+          COALESCE((SELECT SUM(balance) FROM customers),0) AS customer_balance,
+          COALESCE((
+            SELECT SUM(price) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ),0) AS sales,
+          COALESCE((
+            SELECT SUM(profit) FROM orders
+            WHERE LOWER(COALESCE(status,'')) IN ('success','successful','completed','complete','done','delivered','ok')
+          ),0) AS profit
+      `),
+      query("SELECT * FROM orders ORDER BY created_at DESC LIMIT 8")
+    ]);
+
+    if (statsResult.status === "rejected") {
+      console.error("Admin dashboard database error:", statsResult.reason);
+      return res.status(503).json({
+        status: "ERROR",
+        code: "DATABASE_UNAVAILABLE",
+        message: "تعذر الاتصال بقاعدة بيانات المتجر."
+      });
+    }
+
+    let apiBalance = null;
+    if (profileResult.status === "fulfilled") {
+      const profile = profileResult.value;
+      const rawBalance =
+        profile?.balance ??
+        profile?.data?.balance ??
+        profile?.data?.data?.balance ??
+        profile?.wallet?.balance ??
+        profile?.data?.wallet?.balance ??
+        null;
+      const parsedBalance = Number(rawBalance);
+      if (Number.isFinite(parsedBalance)) apiBalance = parsedBalance;
+    } else {
+      console.error("Admin Nemer profile error:", profileResult.reason?.message || profileResult.reason);
+    }
+
+    try {
+      await loadSettings();
+    } catch (settingsError) {
+      console.error("Admin settings database error:", settingsError);
+      return res.status(503).json({
+        status: "ERROR",
+        code: "DATABASE_UNAVAILABLE",
+        message: "تعذر تحميل إعدادات لوحة الإدارة من قاعدة البيانات."
+      });
+    }
+
+    const row = statsResult.value.rows[0] || {};
+    const recent = recentResult.status === "fulfilled" ? recentResult.value.rows : [];
+
+    res.json({
+      status: "OK",
+      total_customers: Number(row.customers || 0),
+      total_orders: Number(row.orders || 0),
+      total_successful_orders: Number(row.successful_orders || 0),
+      total_customer_balance: Number(Number(row.customer_balance || 0).toFixed(12)),
+      failed_orders: Number(row.failed_orders || 0),
+      total_sales: Number(Number(row.sales || 0).toFixed(12)),
+      total_profit: Number(Number(row.profit || 0).toFixed(12)),
+      api_balance: apiBalance,
+      api_balance_available: apiBalance !== null,
+      recent_orders: recent,
+      settings: adminSettings
+    });
+  } catch (error) {
+    console.error("Admin dashboard error:", error);
+    res.status(500).json({
+      status: "ERROR",
+      code: "ADMIN_DASHBOARD_ERROR",
+      message: "تعذر تحميل لوحة الإدارة."
+    });
+  }
+});
+
+app.get("/api/admin/customers", async (req, res) => {
+  const search = String(req.query.search || "").trim();
+  const customerLevelSql = `CASE
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
+    WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
+    ELSE 'عميل — فضي'
+  END AS customer_level`;
+  const sql = `SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,${customerLevelSql} FROM customers${search ? " WHERE CAST(customer_number AS TEXT) ILIKE $1 OR CAST(customer_id AS TEXT) ILIKE $1 OR name ILIKE $1" : ""} ORDER BY created_at DESC`;
+  const result = await query(sql, search ? [`%${search}%`] : []);
+  res.json({ status: "OK", customers: result.rows });
+});
+
+app.get("/api/admin/customers/:id", async (req, res) => {
+  const result = await query(
+    `SELECT customer_id,customer_number,name,email,phone,phone_country,avatar_url,balance,orders_count,discount,active,created_at,updated_at,(SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) AS paid_balance,CASE
+          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 300 THEN 'مورد'
+          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 200 THEN 'تاجر'
+          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 115 THEN 'سعر جملة'
+          WHEN (SELECT COALESCE(SUM(o.price),0) FROM orders o WHERE o.customer_id=customers.customer_id AND o.status NOT IN ('failed','rejected','cancelled','canceled','error')) >= 50 THEN 'عميل مميز'
+          ELSE 'عميل — فضي'
+        END AS customer_level FROM customers WHERE customer_id=$1`,
+    [String(req.params.id)]
+  );
+  if (!result.rows[0]) {
+    return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+  }
+  res.json({ status: "OK", customer: result.rows[0] });
+});
+
+app.post("/api/admin/customers/:id/reset-password", async (req, res) => {
+  try {
+    const customerId = String(req.params.id || "").trim();
+    const temporaryPassword = crypto.randomBytes(12).toString("base64url");
+    const result = await query(
+      "UPDATE customers SET password_hash=$1,updated_at=NOW() WHERE customer_id=$2 RETURNING customer_id,customer_number,name,email",
+      [hashPassword(temporaryPassword), customerId]
+    );
+    if (!result.rows[0]) {
+      return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+    }
+    res.json({
+      status: "OK",
+      message: "تم إنشاء كلمة مرور جديدة. احفظها وشاركها مع العميل بطريقة آمنة.",
+      temporary_password: temporaryPassword,
+      customer: result.rows[0]
+    });
+  } catch (error) {
+    console.error("Admin customer password reset failed:", error);
+    res.status(500).json({ status: "ERROR", message: "تعذر إنشاء كلمة مرور جديدة للعميل." });
+  }
+});
+
+app.put("/api/admin/customers/:id/discount", async (req, res) => {
+  const discount = Number(req.body?.discount);
+  if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
+    return res.status(400).json({
+      status: "ERROR",
+      message: "الخصم يجب أن يكون بين 0 و100."
+    });
+  }
+  const result = await query(
+    "UPDATE customers SET discount=$1,updated_at=NOW() WHERE customer_id=$2 RETURNING customer_id,name,email,balance,orders_count,discount,active,created_at,updated_at",
+    [discount, String(req.params.id)]
+  );
+  if (!result.rows[0]) {
+    return res.status(404).json({ status: "ERROR", message: "العميل غير موجود." });
+  }
+  res.json({ status: "OK", customer: result.rows[0] });
+});
+
+app.post("/api/admin/customers/:id/notifications", async (req, res) => {
+  const customerId = String(req.params.id || "").trim();
+  const title = String(req.body?.title || "").trim();
+  const message = String(req.body?.message || "").trim();
+
+  if (!customerId) {
+    return res.status(400).json({status:"ERROR",message:"معرّف العميل غير صالح."});
+  }
+  if (!title || !message || title.length > 150 || message.length > 10000) {
+    return res.status(400).json({status:"ERROR",message:"أدخل عنوان الإشعار ونصه، مع الالتزام بالحد الأقصى للطول."});
+  }
+
+  try {
+    const customer = await query("SELECT customer_id FROM customers WHERE customer_id=$1 LIMIT 1",[customerId]);
+    if (!customer.rows[0]) {
+      return res.status(404).json({status:"ERROR",message:"العميل غير موجود."});
+    }
+    const result = await query(
+      "INSERT INTO notifications(target,customer_id,title,message) VALUES('customer',$1,$2,$3) RETURNING id,title,message,created_at",
+      [customer.rows[0].customer_id,title,message]
+    );
+    return res.json({status:"OK",notification:result.rows[0]});
+  } catch (error) {
+    console.error("Admin customer notification failed:",error);
+    return res.status(500).json({status:"ERROR",message:"تعذر إرسال الإشعار إلى العميل."});
+  }
+});
+
+app.get("/api/admin/orders", async (req, res) => {
+  const result = await query(
+    "SELECT o.*, c.name AS customer_name, c.customer_number FROM orders o LEFT JOIN customers c ON c.customer_id = o.customer_id ORDER BY o.created_at DESC"
+  );
+  const summary = await query(`
+    SELECT
+      COUNT(*) AS total,
+      COUNT(*) FILTER (
+        WHERE LOWER(COALESCE(status,'')) IN ('failed','rejected','cancelled','canceled','error')
       ) AS failed,
       COUNT(*) FILTER (
         WHERE LOWER(COALESCE(status,'')) NOT IN ('failed','rejected','cancelled','canceled','error')
@@ -1736,4 +2094,3 @@ initDb()
     console.error("Database initialization failed:", error);
     process.exit(1);
   });
-
