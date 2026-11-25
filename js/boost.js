@@ -2,14 +2,14 @@
 (function(){
 "use strict";
 const GROUPS=[
- {key:"snapchat",title:"رشق سناب شات",a:["رشق سناب شات","رشـق سناب شات","snapchat","سناب شات","سناب"]},
- {key:"kwai",title:"رشق كواي",a:["رشق كواي","رشـق كواي","kwai","كواي"]},
- {key:"facebook",title:"رشق فيسبوك",a:["رشق فيسبوك","رشـق فيسبوك","facebook","فيسبوك","فيس بوك"]},
- {key:"whatsapp",title:"رشق واتساب",a:["رشق واتساب","رشـق واتساب","whatsapp","واتساب","وتساب"]},
- {key:"instagram",title:"رشق انستغرام",a:["رشق انستغرام","رشـق انستغرام","instagram","انستغرام","انستجرام"]},
- {key:"tiktok",title:"رشق تيك توك",a:["رشق تيك توك","رشـق تيك توك","tiktok","tik tok","تيك توك"]},
- {key:"telegram",title:"رشق تلجرام",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام"]},
- {key:"youtube",title:"رشق يوتيوب",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
+ {key:"snapchat",title:"رشق سناب شات",image:"snapchat.jpg",a:["رشق سناب شات","رشـق سناب شات","snapchat","سناب شات","سناب"]},
+ {key:"kwai",title:"رشق كواي",image:"kwai.jpg",a:["رشق كواي","رشـق كواي","kwai","كواي"]},
+ {key:"facebook",title:"رشق فيسبوك",image:"facebook.jpg",a:["رشق فيسبوك","رشـق فيسبوك","facebook","فيسبوك","فيس بوك"]},
+ {key:"whatsapp",title:"رشق واتساب",image:"whatsapp.jpg",a:["رشق واتساب","رشـق واتساب","whatsapp","واتساب","وتساب"]},
+ {key:"instagram",title:"رشق انستغرام",image:"instagram.jpg",a:["رشق انستغرام","رشـق انستغرام","instagram","انستغرام","انستجرام"]},
+ {key:"tiktok",title:"رشق تيك توك",image:"tiktok.jpg",a:["رشق تيك توك","رشـق تيك توك","tiktok","tik tok","تيك توك"]},
+ {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام"]},
+ {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
 let products=[];
 let loaded=false;
@@ -22,7 +22,7 @@ function els(){return{services:document.getElementById("servicesSection"),page:d
 function push(view,data){if(typeof pushInternalHistory==="function")pushInternalHistory(view,data||{});else history.pushState(Object.assign({nabdInternal:true,view},data||{}),"",location.href);}
 function renderBoostGroups(e){
  const groups=GROUPS.map(g=>({key:g.key,title:g.title,products:groupProducts(g)}));
- e.content.innerHTML='<div class="boost-page-note">اختر المنصة للدخول إلى منتجات الرشق المتاحة.</div><div class="boost-category-grid">'+groups.map(g=>'<button class="boost-category-tile" type="button" data-boost-group="'+g.key+'"><span class="boost-category-title">'+esc(g.title)+'</span><span class="boost-category-count">'+g.products.length+' منتج</span></button>').join("")+'</div>';
+ e.content.innerHTML='<div class="boost-page-note">اختر المنصة للدخول إلى منتجات الرشق المتاحة.</div><div class="boost-category-grid">'+groups.map(g=>'<button class="boost-category-tile" type="button" data-boost-group="'+g.key+'"><img class="boost-category-image" src="/public/images/رشـق صفحات/'+esc(g.image)+'" alt="" loading="lazy" decoding="async"><span class="boost-category-title">'+esc(g.title)+'</span><span class="boost-category-count">'+g.products.length+' منتج</span></button>').join("")+'</div>';
  e.content.querySelectorAll("[data-boost-group]").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.key===b.dataset.boostGroup);if(g)openBoostProducts(g);}));
  scrollTo({top:0,behavior:"smooth"});
 }
