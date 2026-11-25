@@ -2201,6 +2201,29 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     const robloxProductNotice = normalizeGameText(gameTitle).includes("roblox")
         ? '<div class="game-page-note roblox-delivery-note"><strong>تنبيه لروبلوكس:</strong> عند الشراء سيصل الكود تلقائيًا، ويتضمن البطاقة الجديدة.</div>'
         : '';
+    const pickerBodyHtml = firstProduct
+        ? '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
+            '<div id="pubgParamFields">' +
+                (isPubgGame(gameTitle)
+                    ? renderPubgParamFields(firstProduct)
+                    : renderGameParamFields(firstProduct, gameTitle)) +
+            '</div>' +
+            '<div class="pubg-field-label">اختر المنتج</div>' +
+            '<div class="pubg-select" id="pubgSelect">' +
+                '<button class="pubg-select-trigger" type="button" aria-expanded="false" aria-controls="pubgOptions">' +
+                    '<span id="pubgSelectedName">' + escapeHtml(firstProduct.name || "اختر المنتج") + '</span>' +
+                    '<span class="pubg-select-arrow">▼</span>' +
+                '</button>' +
+                '<div class="pubg-options" id="pubgOptions" hidden>' + listHtml + '</div>' +
+            '</div>' +
+            '<div id="gameQuantityField"></div>' +
+            '<div class="pubg-selected-summary"><span>السعر</span><strong id="pubgSelectedPrice">' + formatProductPrice(firstProduct) + '</strong></div>' +
+            '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
+                ((firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
+                '>إرسال الطلب <span>→</span></button>'
+        : '<div class="products-loading game-empty-products"><p>' +
+            escapeHtml(pickerOptions.emptyMessage || "لا توجد منتجات متاحة حاليًا.") +
+            '</p></div>';
 
     content.innerHTML =
         '<div class="pubg-picker universal-game-picker">' +
@@ -2211,30 +2234,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
                 '<h2>' + escapeHtml(group.title) + '</h2>' +
                 '<span>' + products.length + ' منتج</span>' +
             '</div>' +
-            '<div class="game-required-fields-title">المعلومات المطلوبة</div>' +
-            '<div id="pubgParamFields">' +
-                (firstProduct ? (isPubgGame(gameTitle)
-                    ? renderPubgParamFields(firstProduct)
-                    : renderGameParamFields(firstProduct, gameTitle)) : '') +
-            '</div>' +
-            '<div class="pubg-field-label">اختر المنتج</div>' +
-            '<div class="pubg-select" id="pubgSelect">' +
-                '<button class="pubg-select-trigger" type="button" aria-expanded="false" aria-controls="pubgOptions">' +
-                    '<span id="pubgSelectedName">' + escapeHtml(firstProduct ? (firstProduct.name || "اختر المنتج") : "اختر المنتج") + '</span>' +
-                    '<span class="pubg-select-arrow">▼</span>' +
-                '</button>' +
-                '<div class="pubg-options" id="pubgOptions" hidden>' +
-                    listHtml +
-                '</div>' +
-            '</div>' +
-            '<div id="gameQuantityField"></div>' +
-            '<div class="pubg-selected-summary">' +
-                '<span>السعر</span>' +
-                '<strong id="pubgSelectedPrice">' + (firstProduct ? formatProductPrice(firstProduct) : 'السعر غير متاح') + '</strong>' +
-            '</div>' +
-            '<button class="buy-btn pubg-submit" id="pubgSubmitOrder" type="button"' +
-                (!firstProduct || (firstProduct.available === false || firstProduct.available === 0) ? ' disabled' : '') +
-                '>إرسال الطلب <span>→</span></button>' +
+            pickerBodyHtml +
         '</div>';
 
     let selectedIndex = firstProduct ? products.indexOf(firstProduct) : -1;

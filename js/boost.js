@@ -11,7 +11,7 @@ const GROUPS=[
  {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام","حسابات محذوفة","مشاهدات ل30 بوستات مستقبلية جديدة","مشاهدات ل120 بوستات مستقبلية جديدة"]},
  {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
-const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram","telegram","tiktok"]);
+const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram","telegram","tiktok","youtube"]);
 let products=[];
 let loaded=false;
 function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }
@@ -60,7 +60,7 @@ function openBoostProducts(g,fromHistory){
  if(e.title)e.title.textContent=g.title;if(e.icon)e.icon.textContent="🚀";
  const list=g.products||[];
  if(ORDER_PICKER_GROUPS.has(g.key)){
-  renderGameProductPicker(g.title,{title:g.title,products:list},{image:"/public/images/رشـق صفحات/"+esc(g.image),onBack:()=>openBoost(false)});
+  renderGameProductPicker(g.title,{title:g.title,products:list},{image:"/public/images/رشـق صفحات/"+esc(g.image),onBack:()=>openBoost(false),emptyMessage:g.key==="youtube"?"لا توجد منتجات رشق متاحة ليوتيوب حاليًا.":undefined});
   return;
  }
  e.content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="boostBack">← العودة إلى رشق الصفحات</button><div class="game-products-heading"><strong>'+list.length+' منتج</strong><span>'+esc(g.title)+'</span></div></div><div class="boost-product-grid">'+(list.length?list.map(p=>{
