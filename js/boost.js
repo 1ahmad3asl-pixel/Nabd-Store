@@ -11,6 +11,7 @@ const GROUPS=[
  {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام"]},
  {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
+const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook"]);
 let products=[];
 let loaded=false;
 function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }
@@ -21,7 +22,7 @@ function groupProducts(g){return products.filter(p=>{const t=n((p.category_name|
 function els(){return{services:document.getElementById("servicesSection"),page:document.getElementById("internalPage"),title:document.getElementById("internalPageTitle"),icon:document.getElementById("internalPageIcon"),content:document.getElementById("internalPageContent")};}
 function push(view,data){if(typeof pushInternalHistory==="function")pushInternalHistory(view,data||{});else history.pushState(Object.assign({nabdInternal:true,view},data||{}),"",location.href);}
 function renderBoostGroups(e){
- const groups=GROUPS.map(g=>({key:g.key,title:g.title,products:groupProducts(g)}));
+ const groups=GROUPS.map(g=>({key:g.key,title:g.title,image:g.image,products:groupProducts(g)}));
  e.content.innerHTML='<div class="boost-page-note">اختر المنصة للدخول إلى منتجات الرشق المتاحة.</div><div class="boost-category-grid">'+groups.map(g=>'<button class="boost-category-tile" type="button" data-boost-group="'+g.key+'"><img class="boost-category-image" src="/public/images/رشـق صفحات/'+esc(g.image)+'" alt="" loading="lazy" decoding="async"><span class="boost-category-title">'+esc(g.title)+'</span><span class="boost-category-count">'+g.products.length+' منتج</span></button>').join("")+'</div>';
  e.content.querySelectorAll("[data-boost-group]").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.key===b.dataset.boostGroup);if(g)openBoostProducts(g);}));
  scrollTo({top:0,behavior:"smooth"});
@@ -58,9 +59,8 @@ function openBoostProducts(g,fromHistory){
  const e=els();if(!e.content)return;
  if(e.title)e.title.textContent=g.title;if(e.icon)e.icon.textContent="🚀";
  const list=g.products||[];
- if(g.key==="snapchat" || g.key==="kwai"){
-  const image=g.key==="snapchat"?"/public/images/رشـق صفحات/snapchat.jpg":"/public/images/رشـق صفحات/kwai.jpg";
-  renderGameProductPicker(g.title,{title:g.title,products:list},{image:image,onBack:()=>openBoost(false)});
+ if(ORDER_PICKER_GROUPS.has(g.key)){
+  renderGameProductPicker(g.title,{title:g.title,products:list},{image:"/public/images/رشـق صفحات/"+esc(g.image),onBack:()=>openBoost(false)});
   return;
  }
  e.content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="boostBack">← العودة إلى رشق الصفحات</button><div class="game-products-heading"><strong>'+list.length+' منتج</strong><span>'+esc(g.title)+'</span></div></div><div class="boost-product-grid">'+(list.length?list.map(p=>{
@@ -77,7 +77,7 @@ window.__nabdHandleBoostHistory=function(s){
  if(s.view==="boost")openBoost(true);
  else if(s.view==="boost-products"){
   const g=GROUPS.find(x=>x.key===s.boostGroupKey);
-  if(g)openBoostProducts({key:g.key,title:g.title,products:groupProducts(g)},true);
+  if(g)openBoostProducts({key:g.key,title:g.title,image:g.image,products:groupProducts(g)},true);
   else openBoost(true);
  }
 };
