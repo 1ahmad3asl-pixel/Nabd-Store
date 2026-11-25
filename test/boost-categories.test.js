@@ -9,12 +9,12 @@ const imageDir = path.join(__dirname, "..", "public", "images", "رشـق صفح
 
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
-  assert.match(homeSource, /boost\.js\?v=20261125-boost4/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost5/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
-test("Snapchat and Kwai use the shared product picker with their centered app images", () => {
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\"\]\)/);
+test("Snapchat, Kwai, Facebook, and WhatsApp use the shared product picker", () => {
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\"\]\)/);
   assert.match(boostSource, /image:\"\/public\/images\/رشـق صفحات\/\"\+esc\(g\.image\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
@@ -23,7 +23,14 @@ test("Snapchat and Kwai use the shared product picker with their centered app im
 
 test("Facebook uses the shared product picker with its centered app image", () => {
   assert.match(boostSource, /key:\"facebook\",title:\"رشق فيسبوك\",image:\"facebook\.jpg\"/);
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\"\]\)/);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\"\]\)/);
+  assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
+  assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
+});
+
+test("WhatsApp uses the shared product picker with its centered app image", () => {
+  assert.match(boostSource, /key:\"whatsapp\",title:\"رشق واتساب\",image:\"whatsapp\.jpg\"/);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\"\]\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
 });
