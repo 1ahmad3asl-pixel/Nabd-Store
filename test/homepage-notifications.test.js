@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 
 const appSource = fs.readFileSync(require.resolve("../js/app.js"), "utf8");
-const homeSource = fs.readFileSync(require.resolve("../index.html"), "utf8");
+const homeSource = fs.readFileSync(require.resolve("../pages/index.html"), "utf8");
 const styleSource = fs.readFileSync(require.resolve("../css/style.css"), "utf8");
 
 test("drawer notifications use only the shared drawer action handler", () => {

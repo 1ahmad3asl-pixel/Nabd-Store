@@ -1972,13 +1972,13 @@ app.get("/admin/index.html", (req, res) => {
 app.get("/add-balance.html", async (req, res) => {
   const auth = await customerAuth(req);
   if (!auth) return res.redirect("/customer-login.html");
-  res.sendFile(path.join(__dirname, "add-balance.html"));
+  res.sendFile(path.join(__dirname, "pages", "add-balance.html"));
 });
 
 app.get("/sham-cash-dollar.html", async (req, res) => {
   const auth = await customerAuth(req);
   if (!auth) return res.redirect("/customer-login.html");
-  res.sendFile(path.join(__dirname, "sham-cash-dollar.html"));
+  res.sendFile(path.join(__dirname, "pages", "sham-cash-dollar.html"));
 });
 
 // Prevent Express static serving from exposing the private admin directory through legacy paths.
@@ -1992,6 +1992,10 @@ app.use((req, res, next) => {
 
   if (requestPath === "/admin/") {
     return res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7");
+  }
+  // Public HTML files are mapped to root URLs; never expose their storage path directly.
+  if (requestPath.toLowerCase() === "/pages" || requestPath.toLowerCase().startsWith("/pages/")) {
+    return res.status(404).end();
   }
   if (requestPath === "/admin/login.html") {
     return res.redirect(302, "/Chvcdh678gjFbC55Z6gj5ho7/login.html");
@@ -2027,28 +2031,30 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname), {
-  setHeaders: (res, filePath) => {
-    // لوحة الإدارة لا تُخزّن: CSS/JS والصور الخاصة بها يجب أن تتحدث فورًا.
-    if (filePath.includes(path.sep + "admin" + path.sep) || /[\\/]admin[\\/]/i.test(filePath)) {
-      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
-      res.setHeader("Pragma", "no-cache");
-      res.setHeader("Expires", "0");
-      return;
-    }
-
-    // بقية الملفات الثابتة: 7 أيام، مع تحديث في الخلفية.
-    // HTML العام: لا يملك المتصفح كاشه الخاص؛ Service Worker يدير كاش الصفحات لمدة 30 دقيقة.
-    if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|avif)$/i.test(filePath)) {
-      res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
-    } else if (/\.html$/i.test(filePath)) {
-      res.setHeader("Cache-Control", "no-cache, must-revalidate");
-    }
+function setStaticFileHeaders(res, filePath) {
+  // لوحة الإدارة لا تُخزّن: CSS/JS والصور الخاصة بها يجب أن تتحدث فورًا.
+  if (filePath.includes(path.sep + "admin" + path.sep) || /[\\/]admin[\\/]/i.test(filePath)) {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    return;
   }
-}));
+
+  // بقية الملفات الثابتة: 7 أيام، مع تحديث في الخلفية.
+  // HTML العام: لا يملك المتصفح كاشه الخاص؛ Service Worker يدير كاش الصفحات لمدة 30 دقيقة.
+  if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|avif)$/i.test(filePath)) {
+    res.setHeader("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
+  } else if (/\.html$/i.test(filePath)) {
+    res.setHeader("Cache-Control", "no-cache, must-revalidate");
+  }
+}
+
+// Keep public page URLs at the site root while storing their source under pages/.
+app.use(express.static(path.join(__dirname, "pages"), { index: false, setHeaders: setStaticFileHeaders }));
+app.use(express.static(path.join(__dirname), { setHeaders: setStaticFileHeaders }));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "pages", "index.html"));
 });
 
 app.use("/api", (req, res) => {
@@ -2056,7 +2062,7 @@ app.use("/api", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "pages", "index.html"));
 });
 
 Sentry.setupExpressErrorHandler(app);
