@@ -1,4 +1,4 @@
-const CACHE_VERSION = "nabd-static-v37";
+const CACHE_VERSION = "nabd-static-v38";
 const CACHE_NAME = CACHE_VERSION;
 const PAGE_TTL = 0;
 const ASSET_TTL = 7 * 24 * 60 * 60 * 1000;
@@ -28,6 +28,10 @@ function isAsset(url) {
     /\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|avif)$/i.test(url.pathname);
 }
 
+function isExecutableAsset(url) {
+  return url.origin === self.location.origin && /\.(?:css|js)$/i.test(url.pathname);
+}
+
 function isPublicPage(request, url) {
   return request.mode === "navigate" &&
     url.origin === self.location.origin &&
@@ -36,7 +40,7 @@ function isPublicPage(request, url) {
 }
 
 async function networkAndCache(request, cache) {
-  const response = await fetch(request);
+  const response = await fetch(request, { cache: "no-store" });
   if (response.ok && response.type !== "opaque") {
     const headers = new Headers(response.headers);
     headers.set("x-nabd-cached-at", String(Date.now()));
@@ -62,7 +66,9 @@ self.addEventListener("fetch", event => {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(request);
-      const ttl = isPublicPage(request, url) ? PAGE_TTL : ASSET_TTL;
+      const ttl = isPublicPage(request, url)
+        ? PAGE_TTL
+        : isExecutableAsset(url) ? 0 : ASSET_TTL;
       const cachedAt = cached ? Number(cached.headers.get("x-nabd-cached-at") || 0) : 0;
       const fresh = cached && cachedAt > 0 && (Date.now() - cachedAt < ttl);
 
@@ -80,3 +86,4 @@ self.addEventListener("fetch", event => {
     })());
   }
 });
+
