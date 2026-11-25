@@ -8,10 +8,10 @@ const GROUPS=[
  {key:"whatsapp",title:"رشق واتساب",image:"whatsapp.jpg",a:["رشق واتساب","رشـق واتساب","whatsapp","واتساب","وتساب"]},
  {key:"instagram",title:"رشق انستغرام",image:"instagram.jpg",a:["رشق انستغرام","رشـق انستغرام","instagram","انستغرام","انستجرام"]},
  {key:"tiktok",title:"رشق تيك توك",image:"tiktok.jpg",a:["رشق تيك توك","رشـق تيك توك","tiktok","tik tok","تيك توك"]},
- {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام"]},
+ {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام","حسابات محذوفة","مشاهدات ل30 بوستات مستقبلية جديدة","مشاهدات ل120 بوستات مستقبلية جديدة"]},
  {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
-const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram"]);
+const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram","telegram"]);
 let products=[];
 let loaded=false;
 function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }
