@@ -4,7 +4,14 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const boostSource = fs.readFileSync(require.resolve("../js/boost.js"), "utf8");
+const homeSource = fs.readFileSync(require.resolve("../pages/index.html"), "utf8");
 const imageDir = path.join(__dirname, "..", "public", "images", "رشـق صفحات");
+
+test("homepage can open the boost category through its delegated click handler", () => {
+  assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost1/);
+  assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
+});
 
 test("boost platform categories render their named JPG image placeholders", () => {
   const platforms = ["snapchat", "kwai", "facebook", "whatsapp", "instagram", "telegram", "tiktok", "youtube"];

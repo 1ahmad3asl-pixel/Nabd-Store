@@ -66,6 +66,7 @@ function openBoostProducts(g,fromHistory){
  e.content.querySelectorAll(".boost-buy-btn[data-id]").forEach(b=>b.addEventListener("click",()=>{const p=list.find(x=>String(x.id)===String(b.dataset.id));if(p && isCurrentBoostScope(scope))openProductModal(p);}));
  scrollTo({top:0,behavior:"smooth"});
 }
+window.openBoost=openBoost;
 window.__nabdHandleBoostHistory=function(s){
  if(!s||!s.nabdInternal)return;
  if(s.view==="boost")openBoost(true);
