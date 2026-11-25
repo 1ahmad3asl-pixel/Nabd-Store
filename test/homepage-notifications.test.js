@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 
 const appSource = fs.readFileSync(require.resolve("../js/app.js"), "utf8");
+const homeSource = fs.readFileSync(require.resolve("../index.html"), "utf8");
 
 test("drawer notifications use only the shared drawer action handler", () => {
   const quickMenu = appSource.match(/function initializeQuickMenu\(\) \{([\s\S]*?)\n\}/);
@@ -12,4 +13,9 @@ test("drawer notifications use only the shared drawer action handler", () => {
   assert.ok(drawerMenu, "drawer menu initializer exists");
   assert.doesNotMatch(quickMenu[1], /sidebarNotificationsLink/);
   assert.match(drawerMenu[1], /handleAction\(href\.replace\("#", ""\)\)/);
+});
+
+test("drawer has one profile link", () => {
+  const profileLinks = homeSource.match(/<a\b[^>]*href="\/customer-profile\.html"[^>]*>/g) || [];
+  assert.equal(profileLinks.length, 1);
 });
