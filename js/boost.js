@@ -11,7 +11,7 @@ const GROUPS=[
  {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام","حسابات محذوفة","مشاهدات ل30 بوستات مستقبلية جديدة","مشاهدات ل120 بوستات مستقبلية جديدة"]},
  {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
-const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram","telegram"]);
+const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram","telegram","tiktok"]);
 let products=[];
 let loaded=false;
 function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }

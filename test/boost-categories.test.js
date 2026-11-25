@@ -10,12 +10,12 @@ const normalize = value => String(value).toLowerCase().replace(/[أإآ]/g, "ا"
 
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
-  assert.match(homeSource, /boost\.js\?v=20261125-boost10/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost11/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
-test("Snapchat, Kwai, Facebook, WhatsApp, Instagram, and Telegram use the shared product picker", () => {
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\"\]\)/);
+test("Snapchat, Kwai, Facebook, WhatsApp, Instagram, Telegram, and TikTok use the shared product picker", () => {
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\",\"tiktok\"\]\)/);
   assert.match(boostSource, /image:\"\/public\/images\/رشـق صفحات\/\"\+esc\(g\.image\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
@@ -24,14 +24,14 @@ test("Snapchat, Kwai, Facebook, WhatsApp, Instagram, and Telegram use the shared
 
 test("Facebook uses the shared product picker with its centered app image", () => {
   assert.match(boostSource, /key:\"facebook\",title:\"رشق فيسبوك\",image:\"facebook\.jpg\"/);
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\"\]\)/);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\",\"tiktok\"\]\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
 });
 
 test("WhatsApp uses the shared product picker with its centered app image", () => {
   assert.match(boostSource, /key:\"whatsapp\",title:\"رشق واتساب\",image:\"whatsapp\.jpg\"/);
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\"\]\)/);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\",\"tiktok\"\]\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
 });
@@ -102,7 +102,30 @@ test("Telegram classification includes the six named API products and uses the s
     const text = normalize(product);
     return boostPattern.test(text) && aliases.some(alias => text.includes(alias));
   }).length, 6);
-  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\"\]\)/);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\",\"tiktok\"\]\)/);
+  assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
+});
+
+test("TikTok classification includes all four API boost products and uses the shared picker", () => {
+  const group = boostSource.match(/\{key:\"tiktok\",title:\"[^\"]+\",image:\"[^\"]+\",a:(\[[^\]]+\])\}/);
+  const filter = boostSource.match(/if\(!\/(.+?)\/i\.test\(t\)\)return false/);
+  assert.ok(group, "TikTok group exists");
+  assert.ok(filter, "boost product filter exists");
+
+  const aliases = JSON.parse(group[1]).map(normalize);
+  const boostPattern = new RegExp(filter[1], "i");
+  const products = [
+    "متابعين تيك توك VIP حقيقي ثبات عالي سريع",
+    "اعجابات ومشاهدات فيديو تيك توك VIP حقيقي",
+    "مشاهدات فيديو تيك توك محدث سريع",
+    "مشاركة فيديو تيك توك اكسبلور ثابت الأرخص"
+  ];
+
+  assert.equal(products.filter(product => {
+    const text = normalize(product);
+    return boostPattern.test(text) && aliases.some(alias => text.includes(alias));
+  }).length, 4);
+  assert.match(boostSource, /ORDER_PICKER_GROUPS=new Set\(\[\"snapchat\",\"kwai\",\"facebook\",\"whatsapp\",\"instagram\",\"telegram\",\"tiktok\"\]\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
 });
 
