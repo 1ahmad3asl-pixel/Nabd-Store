@@ -131,7 +131,6 @@ const PRODUCT_STRUCTURE_CACHE_TTL = 30 * 60 * 1000;
 const elements = {
     products: document.getElementById("products"),
     balance: document.getElementById("balance"),
-    heroBalance: document.getElementById("heroBalance"),
     drawer: document.getElementById("drawer"),
     overlay: document.getElementById("overlay"),
     menuBtn: document.getElementById("menuBtn"),
@@ -225,7 +224,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeInternalHistory();
     initializeMenu();
     initializeCategories();
-    initializeQuickMenu();
     initializeModal();
     initializeSounds();
     initializeCustomerNotifications();
@@ -510,7 +508,7 @@ function initializeSounds() {
 
             const target =
                 event.target.closest(
-                    "button, a, .category, .quick-item, .drawer-link, .whatsapp-float, .buy-btn"
+                    "button, a, .category, .drawer-link, .whatsapp-float, .buy-btn"
                 );
 
             if (!target) return;
@@ -2621,33 +2619,6 @@ function initializeSearch() {
 
 
 /* =========================
-   QUICK MENU
-========================= */
-
-function initializeQuickMenu() {
-    document
-        .querySelectorAll(".quick-item")
-        .forEach(function (item) {
-
-            item.addEventListener(
-                "click",
-                function () {
-
-                    const action =
-                        item.getAttribute(
-                            "data-action"
-                        );
-
-                    handleAction(action);
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================
    MODAL
 ========================= */
 
@@ -3115,7 +3086,6 @@ function updateBalance(value) {
     const amount = Number(value) || 0;
     state.balance = amount;
     if (elements.balance) elements.balance.textContent = formatMoney(amount);
-    if (elements.heroBalance) elements.heroBalance.textContent = formatMoney(amount);
 }
 
 function showModal(title, body) {
