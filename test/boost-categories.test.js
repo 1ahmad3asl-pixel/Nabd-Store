@@ -6,10 +6,11 @@ const path = require("node:path");
 const boostSource = fs.readFileSync(require.resolve("../js/boost.js"), "utf8");
 const homeSource = fs.readFileSync(require.resolve("../pages/index.html"), "utf8");
 const imageDir = path.join(__dirname, "..", "public", "images", "رشـق صفحات");
+const normalize = value => String(value).toLowerCase().replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ـ/g, "").replace(/\s+/g, " ").trim();
 
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
-  assert.match(homeSource, /boost\.js\?v=20261125-boost6/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost7/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
@@ -45,6 +46,32 @@ test("boost product matching includes WhatsApp reactions and members but exclude
   assert.equal(matchesBoostType.test("تفاعل منشور وتساب قلب"), true);
   assert.equal(matchesBoostType.test("اعضاء قناة واتساب"), true);
   assert.equal(matchesBoostType.test("ارقام واتساب s1"), false);
+});
+
+test("Facebook classification includes all nine API service names written with the short alias", () => {
+  const facebookGroup = boostSource.match(/\{key:\"facebook\",title:\"[^\"]+\",image:\"[^\"]+\",a:(\[[^\]]+\])\}/);
+  const filter = boostSource.match(/if\(!\/(.+?)\/i\.test\(t\)\)return false/);
+  assert.ok(facebookGroup, "Facebook group exists");
+  assert.ok(filter, "boost product filter exists");
+
+  const aliases = JSON.parse(facebookGroup[1]).map(normalize);
+  const boostPattern = new RegExp(filter[1], "i");
+  const products = [
+    "متابعين صفحة حساب فيسبوك مدى الحياة محدث",
+    "متابعون صفحة حساب فيس بوك مدى الحياة",
+    "تفاعل منشور فيس لايك",
+    "تفاعل منشور فيس أحببته",
+    "تفاعل منشور فيس أحزنني",
+    "تفاعل منشور فيس أدعمه",
+    "تفاعل منشور فيس أغضبني",
+    "تفاعل منشور فيس واو",
+    "مشاهدات ريلز فيسبوك مدى الحياة الأرخص"
+  ];
+
+  assert.equal(products.filter(product => {
+    const text = normalize(product);
+    return boostPattern.test(text) && aliases.some(alias => text.includes(alias));
+  }).length, 9);
 });
 
 test("boost platform categories render their named JPG image placeholders", () => {

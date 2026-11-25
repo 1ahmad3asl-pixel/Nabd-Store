@@ -4,7 +4,7 @@
 const GROUPS=[
  {key:"snapchat",title:"رشق سناب شات",image:"snapchat.jpg",a:["رشق سناب شات","رشـق سناب شات","snapchat","سناب شات","سناب"]},
  {key:"kwai",title:"رشق كواي",image:"kwai.jpg",a:["رشق كواي","رشـق كواي","kwai","كواي"]},
- {key:"facebook",title:"رشق فيسبوك",image:"facebook.jpg",a:["رشق فيسبوك","رشـق فيسبوك","facebook","فيسبوك","فيس بوك"]},
+ {key:"facebook",title:"رشق فيسبوك",image:"facebook.jpg",a:["رشق فيسبوك","رشـق فيسبوك","facebook","فيسبوك","فيس بوك","فيس"]},
  {key:"whatsapp",title:"رشق واتساب",image:"whatsapp.jpg",a:["رشق واتساب","رشـق واتساب","whatsapp","واتساب","وتساب"]},
  {key:"instagram",title:"رشق انستغرام",image:"instagram.jpg",a:["رشق انستغرام","رشـق انستغرام","instagram","انستغرام","انستجرام"]},
  {key:"tiktok",title:"رشق تيك توك",image:"tiktok.jpg",a:["رشق تيك توك","رشـق تيك توك","tiktok","tik tok","تيك توك"]},
