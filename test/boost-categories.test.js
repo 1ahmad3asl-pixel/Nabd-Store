@@ -10,7 +10,7 @@ const normalize = value => String(value).toLowerCase().replace(/[أإآ]/g, "ا"
 
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
-  assert.match(homeSource, /boost\.js\?v=20261125-boost7/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost8/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
@@ -46,6 +46,16 @@ test("boost product matching includes WhatsApp reactions and members but exclude
   assert.equal(matchesBoostType.test("تفاعل منشور وتساب قلب"), true);
   assert.equal(matchesBoostType.test("اعضاء قناة واتساب"), true);
   assert.equal(matchesBoostType.test("ارقام واتساب s1"), false);
+});
+
+test("boost product matching includes video share services but excludes generic Kwai products", () => {
+  const filter = boostSource.match(/if\(!\/(.+?)\/i\.test\(t\)\)return false/);
+  assert.ok(filter, "boost product filter exists");
+  const matchesBoostType = new RegExp(filter[1], "i");
+
+  assert.match(filter[1], /مشاركات\|مشاركة/);
+  assert.equal(matchesBoostType.test("مشاركات فيديو كواي ثابت"), true);
+  assert.equal(matchesBoostType.test("كواي لايف KWAI LIVE"), false);
 });
 
 test("Facebook classification includes all nine API service names written with the short alias", () => {
