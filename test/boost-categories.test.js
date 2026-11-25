@@ -9,15 +9,24 @@ const imageDir = path.join(__dirname, "..", "public", "images", "رشـق صفح
 
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
-  assert.match(homeSource, /boost\.js\?v=20261125-boost2/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost3/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
 test("Snapchat uses the shared product picker with API fields and its centered app image", () => {
-  assert.match(boostSource, /g\.key===\"snapchat\"/);
-  assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:\"\/public\/images\/رشـق صفحات\/snapchat\.jpg\"/);
+  assert.match(boostSource, /g\.key===\"snapchat\" \|\| g\.key===\"kwai\"/);
+  assert.match(boostSource, /\?\"\/public\/images\/رشـق صفحات\/snapchat\.jpg\":\"\/public\/images\/رشـق صفحات\/kwai\.jpg\"/);
+  assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:image/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
   assert.match(homeSource, /app\.js\?v=20261125-order1/);
+});
+
+test("Kwai uses the shared product picker with its centered app image", () => {
+  assert.match(boostSource, /g\.key===\"snapchat\" \|\| g\.key===\"kwai\"/);
+  assert.match(boostSource, /\?\"\/public\/images\/رشـق صفحات\/snapchat\.jpg\":\"\/public\/images\/رشـق صفحات\/kwai\.jpg\"/);
+  assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:image/);
+  assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
+  assert.match(homeSource, /boost\.js\?v=20261125-boost3/);
 });
 
 test("boost platform categories render their named JPG image placeholders", () => {

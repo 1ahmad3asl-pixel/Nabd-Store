@@ -58,8 +58,9 @@ function openBoostProducts(g,fromHistory){
  const e=els();if(!e.content)return;
  if(e.title)e.title.textContent=g.title;if(e.icon)e.icon.textContent="🚀";
  const list=g.products||[];
- if(g.key==="snapchat"){
-  renderGameProductPicker(g.title,{title:g.title,products:list},{image:"/public/images/رشـق صفحات/snapchat.jpg",onBack:()=>openBoost(false)});
+ if(g.key==="snapchat" || g.key==="kwai"){
+  const image=g.key==="snapchat"?"/public/images/رشـق صفحات/snapchat.jpg":"/public/images/رشـق صفحات/kwai.jpg";
+  renderGameProductPicker(g.title,{title:g.title,products:list},{image:image,onBack:()=>openBoost(false)});
   return;
  }
  e.content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="boostBack">← العودة إلى رشق الصفحات</button><div class="game-products-heading"><strong>'+list.length+' منتج</strong><span>'+esc(g.title)+'</span></div></div><div class="boost-product-grid">'+(list.length?list.map(p=>{
