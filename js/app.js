@@ -2189,7 +2189,7 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     });
     // صورة التطبيق هي المرجع الموحد داخل المستوى الثالث وصفحة المنتجات.
     // لا نسمح لصورة تصنيف منتج مختلف باستبدال صورة اللعبة.
-    const image = (gameImage && gameImage.image ? gameImage.image : "") ||
+    const image = pickerOptions.image || (gameImage && gameImage.image ? gameImage.image : "") ||
         getProductImage(firstProduct);
     const imageSource = image
         ? (String(image).startsWith("http") ? image : BACKEND_URL + image)

@@ -58,6 +58,10 @@ function openBoostProducts(g,fromHistory){
  const e=els();if(!e.content)return;
  if(e.title)e.title.textContent=g.title;if(e.icon)e.icon.textContent="🚀";
  const list=g.products||[];
+ if(g.key==="snapchat"){
+  renderGameProductPicker(g.title,{title:g.title,products:list},{image:"/public/images/رشـق صفحات/snapchat.jpg",onBack:()=>openBoost(false)});
+  return;
+ }
  e.content.innerHTML='<div class="app-level-toolbar"><button class="pubg-back" type="button" id="boostBack">← العودة إلى رشق الصفحات</button><div class="game-products-heading"><strong>'+list.length+' منتج</strong><span>'+esc(g.title)+'</span></div></div><div class="boost-product-grid">'+(list.length?list.map(p=>{
   const ok=p.available!==false&&p.available!==0,price=getGameProductPrice(p),live=price!==null;
   return '<article class="boost-product-card"><div class="boost-product-name">'+esc(p.name||"منتج")+'</div><div class="boost-product-meta">'+esc(p.category_name||"")+'</div><div class="boost-product-price">'+(live?formatProductMoney(p,price):"السعر غير متاح")+'</div><button class="buy-btn boost-buy-btn" type="button" data-id="'+esc(String(p.id))+'" '+(ok&&live?"":"disabled")+'>'+ (ok?(live?"شراء الآن":"جاري تحديث السعر"):"غير متوفر")+'</button></article>';
