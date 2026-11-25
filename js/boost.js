@@ -11,14 +11,14 @@ const GROUPS=[
  {key:"telegram",title:"رشق تلجرام",image:"telegram.jpg",a:["رشق تلجرام","رشـق تلجرام","telegram","تلجرام","تليجرام","تيليجرام"]},
  {key:"youtube",title:"رشق يوتيوب",image:"youtube.jpg",a:["رشق يوتيوب","رشـق يوتيوب","youtube","يوتيوب"]}
 ];
-const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp"]);
+const ORDER_PICKER_GROUPS=new Set(["snapchat","kwai","facebook","whatsapp","instagram"]);
 let products=[];
 let loaded=false;
 function captureBoostScope(groupKey){ if(typeof captureSectionScope==="function") return captureSectionScope(NabdScope.BOOST,groupKey||null); return {revision:Date.now(),key:groupKey||"boost"}; }
 function isCurrentBoostScope(snapshot){ if(typeof isCurrentSectionScope==="function") return isCurrentSectionScope(snapshot); return !!snapshot; }
 function n(v){return typeof normalizeGameText==="function"?normalizeGameText(String(v||"")):String(v||"").toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ـ/g,"").replace(/\s+/g," ").trim();}
 function esc(v){return typeof escapeHtml==="function"?escapeHtml(v):String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
-function groupProducts(g){return products.filter(p=>{const t=n((p.category_name||"")+" "+(p.name||""));if(!/(رشق|boost|followers?|likes?|views?|members?|subscribers?|متابع|مشاهد|اعجاب|لايك|مشترك|تفاعل|اعضاء|مشاركات|مشاركة|shares?)/i.test(t))return false;return g.a.map(n).some(a=>t.includes(a));});}
+function groupProducts(g){return products.filter(p=>{const t=n((p.category_name||"")+" "+(p.name||""));if(!/(رشق|boost|followers?|likes?|views?|members?|subscribers?|متابع|مشاهد|اعجاب|لايك|مشترك|تفاعل|اعضاء|مشاركات|مشاركة|shares?|تعليق(?:ات)?|comments?)/i.test(t))return false;return g.a.map(n).some(a=>t.includes(a));});}
 function els(){return{services:document.getElementById("servicesSection"),page:document.getElementById("internalPage"),title:document.getElementById("internalPageTitle"),icon:document.getElementById("internalPageIcon"),content:document.getElementById("internalPageContent")};}
 function push(view,data){if(typeof pushInternalHistory==="function")pushInternalHistory(view,data||{});else history.pushState(Object.assign({nabdInternal:true,view},data||{}),"",location.href);}
 function renderBoostGroups(e){
