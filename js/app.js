@@ -2171,13 +2171,8 @@ function renderGameProductPicker(gameTitle, group, pickerOptions) {
     const listHtml = products.map(function(product, index) {
         const available = product.available !== false && product.available !== 0;
         const price = getGameProductPrice(product);
-        const optionImage = safeImageUrl(getProductImage(product));
-        const optionImageHtml = optionImage
-            ? '<span class="pubg-option-image"><img src="' + escapeHtml(optionImage) + '" alt="" loading="lazy"></span>'
-            : '<span class="pubg-option-image pubg-option-image-placeholder">📲</span>';
         return '<button class="pubg-option' + (available ? '' : ' is-disabled') + '" type="button" data-pubg-index="' + index + '"' +
             (available ? '' : ' disabled') + '>' +
-            optionImageHtml +
             '<span class="pubg-option-name">' + escapeHtml(product.name || "منتج") + '</span>' +
             '<span class="pubg-option-price">' + (price === null ? 'السعر غير متاح' : formatProductMoney(product, price)) + '</span>' +
             (available ? '' : '<span class="pubg-option-status">غير متوفر</span>') +
