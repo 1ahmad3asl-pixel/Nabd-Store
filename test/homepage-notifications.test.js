@@ -28,3 +28,7 @@ test("homepage excludes its hidden intro, quick menu, footer, and their handlers
   assert.doesNotMatch(styleSource, /\.hero\s*,\s*\.quick-menu\s*,\s*\.main-footer\s*\{\s*display\s*:\s*none\s*!important\s*;/);
   assert.doesNotMatch(styleSource, /\.(?:hero(?:-[\w-]+)?|quick-(?:menu|item|icon)|main-footer|footer-logo)(?![\w-])/);
 });
+
+test("levels modal has no obsolete removed-header styling", () => {
+  assert.doesNotMatch(homeSource, /levels-header-removed/);
+});
