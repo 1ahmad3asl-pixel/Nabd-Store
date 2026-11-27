@@ -152,3 +152,47 @@ test("game UI consumes canonical classifier keys and loads the classifier before
   assert.match(appSource, /gameKey = classification\.gameKey/);
   assert.match(homeSource, /<script src="\/lib\/nemer-product-classifier\.js[^>]*><\/script><script src="js\/app\.js/);
 });
+
+test("real catalog classification has a stable audited result with no overlaps", () => {
+  const report = classifyCatalog(realCatalog, realConfig);
+  assert.deepEqual(report.summary, {
+    classified: 2286,
+    review: 67,
+    unclassified: 12,
+    invalid: 0,
+    bySection: {
+      digital: 103,
+      boost: 38,
+      games: 833,
+      balance: 232,
+      appCredits: 1054,
+      giftCards: 26
+    }
+  });
+  assert.deepEqual(report.duplicateIds, []);
+  assert.deepEqual(report.overlaps, []);
+});
+
+test("ambiguous game parent categories use their explicit canonical game keys", () => {
+  const cases = [
+    [3277, "Hero Clash"],
+    [3321, "Clash of Plants"],
+    [3304, "Astral Guardians"],
+    [3261, "Yalla Ludo Gold"],
+    [3273, "Yalla Ludo Diamonds Codes"],
+    [3274, "Yalla Ludo Gold Codes"]
+  ];
+  for (const [parentId, gameKey] of cases) {
+    const product = realCatalog.find(item => Number(item.parent_id) === parentId);
+    assert.ok(product, `parent_id ${parentId} exists`);
+    assert.equal(classifyProduct(product, realConfig).gameKey, gameKey);
+  }
+});
+
+test("the 20 supplier categories remain distinct from the 18 existing store home tiles", () => {
+  const homeSource = fs.readFileSync(path.join(__dirname, "..", "pages", "index.html"), "utf8");
+  assert.equal(realConfig.sectionTopology.supplierMainCategoryCount, 20);
+  assert.equal(realConfig.sectionTopology.storeMainSectionCount, 18);
+  assert.equal(realConfig.sectionTopology.storeSections.length, 18);
+  assert.equal((homeSource.match(/<button class="category category-tile"/g) || []).length, 18);
+});
