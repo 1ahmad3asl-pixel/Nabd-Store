@@ -175,644 +175,736 @@
       "group": "parent-3256",
       "title": "Yalla Ludo Diamonds •",
       "expectedCategoryName": "Yalla Ludo Diamonds •",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "Yalla Ludo"
     },
     "3257": {
       "section": "games",
       "group": "parent-3257",
       "expectedCategoryName": "FarLight84 •",
-      "sortRule": "source",
-      "title": "FarLight84 •"
+      "sortRule": "price_asc",
+      "title": "FarLight84 •",
+      "gameKey": "Farlight 84"
     },
     "3259": {
       "section": "games",
       "group": "parent-3259",
       "expectedCategoryName": "Lords mobile •",
-      "sortRule": "source",
-      "title": "Lords mobile •"
+      "sortRule": "price_asc",
+      "title": "Lords mobile •",
+      "gameKey": "Lords mobile"
     },
     "3261": {
       "section": "games",
       "group": "parent-3261",
       "title": "Yalla Ludo Gold •",
       "expectedCategoryName": "Yalla Ludo Gold •",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "Yalla Ludo Gold"
     },
     "3263": {
       "section": "games",
       "group": "parent-3263",
       "expectedCategoryName": "Guns of glory •",
-      "sortRule": "source",
-      "title": "Guns of glory •"
+      "sortRule": "price_asc",
+      "title": "Guns of glory •",
+      "gameKey": "Guns of Glory"
     },
     "3264": {
       "section": "games",
       "group": "parent-3264",
       "expectedCategoryName": "Project entropy •",
-      "sortRule": "source",
-      "title": "Project entropy •"
+      "sortRule": "price_asc",
+      "title": "Project entropy •",
+      "gameKey": "Project entropy"
     },
     "3265": {
       "section": "games",
       "group": "parent-3265",
       "expectedCategoryName": "8Ball Pool •",
-      "sortRule": "source",
-      "title": "8Ball Pool •"
+      "sortRule": "price_asc",
+      "title": "8Ball Pool •",
+      "gameKey": "8 Ball Pool"
     },
     "3266": {
       "section": "games",
       "group": "parent-3266",
       "expectedCategoryName": "Whiteout Survival •",
-      "sortRule": "source",
-      "title": "Whiteout Survival •"
+      "sortRule": "price_asc",
+      "title": "Whiteout Survival •",
+      "gameKey": "Whiteout Survival"
     },
     "3267": {
       "section": "games",
       "group": "parent-3267",
       "expectedCategoryName": "Marvel Reveals •",
-      "sortRule": "source",
-      "title": "Marvel Reveals •"
+      "sortRule": "price_asc",
+      "title": "Marvel Reveals •",
+      "gameKey": "Marvel Rivals"
     },
     "3268": {
       "section": "games",
       "group": "parent-3268",
       "expectedCategoryName": "City Of Crime Gang War •",
-      "sortRule": "source",
-      "title": "City Of Crime Gang War •"
+      "sortRule": "price_asc",
+      "title": "City Of Crime Gang War •",
+      "gameKey": "City Of Crime Gang War"
     },
     "3269": {
       "section": "games",
       "group": "parent-3269",
       "expectedCategoryName": "Stumble Guys •",
-      "sortRule": "source",
-      "title": "Stumble Guys •"
+      "sortRule": "price_asc",
+      "title": "Stumble Guys •",
+      "gameKey": "Stumble Guys"
     },
     "3270": {
       "section": "games",
       "group": "parent-3270",
       "expectedCategoryName": "Super SUS •",
-      "sortRule": "source",
-      "title": "Super SUS •"
+      "sortRule": "price_asc",
+      "title": "Super SUS •",
+      "gameKey": "Super SUS"
     },
     "3271": {
       "section": "games",
       "group": "parent-3271",
       "expectedCategoryName": "Genshen Impact •",
-      "sortRule": "source",
-      "title": "Genshen Impact •"
+      "sortRule": "price_asc",
+      "title": "Genshen Impact •",
+      "gameKey": "Genshin Impact"
     },
     "3273": {
       "section": "games",
       "group": "parent-3273",
       "title": "Yalla Ludo Diamonds Codes •",
       "expectedCategoryName": "Yalla Ludo Diamonds Codes •",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "Yalla Ludo Diamonds Codes"
     },
     "3274": {
       "section": "games",
       "group": "parent-3274",
       "title": "Yalla Ludo Gold Codes •",
       "expectedCategoryName": "Yalla Ludo Gold Codes •",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "Yalla Ludo Gold Codes"
     },
     "3275": {
       "section": "games",
       "group": "parent-3275",
       "expectedCategoryName": "Honkai : Star Rail •",
-      "sortRule": "source",
-      "title": "Honkai : Star Rail •"
+      "sortRule": "price_asc",
+      "title": "Honkai : Star Rail •",
+      "gameKey": "Honkai: Star Rail"
     },
     "3276": {
       "section": "games",
       "group": "parent-3276",
       "expectedCategoryName": "Oxide : Survival Island •",
-      "sortRule": "source",
-      "title": "Oxide : Survival Island •"
+      "sortRule": "price_asc",
+      "title": "Oxide : Survival Island •",
+      "gameKey": "Oxide : Survival Island"
     },
     "3277": {
       "section": "games",
       "group": "parent-3277",
       "expectedCategoryName": "Hero Clash •",
-      "sortRule": "source",
-      "title": "Hero Clash •"
+      "sortRule": "price_asc",
+      "title": "Hero Clash •",
+      "gameKey": "Hero Clash"
     },
     "3278": {
       "section": "games",
       "group": "parent-3278",
       "expectedCategoryName": "Mobile Legend Global •",
-      "sortRule": "source",
-      "title": "Mobile Legend Global •"
+      "sortRule": "price_asc",
+      "title": "Mobile Legend Global •",
+      "gameKey": "Mobile Legends: Bang Bang"
     },
     "3279": {
       "section": "games",
       "group": "parent-3279",
       "expectedCategoryName": "Mobile Legends Turkish •",
-      "sortRule": "source",
-      "title": "Mobile Legends Turkish •"
+      "sortRule": "price_asc",
+      "title": "Mobile Legends Turkish •",
+      "gameKey": "Mobile Legends: Bang Bang"
     },
     "3280": {
       "section": "games",
       "group": "parent-3280",
       "title": "Zepeto •",
       "expectedCategoryName": "Zepeto •",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "Zepeto"
     },
     "3281": {
       "section": "games",
       "group": "parent-3281",
       "expectedCategoryName": "King Shot •",
-      "sortRule": "source",
-      "title": "King Shot •"
+      "sortRule": "price_asc",
+      "title": "King Shot •",
+      "gameKey": "King Shot"
     },
     "3283": {
       "section": "games",
       "group": "parent-3283",
       "expectedCategoryName": "Bullet Echo •",
-      "sortRule": "source",
-      "title": "Bullet Echo •"
+      "sortRule": "price_asc",
+      "title": "Bullet Echo •",
+      "gameKey": "Bullet Echo"
     },
     "3284": {
       "section": "games",
       "group": "parent-3284",
       "expectedCategoryName": "Crystal of Atlan •",
-      "sortRule": "source",
-      "title": "Crystal of Atlan •"
+      "sortRule": "price_asc",
+      "title": "Crystal of Atlan •",
+      "gameKey": "Crystal of Atlan"
     },
     "3285": {
       "section": "games",
       "group": "parent-3285",
       "expectedCategoryName": "Devil May Cry: Peak of Combat •",
-      "sortRule": "source",
-      "title": "Devil May Cry: Peak of Combat •"
+      "sortRule": "price_asc",
+      "title": "Devil May Cry: Peak of Combat •",
+      "gameKey": "Devil May Cry: Peak of Combat"
     },
     "3286": {
       "section": "games",
       "group": "parent-3286",
       "expectedCategoryName": "Acecraft •",
-      "sortRule": "source",
-      "title": "Acecraft •"
+      "sortRule": "price_asc",
+      "title": "Acecraft •",
+      "gameKey": "Acecraft"
     },
     "3287": {
       "section": "games",
       "group": "parent-3287",
       "expectedCategoryName": "Blood Strike (GLOBAL) •",
-      "sortRule": "source",
-      "title": "Blood Strike (GLOBAL) •"
+      "sortRule": "price_asc",
+      "title": "Blood Strike (GLOBAL) •",
+      "gameKey": "Blood Strike"
     },
     "3288": {
       "section": "games",
       "group": "parent-3288",
       "expectedCategoryName": "Blood strike العرب •",
-      "sortRule": "source",
-      "title": "Blood strike العرب •"
+      "sortRule": "price_asc",
+      "title": "Blood strike العرب •",
+      "gameKey": "Blood Strike"
     },
     "3289": {
       "section": "games",
       "group": "parent-3289",
       "expectedCategoryName": "Ludo clud •",
-      "sortRule": "source",
-      "title": "Ludo clud •"
+      "sortRule": "price_asc",
+      "title": "Ludo clud •",
+      "gameKey": "Ludo Club"
     },
     "3290": {
       "section": "games",
       "group": "parent-3290",
       "expectedCategoryName": "Arena Breakout •",
-      "sortRule": "source",
-      "title": "Arena Breakout •"
+      "sortRule": "price_asc",
+      "title": "Arena Breakout •",
+      "gameKey": "Arena Breakout"
     },
     "3291": {
       "section": "games",
       "group": "parent-3291",
       "expectedCategoryName": "Honor of king •",
-      "sortRule": "source",
-      "title": "Honor of king •"
+      "sortRule": "price_asc",
+      "title": "Honor of king •",
+      "gameKey": "Honor of Kings"
     },
     "3292": {
       "section": "games",
       "group": "parent-3292",
       "expectedCategoryName": "Age Of Empires Mobile •",
-      "sortRule": "source",
-      "title": "Age Of Empires Mobile •"
+      "sortRule": "price_asc",
+      "title": "Age Of Empires Mobile •",
+      "gameKey": "Age Of Empires Mobile"
     },
     "3293": {
       "section": "games",
       "group": "parent-3293",
       "expectedCategoryName": "division resurgence •",
-      "sortRule": "source",
-      "title": "division resurgence •"
+      "sortRule": "price_asc",
+      "title": "division resurgence •",
+      "gameKey": "Division Resurgence"
     },
     "3294": {
       "section": "games",
       "group": "parent-3294",
       "expectedCategoryName": "afk journey •",
-      "sortRule": "source",
-      "title": "afk journey •"
+      "sortRule": "price_asc",
+      "title": "afk journey •",
+      "gameKey": "AFK Journey"
     },
     "3295": {
       "section": "games",
       "group": "parent-3295",
       "expectedCategoryName": "ghost story love destiny •",
-      "sortRule": "source",
-      "title": "ghost story love destiny •"
+      "sortRule": "price_asc",
+      "title": "ghost story love destiny •",
+      "gameKey": "Ghost Story Love Destiny"
     },
     "3296": {
       "section": "games",
       "group": "parent-3296",
       "expectedCategoryName": "age of magic •",
-      "sortRule": "source",
-      "title": "age of magic •"
+      "sortRule": "price_asc",
+      "title": "age of magic •",
+      "gameKey": "Age of Magic"
     },
     "3297": {
       "section": "games",
       "group": "parent-3297",
       "expectedCategoryName": "goddess of victory nikke •",
-      "sortRule": "source",
-      "title": "goddess of victory nikke •"
+      "sortRule": "price_asc",
+      "title": "goddess of victory nikke •",
+      "gameKey": "Goddess of Victory: NIKKE"
     },
     "3298": {
       "section": "games",
       "group": "parent-3298",
       "expectedCategoryName": "golden spatula •",
-      "sortRule": "source",
-      "title": "golden spatula •"
+      "sortRule": "price_asc",
+      "title": "golden spatula •",
+      "gameKey": "Golden Spatula"
     },
     "3299": {
       "section": "games",
       "group": "parent-3299",
       "expectedCategoryName": "growtopia •",
-      "sortRule": "source",
-      "title": "growtopia •"
+      "sortRule": "price_asc",
+      "title": "growtopia •",
+      "gameKey": "Growtopia"
     },
     "3300": {
       "section": "games",
       "group": "parent-3300",
       "expectedCategoryName": "arena of valor eu •",
-      "sortRule": "source",
-      "title": "arena of valor eu •"
+      "sortRule": "price_asc",
+      "title": "arena of valor eu •",
+      "gameKey": "Arena of Valor EU"
     },
     "3301": {
       "section": "games",
       "group": "parent-3301",
       "expectedCategoryName": "haikyu fly high sea •",
-      "sortRule": "source",
-      "title": "haikyu fly high sea •"
+      "sortRule": "price_asc",
+      "title": "haikyu fly high sea •",
+      "gameKey": "Haikyu Fly High"
     },
     "3302": {
       "section": "games",
       "group": "parent-3302",
       "expectedCategoryName": "arknights endfield •",
-      "sortRule": "source",
-      "title": "arknights endfield •"
+      "sortRule": "price_asc",
+      "title": "arknights endfield •",
+      "gameKey": "Arknights Endfield"
     },
     "3303": {
       "section": "games",
       "group": "parent-3303",
       "expectedCategoryName": "hatsune miku colorful stage •",
-      "sortRule": "source",
-      "title": "hatsune miku colorful stage •"
+      "sortRule": "price_asc",
+      "title": "hatsune miku colorful stage •",
+      "gameKey": "Hatsune Miku: Colorful Stage"
     },
     "3304": {
       "section": "games",
       "group": "parent-3304",
       "expectedCategoryName": "astral guardians cyber fantasy •",
-      "sortRule": "source",
-      "title": "astral guardians cyber fantasy •"
+      "sortRule": "price_asc",
+      "title": "astral guardians cyber fantasy •",
+      "gameKey": "Astral Guardians"
     },
     "3305": {
       "section": "games",
       "group": "parent-3305",
       "expectedCategoryName": "heaven burns red •",
-      "sortRule": "source",
-      "title": "heaven burns red •"
+      "sortRule": "price_asc",
+      "title": "heaven burns red •",
+      "gameKey": "Heaven Burns Red"
     },
     "3306": {
       "section": "games",
       "group": "parent-3306",
       "expectedCategoryName": "ballistic hero vng •",
-      "sortRule": "source",
-      "title": "ballistic hero vng •"
+      "sortRule": "price_asc",
+      "title": "ballistic hero vng •",
+      "gameKey": "Ballistic Hero VNG"
     },
     "3307": {
       "section": "games",
       "group": "parent-3307",
       "expectedCategoryName": "be the king •",
-      "sortRule": "source",
-      "title": "be the king •"
+      "sortRule": "price_asc",
+      "title": "be the king •",
+      "gameKey": "Be The King"
     },
     "3308": {
       "section": "games",
       "group": "parent-3308",
       "expectedCategoryName": "blade x odyssey of heroes •",
-      "sortRule": "source",
-      "title": "blade x odyssey of heroes •"
+      "sortRule": "price_asc",
+      "title": "blade x odyssey of heroes •",
+      "gameKey": "Blade X Odyssey of Heroes"
     },
     "3312": {
       "section": "games",
       "group": "parent-3312",
       "expectedCategoryName": "blockman go •",
-      "sortRule": "source",
-      "title": "blockman go •"
+      "sortRule": "price_asc",
+      "title": "blockman go •",
+      "gameKey": "Blockman Go"
     },
     "3313": {
       "section": "games",
       "group": "parent-3313",
       "expectedCategoryName": "hyper front •",
-      "sortRule": "source",
-      "title": "hyper front •"
+      "sortRule": "price_asc",
+      "title": "hyper front •",
+      "gameKey": "Hyper Front"
     },
     "3314": {
       "section": "games",
       "group": "parent-3314",
       "expectedCategoryName": "idol party •",
-      "sortRule": "source",
-      "title": "idol party •"
+      "sortRule": "price_asc",
+      "title": "idol party •",
+      "gameKey": "Idol Party"
     },
     "3315": {
       "section": "games",
       "group": "parent-3315",
       "expectedCategoryName": "captain tsubasa ace •",
-      "sortRule": "source",
-      "title": "captain tsubasa ace •"
+      "sortRule": "price_asc",
+      "title": "captain tsubasa ace •",
+      "gameKey": "Captain Tsubasa: Ace"
     },
     "3316": {
       "section": "games",
       "group": "parent-3316",
       "expectedCategoryName": "infinite lagrange •",
-      "sortRule": "source",
-      "title": "infinite lagrange •"
+      "sortRule": "price_asc",
+      "title": "infinite lagrange •",
+      "gameKey": "Infinite Lagrange"
     },
     "3317": {
       "section": "games",
       "group": "parent-3317",
       "expectedCategoryName": "isekai feast tales of recipes •",
-      "sortRule": "source",
-      "title": "isekai feast tales of recipes •"
+      "sortRule": "price_asc",
+      "title": "isekai feast tales of recipes •",
+      "gameKey": "Isekai Feast"
     },
     "3318": {
       "section": "games",
       "group": "parent-3318",
       "expectedCategoryName": "jade dynasty new fantasy •",
-      "sortRule": "source",
-      "title": "jade dynasty new fantasy •"
+      "sortRule": "price_asc",
+      "title": "jade dynasty new fantasy •",
+      "gameKey": "Jade Dynasty"
     },
     "3319": {
       "section": "games",
       "group": "parent-3319",
       "expectedCategoryName": "civilization eras and allies •",
-      "sortRule": "source",
-      "title": "civilization eras and allies •"
+      "sortRule": "price_asc",
+      "title": "civilization eras and allies •",
+      "gameKey": "Civilization: Eras & Allies"
     },
     "3320": {
       "section": "games",
       "group": "parent-3320",
       "expectedCategoryName": "journey renewed fate fantasy •",
-      "sortRule": "source",
-      "title": "journey renewed fate fantasy •"
+      "sortRule": "price_asc",
+      "title": "journey renewed fate fantasy •",
+      "gameKey": "Journey Renewed: Fate Fantasy"
     },
     "3321": {
       "section": "games",
       "group": "parent-3321",
       "expectedCategoryName": "clash of plants •",
-      "sortRule": "source",
-      "title": "clash of plants •"
+      "sortRule": "price_asc",
+      "title": "clash of plants •",
+      "gameKey": "Clash of Plants"
     },
     "3322": {
       "section": "games",
       "group": "parent-3322",
       "expectedCategoryName": "kings choice sea •",
-      "sortRule": "source",
-      "title": "kings choice sea •"
+      "sortRule": "price_asc",
+      "title": "kings choice sea •",
+      "gameKey": "King's Choice SEA"
     },
     "3323": {
       "section": "games",
       "group": "parent-3323",
       "expectedCategoryName": "cloud song saga of skywalkers •",
-      "sortRule": "source",
-      "title": "cloud song saga of skywalkers •"
+      "sortRule": "price_asc",
+      "title": "cloud song saga of skywalkers •",
+      "gameKey": "Cloud Song: Saga of Skywalkers"
     },
     "3324": {
       "section": "games",
       "group": "parent-3324",
       "expectedCategoryName": "kuroko street rivals •",
-      "sortRule": "source",
-      "title": "kuroko street rivals •"
+      "sortRule": "price_asc",
+      "title": "kuroko street rivals •",
+      "gameKey": "Kuroko Street Rivals"
     },
     "3325": {
       "section": "games",
       "group": "parent-3325",
       "expectedCategoryName": "legacy of discord furiouswings •",
-      "sortRule": "source",
-      "title": "legacy of discord furiouswings •"
+      "sortRule": "price_asc",
+      "title": "legacy of discord furiouswings •",
+      "gameKey": "Legacy of Discord: FuriousWings"
     },
     "3326": {
       "section": "games",
       "group": "parent-3326",
       "expectedCategoryName": "legend of the phoenix •",
-      "sortRule": "source",
-      "title": "legend of the phoenix •"
+      "sortRule": "price_asc",
+      "title": "legend of the phoenix •",
+      "gameKey": "Legend of the Phoenix"
     },
     "3327": {
       "section": "games",
       "group": "parent-3327",
       "expectedCategoryName": "crossfire legend •",
-      "sortRule": "source",
-      "title": "crossfire legend •"
+      "sortRule": "price_asc",
+      "title": "crossfire legend •",
+      "gameKey": "Crossfire Legend"
     },
     "3328": {
       "section": "games",
       "group": "parent-3328",
       "expectedCategoryName": "crossout mobile •",
-      "sortRule": "source",
-      "title": "crossout mobile •"
+      "sortRule": "price_asc",
+      "title": "crossout mobile •",
+      "gameKey": "Crossout Mobile"
     },
     "3329": {
       "section": "games",
       "group": "parent-3329",
       "expectedCategoryName": "crystalfall •",
-      "sortRule": "source",
-      "title": "crystalfall •"
+      "sortRule": "price_asc",
+      "title": "crystalfall •",
+      "gameKey": "CrystalFall"
     },
     "3330": {
       "section": "games",
       "group": "parent-3330",
       "expectedCategoryName": "deadly dudes •",
-      "sortRule": "source",
-      "title": "deadly dudes •"
+      "sortRule": "price_asc",
+      "title": "deadly dudes •",
+      "gameKey": "Deadly Dudes"
     },
     "3331": {
       "section": "games",
       "group": "parent-3331",
       "expectedCategoryName": "life makeover global •",
-      "sortRule": "source",
-      "title": "life makeover global •"
+      "sortRule": "price_asc",
+      "title": "life makeover global •",
+      "gameKey": "Life Makeover Global"
     },
     "3332": {
       "section": "games",
       "group": "parent-3332",
       "expectedCategoryName": "dragon nest m sea •",
-      "sortRule": "source",
-      "title": "dragon nest m sea •"
+      "sortRule": "price_asc",
+      "title": "dragon nest m sea •",
+      "gameKey": "Dragon Nest M SEA"
     },
     "3333": {
       "section": "games",
       "group": "parent-3333",
       "expectedCategoryName": "dragon raja sea •",
-      "sortRule": "source",
-      "title": "dragon raja sea •"
+      "sortRule": "price_asc",
+      "title": "dragon raja sea •",
+      "gameKey": "Dragon Raja SEA"
     },
     "3335": {
       "section": "games",
       "group": "parent-3335",
       "expectedCategoryName": "dream and lethe record •",
-      "sortRule": "source",
-      "title": "dream and lethe record •"
+      "sortRule": "price_asc",
+      "title": "dream and lethe record •",
+      "gameKey": "Dream and Lethe Record"
     },
     "3336": {
       "section": "games",
       "group": "parent-3336",
       "expectedCategoryName": "dragonheir silent gods •",
-      "sortRule": "source",
-      "title": "dragonheir silent gods •"
+      "sortRule": "price_asc",
+      "title": "dragonheir silent gods •",
+      "gameKey": "Dragonheir: Silent Gods"
     },
     "3337": {
       "section": "games",
       "group": "parent-3337",
       "expectedCategoryName": "love nikki •",
-      "sortRule": "source",
-      "title": "love nikki •"
+      "sortRule": "price_asc",
+      "title": "love nikki •",
+      "gameKey": "Love Nikki"
     },
     "3339": {
       "section": "games",
       "group": "parent-3339",
       "expectedCategoryName": "dynasty heroes legend samkok •",
-      "sortRule": "source",
-      "title": "dynasty heroes legend samkok •"
+      "sortRule": "price_asc",
+      "title": "dynasty heroes legend samkok •",
+      "gameKey": "Dynasty Heroes: Legend Samkok"
     },
     "3340": {
       "section": "games",
       "group": "parent-3340",
       "expectedCategoryName": "echocalypse scarlet covenant •",
-      "sortRule": "source",
-      "title": "echocalypse scarlet covenant •"
+      "sortRule": "price_asc",
+      "title": "echocalypse scarlet covenant •",
+      "gameKey": "Echocalypse: Scarlet Covenant"
     },
     "3341": {
       "section": "games",
       "group": "parent-3341",
       "expectedCategoryName": "eggy party •",
-      "sortRule": "source",
-      "title": "eggy party •"
+      "sortRule": "price_asc",
+      "title": "eggy party •",
+      "gameKey": "Eggy Party"
     },
     "3342": {
       "section": "games",
       "group": "parent-3342",
       "expectedCategoryName": "enhypen world •",
-      "sortRule": "source",
-      "title": "enhypen world •"
+      "sortRule": "price_asc",
+      "title": "enhypen world •",
+      "gameKey": "Enhypen World"
     },
     "3343": {
       "section": "games",
       "group": "parent-3343",
       "expectedCategoryName": "magic chess gogo global •",
-      "sortRule": "source",
-      "title": "magic chess gogo global •"
+      "sortRule": "price_asc",
+      "title": "magic chess gogo global •",
+      "gameKey": "Magic Chess GoGo"
     },
     "3344": {
       "section": "games",
       "group": "parent-3344",
       "expectedCategoryName": "ensemble stars music •",
-      "sortRule": "source",
-      "title": "ensemble stars music •"
+      "sortRule": "price_asc",
+      "title": "ensemble stars music •",
+      "gameKey": "Ensemble Stars Music"
     },
     "3345": {
       "section": "games",
       "group": "parent-3345",
       "expectedCategoryName": "eve echoes •",
-      "sortRule": "source",
-      "title": "eve echoes •"
+      "sortRule": "price_asc",
+      "title": "eve echoes •",
+      "gameKey": "EVE Echoes"
     },
     "3346": {
       "section": "games",
       "group": "parent-3346",
       "expectedCategoryName": "extraordinary ones •",
-      "sortRule": "source",
-      "title": "extraordinary ones •"
+      "sortRule": "price_asc",
+      "title": "extraordinary ones •",
+      "gameKey": "Extraordinary Ones"
     },
     "3347": {
       "section": "games",
       "group": "parent-3347",
       "expectedCategoryName": "marvel duel •",
-      "sortRule": "source",
-      "title": "marvel duel •"
+      "sortRule": "price_asc",
+      "title": "marvel duel •",
+      "gameKey": "Marvel Duel"
     },
     "3348": {
       "section": "games",
       "group": "parent-3348",
       "expectedCategoryName": "marvel mystic mayhem •",
-      "sortRule": "source",
-      "title": "marvel mystic mayhem •"
+      "sortRule": "price_asc",
+      "title": "marvel mystic mayhem •",
+      "gameKey": "Marvel Mystic Mayhem"
     },
     "3349": {
       "section": "games",
       "group": "parent-3349",
       "expectedCategoryName": "football master 2 •",
-      "sortRule": "source",
-      "title": "football master 2 •"
+      "sortRule": "price_asc",
+      "title": "football master 2 •",
+      "gameKey": "Football Master 2"
     },
     "3350": {
       "section": "games",
       "group": "parent-3350",
       "expectedCategoryName": "mirage perfect skyline •",
-      "sortRule": "source",
-      "title": "mirage perfect skyline •"
+      "sortRule": "price_asc",
+      "title": "mirage perfect skyline •",
+      "gameKey": "Mirage Perfect Skyline"
     },
     "3351": {
       "section": "games",
       "group": "parent-3351",
       "expectedCategoryName": "modern strike online •",
-      "sortRule": "source",
-      "title": "modern strike online •"
+      "sortRule": "price_asc",
+      "title": "modern strike online •",
+      "gameKey": "Modern Strike Online"
     },
     "3352": {
       "section": "games",
       "group": "parent-3352",
       "expectedCategoryName": "mongil star dive •",
-      "sortRule": "source",
-      "title": "mongil star dive •"
+      "sortRule": "price_asc",
+      "title": "mongil star dive •",
+      "gameKey": "Mongil Star Dive"
     },
     "3353": {
       "section": "games",
       "group": "parent-3353",
       "expectedCategoryName": "garena speed drifters •",
-      "sortRule": "source",
-      "title": "garena speed drifters •"
+      "sortRule": "price_asc",
+      "title": "garena speed drifters •",
+      "gameKey": "Garena Speed Drifters"
     },
     "3354": {
       "section": "games",
       "group": "parent-3354",
       "expectedCategoryName": "my singing monsters •",
-      "sortRule": "source",
-      "title": "my singing monsters •"
+      "sortRule": "price_asc",
+      "title": "my singing monsters •",
+      "gameKey": "My Singing Monsters"
     },
     "3355": {
       "section": "games",
       "group": "parent-3355",
       "expectedCategoryName": "onmyoji arena •",
-      "sortRule": "source",
-      "title": "onmyoji arena •"
+      "sortRule": "price_asc",
+      "title": "onmyoji arena •",
+      "gameKey": "Onmyoji Arena"
     },
     "3356": {
       "section": "games",
       "group": "parent-3356",
       "expectedCategoryName": "overmortal idle global •",
-      "sortRule": "source",
-      "title": "overmortal idle global •"
+      "sortRule": "price_asc",
+      "title": "overmortal idle global •",
+      "gameKey": "Overmortal Idle Global"
     },
     "3357": {
       "section": "games",
       "group": "parent-3357",
       "expectedCategoryName": "stormshot •",
-      "sortRule": "source",
-      "title": "stormshot •"
+      "sortRule": "price_asc",
+      "title": "stormshot •",
+      "gameKey": "Stormshot"
     },
     "3400": {
       "section": "digital",
@@ -860,36 +952,41 @@
       "section": "games",
       "group": "parent-3918",
       "expectedCategoryName": "Roblox USA ??",
-      "sortRule": "source",
-      "title": "Roblox USA ??"
+      "sortRule": "price_asc",
+      "title": "Roblox USA ??",
+      "gameKey": "Roblox"
     },
     "3919": {
       "section": "games",
       "group": "parent-3919",
       "expectedCategoryName": "Roblox KSA ??",
-      "sortRule": "source",
-      "title": "Roblox KSA ??"
+      "sortRule": "price_asc",
+      "title": "Roblox KSA ??",
+      "gameKey": "Roblox"
     },
     "3920": {
       "section": "games",
       "group": "parent-3920",
       "expectedCategoryName": "Roblox UAE ??",
-      "sortRule": "source",
-      "title": "Roblox UAE ??"
+      "sortRule": "price_asc",
+      "title": "Roblox UAE ??",
+      "gameKey": "Roblox"
     },
     "3921": {
       "section": "games",
       "group": "parent-3921",
       "expectedCategoryName": "Roblox CAD ??",
-      "sortRule": "source",
-      "title": "Roblox CAD ??"
+      "sortRule": "price_asc",
+      "title": "Roblox CAD ??",
+      "gameKey": "Roblox"
     },
     "3922": {
       "section": "games",
       "group": "parent-3922",
       "expectedCategoryName": "Roblox EUR ??",
-      "sortRule": "source",
-      "title": "Roblox EUR ??"
+      "sortRule": "price_asc",
+      "title": "Roblox EUR ??",
+      "gameKey": "Roblox"
     },
     "3932": {
       "section": "digital",
@@ -993,15 +1090,17 @@
       "section": "games",
       "group": "parent-3966",
       "expectedCategoryName": "Clash of clans •",
-      "sortRule": "source",
-      "title": "Clash of clans •"
+      "sortRule": "price_asc",
+      "title": "Clash of clans •",
+      "gameKey": "Clash of Clans"
     },
     "3968": {
       "section": "games",
       "group": "parent-3968",
       "title": "مسرع جواكر~",
       "expectedCategoryName": "مسرع جواكر~",
-      "sortRule": "source"
+      "sortRule": "price_asc",
+      "gameKey": "جواكر"
     },
     "3969": {
       "section": "appCredits",
@@ -1052,6 +1151,22 @@
       "expectedCategoryName": "اشتراك تلغرام بريميوم •",
       "sortRule": "source"
     },
+    "4254": {
+      "section": "games",
+      "group": "parent-4254",
+      "gameKey": "PUBG Mobile",
+      "title": "عضويات ببجي \"",
+      "expectedCategoryName": "عضويات ببجي \"",
+      "sortRule": "price_asc"
+    },
+    "4255": {
+      "section": "games",
+      "group": "parent-4255",
+      "gameKey": "PUBG Mobile",
+      "title": "عضويات ببجي | 2 \"",
+      "expectedCategoryName": "عضويات ببجي | 2 \"",
+      "sortRule": "price_asc"
+    },
     "4269": {
       "section": "appCredits",
       "group": "parent-4269",
@@ -1059,26 +1174,45 @@
       "sortRule": "source",
       "title": "LIVU"
     },
+    "4270": {
+      "section": "games",
+      "group": "parent-4270",
+      "gameKey": "PUBG Mobile",
+      "title": "ببجي سيرفر1 •",
+      "expectedCategoryName": "ببجي سيرفر1 •",
+      "sortRule": "price_asc"
+    },
+    "4272": {
+      "section": "games",
+      "group": "parent-4272",
+      "gameKey": "PUBG Mobile",
+      "title": "ببجي العالمية سيرفر2 ~",
+      "expectedCategoryName": "ببجي العالمية سيرفر2 ~",
+      "sortRule": "price_asc"
+    },
     "4273": {
       "section": "games",
       "group": "parent-4273",
       "expectedCategoryName": "Free Fire ~",
-      "sortRule": "source",
-      "title": "Free Fire ~"
+      "sortRule": "price_asc",
+      "title": "Free Fire ~",
+      "gameKey": "فري فاير"
     },
     "4274": {
       "section": "games",
       "group": "parent-4274",
       "expectedCategoryName": "فري فاير روبوت \"s3",
-      "sortRule": "source",
-      "title": "فري فاير روبوت \"s3"
+      "sortRule": "price_asc",
+      "title": "فري فاير روبوت \"s3",
+      "gameKey": "فري فاير"
     },
     "4275": {
       "section": "games",
       "group": "parent-4275",
       "expectedCategoryName": "عضويات فري فاير \"",
-      "sortRule": "source",
-      "title": "عضويات فري فاير \""
+      "sortRule": "price_asc",
+      "title": "عضويات فري فاير \"",
+      "gameKey": "فري فاير"
     },
     "4281": {
       "section": "appCredits",
@@ -1098,15 +1232,49 @@
       "section": "games",
       "group": "parent-4283",
       "expectedCategoryName": "فري فاير يدوي \"",
-      "sortRule": "source",
-      "title": "فري فاير يدوي \""
+      "sortRule": "price_asc",
+      "title": "فري فاير يدوي \"",
+      "gameKey": "فري فاير"
     },
     "4295": {
       "section": "games",
       "group": "parent-4295",
       "expectedCategoryName": "فري فاير رابطة الدول المستقلة \"",
-      "sortRule": "source",
-      "title": "فري فاير رابطة الدول المستقلة \""
+      "sortRule": "price_asc",
+      "title": "فري فاير رابطة الدول المستقلة \"",
+      "gameKey": "فري فاير"
+    },
+    "4296": {
+      "section": "games",
+      "group": "parent-4296",
+      "gameKey": "PUBG Mobile",
+      "title": "ببجي يدوي \"4",
+      "expectedCategoryName": "ببجي يدوي \"4",
+      "sortRule": "price_asc"
+    },
+    "4297": {
+      "section": "games",
+      "group": "parent-4297",
+      "gameKey": "PUBG Mobile",
+      "title": "ببجي روبوت \"3",
+      "expectedCategoryName": "ببجي روبوت \"3",
+      "sortRule": "price_asc"
+    },
+    "4298": {
+      "section": "games",
+      "group": "parent-4298",
+      "gameKey": "PUBG Mobile",
+      "title": "عضويات ببجي \"2",
+      "expectedCategoryName": "عضويات ببجي \"2",
+      "sortRule": "price_asc"
+    },
+    "4300": {
+      "section": "games",
+      "group": "parent-4300",
+      "gameKey": "PUBG Mobile",
+      "title": "عضويات ببجي | 2 \"",
+      "expectedCategoryName": "عضويات ببجي | 2 \"",
+      "sortRule": "price_asc"
     }
   },
   "categoryNameRules": {
@@ -6697,7 +6865,8 @@
       "group": "games:jawaker-counter-s2",
       "title": "عداد جواكر S2",
       "reason": "عداد جواكر بمعرف اللاعب",
-      "expectedCategoryName": "عداد جواكر S2"
+      "expectedCategoryName": "عداد جواكر S2",
+      "gameKey": "جواكر"
     },
     "2375": {
       "section": "appCredits",
@@ -7992,7 +8161,8 @@
       "group": "games:jawaker-counter-s1",
       "title": "عداد جواكر S1",
       "reason": "عداد جواكر بمعرف اللاعب",
-      "expectedCategoryName": "عداد جواكر ~s1"
+      "expectedCategoryName": "عداد جواكر ~s1",
+      "gameKey": "جواكر"
     },
     "2961": {
       "section": "appCredits",
@@ -11287,5 +11457,84 @@
     "لا توجد قواعد نصية احتياطية تعتمد على كلمات عامة.",
     "parent_id المعروف مع اسم تصنيف مختلف ينتج حالة conflict."
   ],
-  "reviewPolicy": "unclassified"
+  "reviewPolicy": "unclassified",
+  "sectionTopology": {
+    "supplierMainCategoryCount": 20,
+    "storeMainSectionCount": 18,
+    "storeSections": [
+      {
+        "key": "games",
+        "title": "الألعاب"
+      },
+      {
+        "key": "balance",
+        "title": "الأرصدة"
+      },
+      {
+        "key": "numbers",
+        "title": "الأرقام"
+      },
+      {
+        "key": "boost",
+        "title": "رشق صفحات"
+      },
+      {
+        "key": "digital",
+        "title": "اشتراكات رقمية"
+      },
+      {
+        "key": "cards",
+        "title": "البطاقات"
+      },
+      {
+        "key": "accounts",
+        "title": "حسابات جاهزة"
+      },
+      {
+        "key": "payments",
+        "title": "الدفع الإلكتروني"
+      },
+      {
+        "key": "promo",
+        "title": "ترويج حقيقي"
+      },
+      {
+        "key": "software",
+        "title": "قسم السوفت وير"
+      },
+      {
+        "key": "repair",
+        "title": "قسم برامج الصيانة"
+      },
+      {
+        "key": "transfers",
+        "title": "قسم الحوالات"
+      },
+      {
+        "key": "telegram",
+        "title": "خدمات تيليجرام"
+      },
+      {
+        "key": "verify",
+        "title": "توثيق حسابات"
+      },
+      {
+        "key": "screens",
+        "title": "اشتراكات شاشة"
+      },
+      {
+        "key": "vpn",
+        "title": "اشتراكات VPN"
+      },
+      {
+        "key": "vip",
+        "title": "مستويات VIP"
+      },
+      {
+        "key": "website",
+        "title": "إنشاء موقع"
+      }
+    ],
+    "policy": "Nemer's 20 top-level categories are a source taxonomy, not 20 new Nabd-Store home tiles. Preserve the existing 18 store sections and map each supplier category to an existing store section or a reviewed hidden/internal group. Do not infer a one-to-one relationship."
+  }
 }
