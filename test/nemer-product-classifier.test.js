@@ -121,3 +121,34 @@ test("a conflicting product ID override cannot fall through to another exact cat
   assert.equal(result.status, "review");
   assert.equal(result.reason, "product_override_category_conflict");
 });
+
+test("every approved game parent rule exposes one canonical game key", () => {
+  const gameRules = Object.entries(realConfig.parentIdRules).filter(([, rule]) => rule.section === "games");
+  assert.ok(gameRules.length >= 110);
+  for (const [parentId, rule] of gameRules) {
+    assert.ok(rule.gameKey, `parent_id ${parentId} has a canonical game key`);
+    assert.equal(rule.sortRule, "price_asc");
+  }
+});
+
+test("all eight PUBG source categories are included in the unified games engine", () => {
+  const expected = [4254, 4255, 4270, 4272, 4296, 4297, 4298, 4300];
+  for (const parentId of expected) {
+    const rule = realConfig.parentIdRules[String(parentId)];
+    assert.ok(rule, `PUBG parent_id ${parentId} is mapped`);
+    assert.equal(rule.section, "games");
+    assert.equal(rule.gameKey, "PUBG Mobile");
+  }
+  const pubgProducts = realCatalog.filter(product => expected.includes(Number(product.parent_id)));
+  assert.equal(pubgProducts.length, 93);
+  assert.ok(pubgProducts.every(product => classifyProduct(product, realConfig).gameKey === "PUBG Mobile"));
+});
+
+test("game UI consumes canonical classifier keys and loads the classifier before app.js", () => {
+  const appSource = fs.readFileSync(path.join(__dirname, "..", "js", "app.js"), "utf8");
+  const homeSource = fs.readFileSync(path.join(__dirname, "..", "pages", "index.html"), "utf8");
+  assert.match(appSource, /window\.NemerProductClassifier/);
+  assert.match(appSource, /classification\.section !== "games"/);
+  assert.match(appSource, /gameKey = classification\.gameKey/);
+  assert.match(homeSource, /<script src="\/lib\/nemer-product-classifier\.js[^>]*><\/script><script src="js\/app\.js/);
+});
