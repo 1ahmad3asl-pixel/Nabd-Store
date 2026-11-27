@@ -1,6 +1,10 @@
 "use strict";
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const realConfig = require("../config/nemer-category-map.json");
+const realCatalog = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "nemer-products.json"), "utf8")).products;
 const { classifyProduct, classifyCatalog, sortClassifiedProducts } = require("../lib/nemer-product-classifier");
 
 const config = {
@@ -64,4 +68,27 @@ test("catalog detects duplicate IDs and keeps a product in one group", () => {
 test("price sorting is ascending and stable", () => {
   const products = [{ id: 3, price: 2 }, { id: 1, price: 1 }, { id: 2, price: 1 }];
   assert.deepEqual(sortClassifiedProducts(products, "price_asc").map(p => p.id), [1, 2, 3]);
+});
+
+test("approved app-credit and digital-card parent groups stay separate", () => {
+  const app = classifyProduct({ id: 3192001, parent_id: 3192, category_name: 'شاميت - Chamet "' }, realConfig);
+  const card = classifyProduct({ id: 3214001, parent_id: 3214, category_name: 'ITUNES - USA "' }, realConfig);
+  assert.equal(app.section, "appCredits");
+  assert.equal(card.section, "giftCards");
+  assert.notEqual(app.group, card.group);
+});
+
+test("all mapped parent_id rules match the real Nemer snapshot", () => {
+  const mappedIds = new Set(Object.keys(realConfig.parentIdRules).map(Number));
+  for (const product of realCatalog) {
+    if (!mappedIds.has(Number(product.parent_id))) continue;
+    const result = classifyProduct(product, realConfig);
+    assert.equal(result.status, "classified", `product ${product.id} should match its approved parent_id rule`);
+  }
+});
+
+test("real Nemer snapshot has unique product IDs and no invalid records", () => {
+  const ids = realCatalog.map(product => String(product.id));
+  assert.equal(new Set(ids).size, ids.length);
+  assert.ok(realCatalog.every(product => product.id != null && product.category_name));
 });
