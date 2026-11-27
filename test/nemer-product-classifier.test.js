@@ -115,3 +115,9 @@ test("all documented parentless product overrides match the real Nemer snapshot"
     assert.equal(classifyProduct(product, realConfig).status, "classified", `override ${id} should classify`);
   }
 });
+
+test("a conflicting product ID override cannot fall through to another exact category", () => {
+  const result = classifyProduct({ id: 2382, parent_id: 0, category_name: "TAKA LIVE" }, realConfig);
+  assert.equal(result.status, "review");
+  assert.equal(result.reason, "product_override_category_conflict");
+});
