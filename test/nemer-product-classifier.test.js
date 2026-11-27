@@ -104,3 +104,14 @@ test("product ID override is sent to review if its category name changes", () =>
   assert.equal(result.status, "review");
   assert.equal(result.reason, "product_override_category_conflict");
 });
+
+test("all documented parentless product overrides match the real Nemer snapshot", () => {
+  const byId = new Map(realCatalog.map(product => [String(product.id), product]));
+  for (const [id, rule] of Object.entries(realConfig.productIdOverrides)) {
+    const product = byId.get(id);
+    assert.ok(product, `override ${id} exists in the source snapshot`);
+    assert.equal(product.parent_id || 0, 0, `override ${id} is only used for parent_id=0`);
+    assert.equal(product.category_name, rule.expectedCategoryName, `override ${id} retains its approved category name`);
+    assert.equal(classifyProduct(product, realConfig).status, "classified", `override ${id} should classify`);
+  }
+});
