@@ -1111,65 +1111,785 @@
   },
   "categoryNameRules": {},
   "productIdOverrides": {
+    "1427": {
+      "section": "appCredits",
+      "group": "app:zaar chat",
+      "title": "Zaar Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1428": {
+      "section": "appCredits",
+      "group": "app:kwai",
+      "title": "KWAI",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1429": {
+      "section": "appCredits",
+      "group": "app:olamet live",
+      "title": "Olamet Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "1430": {
       "section": "appCredits",
-      "group": "app-chamet",
+      "group": "app:chamet",
       "title": "CHAMET",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1432": {
+      "section": "appCredits",
+      "group": "app:waki star",
+      "title": "WAKI STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1433": {
+      "section": "appCredits",
+      "group": "app:yami star",
+      "title": "Yami Star",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1434": {
+      "section": "appCredits",
+      "group": "app:party star",
+      "title": "PARTY STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1435": {
+      "section": "appCredits",
+      "group": "app:yoyo chat",
+      "title": "YOYO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1436": {
+      "section": "appCredits",
+      "group": "app:yooy chat",
+      "title": "YOOY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1437": {
+      "section": "appCredits",
+      "group": "app:cocco live",
+      "title": "COCCO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1440": {
+      "section": "appCredits",
+      "group": "app:sama chat",
+      "title": "SAMA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1441": {
+      "section": "appCredits",
+      "group": "app:waaw chat",
+      "title": "WAAW CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1442": {
+      "section": "appCredits",
+      "group": "app:sodfa chat",
+      "title": "SODFA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1443": {
+      "section": "appCredits",
+      "group": "app:laki chat",
+      "title": "LAKI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1444": {
+      "section": "appCredits",
+      "group": "app:kessmet chat",
+      "title": "KESSMET CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1445": {
+      "section": "appCredits",
+      "group": "app:hoby chat",
+      "title": "HOBY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1446": {
+      "section": "appCredits",
+      "group": "app:soul chat",
+      "title": "SOUL CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1447": {
+      "section": "appCredits",
+      "group": "app:habbey chat",
+      "title": "HABBEY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1448": {
+      "section": "appCredits",
+      "group": "app:veco chat",
+      "title": "VECO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1449": {
+      "section": "appCredits",
+      "group": "app:tada chat",
+      "title": "TADA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1450": {
+      "section": "appCredits",
+      "group": "app:yayya chat",
+      "title": "Yayya Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1451": {
+      "section": "appCredits",
+      "group": "app:majlis chat",
+      "title": "MAJLIS CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1452": {
+      "section": "appCredits",
+      "group": "app:weso chat",
+      "title": "WESO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1453": {
+      "section": "appCredits",
+      "group": "app:imu chat",
+      "title": "IMU CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1454": {
+      "section": "appCredits",
+      "group": "app:saada chat",
+      "title": "SAADA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1455": {
+      "section": "appCredits",
+      "group": "app:hiplay chat",
+      "title": "HIPLAY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1456": {
+      "section": "appCredits",
+      "group": "app:mashi chat",
+      "title": "MASHI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1457": {
+      "section": "appCredits",
+      "group": "app:dana chat",
+      "title": "DANA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1458": {
+      "section": "appCredits",
+      "group": "app:habi chat",
+      "title": "HABI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1459": {
+      "section": "appCredits",
+      "group": "app:dimo chat",
+      "title": "DIMO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1460": {
+      "section": "appCredits",
+      "group": "app:rooh chat",
+      "title": "ROOH CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1461": {
+      "section": "appCredits",
+      "group": "app:hawa chat",
+      "title": "HAWA Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1462": {
+      "section": "appCredits",
+      "group": "app:saba chat",
+      "title": "SABA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1463": {
+      "section": "appCredits",
+      "group": "app:yobi chat",
+      "title": "YOBI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1479": {
+      "section": "appCredits",
+      "group": "app:wyak chat",
+      "title": "WYAK CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1480": {
+      "section": "appCredits",
+      "group": "app:nabd chat",
+      "title": "NABD CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1482": {
+      "section": "appCredits",
+      "group": "app:lit chat",
+      "title": "LiT CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1483": {
+      "section": "appCredits",
+      "group": "app:binmo chat",
+      "title": "BINMO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1484": {
+      "section": "appCredits",
+      "group": "app:mico chat",
+      "title": "MICO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1485": {
+      "section": "appCredits",
+      "group": "app:haki chat",
+      "title": "HAKI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1486": {
+      "section": "appCredits",
+      "group": "app:light chat",
+      "title": "LIGHT CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1487": {
+      "section": "appCredits",
+      "group": "app:4fun chat",
+      "title": "4FUN CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1488": {
+      "section": "appCredits",
+      "group": "app:dika live",
+      "title": "DIKA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1489": {
+      "section": "appCredits",
+      "group": "app:crush live",
+      "title": "Crush Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1491": {
+      "section": "appCredits",
+      "group": "app:hapi live",
+      "title": "HAPI LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1492": {
+      "section": "appCredits",
+      "group": "app:pota live",
+      "title": "POTA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1493": {
+      "section": "appCredits",
+      "group": "app:hart live",
+      "title": "HART LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1494": {
+      "section": "appCredits",
+      "group": "app:opa live",
+      "title": "OPA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1495": {
+      "section": "appCredits",
+      "group": "app:higo live",
+      "title": "HIGO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1496": {
+      "section": "appCredits",
+      "group": "app:nawa live",
+      "title": "NAWA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1497": {
+      "section": "appCredits",
+      "group": "app:azal live",
+      "title": "AZAL LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1498": {
+      "section": "appCredits",
+      "group": "app:super live",
+      "title": "SUPER LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1499": {
+      "section": "appCredits",
+      "group": "app:up live",
+      "title": "UP LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1500": {
+      "section": "appCredits",
+      "group": "app:migo live",
+      "title": "MIGO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1501": {
+      "section": "appCredits",
+      "group": "app:taka live",
+      "title": "TAKA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1502": {
+      "section": "appCredits",
+      "group": "app:gimme live",
+      "title": "GIMME LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1504": {
+      "section": "appCredits",
+      "group": "app:mango live",
+      "title": "MANGO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1505": {
+      "section": "appCredits",
+      "group": "app:fancy live",
+      "title": "FANCY LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1506": {
+      "section": "appCredits",
+      "group": "app:ligo live",
+      "title": "LIGO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1507": {
+      "section": "appCredits",
+      "group": "app:xena live",
+      "title": "XENA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1508": {
+      "section": "appCredits",
+      "group": "app:kiyo live",
+      "title": "KIYO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1509": {
       "section": "appCredits",
-      "group": "app-poppo",
+      "group": "app:poppo live",
       "title": "POPPO LIVE",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1510": {
       "section": "appCredits",
-      "group": "app-bigo",
+      "group": "app:bigo live",
       "title": "BIGO LIVE",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1511": {
       "section": "appCredits",
-      "group": "app-likee",
+      "group": "app:likee live",
       "title": "LIKEE LIVE",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1512": {
+      "section": "appCredits",
+      "group": "app:hiya chat",
+      "title": "HIYA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1513": {
+      "section": "appCredits",
+      "group": "app:hami party",
+      "title": "HAMI PARTY",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1521": {
       "section": "appCredits",
-      "group": "app-yoho",
+      "group": "app:yoho",
       "title": "YOHO",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1523": {
+      "section": "appCredits",
+      "group": "app:soul star",
+      "title": "SOUL STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1524": {
+      "section": "appCredits",
+      "group": "app:oohla chat",
+      "title": "OOHLA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1527": {
+      "section": "appCredits",
+      "group": "app:nahki chat",
+      "title": "Nahki chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1528": {
+      "section": "appCredits",
+      "group": "app:baat live",
+      "title": "Baat Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1529": {
+      "section": "appCredits",
+      "group": "app:cocco live",
+      "title": "COCCO LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1532": {
+      "section": "appCredits",
+      "group": "app:party star",
+      "title": "PARTY STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1533": {
+      "section": "appCredits",
+      "group": "app:yoyo chat",
+      "title": "YOYO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1534": {
+      "section": "appCredits",
+      "group": "app:yooy chat",
+      "title": "YOOY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1536": {
+      "section": "appCredits",
+      "group": "app:waki star",
+      "title": "WAKI STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1537": {
+      "section": "appCredits",
+      "group": "app:yami star",
+      "title": "Yami Star",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1540": {
+      "section": "appCredits",
+      "group": "app:hoob live",
+      "title": "HOOB LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1541": {
+      "section": "appCredits",
+      "group": "app:beela chat",
+      "title": "Beela CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1542": {
+      "section": "appCredits",
+      "group": "app:lami chat",
+      "title": "LAMI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1544": {
       "section": "appCredits",
-      "group": "app-tango",
+      "group": "app:tango",
       "title": "TANGO",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1545": {
       "section": "appCredits",
-      "group": "app-chamet",
+      "group": "app:chamet",
       "title": "CHAMET",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1546": {
+      "section": "appCredits",
+      "group": "app:olamet live",
+      "title": "Olamet Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1547": {
+      "section": "appCredits",
+      "group": "app:kwai",
+      "title": "KWAI",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1548": {
+      "section": "appCredits",
+      "group": "app:wasla chat",
+      "title": "Wasla Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1550": {
+      "section": "appCredits",
+      "group": "app:bobo chat",
+      "title": "BOBO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1552": {
+      "section": "appCredits",
+      "group": "app:hi party",
+      "title": "HI PARTY",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1555": {
+      "section": "appCredits",
+      "group": "app:pocket chat",
+      "title": "Pocket Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1556": {
+      "section": "appCredits",
+      "group": "app:wego party",
+      "title": "WeGo Party",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1561": {
+      "section": "appCredits",
+      "group": "app:gold chat",
+      "title": "Gold Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1563": {
+      "section": "appCredits",
+      "group": "app:pawa live",
+      "title": "PAWA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1565": {
+      "section": "appCredits",
+      "group": "app:soul u",
+      "title": "Soul U",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1566": {
+      "section": "appCredits",
+      "group": "app:yahlla chat",
+      "title": "YAHLLA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1567": {
+      "section": "appCredits",
+      "group": "app:rostar",
+      "title": "ROSTAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1569": {
+      "section": "appCredits",
+      "group": "app:ayome chat",
+      "title": "AYOME CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1580": {
+      "section": "appCredits",
+      "group": "app:kiti live",
+      "title": "KITI LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1581": {
+      "section": "appCredits",
+      "group": "app:star maker",
+      "title": "Star Maker",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1583": {
+      "section": "appCredits",
+      "group": "app:4party chat",
+      "title": "4PARTY CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1586": {
+      "section": "appCredits",
+      "group": "app:asha live",
+      "title": "Asha Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1587": {
+      "section": "appCredits",
+      "group": "app:party hero",
+      "title": "Party Hero",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1591": {
+      "section": "appCredits",
+      "group": "app:halla live",
+      "title": "HALLA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1592": {
+      "section": "appCredits",
+      "group": "app:pk star",
+      "title": "PK STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1595": {
+      "section": "appCredits",
+      "group": "app:halo star",
+      "title": "HALO STAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1599": {
+      "section": "appCredits",
+      "group": "app:lado live",
+      "title": "Lado Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1600": {
+      "section": "appCredits",
+      "group": "app:lotfun chat",
+      "title": "LOTFUN CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1603": {
+      "section": "appCredits",
+      "group": "app:wadi chat",
+      "title": "WADI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1604": {
+      "section": "appCredits",
+      "group": "app:vostar",
+      "title": "VOSTAR",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1607": {
+      "section": "appCredits",
+      "group": "app:zaar chat",
+      "title": "Zaar Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1608": {
+      "section": "appCredits",
+      "group": "app:doli live",
+      "title": "DOLI LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1609": {
+      "section": "appCredits",
+      "group": "app:dido chat",
+      "title": "Dido Chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1611": {
+      "section": "appCredits",
+      "group": "app:fofo chat",
+      "title": "FOFO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1612": {
+      "section": "appCredits",
+      "group": "app:sahra chat",
+      "title": "SAHRA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1614": {
       "section": "appCredits",
-      "group": "app-saya-likee",
+      "group": "app:saya likee",
       "title": "SAYA LIKEE",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1615": {
+      "section": "appCredits",
+      "group": "app:siya chat",
+      "title": "SIYA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1618": {
+      "section": "appCredits",
+      "group": "app:laka chat",
+      "title": "LAKA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1620": {
+      "section": "appCredits",
+      "group": "app:fomi party",
+      "title": "Fomi party",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1622": {
+      "section": "appCredits",
+      "group": "app:sugo chat",
+      "title": "SUGO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1623": {
+      "section": "appCredits",
+      "group": "app:salam chat",
+      "title": "SALAM CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1624": {
+      "section": "appCredits",
+      "group": "app:layla chat",
+      "title": "LAYLA CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1625": {
+      "section": "appCredits",
+      "group": "app:hiyoo chat",
+      "title": "HIYOO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1628": {
+      "section": "appCredits",
+      "group": "app:soul chill",
+      "title": "SOUL CHILL",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1629": {
+      "section": "appCredits",
+      "group": "app:roka live",
+      "title": "ROKA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1630": {
+      "section": "appCredits",
+      "group": "app:ahlan chat",
+      "title": "AHLAN CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1631": {
+      "section": "appCredits",
+      "group": "app:soyo chat",
+      "title": "SOYO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1632": {
+      "section": "appCredits",
+      "group": "app:lions chat",
+      "title": "LIONS CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1633": {
+      "section": "appCredits",
+      "group": "app:yaahlan chat",
+      "title": "YAAHLAN CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1634": {
+      "section": "appCredits",
+      "group": "app:junko chat",
+      "title": "JUNKO CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1658": {
       "section": "appCredits",
-      "group": "app-yoho",
+      "group": "app:yoho",
       "title": "YOHO",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1674": {
       "section": "balance",
       "group": "turkcell-invoices",
       "title": "تسديد تركسل",
       "reason": "خدمة تسديد تركسل محددة بالمنتج"
+    },
+    "1677": {
+      "section": "appCredits",
+      "group": "app:best live",
+      "title": "Best Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "1679": {
       "section": "balance",
@@ -1183,77 +1903,779 @@
       "reason": "فاتورة MTN وفق مصفوفة التدقيق",
       "title": "mtn-invoices"
     },
+    "1684": {
+      "section": "appCredits",
+      "group": "app:zaffa live",
+      "title": "Zaffa Live",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1714": {
+      "section": "appCredits",
+      "group": "app:karak chat",
+      "title": "karak chat",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1723": {
+      "section": "appCredits",
+      "group": "app:taka live",
+      "title": "TAKA LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1724": {
+      "section": "appCredits",
+      "group": "app:tami chat",
+      "title": "TAMI CHAT",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "1725": {
+      "section": "appCredits",
+      "group": "app:kwai",
+      "title": "KWAI",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "2191": {
       "section": "digital",
       "group": "pia-vpn",
       "reason": "اشتراك PIA VPN مؤكد",
       "title": "PIA VPN"
     },
+    "2334": {
+      "section": "appCredits",
+      "group": "app:ti live",
+      "title": "TI LIVE",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2375": {
+      "section": "appCredits",
+      "group": "app:فور بارتي 4partyr ~",
+      "title": "فور بارتي 4PARTYR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2377": {
+      "section": "appCredits",
+      "group": "app:نيو شات niuchat r ~",
+      "title": "نيو شات NiuChat R ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2379": {
+      "section": "appCredits",
+      "group": "app:شباب شات shabab chat ~",
+      "title": "شباب شات Shabab Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2380": {
+      "section": "appCredits",
+      "group": "app:واهو شات waho chat ~",
+      "title": "واهو شات WAHO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "2382": {
       "section": "appCredits",
-      "group": "app-poppo",
+      "group": "app:بوبو poppo ~",
       "title": "بوبو Poppo ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2384": {
+      "section": "appCredits",
+      "group": "app:سول شات soul chat ~",
+      "title": "سول شات Soul chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2385": {
+      "section": "appCredits",
+      "group": "app:بيست لايف best live ~",
+      "title": "بيست لايف BEST LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2386": {
+      "section": "appCredits",
+      "group": "app:يا اهلان شات yaahlan chat ~",
+      "title": "يا اهلان شات YAAHLAN CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2387": {
+      "section": "appCredits",
+      "group": "app:سوشال كريستال soul chill crystal ~",
+      "title": "سوشال كريستال SOUL CHILL CRYSTAL ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2389": {
+      "section": "appCredits",
+      "group": "app:اهلن شات ahlan chat ~",
+      "title": "اهلن شات AHLAN CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2390": {
+      "section": "appCredits",
+      "group": "app:جنكو شات junko chat ~",
+      "title": "جنكو شات JUNKO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2391": {
+      "section": "appCredits",
+      "group": "app:تامي شات tami chat ~",
+      "title": "تامي شات TAMI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2392": {
+      "section": "appCredits",
+      "group": "app:فوستار vostar ~",
+      "title": "فوستار Vostar ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2393": {
+      "section": "appCredits",
+      "group": "app:سول ستار  soul star ~",
+      "title": "سول ستار  SOUL STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2394": {
+      "section": "appCredits",
+      "group": "app:ليجهت شات light chat ~",
+      "title": "ليجهت شات LIGHT CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2395": {
+      "section": "appCredits",
+      "group": "app:ليجو لايف ligo live ~",
+      "title": "ليجو لايف LIGO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2396": {
       "section": "appCredits",
-      "group": "app-bigo",
+      "group": "app:بيجو لايف bigo live ~",
       "title": "بيجو لايف Bigo Live ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2397": {
+      "section": "appCredits",
+      "group": "app:هاكي شات haki chat ~",
+      "title": "هاكي شات HAKI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2398": {
+      "section": "appCredits",
+      "group": "app:يويو شات yoyo chat ~",
+      "title": "يويو شات YOYO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2401": {
+      "section": "appCredits",
+      "group": "app:فورفون شات 4fun chat ~",
+      "title": "فورفون شات 4FUN CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2402": {
+      "section": "appCredits",
+      "group": "app:هيا شات hiya chat ~",
+      "title": "هيا شات HIYA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2403": {
       "section": "appCredits",
-      "group": "app-yoho",
+      "group": "app:يوهو واكا yoho waka ~",
       "title": "يوهو واكا YOHO WAKA ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2404": {
+      "section": "appCredits",
+      "group": "app:لامي شات lami chat ~",
+      "title": "لامي شات LAMI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2405": {
+      "section": "appCredits",
+      "group": "app:سامي شات sama chat ~",
+      "title": "سامي شات Sama chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2406": {
       "section": "appCredits",
-      "group": "app-likee",
+      "group": "app:لايكي لايف likee live ~",
       "title": "لايكي لايف LIKEE LIVE ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2407": {
+      "section": "appCredits",
+      "group": "app:بارتي ستار party star ~",
+      "title": "بارتي ستار PARTY STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2408": {
+      "section": "appCredits",
+      "group": "app:اوب لايف up live ~",
+      "title": "اوب لايف UP LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2409": {
+      "section": "appCredits",
+      "group": "app:ميكو شات mico chat ~",
+      "title": "ميكو شات MICO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2410": {
+      "section": "appCredits",
+      "group": "app:فانسي لايف fancy live ~",
+      "title": "فانسي لايف FANCY LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2413": {
+      "section": "appCredits",
+      "group": "app:هابي شات habby chat ~",
+      "title": "هابي شات Habby Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2414": {
+      "section": "appCredits",
+      "group": "app:اوهلا شات oohla chat ~",
+      "title": "اوهلا شات OOHLA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2417": {
+      "section": "appCredits",
+      "group": "app:لاما شاتlama chat ~",
+      "title": "لاما شاتLAMA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2418": {
+      "section": "appCredits",
+      "group": "app:ليت شات lit chat ~",
+      "title": "ليت شات LiT CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2419": {
+      "section": "appCredits",
+      "group": "app:بيلا شات beela chat ~",
+      "title": "بيلا شات Beela Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2420": {
+      "section": "appCredits",
+      "group": "app:هوا شات hawa chat ~",
+      "title": "هوا شات HAWA Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2421": {
+      "section": "appCredits",
+      "group": "app:سوبر لايف super live ~",
+      "title": "سوبر لايف SUPER LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2422": {
+      "section": "appCredits",
+      "group": "app:سكي شات sky chat ~",
+      "title": "سكي شات SKY CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2424": {
       "section": "appCredits",
-      "group": "app-kwai-live",
+      "group": "app:كواي لايف kwai live ~",
       "title": "كواي لايف KWAI LIVE ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2426": {
+      "section": "appCredits",
+      "group": "app:بينمو شات binmo chat ~",
+      "title": "بينمو شات Binmo Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2430": {
+      "section": "appCredits",
+      "group": "app:ازال لايف azal live ~",
+      "title": "ازال لايف Azal Live ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2431": {
+      "section": "appCredits",
+      "group": "app:واكي ستار waki star ~",
+      "title": "واكي ستار Waki star ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2432": {
+      "section": "appCredits",
+      "group": "app:ميجو لايف migo live ~",
+      "title": "ميجو لايف MIGO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2434": {
+      "section": "appCredits",
+      "group": "app:كوكو لايف cocco live ~",
+      "title": "كوكو لايف COCCO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2435": {
+      "section": "appCredits",
+      "group": "app:وياك شات wyak chat ~",
+      "title": "وياك شات WYAK CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2436": {
+      "section": "appCredits",
+      "group": "app:الو شات allo chat ~",
+      "title": "الو شات ALLO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2437": {
+      "section": "appCredits",
+      "group": "app:هيو شات hiyoo chat ~",
+      "title": "هيو شات HIYOO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2438": {
+      "section": "appCredits",
+      "group": "app:جولد شات gold chat ~",
+      "title": "جولد شات Gold Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2439": {
+      "section": "appCredits",
+      "group": "app:يوبي شات yobi chat ~",
+      "title": "يوبي شات YOBI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2442": {
+      "section": "appCredits",
+      "group": "app:توب توب شات top top chat ~",
+      "title": "توب توب شات TOP TOP CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2443": {
+      "section": "appCredits",
+      "group": "app:ديتو لايف ditto live ~",
+      "title": "ديتو لايف DITTO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2444": {
+      "section": "appCredits",
+      "group": "app:ديموdimo ~",
+      "title": "ديموDimo ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2445": {
+      "section": "appCredits",
+      "group": "app:سوالفنا شات sawalfna chat ~",
+      "title": "سوالفنا شات SAWALFNA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2448": {
+      "section": "appCredits",
+      "group": "app:جيمي لايف gimme live ~",
+      "title": "جيمي لايف GIMME LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2449": {
+      "section": "appCredits",
+      "group": "app:سلام شات salam chat ~",
+      "title": "سلام شات SALAM CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2450": {
+      "section": "appCredits",
+      "group": "app:لايلا شات layla chat ~",
+      "title": "لايلا شات LAYLA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2451": {
+      "section": "appCredits",
+      "group": "app:ون ستار شات 1star chat ~",
+      "title": "ون ستار شات 1STAR CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2452": {
       "section": "appCredits",
-      "group": "app-tango",
+      "group": "app:تينجو tango ~",
       "title": "تينجو Tango ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2453": {
+      "section": "appCredits",
+      "group": "app:تادا شات tada chat ~",
+      "title": "تادا شات Tada Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2455": {
+      "section": "appCredits",
+      "group": "app:غلا ستار gala star ~",
+      "title": "غلا ستار GALA STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2456": {
+      "section": "appCredits",
+      "group": "app:لينوس شات lions chat ~",
+      "title": "لينوس شات LIONS CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2457": {
+      "section": "appCredits",
+      "group": "app:هابي شات habi chat ~",
+      "title": "هابي شات HABI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2458": {
+      "section": "appCredits",
+      "group": "app:هامي بارتي hami party ~",
+      "title": "هامي بارتي HAMI PARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2459": {
       "section": "appCredits",
-      "group": "app-chamet",
+      "group": "app:شاميت chamet ~",
       "title": "شاميت CHAMET ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2464": {
+      "section": "appCredits",
+      "group": "app:مجلس شات majlis chat ~",
+      "title": "مجلس شات MAJLIS CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2466": {
+      "section": "appCredits",
+      "group": "app:بارتي هيرو party hero ~",
+      "title": "بارتي هيرو PARTY HERO ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2467": {
+      "section": "appCredits",
+      "group": "app:دانا شات dana chat ~",
+      "title": "دانا شات DANA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2468": {
+      "section": "appCredits",
+      "group": "app:اشا لايفasha live ~",
+      "title": "اشا لايفASHA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2469": {
+      "section": "appCredits",
+      "group": "app:هيجو لايف higo live ~",
+      "title": "هيجو لايف HIGO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2471": {
+      "section": "appCredits",
+      "group": "app:رو ستار rostar ~",
+      "title": "رو ستار RoStar ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2473": {
+      "section": "appCredits",
+      "group": "app:يامي ستار yami star ~",
+      "title": "يامي ستار YAMI STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2474": {
+      "section": "appCredits",
+      "group": "app:فوفو شات fofo chat ~",
+      "title": "فوفو شات FOFO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2475": {
+      "section": "appCredits",
+      "group": "app:شيلا شات shila chat ~",
+      "title": "شيلا شات SHILA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2476": {
+      "section": "appCredits",
+      "group": "app:weso chat ~",
+      "title": "WESO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2477": {
+      "section": "appCredits",
+      "group": "app:صدفه شات sodfa chat ~",
+      "title": "صدفه شات SODFA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2478": {
       "section": "appCredits",
-      "group": "app-saya-likee",
+      "group": "app:سايا لايكي saya likee ~",
       "title": "سايا لايكي SAYA LIKEE ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2481": {
+      "section": "appCredits",
+      "group": "app:ناوا شاتnawa chat ~",
+      "title": "ناوا شاتNAWA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2483": {
+      "section": "appCredits",
+      "group": "app:لادو شات lado chat ~",
+      "title": "لادو شات LADO CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2484": {
+      "section": "appCredits",
+      "group": "app:بوتا لايف potalive ~",
+      "title": "بوتا لايف PotaLive ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2488": {
+      "section": "appCredits",
+      "group": "app:باوا لايف pawa live ~",
+      "title": "باوا لايف PAWA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2489": {
+      "section": "appCredits",
+      "group": "app:جويو  لايف joyo live ~",
+      "title": "جويو  لايف JOYO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2490": {
+      "section": "appCredits",
+      "group": "app:واو شات waaw chat ~",
+      "title": "واو شات WAAW CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2493": {
+      "section": "appCredits",
+      "group": "app:هالو ستار halo star ~",
+      "title": "هالو ستار HALO STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2495": {
+      "section": "appCredits",
+      "group": "app:فف بارتي vvparty ~",
+      "title": "فف بارتي VVPARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2496": {
+      "section": "appCredits",
+      "group": "app:فوكا voca ~",
+      "title": "فوكا VOCA ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2502": {
       "section": "appCredits",
-      "group": "app-yoho-star",
+      "group": "app:يوهو ستار yohoo star ~",
       "title": "يوهو ستار YOHOO STAR ~",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2516": {
+      "section": "appCredits",
+      "group": "app:هيلا شات hilla chat ~",
+      "title": "هيلا شات HILLA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2517": {
+      "section": "appCredits",
+      "group": "app:هيبارتيhiparty ~",
+      "title": "هيبارتيHIPARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2518": {
+      "section": "appCredits",
+      "group": "app:دولي لايف doli live ~",
+      "title": "دولي لايف DOLI LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2519": {
+      "section": "appCredits",
+      "group": "app:مرحبا شات mr7ba chat ~",
+      "title": "مرحبا شات MR7BA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2523": {
+      "section": "appCredits",
+      "group": "app:شيل شات chill chat ~",
+      "title": "شيل شات CHILL CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2524": {
+      "section": "appCredits",
+      "group": "app:كراك شات karak chat ~",
+      "title": "كراك شات KARAK CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2530": {
+      "section": "appCredits",
+      "group": "app:وادي شات wadi chat ~",
+      "title": "وادي شات WADI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2532": {
+      "section": "appCredits",
+      "group": "app:ديكا بارتي dika party ~",
+      "title": "ديكا بارتي DIKA PARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2533": {
+      "section": "appCredits",
+      "group": "app:فومي بارتي  fomi party ~",
+      "title": "فومي بارتي  FOMI PARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2534": {
+      "section": "appCredits",
+      "group": "app:روكا لايف roka live ~",
+      "title": "روكا لايف ROKA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2535": {
+      "section": "appCredits",
+      "group": "app:هوبي ستار hopi star ~",
+      "title": "هوبي ستار HOPI STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2536": {
+      "section": "appCredits",
+      "group": "app:دوا لايف dawa live ~",
+      "title": "دوا لايف DAWA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2538": {
+      "section": "appCredits",
+      "group": "app:يازا شات yaza chat ~",
+      "title": "يازا شات YAZA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2539": {
+      "section": "appCredits",
+      "group": "app:يوكي شات yoki chat ~",
+      "title": "يوكي شات YOKI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2541": {
+      "section": "appCredits",
+      "group": "app:لاكا شات laka chat ~",
+      "title": "لاكا شات LAKA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2542": {
+      "section": "appCredits",
+      "group": "app:بات لايف baat live ~",
+      "title": "بات لايف BAAT LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2543": {
+      "section": "appCredits",
+      "group": "app:سايا شات siya chat ~",
+      "title": "سايا شات SIYA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2546": {
+      "section": "appCredits",
+      "group": "app:فور شات 4chat ~",
+      "title": "فور شات 4CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2548": {
+      "section": "appCredits",
+      "group": "app:نادي ستار naddy star ~",
+      "title": "نادي ستار NADDY STAR ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2550": {
+      "section": "appCredits",
+      "group": "app:وهلا شات ohla chat ~",
+      "title": "وهلا شات OHLA CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2551": {
+      "section": "appCredits",
+      "group": "app:يوي شات  yooy chat ~",
+      "title": "يوي شات  YOOY CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2553": {
+      "section": "appCredits",
+      "group": "app:مومو لايف momo live ~",
+      "title": "مومو لايف MOMO LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2557": {
+      "section": "appCredits",
+      "group": "app:شغف شات shaghaf chat ~",
+      "title": "شغف شات SHAGHAF CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2560": {
+      "section": "appCredits",
+      "group": "app:زافا لايفzaffa live ~",
+      "title": "زافا لايفZAFFA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2562": {
+      "section": "appCredits",
+      "group": "app:نيس شات nice chat ~",
+      "title": "نيس شات Nice chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2565": {
+      "section": "appCredits",
+      "group": "app:يومي شات yumi chat ~",
+      "title": "يومي شات Yumi chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2566": {
+      "section": "appCredits",
+      "group": "app:اميسو بارتي amisu party ~",
+      "title": "اميسو بارتي Amisu Party ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2568": {
+      "section": "appCredits",
+      "group": "app:فولي ستار volistar ~",
+      "title": "فولي ستار Volistar ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2569": {
+      "section": "appCredits",
+      "group": "app:يانا شات yena chat ~",
+      "title": "يانا شات Yena chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2961": {
+      "section": "appCredits",
+      "group": "app:زينا لايف xena live~",
+      "title": "زينا لايف XENA LIVE~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2967": {
+      "section": "appCredits",
+      "group": "app:تاكا شات - taka chat \"",
+      "title": "تاكا شات - Taka Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2968": {
+      "section": "appCredits",
+      "group": "app:سول شيل - soul chill \"",
+      "title": "سول شيل - Soul Chill \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2974": {
       "section": "appCredits",
-      "group": "app-likee",
+      "group": "app:لايكي - likee \"",
       "title": "لايكي - Likee \"",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2975": {
+      "section": "appCredits",
+      "group": "app:يا اهلن شات - ya ahlan chat \"",
+      "title": "يا اهلن شات - Ya Ahlan Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2976": {
       "section": "appCredits",
       "group": "app-yoho",
       "title": "يوهو واكا - Yoho Waka \"",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2977": {
+      "section": "appCredits",
+      "group": "app:عمار شات - amar chat \"",
+      "title": "عمار شات - Amar Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2980": {
+      "section": "appCredits",
+      "group": "app:بوتا لايف - pota live \"",
+      "title": "بوتا لايف - Pota Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "2982": {
       "section": "appCredits",
@@ -1267,11 +2689,389 @@
       "title": "سايا لايكي - Saya Likee \"",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
+    "2988": {
+      "section": "appCredits",
+      "group": "app:ليت شات - lit chat \"",
+      "title": "ليت شات - Lit Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2989": {
+      "section": "appCredits",
+      "group": "app:سويو شات - soyo chat \"",
+      "title": "سويو شات - Soyo Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2990": {
+      "section": "appCredits",
+      "group": "app:لاما شات - lama chat \"",
+      "title": "لاما شات - Lama Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2992": {
+      "section": "appCredits",
+      "group": "app:ميجو لايف - migo live \"",
+      "title": "ميجو لايف - Migo Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "2996": {
+      "section": "appCredits",
+      "group": "app:ميكو شات - mico chat \"",
+      "title": "ميكو شات - Mico Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3001": {
+      "section": "appCredits",
+      "group": "app:فور بارتي - 4party \"",
+      "title": "فور بارتي - 4party \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "3006": {
       "section": "appCredits",
       "group": "app-tango",
       "title": "تانغو لايف - Tango Live \"",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "3008": {
+      "section": "appCredits",
+      "group": "app:سلام شات - salam chat \"",
+      "title": "سلام شات - Salam Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3011": {
+      "section": "appCredits",
+      "group": "app:كواي - kwai \"",
+      "title": "كواي - Kwai \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3012": {
+      "section": "appCredits",
+      "group": "app:فانسي لايف - fancy live \"",
+      "title": "فانسي لايف - Fancy Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3015": {
+      "section": "appCredits",
+      "group": "app:سوبر لايف - super live \"",
+      "title": "سوبر لايف - Super Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3017": {
+      "section": "appCredits",
+      "group": "app:هوا شاتhawa chat \"",
+      "title": "هوا شاتHAWA CHAT \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3019": {
+      "section": "appCredits",
+      "group": "app:زفا لايف zaffa live \"",
+      "title": "زفا لايف Zaffa live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3020": {
+      "section": "appCredits",
+      "group": "app:اب لايفup live \"",
+      "title": "اب لايفUP LIVE \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3022": {
+      "section": "appCredits",
+      "group": "app:لامي شاتlami chat \"",
+      "title": "لامي شاتLAMI CHAT \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3023": {
+      "section": "appCredits",
+      "group": "app:مرحبا شاتmr7ba chat \"",
+      "title": "مرحبا شاتMR7BA CHAT \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3025": {
+      "section": "appCredits",
+      "group": "app:وياك شاتwyak chat \"",
+      "title": "وياك شاتWYAK CHAT \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3026": {
+      "section": "appCredits",
+      "group": "app:اوليمت شات - olamet chat \"",
+      "title": "اوليمت شات - Olamet Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3028": {
+      "section": "appCredits",
+      "group": "app:سول شات - soul chat \"",
+      "title": "سول شات - Soul Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3034": {
+      "section": "appCredits",
+      "group": "app:ليلى شات - layla chat \"",
+      "title": "ليلى شات - Layla Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3037": {
+      "section": "appCredits",
+      "group": "app:هامي بارتي - hami party \"",
+      "title": "هامي بارتي - Hami Party \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3038": {
+      "section": "appCredits",
+      "group": "app:هوبي شات - hoby chat \"",
+      "title": "هوبي شات - Hoby Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3039": {
+      "section": "appCredits",
+      "group": "app:الو شات - allo chat \"",
+      "title": "الو شات - Allo Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3041": {
+      "section": "appCredits",
+      "group": "app:هاي بارتي - hi party \"",
+      "title": "هاي بارتي - Hi Party \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3045": {
+      "section": "appCredits",
+      "group": "app:بيب لايف - pep live \"",
+      "title": "بيب لايف - Pep Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3046": {
+      "section": "appCredits",
+      "group": "app:ليونز شات - lions chat \"",
+      "title": "ليونز شات - Lions Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3047": {
+      "section": "appCredits",
+      "group": "app:هاي بلاي شات - hi play chat \"",
+      "title": "هاي بلاي شات - Hi Play Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3050": {
+      "section": "appCredits",
+      "group": "app:بارتي هيرو - party hero \"",
+      "title": "بارتي هيرو - Party Hero \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3052": {
+      "section": "appCredits",
+      "group": "app:جنكو شات - junko chat \"",
+      "title": "جنكو شات - Junko Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3053": {
+      "section": "appCredits",
+      "group": "app:يامي ستار - yami star \"",
+      "title": "يامي ستار - Yami Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3056": {
+      "section": "appCredits",
+      "group": "app:صدفى شات - sodfa chat \"",
+      "title": "صدفى شات - Sodfa Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3057": {
+      "section": "appCredits",
+      "group": "app:نوى لايف - nawa live \"",
+      "title": "نوى لايف - Nawa Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3058": {
+      "section": "appCredits",
+      "group": "app:دانا شات - dana chat \"",
+      "title": "دانا شات - Dana Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3059": {
+      "section": "appCredits",
+      "group": "app:صدى شات - saada chat \"",
+      "title": "صدى شات - Saada Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3061": {
+      "section": "appCredits",
+      "group": "app:مانغو لايف - mango live \"",
+      "title": "مانغو لايف - Mango Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3062": {
+      "section": "appCredits",
+      "group": "app:بوكيت شات - pocket chat \"",
+      "title": "بوكيت شات - Pocket Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3063": {
+      "section": "appCredits",
+      "group": "app:فوفو شات - fofo chat \"",
+      "title": "فوفو شات - Fofo Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3065": {
+      "section": "appCredits",
+      "group": "app:يودو شات - yudo chat \"",
+      "title": "يودو شات - Yudo Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3067": {
+      "section": "appCredits",
+      "group": "app:شات شيل - chat chill \"",
+      "title": "شات شيل - Chat Chill \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3068": {
+      "section": "appCredits",
+      "group": "app:سكاي شات - sky chat \"",
+      "title": "سكاي شات - Sky Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3071": {
+      "section": "appCredits",
+      "group": "app:باوا لايف - pawa live \"",
+      "title": "باوا لايف - Pawa Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3072": {
+      "section": "appCredits",
+      "group": "app:مان شات - maan chat \"",
+      "title": "مان شات - Maan Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3073": {
+      "section": "appCredits",
+      "group": "app:جولد شات - gold chat \"",
+      "title": "جولد شات - Gold Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3076": {
+      "section": "appCredits",
+      "group": "app:لاكي شات - laki chat \"",
+      "title": "لاكي شات - Laki Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3082": {
+      "section": "appCredits",
+      "group": "app:ون ستار شات - 1star chat \"",
+      "title": "ون ستار شات - 1Star Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3087": {
+      "section": "appCredits",
+      "group": "app:هالو ستار - halo star \"",
+      "title": "هالو ستار - Halo Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3088": {
+      "section": "appCredits",
+      "group": "app:واو شات - waaw chat \"",
+      "title": "واو شات - Waaw Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3089": {
+      "section": "appCredits",
+      "group": "app:كيسميت شات - lessmet chat \"",
+      "title": "كيسميت شات - Lessmet Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3090": {
+      "section": "appCredits",
+      "group": "app:بولي شات - boli chat \"",
+      "title": "بولي شات - Boli Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3093": {
+      "section": "appCredits",
+      "group": "app:نحكي شات - nahki chat \"",
+      "title": "نحكي شات - Nahki Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3096": {
+      "section": "appCredits",
+      "group": "app:مانغو ستار - mango star \"",
+      "title": "مانغو ستار - Mango Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3103": {
+      "section": "appCredits",
+      "group": "app:فيلا شات - vilaa chat \"",
+      "title": "فيلا شات - Vilaa Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3104": {
+      "section": "appCredits",
+      "group": "app:واكي ستار - waki star \"",
+      "title": "واكي ستار - Waki Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3105": {
+      "section": "appCredits",
+      "group": "app:ماستي شات - masti chat \"",
+      "title": "ماستي شات - Masti Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3132": {
+      "section": "appCredits",
+      "group": "app:بيست لايف - best live \"",
+      "title": "بيست لايف - Best Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3133": {
+      "section": "appCredits",
+      "group": "app:وهو شات - woho chat \"",
+      "title": "وهو شات - Woho Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3135": {
+      "section": "appCredits",
+      "group": "app:فور شات - 4chat \"",
+      "title": "فور شات - 4Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3136": {
+      "section": "appCredits",
+      "group": "app:عرب ستار - arab star \"",
+      "title": "عرب ستار - Arab Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3137": {
+      "section": "appCredits",
+      "group": "app:كراش لايف - crush live \"",
+      "title": "كراش لايف - Crush Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3138": {
+      "section": "appCredits",
+      "group": "app:ميكوو شات - mikoo chat \"",
+      "title": "ميكوو شات - Mikoo Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3139": {
+      "section": "appCredits",
+      "group": "app:نيو شات - niu chat \"",
+      "title": "نيو شات - Niu Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3141": {
+      "section": "appCredits",
+      "group": "app:تايا شات - taya chat \"",
+      "title": "تايا شات - Taya Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3142": {
+      "section": "appCredits",
+      "group": "app:تي لايف - ti live \"",
+      "title": "تي لايف - Ti Live \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3145": {
+      "section": "appCredits",
+      "group": "app:فن ستار - fun star \"",
+      "title": "فن ستار - Fun Star \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "3408": {
       "section": "boost",
@@ -1501,6 +3301,12 @@
       "reason": "منتج رشق كواي مؤكد",
       "title": "كواي"
     },
+    "3926": {
+      "section": "appCredits",
+      "group": "app:voca chat ~",
+      "title": "Voca Chat ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "3950": {
       "section": "balance",
       "group": "rcell",
@@ -1543,17 +3349,185 @@
       "title": "Payoneer",
       "reason": "خدمة دفع محددة بالمنتج"
     },
+    "3962": {
+      "section": "appCredits",
+      "group": "app:هيليلي شات helili chat~",
+      "title": "هيليلي شات Helili Chat~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3964": {
+      "section": "appCredits",
+      "group": "app:بشار شات bishar chat •",
+      "title": "بشار شات BISHAR CHAT •",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3965": {
+      "section": "appCredits",
+      "group": "app:كراش لايف crush live •",
+      "title": "كراش لايف CRUSH LIVE •",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3970": {
+      "section": "appCredits",
+      "group": "app:yaahlan chat 1 °",
+      "title": "YAAHLAN CHAT 1 °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3971": {
+      "section": "appCredits",
+      "group": "app:tami chat °",
+      "title": "TAMI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3972": {
+      "section": "appCredits",
+      "group": "app:waho chat °",
+      "title": "WAHO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3975": {
+      "section": "appCredits",
+      "group": "app:4fun chat °",
+      "title": "4FUN CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3979": {
+      "section": "appCredits",
+      "group": "app:xena live °",
+      "title": "XENA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3980": {
+      "section": "appCredits",
+      "group": "app:hiyoo chat °",
+      "title": "HIYOO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3982": {
+      "section": "appCredits",
+      "group": "app:bishar chat °",
+      "title": "BISHAR CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3984": {
+      "section": "appCredits",
+      "group": "app:yooy chat °",
+      "title": "YOOY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3985": {
+      "section": "appCredits",
+      "group": "app:super live °",
+      "title": "SUPER LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3987": {
+      "section": "appCredits",
+      "group": "app:hiya chat °",
+      "title": "HIYA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3988": {
+      "section": "appCredits",
+      "group": "app:dimo chat °",
+      "title": "DiMO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3992": {
+      "section": "appCredits",
+      "group": "app:lit chat °",
+      "title": "LiT CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3993": {
+      "section": "appCredits",
+      "group": "app:mango live °",
+      "title": "MANGO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3994": {
+      "section": "appCredits",
+      "group": "app:pota live °",
+      "title": "POTA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "3995": {
       "section": "appCredits",
-      "group": "app-kwai-live",
+      "group": "app:kwai live °",
       "title": "KWAI LIVE °",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "3997": {
       "section": "appCredits",
-      "group": "app-yoho",
+      "group": "app:yoho waka °",
       "title": "YOHO WAKA °",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3998": {
+      "section": "appCredits",
+      "group": "app:mico live °",
+      "title": "MICO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "3999": {
+      "section": "appCredits",
+      "group": "app:soul chat °",
+      "title": "SOUL CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4000": {
+      "section": "appCredits",
+      "group": "app:lama chat °",
+      "title": "LAMA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4004": {
+      "section": "appCredits",
+      "group": "app:tada chat °",
+      "title": "TADA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4005": {
+      "section": "appCredits",
+      "group": "app:wego party °",
+      "title": "WEGO PARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4006": {
+      "section": "appCredits",
+      "group": "app:taka live °",
+      "title": "TAKA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4007": {
+      "section": "appCredits",
+      "group": "app:binmo chat °",
+      "title": "BINMO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4008": {
+      "section": "appCredits",
+      "group": "app:light chat °",
+      "title": "LIGHT CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4009": {
+      "section": "appCredits",
+      "group": "app:haki chat °",
+      "title": "HAKI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4010": {
+      "section": "appCredits",
+      "group": "app:kiyo live °",
+      "title": "KIYO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4012": {
+      "section": "appCredits",
+      "group": "app:oohla chat °",
+      "title": "OOHLA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "4013": {
       "section": "appCredits",
@@ -1561,23 +3535,695 @@
       "title": "CHAMET °",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
+    "4014": {
+      "section": "appCredits",
+      "group": "app:azal live °",
+      "title": "AZAL LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4015": {
+      "section": "appCredits",
+      "group": "app:cocco live °",
+      "title": "COCCO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4016": {
+      "section": "appCredits",
+      "group": "app:migo live °",
+      "title": "MIGO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4017": {
+      "section": "appCredits",
+      "group": "app:gala star °",
+      "title": "GALA STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4018": {
+      "section": "appCredits",
+      "group": "app:ligo live °",
+      "title": "LIGO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4019": {
+      "section": "appCredits",
+      "group": "app:salam chat °",
+      "title": "SALAM CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4020": {
+      "section": "appCredits",
+      "group": "app:habby chat °",
+      "title": "HABBY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4021": {
+      "section": "appCredits",
+      "group": "app:star maker °",
+      "title": "STAR MAKER °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4022": {
+      "section": "appCredits",
+      "group": "app:opa live °",
+      "title": "OPA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4023": {
+      "section": "appCredits",
+      "group": "app:lami chat °",
+      "title": "LAMI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4024": {
+      "section": "appCredits",
+      "group": "app:bobo chat °",
+      "title": "BOBO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4025": {
+      "section": "appCredits",
+      "group": "app:mr7ba chat °",
+      "title": "MR7BA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4026": {
+      "section": "appCredits",
+      "group": "app:pocket chat °",
+      "title": "POCKET CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4027": {
+      "section": "appCredits",
+      "group": "app:fancy live °",
+      "title": "FANCY LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4028": {
+      "section": "appCredits",
+      "group": "app:sky chat °",
+      "title": "SKY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "4029": {
       "section": "appCredits",
       "group": "app-tango",
       "title": "TANGO °",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
+    "4030": {
+      "section": "appCredits",
+      "group": "app:beela chat °",
+      "title": "BEELA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4033": {
+      "section": "appCredits",
+      "group": "app:up live °",
+      "title": "UP LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4034": {
+      "section": "appCredits",
+      "group": "app:hoob chat °",
+      "title": "HOOB CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4035": {
+      "section": "appCredits",
+      "group": "app:wyak chat °",
+      "title": "WYAK CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4036": {
+      "section": "appCredits",
+      "group": "app:gold chat °",
+      "title": "GOLD CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4037": {
+      "section": "appCredits",
+      "group": "app:hiparty °",
+      "title": "HIPARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4038": {
+      "section": "appCredits",
+      "group": "app:allo chat °",
+      "title": "ALLO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4039": {
+      "section": "appCredits",
+      "group": "app:toptop chat °",
+      "title": "TOPTOP CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4042": {
+      "section": "appCredits",
+      "group": "app:gimme live °",
+      "title": "GIMME LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4046": {
+      "section": "appCredits",
+      "group": "app:lions chat °",
+      "title": "LIONS CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4048": {
+      "section": "appCredits",
+      "group": "app:pawa live °",
+      "title": "PAWA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4051": {
+      "section": "appCredits",
+      "group": "app:hawa chat °",
+      "title": "HAWA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
     "4053": {
       "section": "appCredits",
-      "group": "app-saya-likee",
+      "group": "app:saya likee °",
       "title": "SAYA LIKEE °",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4054": {
+      "section": "appCredits",
+      "group": "app:waki star °",
+      "title": "WAKI STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4056": {
+      "section": "appCredits",
+      "group": "app:yobi chat °",
+      "title": "YOBI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4057": {
+      "section": "appCredits",
+      "group": "app:party hero °",
+      "title": "PARTY HERO °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4060": {
+      "section": "appCredits",
+      "group": "app:yami star °",
+      "title": "YAMI STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4061": {
+      "section": "appCredits",
+      "group": "app:westar °",
+      "title": "WESTAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4062": {
+      "section": "appCredits",
+      "group": "app:maan chat °",
+      "title": "MAAN CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4065": {
+      "section": "appCredits",
+      "group": "app:hiplay chat °",
+      "title": "HIPLAY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4068": {
+      "section": "appCredits",
+      "group": "app:haya chat °",
+      "title": "HAYA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4070": {
+      "section": "appCredits",
+      "group": "app:rostar °",
+      "title": "ROSTAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4071": {
+      "section": "appCredits",
+      "group": "app:jaco chat °",
+      "title": "JACO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4072": {
+      "section": "appCredits",
+      "group": "app:yahlla chat °",
+      "title": "YAHLLA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4073": {
+      "section": "appCredits",
+      "group": "app:gamet live °",
+      "title": "GAMET LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4076": {
+      "section": "appCredits",
+      "group": "app:yigo chat °",
+      "title": "YIGO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4078": {
+      "section": "appCredits",
+      "group": "app:4party chat °",
+      "title": "4PARTY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4080": {
+      "section": "appCredits",
+      "group": "app:kessmet chat °",
+      "title": "KESSMET CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4085": {
+      "section": "appCredits",
+      "group": "app:salam chat °",
+      "title": "SALAM CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4092": {
+      "section": "appCredits",
+      "group": "app:laki chat °",
+      "title": "LAKI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4094": {
+      "section": "appCredits",
+      "group": "app:ghanny live °",
+      "title": "GHANNY LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4095": {
+      "section": "appCredits",
+      "group": "app:1star chat °",
+      "title": "1STAR CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "4097": {
       "section": "appCredits",
-      "group": "app-yoho-star",
+      "group": "app:yohoo star °",
       "title": "YOHOO STAR °",
-      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4098": {
+      "section": "appCredits",
+      "group": "app:waaw chat °",
+      "title": "WAAW CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4099": {
+      "section": "appCredits",
+      "group": "app:lado chat °",
+      "title": "LADO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4100": {
+      "section": "appCredits",
+      "group": "app:fun star °",
+      "title": "FUN STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4101": {
+      "section": "appCredits",
+      "group": "app:carni live °",
+      "title": "CARNI LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4102": {
+      "section": "appCredits",
+      "group": "app:ditto live °",
+      "title": "DITTO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4105": {
+      "section": "appCredits",
+      "group": "app:nahki chat °",
+      "title": "NAHKI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4106": {
+      "section": "appCredits",
+      "group": "app:dido chat °",
+      "title": "DIDO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4107": {
+      "section": "appCredits",
+      "group": "app:halo star °",
+      "title": "HALO STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4108": {
+      "section": "appCredits",
+      "group": "app:vilaa chat °",
+      "title": "VILAA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4109": {
+      "section": "appCredits",
+      "group": "app:e-party °",
+      "title": "E-PARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4110": {
+      "section": "appCredits",
+      "group": "app:rooh chat °",
+      "title": "ROOH CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4111": {
+      "section": "appCredits",
+      "group": "app:hart live °",
+      "title": "HART LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4113": {
+      "section": "appCredits",
+      "group": "app:doli live °",
+      "title": "DOLI LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4114": {
+      "section": "appCredits",
+      "group": "app:voca °",
+      "title": "VOCA °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4116": {
+      "section": "appCredits",
+      "group": "app:naddy star °",
+      "title": "NADDY STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4119": {
+      "section": "appCredits",
+      "group": "app:hopi star °",
+      "title": "HOPI STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4122": {
+      "section": "appCredits",
+      "group": "app:yoso chat °",
+      "title": "YOSO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4123": {
+      "section": "appCredits",
+      "group": "app:yoki chat °",
+      "title": "YOKI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4126": {
+      "section": "appCredits",
+      "group": "app:dawa chat °",
+      "title": "DAWA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4128": {
+      "section": "appCredits",
+      "group": "app:tayyb chat °",
+      "title": "TAYYB CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4129": {
+      "section": "appCredits",
+      "group": "app:roka live °",
+      "title": "ROKA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4130": {
+      "section": "appCredits",
+      "group": "app:wadi chat °",
+      "title": "WADI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4131": {
+      "section": "appCredits",
+      "group": "app:fomi party °",
+      "title": "FOMI PARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4132": {
+      "section": "appCredits",
+      "group": "app:karak chat °",
+      "title": "KARAK CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4134": {
+      "section": "appCredits",
+      "group": "app:yudo chat °",
+      "title": "YUDO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4135": {
+      "section": "appCredits",
+      "group": "app:dika live °",
+      "title": "DIKA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4136": {
+      "section": "appCredits",
+      "group": "app:sahi live °",
+      "title": "SAHI LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4138": {
+      "section": "appCredits",
+      "group": "app:laka chat °",
+      "title": "LAKA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4139": {
+      "section": "appCredits",
+      "group": "app:baat live °",
+      "title": "BAAT LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4140": {
+      "section": "appCredits",
+      "group": "app:crush live °",
+      "title": "CRUSH LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4141": {
+      "section": "appCredits",
+      "group": "app:yayya chat °",
+      "title": "YAYYA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4142": {
+      "section": "appCredits",
+      "group": "app:ohla live °",
+      "title": "OHLA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4144": {
+      "section": "appCredits",
+      "group": "app:4chat °",
+      "title": "4CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4145": {
+      "section": "appCredits",
+      "group": "app:shabab chat °",
+      "title": "SHABAB CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4147": {
+      "section": "appCredits",
+      "group": "app:chata °",
+      "title": "CHATA °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4148": {
+      "section": "appCredits",
+      "group": "app:niu chat °",
+      "title": "NIU CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4149": {
+      "section": "appCredits",
+      "group": "app:best live °",
+      "title": "BEST LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4151": {
+      "section": "appCredits",
+      "group": "app:masti chat °",
+      "title": "MASTI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4156": {
+      "section": "appCredits",
+      "group": "app:chati °",
+      "title": "CHATI °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4157": {
+      "section": "appCredits",
+      "group": "app:momo live °",
+      "title": "MOMO LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4159": {
+      "section": "appCredits",
+      "group": "app:zaffa live °",
+      "title": "ZAFFA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4160": {
+      "section": "appCredits",
+      "group": "app:mikoo chat °",
+      "title": "MIKOO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4162": {
+      "section": "appCredits",
+      "group": "app:nady chat °",
+      "title": "NADY CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4163": {
+      "section": "appCredits",
+      "group": "app:yena chat °",
+      "title": "YENA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4167": {
+      "section": "appCredits",
+      "group": "app:ti live °",
+      "title": "TI LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4168": {
+      "section": "appCredits",
+      "group": "app:yula chat °",
+      "title": "YULA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4169": {
+      "section": "appCredits",
+      "group": "app:wahda chat °",
+      "title": "WAHDA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4170": {
+      "section": "appCredits",
+      "group": "app:faby star °",
+      "title": "FABY STAR °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4171": {
+      "section": "appCredits",
+      "group": "app:rixo chat °",
+      "title": "RIXO CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4172": {
+      "section": "appCredits",
+      "group": "app:moma live °",
+      "title": "MOMA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4173": {
+      "section": "appCredits",
+      "group": "app:taya chat °",
+      "title": "TAYA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4174": {
+      "section": "appCredits",
+      "group": "app:amisu party °",
+      "title": "AMISU PARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4175": {
+      "section": "appCredits",
+      "group": "app:lotfun chat °",
+      "title": "LOTFUN CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4176": {
+      "section": "appCredits",
+      "group": "app:sohha live °",
+      "title": "SOHHA LIVE °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4179": {
+      "section": "appCredits",
+      "group": "app:hi chat °",
+      "title": "HI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4180": {
+      "section": "appCredits",
+      "group": "app:shaghaf chat °",
+      "title": "SHAGHAF CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4192": {
+      "section": "appCredits",
+      "group": "app:laika chat °",
+      "title": "LAIKA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4195": {
+      "section": "appCredits",
+      "group": "app:nice chat °",
+      "title": "NICE CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4198": {
+      "section": "appCredits",
+      "group": "app:bota chat °",
+      "title": "BOTA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4199": {
+      "section": "appCredits",
+      "group": "app:hob chat °",
+      "title": "HOB CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4200": {
+      "section": "appCredits",
+      "group": "app:helili chat °",
+      "title": "HELILI CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4207": {
+      "section": "appCredits",
+      "group": "app:we party °",
+      "title": "WE PARTY °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4220": {
+      "section": "appCredits",
+      "group": "app:hoki chat ~",
+      "title": "HOKI CHAT ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4223": {
+      "section": "appCredits",
+      "group": "app:ti live ~",
+      "title": "TI LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4224": {
+      "section": "appCredits",
+      "group": "app:we party ~",
+      "title": "WE PARTY ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4230": {
+      "section": "appCredits",
+      "group": "app:chati ~",
+      "title": "Chati ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     },
     "4256": {
       "section": "digital",
@@ -1626,6 +4272,30 @@
       "group": "shahid",
       "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد"
+    },
+    "4277": {
+      "section": "appCredits",
+      "group": "app:يابي شات - yabi chat \"",
+      "title": "يابي شات - Yabi Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4278": {
+      "section": "appCredits",
+      "group": "app:taka live ~",
+      "title": "TAKA LIVE ~",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4280": {
+      "section": "appCredits",
+      "group": "app:تامي شات - tami chat \"",
+      "title": "تامي شات - Tami Chat \"",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
+    },
+    "4301": {
+      "section": "appCredits",
+      "group": "app:ulfaa chat °",
+      "title": "ULFAA CHAT °",
+      "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID"
     }
   },
   "sortRules": {
