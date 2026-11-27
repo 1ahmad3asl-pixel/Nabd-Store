@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/unified-product-classifier" ]
   pull_request:
     branches: [ "main" ]
 
@@ -27,6 +27,9 @@ jobs:
 
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
+
+      - name: Run test suite
+        run: npm test
 
       - name: Check server syntax
         run: node --check server.js
