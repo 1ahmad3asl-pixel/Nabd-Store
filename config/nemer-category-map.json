@@ -4,1084 +4,1446 @@
   "parentIdRules": {
     "2237": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-2237",
       "expectedCategoryName": "وحدات سيريتل s2",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "وحدات سيريتل s2"
     },
     "2238": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-2238",
       "expectedCategoryName": "وحدات s2 MTN",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "وحدات s2 MTN"
     },
     "2276": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-2276",
       "expectedCategoryName": "Snapchat Plus",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Snapchat Plus"
     },
     "2577": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-2577",
       "expectedCategoryName": "وحدات MTN~",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "وحدات MTN~"
     },
     "3192": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-3192",
       "expectedCategoryName": "شاميت - Chamet \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "شاميت - Chamet \""
     },
     "3194": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-3194",
       "expectedCategoryName": "فالا - Falla \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "فالا - Falla \""
     },
     "3195": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-3195",
       "expectedCategoryName": "نيمو تي في - Nimo Tv \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "نيمو تي في - Nimo Tv \""
     },
     "3208": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3208",
       "expectedCategoryName": "Gemini - Pro \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Gemini - Pro \""
     },
     "3209": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3209",
       "expectedCategoryName": "Gamma Ai - Pro \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Gamma Ai - Pro \""
     },
     "3210": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3210",
       "expectedCategoryName": "Super Grok \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Super Grok \""
     },
     "3211": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3211",
       "expectedCategoryName": "Cursor - Pro \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Cursor - Pro \""
     },
     "3212": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3212",
       "expectedCategoryName": "ChatGPT \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ChatGPT \""
     },
     "3214": {
       "section": "giftCards",
-      "group": "digital-cards",
+      "group": "parent-3214",
       "expectedCategoryName": "ITUNES - USA \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ITUNES - USA \""
     },
     "3215": {
       "section": "giftCards",
-      "group": "digital-cards",
+      "group": "parent-3215",
       "expectedCategoryName": "STEAM - USA \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "STEAM - USA \""
     },
     "3216": {
       "section": "giftCards",
-      "group": "digital-cards",
+      "group": "parent-3216",
       "expectedCategoryName": "RAZER GOLD - GLOBAL \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "RAZER GOLD - GLOBAL \""
     },
     "3217": {
       "section": "giftCards",
-      "group": "digital-cards",
+      "group": "parent-3217",
       "expectedCategoryName": "VISA CARD \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "VISA CARD \""
     },
     "3218": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3218",
       "expectedCategoryName": "Canva - Pro \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Canva - Pro \""
     },
     "3257": {
       "section": "games",
-      "group": "FarLight84 •",
+      "group": "parent-3257",
       "expectedCategoryName": "FarLight84 •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "FarLight84 •"
     },
     "3259": {
       "section": "games",
-      "group": "Lords mobile •",
+      "group": "parent-3259",
       "expectedCategoryName": "Lords mobile •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Lords mobile •"
     },
     "3263": {
       "section": "games",
-      "group": "Guns of glory •",
+      "group": "parent-3263",
       "expectedCategoryName": "Guns of glory •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Guns of glory •"
     },
     "3264": {
       "section": "games",
-      "group": "Project entropy •",
+      "group": "parent-3264",
       "expectedCategoryName": "Project entropy •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Project entropy •"
     },
     "3265": {
       "section": "games",
-      "group": "8Ball Pool •",
+      "group": "parent-3265",
       "expectedCategoryName": "8Ball Pool •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "8Ball Pool •"
     },
     "3266": {
       "section": "games",
-      "group": "Whiteout Survival •",
+      "group": "parent-3266",
       "expectedCategoryName": "Whiteout Survival •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Whiteout Survival •"
     },
     "3267": {
       "section": "games",
-      "group": "Marvel Reveals •",
+      "group": "parent-3267",
       "expectedCategoryName": "Marvel Reveals •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Marvel Reveals •"
     },
     "3268": {
       "section": "games",
-      "group": "City Of Crime Gang War •",
+      "group": "parent-3268",
       "expectedCategoryName": "City Of Crime Gang War •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "City Of Crime Gang War •"
     },
     "3269": {
       "section": "games",
-      "group": "Stumble Guys •",
+      "group": "parent-3269",
       "expectedCategoryName": "Stumble Guys •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Stumble Guys •"
     },
     "3270": {
       "section": "games",
-      "group": "Super SUS •",
+      "group": "parent-3270",
       "expectedCategoryName": "Super SUS •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Super SUS •"
     },
     "3271": {
       "section": "games",
-      "group": "Genshen Impact •",
+      "group": "parent-3271",
       "expectedCategoryName": "Genshen Impact •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Genshen Impact •"
     },
     "3275": {
       "section": "games",
-      "group": "Honkai : Star Rail •",
+      "group": "parent-3275",
       "expectedCategoryName": "Honkai : Star Rail •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Honkai : Star Rail •"
     },
     "3276": {
       "section": "games",
-      "group": "Oxide : Survival Island •",
+      "group": "parent-3276",
       "expectedCategoryName": "Oxide : Survival Island •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Oxide : Survival Island •"
     },
     "3277": {
       "section": "games",
-      "group": "Hero Clash •",
+      "group": "parent-3277",
       "expectedCategoryName": "Hero Clash •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Hero Clash •"
     },
     "3278": {
       "section": "games",
-      "group": "Mobile Legend Global •",
+      "group": "parent-3278",
       "expectedCategoryName": "Mobile Legend Global •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Mobile Legend Global •"
     },
     "3279": {
       "section": "games",
-      "group": "Mobile Legends Turkish •",
+      "group": "parent-3279",
       "expectedCategoryName": "Mobile Legends Turkish •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Mobile Legends Turkish •"
     },
     "3281": {
       "section": "games",
-      "group": "King Shot •",
+      "group": "parent-3281",
       "expectedCategoryName": "King Shot •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "King Shot •"
     },
     "3283": {
       "section": "games",
-      "group": "Bullet Echo •",
+      "group": "parent-3283",
       "expectedCategoryName": "Bullet Echo •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Bullet Echo •"
     },
     "3284": {
       "section": "games",
-      "group": "Crystal of Atlan •",
+      "group": "parent-3284",
       "expectedCategoryName": "Crystal of Atlan •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Crystal of Atlan •"
     },
     "3285": {
       "section": "games",
-      "group": "Devil May Cry: Peak of Combat •",
+      "group": "parent-3285",
       "expectedCategoryName": "Devil May Cry: Peak of Combat •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Devil May Cry: Peak of Combat •"
     },
     "3286": {
       "section": "games",
-      "group": "Acecraft •",
+      "group": "parent-3286",
       "expectedCategoryName": "Acecraft •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Acecraft •"
     },
     "3287": {
       "section": "games",
-      "group": "Blood Strike (GLOBAL) •",
+      "group": "parent-3287",
       "expectedCategoryName": "Blood Strike (GLOBAL) •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Blood Strike (GLOBAL) •"
     },
     "3288": {
       "section": "games",
-      "group": "Blood strike العرب •",
+      "group": "parent-3288",
       "expectedCategoryName": "Blood strike العرب •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Blood strike العرب •"
     },
     "3289": {
       "section": "games",
-      "group": "Ludo clud •",
+      "group": "parent-3289",
       "expectedCategoryName": "Ludo clud •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Ludo clud •"
     },
     "3290": {
       "section": "games",
-      "group": "Arena Breakout •",
+      "group": "parent-3290",
       "expectedCategoryName": "Arena Breakout •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Arena Breakout •"
     },
     "3291": {
       "section": "games",
-      "group": "Honor of king •",
+      "group": "parent-3291",
       "expectedCategoryName": "Honor of king •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Honor of king •"
     },
     "3292": {
       "section": "games",
-      "group": "Age Of Empires Mobile •",
+      "group": "parent-3292",
       "expectedCategoryName": "Age Of Empires Mobile •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Age Of Empires Mobile •"
     },
     "3293": {
       "section": "games",
-      "group": "division resurgence •",
+      "group": "parent-3293",
       "expectedCategoryName": "division resurgence •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "division resurgence •"
     },
     "3294": {
       "section": "games",
-      "group": "afk journey •",
+      "group": "parent-3294",
       "expectedCategoryName": "afk journey •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "afk journey •"
     },
     "3295": {
       "section": "games",
-      "group": "ghost story love destiny •",
+      "group": "parent-3295",
       "expectedCategoryName": "ghost story love destiny •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ghost story love destiny •"
     },
     "3296": {
       "section": "games",
-      "group": "age of magic •",
+      "group": "parent-3296",
       "expectedCategoryName": "age of magic •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "age of magic •"
     },
     "3297": {
       "section": "games",
-      "group": "goddess of victory nikke •",
+      "group": "parent-3297",
       "expectedCategoryName": "goddess of victory nikke •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "goddess of victory nikke •"
     },
     "3298": {
       "section": "games",
-      "group": "golden spatula •",
+      "group": "parent-3298",
       "expectedCategoryName": "golden spatula •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "golden spatula •"
     },
     "3299": {
       "section": "games",
-      "group": "growtopia •",
+      "group": "parent-3299",
       "expectedCategoryName": "growtopia •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "growtopia •"
     },
     "3300": {
       "section": "games",
-      "group": "arena of valor eu •",
+      "group": "parent-3300",
       "expectedCategoryName": "arena of valor eu •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "arena of valor eu •"
     },
     "3301": {
       "section": "games",
-      "group": "haikyu fly high sea •",
+      "group": "parent-3301",
       "expectedCategoryName": "haikyu fly high sea •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "haikyu fly high sea •"
     },
     "3302": {
       "section": "games",
-      "group": "arknights endfield •",
+      "group": "parent-3302",
       "expectedCategoryName": "arknights endfield •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "arknights endfield •"
     },
     "3303": {
       "section": "games",
-      "group": "hatsune miku colorful stage •",
+      "group": "parent-3303",
       "expectedCategoryName": "hatsune miku colorful stage •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "hatsune miku colorful stage •"
     },
     "3304": {
       "section": "games",
-      "group": "astral guardians cyber fantasy •",
+      "group": "parent-3304",
       "expectedCategoryName": "astral guardians cyber fantasy •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "astral guardians cyber fantasy •"
     },
     "3305": {
       "section": "games",
-      "group": "heaven burns red •",
+      "group": "parent-3305",
       "expectedCategoryName": "heaven burns red •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "heaven burns red •"
     },
     "3306": {
       "section": "games",
-      "group": "ballistic hero vng •",
+      "group": "parent-3306",
       "expectedCategoryName": "ballistic hero vng •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ballistic hero vng •"
     },
     "3307": {
       "section": "games",
-      "group": "be the king •",
+      "group": "parent-3307",
       "expectedCategoryName": "be the king •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "be the king •"
     },
     "3308": {
       "section": "games",
-      "group": "blade x odyssey of heroes •",
+      "group": "parent-3308",
       "expectedCategoryName": "blade x odyssey of heroes •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "blade x odyssey of heroes •"
     },
     "3312": {
       "section": "games",
-      "group": "blockman go •",
+      "group": "parent-3312",
       "expectedCategoryName": "blockman go •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "blockman go •"
     },
     "3313": {
       "section": "games",
-      "group": "hyper front •",
+      "group": "parent-3313",
       "expectedCategoryName": "hyper front •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "hyper front •"
     },
     "3314": {
       "section": "games",
-      "group": "idol party •",
+      "group": "parent-3314",
       "expectedCategoryName": "idol party •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "idol party •"
     },
     "3315": {
       "section": "games",
-      "group": "captain tsubasa ace •",
+      "group": "parent-3315",
       "expectedCategoryName": "captain tsubasa ace •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "captain tsubasa ace •"
     },
     "3316": {
       "section": "games",
-      "group": "infinite lagrange •",
+      "group": "parent-3316",
       "expectedCategoryName": "infinite lagrange •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "infinite lagrange •"
     },
     "3317": {
       "section": "games",
-      "group": "isekai feast tales of recipes •",
+      "group": "parent-3317",
       "expectedCategoryName": "isekai feast tales of recipes •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "isekai feast tales of recipes •"
     },
     "3318": {
       "section": "games",
-      "group": "jade dynasty new fantasy •",
+      "group": "parent-3318",
       "expectedCategoryName": "jade dynasty new fantasy •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "jade dynasty new fantasy •"
     },
     "3319": {
       "section": "games",
-      "group": "civilization eras and allies •",
+      "group": "parent-3319",
       "expectedCategoryName": "civilization eras and allies •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "civilization eras and allies •"
     },
     "3320": {
       "section": "games",
-      "group": "journey renewed fate fantasy •",
+      "group": "parent-3320",
       "expectedCategoryName": "journey renewed fate fantasy •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "journey renewed fate fantasy •"
     },
     "3321": {
       "section": "games",
-      "group": "clash of plants •",
+      "group": "parent-3321",
       "expectedCategoryName": "clash of plants •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "clash of plants •"
     },
     "3322": {
       "section": "games",
-      "group": "kings choice sea •",
+      "group": "parent-3322",
       "expectedCategoryName": "kings choice sea •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "kings choice sea •"
     },
     "3323": {
       "section": "games",
-      "group": "cloud song saga of skywalkers •",
+      "group": "parent-3323",
       "expectedCategoryName": "cloud song saga of skywalkers •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "cloud song saga of skywalkers •"
     },
     "3324": {
       "section": "games",
-      "group": "kuroko street rivals •",
+      "group": "parent-3324",
       "expectedCategoryName": "kuroko street rivals •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "kuroko street rivals •"
     },
     "3325": {
       "section": "games",
-      "group": "legacy of discord furiouswings •",
+      "group": "parent-3325",
       "expectedCategoryName": "legacy of discord furiouswings •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "legacy of discord furiouswings •"
     },
     "3326": {
       "section": "games",
-      "group": "legend of the phoenix •",
+      "group": "parent-3326",
       "expectedCategoryName": "legend of the phoenix •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "legend of the phoenix •"
     },
     "3327": {
       "section": "games",
-      "group": "crossfire legend •",
+      "group": "parent-3327",
       "expectedCategoryName": "crossfire legend •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "crossfire legend •"
     },
     "3328": {
       "section": "games",
-      "group": "crossout mobile •",
+      "group": "parent-3328",
       "expectedCategoryName": "crossout mobile •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "crossout mobile •"
     },
     "3329": {
       "section": "games",
-      "group": "crystalfall •",
+      "group": "parent-3329",
       "expectedCategoryName": "crystalfall •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "crystalfall •"
     },
     "3330": {
       "section": "games",
-      "group": "deadly dudes •",
+      "group": "parent-3330",
       "expectedCategoryName": "deadly dudes •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "deadly dudes •"
     },
     "3331": {
       "section": "games",
-      "group": "life makeover global •",
+      "group": "parent-3331",
       "expectedCategoryName": "life makeover global •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "life makeover global •"
     },
     "3332": {
       "section": "games",
-      "group": "dragon nest m sea •",
+      "group": "parent-3332",
       "expectedCategoryName": "dragon nest m sea •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "dragon nest m sea •"
     },
     "3333": {
       "section": "games",
-      "group": "dragon raja sea •",
+      "group": "parent-3333",
       "expectedCategoryName": "dragon raja sea •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "dragon raja sea •"
     },
     "3335": {
       "section": "games",
-      "group": "dream and lethe record •",
+      "group": "parent-3335",
       "expectedCategoryName": "dream and lethe record •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "dream and lethe record •"
     },
     "3336": {
       "section": "games",
-      "group": "dragonheir silent gods •",
+      "group": "parent-3336",
       "expectedCategoryName": "dragonheir silent gods •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "dragonheir silent gods •"
     },
     "3337": {
       "section": "games",
-      "group": "love nikki •",
+      "group": "parent-3337",
       "expectedCategoryName": "love nikki •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "love nikki •"
     },
     "3339": {
       "section": "games",
-      "group": "dynasty heroes legend samkok •",
+      "group": "parent-3339",
       "expectedCategoryName": "dynasty heroes legend samkok •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "dynasty heroes legend samkok •"
     },
     "3340": {
       "section": "games",
-      "group": "echocalypse scarlet covenant •",
+      "group": "parent-3340",
       "expectedCategoryName": "echocalypse scarlet covenant •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "echocalypse scarlet covenant •"
     },
     "3341": {
       "section": "games",
-      "group": "eggy party •",
+      "group": "parent-3341",
       "expectedCategoryName": "eggy party •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "eggy party •"
     },
     "3342": {
       "section": "games",
-      "group": "enhypen world •",
+      "group": "parent-3342",
       "expectedCategoryName": "enhypen world •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "enhypen world •"
     },
     "3343": {
       "section": "games",
-      "group": "magic chess gogo global •",
+      "group": "parent-3343",
       "expectedCategoryName": "magic chess gogo global •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "magic chess gogo global •"
     },
     "3344": {
       "section": "games",
-      "group": "ensemble stars music •",
+      "group": "parent-3344",
       "expectedCategoryName": "ensemble stars music •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ensemble stars music •"
     },
     "3345": {
       "section": "games",
-      "group": "eve echoes •",
+      "group": "parent-3345",
       "expectedCategoryName": "eve echoes •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "eve echoes •"
     },
     "3346": {
       "section": "games",
-      "group": "extraordinary ones •",
+      "group": "parent-3346",
       "expectedCategoryName": "extraordinary ones •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "extraordinary ones •"
     },
     "3347": {
       "section": "games",
-      "group": "marvel duel •",
+      "group": "parent-3347",
       "expectedCategoryName": "marvel duel •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "marvel duel •"
     },
     "3348": {
       "section": "games",
-      "group": "marvel mystic mayhem •",
+      "group": "parent-3348",
       "expectedCategoryName": "marvel mystic mayhem •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "marvel mystic mayhem •"
     },
     "3349": {
       "section": "games",
-      "group": "football master 2 •",
+      "group": "parent-3349",
       "expectedCategoryName": "football master 2 •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "football master 2 •"
     },
     "3350": {
       "section": "games",
-      "group": "mirage perfect skyline •",
+      "group": "parent-3350",
       "expectedCategoryName": "mirage perfect skyline •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "mirage perfect skyline •"
     },
     "3351": {
       "section": "games",
-      "group": "modern strike online •",
+      "group": "parent-3351",
       "expectedCategoryName": "modern strike online •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "modern strike online •"
     },
     "3352": {
       "section": "games",
-      "group": "mongil star dive •",
+      "group": "parent-3352",
       "expectedCategoryName": "mongil star dive •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "mongil star dive •"
     },
     "3353": {
       "section": "games",
-      "group": "garena speed drifters •",
+      "group": "parent-3353",
       "expectedCategoryName": "garena speed drifters •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "garena speed drifters •"
     },
     "3354": {
       "section": "games",
-      "group": "my singing monsters •",
+      "group": "parent-3354",
       "expectedCategoryName": "my singing monsters •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "my singing monsters •"
     },
     "3355": {
       "section": "games",
-      "group": "onmyoji arena •",
+      "group": "parent-3355",
       "expectedCategoryName": "onmyoji arena •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "onmyoji arena •"
     },
     "3356": {
       "section": "games",
-      "group": "overmortal idle global •",
+      "group": "parent-3356",
       "expectedCategoryName": "overmortal idle global •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "overmortal idle global •"
     },
     "3357": {
       "section": "games",
-      "group": "stormshot •",
+      "group": "parent-3357",
       "expectedCategoryName": "stormshot •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "stormshot •"
     },
     "3401": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3401",
       "expectedCategoryName": "NETFLIX •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "NETFLIX •"
     },
     "3404": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3404",
       "expectedCategoryName": "Apple Music •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Apple Music •"
     },
     "3918": {
       "section": "games",
-      "group": "Roblox USA ??",
+      "group": "parent-3918",
       "expectedCategoryName": "Roblox USA ??",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Roblox USA ??"
     },
     "3919": {
       "section": "games",
-      "group": "Roblox KSA ??",
+      "group": "parent-3919",
       "expectedCategoryName": "Roblox KSA ??",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Roblox KSA ??"
     },
     "3920": {
       "section": "games",
-      "group": "Roblox UAE ??",
+      "group": "parent-3920",
       "expectedCategoryName": "Roblox UAE ??",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Roblox UAE ??"
     },
     "3921": {
       "section": "games",
-      "group": "Roblox CAD ??",
+      "group": "parent-3921",
       "expectedCategoryName": "Roblox CAD ??",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Roblox CAD ??"
     },
     "3922": {
       "section": "games",
-      "group": "Roblox EUR ??",
+      "group": "parent-3922",
       "expectedCategoryName": "Roblox EUR ??",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Roblox EUR ??"
     },
     "3932": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3932",
       "expectedCategoryName": "Nord VPN (Global) •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Nord VPN (Global) •"
     },
     "3933": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3933",
       "expectedCategoryName": "Express vpn •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Express vpn •"
     },
     "3934": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3934",
       "expectedCategoryName": "PIA VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "PIA VPN •"
     },
     "3935": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3935",
       "expectedCategoryName": "Proton VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Proton VPN •"
     },
     "3937": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3937",
       "expectedCategoryName": "SurfShark VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "SurfShark VPN •"
     },
     "3938": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3938",
       "expectedCategoryName": "Pure VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Pure VPN •"
     },
     "3939": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3939",
       "expectedCategoryName": "Windscribe VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Windscribe VPN •"
     },
     "3940": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-3940",
       "expectedCategoryName": "Shield VPN •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Shield VPN •"
     },
     "3946": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-3946",
       "expectedCategoryName": "باقة تركسل•",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "باقة تركسل•"
     },
     "3947": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-3947",
       "expectedCategoryName": "زين كاش العراق •",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "زين كاش العراق •"
     },
     "3948": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-3948",
       "expectedCategoryName": "Alfa •",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "Alfa •"
     },
     "3957": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-3957",
       "expectedCategoryName": "Touch •",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "Touch •"
     },
     "3958": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-3958",
       "expectedCategoryName": "اسيا سيل •",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "اسيا سيل •"
     },
     "3966": {
       "section": "games",
-      "group": "Clash of clans •",
+      "group": "parent-3966",
       "expectedCategoryName": "Clash of clans •",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Clash of clans •"
     },
     "4215": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4215",
       "expectedCategoryName": "FALLA °",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "FALLA °"
     },
     "4216": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4216",
       "expectedCategoryName": "NIMO TV °",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "NIMO TV °"
     },
     "4219": {
       "section": "digital",
-      "group": "subscriptions",
+      "group": "parent-4219",
       "expectedCategoryName": "Canva pro ~",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Canva pro ~"
     },
     "4231": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4231",
       "expectedCategoryName": "ليف يو - LivU \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "ليف يو - LivU \""
     },
     "4232": {
       "section": "balance",
-      "group": "telecom",
+      "group": "parent-4232",
       "expectedCategoryName": "وحداتسرياتيلs1 ~",
-      "sortRule": "price_asc"
+      "sortRule": "price_asc",
+      "title": "وحداتسرياتيلs1 ~"
     },
     "4269": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4269",
       "expectedCategoryName": "LIVU",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "LIVU"
     },
     "4273": {
       "section": "games",
-      "group": "Free Fire ~",
+      "group": "parent-4273",
       "expectedCategoryName": "Free Fire ~",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "Free Fire ~"
     },
     "4274": {
       "section": "games",
-      "group": "فري فاير روبوت \"s3",
+      "group": "parent-4274",
       "expectedCategoryName": "فري فاير روبوت \"s3",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "فري فاير روبوت \"s3"
     },
     "4275": {
       "section": "games",
-      "group": "عضويات فري فاير \"",
+      "group": "parent-4275",
       "expectedCategoryName": "عضويات فري فاير \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "عضويات فري فاير \""
     },
     "4281": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4281",
       "expectedCategoryName": "يلا لايف yalla live ~",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "يلا لايف yalla live ~"
     },
     "4282": {
       "section": "appCredits",
-      "group": "app-credits",
+      "group": "parent-4282",
       "expectedCategoryName": "يلا شات - Yalla Chat \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "يلا شات - Yalla Chat \""
     },
     "4283": {
       "section": "games",
-      "group": "فري فاير يدوي \"",
+      "group": "parent-4283",
       "expectedCategoryName": "فري فاير يدوي \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "فري فاير يدوي \""
     },
     "4295": {
       "section": "games",
-      "group": "فري فاير رابطة الدول المستقلة \"",
+      "group": "parent-4295",
       "expectedCategoryName": "فري فاير رابطة الدول المستقلة \"",
-      "sortRule": "source"
+      "sortRule": "source",
+      "title": "فري فاير رابطة الدول المستقلة \""
     }
   },
   "categoryNameRules": {},
   "productIdOverrides": {
+    "1430": {
+      "section": "appCredits",
+      "group": "app-chamet",
+      "title": "CHAMET",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1509": {
+      "section": "appCredits",
+      "group": "app-poppo",
+      "title": "POPPO LIVE",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1510": {
+      "section": "appCredits",
+      "group": "app-bigo",
+      "title": "BIGO LIVE",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1511": {
+      "section": "appCredits",
+      "group": "app-likee",
+      "title": "LIKEE LIVE",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1521": {
+      "section": "appCredits",
+      "group": "app-yoho",
+      "title": "YOHO",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1544": {
+      "section": "appCredits",
+      "group": "app-tango",
+      "title": "TANGO",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1545": {
+      "section": "appCredits",
+      "group": "app-chamet",
+      "title": "CHAMET",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1614": {
+      "section": "appCredits",
+      "group": "app-saya-likee",
+      "title": "SAYA LIKEE",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "1658": {
+      "section": "appCredits",
+      "group": "app-yoho",
+      "title": "YOHO",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
     "1679": {
       "section": "balance",
       "group": "syriatel-invoices",
-      "reason": "فاتورة سيريتل وفق مصفوفة التدقيق"
+      "reason": "فاتورة سيريتل وفق مصفوفة التدقيق",
+      "title": "syriatel-invoices"
     },
     "1680": {
       "section": "balance",
       "group": "mtn-invoices",
-      "reason": "فاتورة MTN وفق مصفوفة التدقيق"
+      "reason": "فاتورة MTN وفق مصفوفة التدقيق",
+      "title": "mtn-invoices"
     },
     "2191": {
       "section": "digital",
       "group": "pia-vpn",
-      "reason": "اشتراك PIA VPN مؤكد"
+      "reason": "اشتراك PIA VPN مؤكد",
+      "title": "PIA VPN"
+    },
+    "2382": {
+      "section": "appCredits",
+      "group": "app-poppo",
+      "title": "بوبو Poppo ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2396": {
+      "section": "appCredits",
+      "group": "app-bigo",
+      "title": "بيجو لايف Bigo Live ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2403": {
+      "section": "appCredits",
+      "group": "app-yoho",
+      "title": "يوهو واكا YOHO WAKA ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2406": {
+      "section": "appCredits",
+      "group": "app-likee",
+      "title": "لايكي لايف LIKEE LIVE ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2424": {
+      "section": "appCredits",
+      "group": "app-kwai-live",
+      "title": "كواي لايف KWAI LIVE ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2452": {
+      "section": "appCredits",
+      "group": "app-tango",
+      "title": "تينجو Tango ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2459": {
+      "section": "appCredits",
+      "group": "app-chamet",
+      "title": "شاميت CHAMET ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2478": {
+      "section": "appCredits",
+      "group": "app-saya-likee",
+      "title": "سايا لايكي SAYA LIKEE ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2502": {
+      "section": "appCredits",
+      "group": "app-yoho-star",
+      "title": "يوهو ستار YOHOO STAR ~",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2974": {
+      "section": "appCredits",
+      "group": "app-likee",
+      "title": "لايكي - Likee \"",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2976": {
+      "section": "appCredits",
+      "group": "app-yoho",
+      "title": "يوهو واكا - Yoho Waka \"",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2982": {
+      "section": "appCredits",
+      "group": "app-poppo",
+      "title": "بوبو لايف - Poppo Live \"",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "2983": {
+      "section": "appCredits",
+      "group": "app-saya-likee",
+      "title": "سايا لايكي - Saya Likee \"",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "3006": {
+      "section": "appCredits",
+      "group": "app-tango",
+      "title": "تانغو لايف - Tango Live \"",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
     "3408": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3409": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3410": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3411": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3412": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3413": {
       "section": "boost",
       "group": "instagram",
-      "reason": "منتج رشق انستغرام مؤكد"
+      "reason": "منتج رشق انستغرام مؤكد",
+      "title": "إنستغرام"
     },
     "3414": {
       "section": "boost",
       "group": "tiktok",
-      "reason": "منتج رشق تيك توك مؤكد"
+      "reason": "منتج رشق تيك توك مؤكد",
+      "title": "تيك توك"
     },
     "3415": {
       "section": "boost",
       "group": "tiktok",
-      "reason": "منتج رشق تيك توك مؤكد"
+      "reason": "منتج رشق تيك توك مؤكد",
+      "title": "تيك توك"
     },
     "3416": {
       "section": "boost",
       "group": "tiktok",
-      "reason": "منتج رشق تيك توك مؤكد"
+      "reason": "منتج رشق تيك توك مؤكد",
+      "title": "تيك توك"
     },
     "3417": {
       "section": "boost",
       "group": "tiktok",
-      "reason": "منتج رشق تيك توك مؤكد"
+      "reason": "منتج رشق تيك توك مؤكد",
+      "title": "تيك توك"
     },
     "3418": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3419": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3420": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3421": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3422": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3423": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3424": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3425": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3426": {
       "section": "boost",
       "group": "facebook",
-      "reason": "منتج رشق فيسبوك مؤكد"
+      "reason": "منتج رشق فيسبوك مؤكد",
+      "title": "فيسبوك"
     },
     "3428": {
       "section": "boost",
       "group": "telegram",
-      "reason": "منتج رشق تلغرام مؤكد"
+      "reason": "منتج رشق تلغرام مؤكد",
+      "title": "تلغرام"
     },
     "3429": {
       "section": "boost",
       "group": "telegram",
-      "reason": "منتج رشق تلغرام مؤكد"
+      "reason": "منتج رشق تلغرام مؤكد",
+      "title": "تلغرام"
     },
     "3430": {
       "section": "boost",
       "group": "telegram",
-      "reason": "منتج رشق تلغرام مؤكد"
+      "reason": "منتج رشق تلغرام مؤكد",
+      "title": "تلغرام"
     },
     "3431": {
       "section": "boost",
       "group": "telegram",
-      "reason": "منتج رشق تلغرام مؤكد"
+      "reason": "منتج رشق تلغرام مؤكد",
+      "title": "تلغرام"
     },
     "3432": {
       "section": "boost",
       "group": "telegram",
-      "reason": "منتج رشق تلغرام مؤكد"
+      "reason": "منتج رشق تلغرام مؤكد",
+      "title": "تلغرام"
     },
     "3433": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3434": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3435": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3436": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3437": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3438": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3439": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3440": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3441": {
       "section": "boost",
       "group": "whatsapp",
-      "reason": "منتج رشق واتساب مؤكد"
+      "reason": "منتج رشق واتساب مؤكد",
+      "title": "واتساب"
     },
     "3442": {
       "section": "boost",
       "group": "snapchat",
-      "reason": "منتج رشق سناب مؤكد"
+      "reason": "منتج رشق سناب مؤكد",
+      "title": "سناب شات"
     },
     "3443": {
       "section": "boost",
       "group": "kwai",
-      "reason": "منتج رشق كواي مؤكد"
+      "reason": "منتج رشق كواي مؤكد",
+      "title": "كواي"
     },
     "3444": {
       "section": "boost",
       "group": "kwai",
-      "reason": "منتج رشق كواي مؤكد"
+      "reason": "منتج رشق كواي مؤكد",
+      "title": "كواي"
     },
     "3445": {
       "section": "boost",
       "group": "kwai",
-      "reason": "منتج رشق كواي مؤكد"
+      "reason": "منتج رشق كواي مؤكد",
+      "title": "كواي"
     },
     "3446": {
       "section": "boost",
       "group": "kwai",
-      "reason": "منتج رشق كواي مؤكد"
+      "reason": "منتج رشق كواي مؤكد",
+      "title": "كواي"
     },
     "3950": {
       "section": "balance",
       "group": "rcell",
-      "reason": "Rcell وفق مصفوفة التدقيق"
+      "reason": "Rcell وفق مصفوفة التدقيق",
+      "title": "rcell"
+    },
+    "3995": {
+      "section": "appCredits",
+      "group": "app-kwai-live",
+      "title": "KWAI LIVE °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "3997": {
+      "section": "appCredits",
+      "group": "app-yoho",
+      "title": "YOHO WAKA °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "4013": {
+      "section": "appCredits",
+      "group": "app-chamet",
+      "title": "CHAMET °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "4029": {
+      "section": "appCredits",
+      "group": "app-tango",
+      "title": "TANGO °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "4053": {
+      "section": "appCredits",
+      "group": "app-saya-likee",
+      "title": "SAYA LIKEE °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
+    },
+    "4097": {
+      "section": "appCredits",
+      "group": "app-yoho-star",
+      "title": "YOHOO STAR °",
+      "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
     "4256": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4257": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4258": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4259": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4260": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4261": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4262": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     },
     "4263": {
       "section": "digital",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج"
+      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
+      "title": "شاهد"
     }
   },
   "sortRules": {
