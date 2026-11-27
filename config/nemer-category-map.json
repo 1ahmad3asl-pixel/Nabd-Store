@@ -2,6 +2,55 @@
   "version": 1,
   "description": "قواعد تصنيف محافظة لكتالوج Nemer. أي قاعدة غير مؤكدة تترك المنتج للمراجعة.",
   "parentIdRules": {
+    "1515": {
+      "section": "digital",
+      "group": "parent-1515",
+      "title": "قديم DFT PRO",
+      "expectedCategoryName": "قديم DFT PRO",
+      "sortRule": "source"
+    },
+    "1516": {
+      "section": "digital",
+      "group": "parent-1516",
+      "title": "DFT Pro new",
+      "expectedCategoryName": "DFT Pro new",
+      "sortRule": "source"
+    },
+    "1557": {
+      "section": "appCredits",
+      "group": "parent-1557",
+      "title": "MIXU",
+      "expectedCategoryName": "MIXU",
+      "sortRule": "source"
+    },
+    "1559": {
+      "section": "appCredits",
+      "group": "parent-1559",
+      "title": "TUMILE",
+      "expectedCategoryName": "TUMILE",
+      "sortRule": "source"
+    },
+    "1571": {
+      "section": "appCredits",
+      "group": "parent-1571",
+      "title": "Liv Cam",
+      "expectedCategoryName": "Liv Cam",
+      "sortRule": "source"
+    },
+    "1588": {
+      "section": "appCredits",
+      "group": "parent-1588",
+      "title": "MEYO",
+      "expectedCategoryName": "MEYO",
+      "sortRule": "source"
+    },
+    "1589": {
+      "section": "appCredits",
+      "group": "parent-1589",
+      "title": "STAR LITE",
+      "expectedCategoryName": "STAR LITE",
+      "sortRule": "source"
+    },
     "2237": {
       "section": "balance",
       "group": "parent-2237",
@@ -765,6 +814,13 @@
       "sortRule": "source",
       "title": "stormshot •"
     },
+    "3400": {
+      "section": "digital",
+      "group": "parent-3400",
+      "title": "شامنا •",
+      "expectedCategoryName": "شامنا •",
+      "sortRule": "source"
+    },
     "3401": {
       "section": "digital",
       "group": "parent-3401",
@@ -772,12 +828,33 @@
       "sortRule": "source",
       "title": "NETFLIX •"
     },
+    "3402": {
+      "section": "digital",
+      "group": "parent-3402",
+      "title": "انغامي بلس •",
+      "expectedCategoryName": "انغامي بلس •",
+      "sortRule": "source"
+    },
+    "3403": {
+      "section": "digital",
+      "group": "parent-3403",
+      "title": "IP TV •",
+      "expectedCategoryName": "IP TV •",
+      "sortRule": "source"
+    },
     "3404": {
       "section": "digital",
       "group": "parent-3404",
       "expectedCategoryName": "Apple Music •",
       "sortRule": "source",
       "title": "Apple Music •"
+    },
+    "3405": {
+      "section": "digital",
+      "group": "parent-3405",
+      "title": "Zain 4K •",
+      "expectedCategoryName": "Zain 4K •",
+      "sortRule": "source"
     },
     "3918": {
       "section": "games",
@@ -841,6 +918,13 @@
       "expectedCategoryName": "Proton VPN •",
       "sortRule": "source",
       "title": "Proton VPN •"
+    },
+    "3936": {
+      "section": "digital",
+      "group": "parent-3936",
+      "title": "GearUP Booster •",
+      "expectedCategoryName": "GearUP Booster •",
+      "sortRule": "source"
     },
     "3937": {
       "section": "digital",
@@ -919,6 +1003,13 @@
       "expectedCategoryName": "مسرع جواكر~",
       "sortRule": "source"
     },
+    "3969": {
+      "section": "appCredits",
+      "group": "parent-3969",
+      "title": "IMO",
+      "expectedCategoryName": "IMO",
+      "sortRule": "source"
+    },
     "4215": {
       "section": "appCredits",
       "group": "parent-4215",
@@ -953,6 +1044,13 @@
       "expectedCategoryName": "وحداتسرياتيلs1 ~",
       "sortRule": "price_asc",
       "title": "وحداتسرياتيلs1 ~"
+    },
+    "4235": {
+      "section": "digital",
+      "group": "parent-4235",
+      "title": "اشتراك تلغرام بريميوم •",
+      "expectedCategoryName": "اشتراك تلغرام بريميوم •",
+      "sortRule": "source"
     },
     "4269": {
       "section": "appCredits",
