@@ -73,8 +73,8 @@ test("price sorting is ascending and stable", () => {
 test("approved app-credit and digital-card parent groups stay separate", () => {
   const app = classifyProduct({ id: 3192001, parent_id: 3192, category_name: 'شاميت - Chamet "' }, realConfig);
   const card = classifyProduct({ id: 3214001, parent_id: 3214, category_name: 'ITUNES - USA "' }, realConfig);
-  assert.equal(app.section, "appCredits");
-  assert.equal(card.section, "giftCards");
+  assert.equal(app.section, "apps");
+  assert.equal(card.section, "cards");
   assert.notEqual(app.group, card.group);
 });
 
@@ -96,7 +96,7 @@ test("real Nemer snapshot has unique product IDs and no invalid records", () => 
 test("exact parentless category names classify future products without fuzzy matching", () => {
   const result = classifyProduct({ id: 999999, parent_id: 0, category_name: "TAKA LIVE" }, realConfig);
   assert.equal(result.status, "classified");
-  assert.equal(result.section, "appCredits");
+  assert.equal(result.section, "apps");
 });
 
 test("product ID override is sent to review if its category name changes", () => {
@@ -149,6 +149,7 @@ test("game UI consumes canonical classifier keys and loads the classifier before
   const homeSource = fs.readFileSync(path.join(__dirname, "..", "pages", "index.html"), "utf8");
   assert.match(appSource, /window\.NemerProductClassifier/);
   assert.match(appSource, /classification\.section !== "games"/);
+  assert.match(appSource, /return classification.status === "classified" \? classification.section : "other"/);
   assert.match(appSource, /gameKey = classification\.gameKey/);
   assert.match(homeSource, /<script src="\/lib\/nemer-product-classifier\.js[^>]*><\/script><script src="js\/app\.js/);
 });
@@ -156,18 +157,21 @@ test("game UI consumes canonical classifier keys and loads the classifier before
 test("real catalog classification has a stable audited result with no overlaps", () => {
   const report = classifyCatalog(realCatalog, realConfig);
   assert.deepEqual(report.summary, {
-    classified: 2286,
-    review: 67,
-    unclassified: 12,
-    invalid: 0,
-    bySection: {
-      digital: 103,
-      boost: 38,
-      games: 833,
-      balance: 232,
-      appCredits: 1054,
-      giftCards: 26
-    }
+      "classified": 2295,
+      "review": 67,
+      "unclassified": 3,
+      "invalid": 0,
+      "bySection": {
+          "digital": 101,
+          "boost": 39,
+          "games": 833,
+          "balance": 232,
+          "apps": 1054,
+          "cards": 26,
+          "software": 7,
+          "shamcash": 1,
+          "payments": 2
+      }
   });
   assert.deepEqual(report.duplicateIds, []);
   assert.deepEqual(report.overlaps, []);

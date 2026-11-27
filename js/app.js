@@ -3792,11 +3792,11 @@ function renderBalanceProductPicker(group) {
     window.scrollTo({top:0,behavior:"smooth"});
 }
 function getProductCategory(product) {
-    const text = String(product.category_name || product.name || "").toLowerCase();
-    if (/جواكر|فري فاير|free fire|ببجي|pubg|لودو|blood strike|روبلوكس|roblox|كلاش|clash|فالورانت|valorant|minecraft|ماينكرافت|fifa|فورتنايت|fortnite/.test(text)) return "games";
-    if (/انستغرام|instagram|فيس بوك|facebook|تيك توك|tiktok|تلجرام|telegram|وتساب|whatsapp|واتساب|سناب|snapchat|كواي|kwai|يوتيوب|youtube|تويتر|twitter/.test(text)) return "social";
-    if (/رقم|وحدات|رصيد|شحن|استرداد رصيد|mtn|syriatel|زين|شامنا/.test(text)) return "numbers";
-    return "other";
+    const classifier = window.NemerProductClassifier;
+    const categoryMap = state.nemerCategoryMap;
+    if (!classifier || !categoryMap) return "other";
+    const classification = classifier.classifyProduct(product, categoryMap);
+    return classification.status === "classified" ? classification.section : "other";
 }
 
 async function loadProducts(options) {
