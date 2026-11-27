@@ -11535,6 +11535,8 @@
         "title": "إنشاء موقع"
       }
     ],
-    "policy": "Nemer's 20 top-level categories are a source taxonomy, not 20 new Nabd-Store home tiles. Preserve the existing 18 store sections and map each supplier category to an existing store section or a reviewed hidden/internal group. Do not infer a one-to-one relationship."
+    "policy": "Nemer's 20 top-level categories are a source taxonomy, not 20 new Nabd-Store home tiles. Preserve the existing 18 store sections and map each supplier category to an existing store section or a reviewed hidden/internal group. Do not infer a one-to-one relationship. The supplier's 20 category names and IDs have not yet been captured from the API, so their individual routes remain pending and must not be guessed.",
+    "supplierMainCategoryNames": [],
+    "supplierCategoryNameStatus": "pending_api_inventory"
   }
 }
