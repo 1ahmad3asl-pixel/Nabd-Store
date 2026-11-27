@@ -2,6 +2,13 @@
   "version": 1,
   "description": "قواعد تصنيف محافظة لكتالوج Nemer. أي قاعدة غير مؤكدة تترك المنتج للمراجعة.",
   "parentIdRules": {
+    "1514": {
+      "section": "numbers",
+      "group": "parent-1514",
+      "title": "رقم وتساب يدوي",
+      "expectedCategoryName": "رقم وتساب يدوي",
+      "sortRule": "source"
+    },
     "1515": {
       "section": "software",
       "group": "parent-1515",
@@ -49,6 +56,69 @@
       "group": "parent-1589",
       "title": "STAR LITE",
       "expectedCategoryName": "STAR LITE",
+      "sortRule": "source"
+    },
+    "1691": {
+      "section": "accounts",
+      "group": "parent-1691",
+      "title": "حساب تيك توك",
+      "expectedCategoryName": "حساب تيك توك",
+      "sortRule": "source"
+    },
+    "1692": {
+      "section": "accounts",
+      "group": "parent-1692",
+      "title": "حساب سناب شات",
+      "expectedCategoryName": "حساب سناب شات",
+      "sortRule": "source"
+    },
+    "1693": {
+      "section": "accounts",
+      "group": "parent-1693",
+      "title": "حساب فيسبوك",
+      "expectedCategoryName": "حساب فيسبوك",
+      "sortRule": "source"
+    },
+    "1694": {
+      "section": "accounts",
+      "group": "parent-1694",
+      "title": "حساب gmail",
+      "expectedCategoryName": "حساب gmail",
+      "sortRule": "source"
+    },
+    "1990": {
+      "section": "vip",
+      "group": "parent-1990",
+      "title": "مستوى فضي",
+      "expectedCategoryName": "مستوى فضي",
+      "sortRule": "source"
+    },
+    "1991": {
+      "section": "vip",
+      "group": "parent-1991",
+      "title": "مستوى ذهبي",
+      "expectedCategoryName": "مستوى ذهبي",
+      "sortRule": "source"
+    },
+    "1992": {
+      "section": "vip",
+      "group": "parent-1992",
+      "title": "مستوى الماسي",
+      "expectedCategoryName": "مستوى الماسي",
+      "sortRule": "source"
+    },
+    "1993": {
+      "section": "vip",
+      "group": "parent-1993",
+      "title": "مستوى VIP",
+      "expectedCategoryName": "مستوى VIP",
+      "sortRule": "source"
+    },
+    "2071": {
+      "section": "numbers",
+      "group": "parent-2071",
+      "title": "ارقام وتساب مباشر S2",
+      "expectedCategoryName": "ارقام وتساب مباشر S2",
       "sortRule": "source"
     },
     "2237": {
@@ -99,6 +169,41 @@
       "expectedCategoryName": "نيمو تي في - Nimo Tv \"",
       "sortRule": "source",
       "title": "نيمو تي في - Nimo Tv \""
+    },
+    "3196": {
+      "section": "numbers",
+      "group": "parent-3196",
+      "title": "ارقام جيميل",
+      "expectedCategoryName": "ارقام جيميل",
+      "sortRule": "source"
+    },
+    "3198": {
+      "section": "numbers",
+      "group": "parent-3198",
+      "title": "ارقام فيسبوك",
+      "expectedCategoryName": "ارقام فيسبوك",
+      "sortRule": "source"
+    },
+    "3199": {
+      "section": "numbers",
+      "group": "parent-3199",
+      "title": "ارقام ايكلود",
+      "expectedCategoryName": "ارقام ايكلود",
+      "sortRule": "source"
+    },
+    "3201": {
+      "section": "numbers",
+      "group": "parent-3201",
+      "title": "ارقام ايمو",
+      "expectedCategoryName": "ارقام ايمو",
+      "sortRule": "source"
+    },
+    "3204": {
+      "section": "numbers",
+      "group": "parent-3204",
+      "title": "ارقام انستجرام",
+      "expectedCategoryName": "ارقام انستجرام",
+      "sortRule": "source"
     },
     "3208": {
       "section": "digital",
@@ -946,6 +1051,20 @@
       "group": "parent-3405",
       "title": "Zain 4K •",
       "expectedCategoryName": "Zain 4K •",
+      "sortRule": "source"
+    },
+    "3456": {
+      "section": "numbers",
+      "group": "parent-3456",
+      "title": "ارقام واتساب s1\"",
+      "expectedCategoryName": "ارقام واتساب s1\"",
+      "sortRule": "source"
+    },
+    "3459": {
+      "section": "website",
+      "group": "parent-3459",
+      "title": "انشاء موقع",
+      "expectedCategoryName": "انشاء موقع",
       "sortRule": "source"
     },
     "3918": {

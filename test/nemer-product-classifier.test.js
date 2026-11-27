@@ -78,6 +78,23 @@ test("approved app-credit and digital-card parent groups stay separate", () => {
   assert.notEqual(app.group, card.group);
 });
 
+test("approved non-game parent groups route to their matching homepage sections", () => {
+  const expected = {
+    3456: "numbers", 3196: "numbers", 3198: "numbers", 3199: "numbers",
+    3201: "numbers", 3204: "numbers", 2071: "numbers", 1514: "numbers",
+    1691: "accounts", 1692: "accounts", 1693: "accounts", 1694: "accounts",
+    1990: "vip", 1991: "vip", 1992: "vip", 1993: "vip", 3459: "website"
+  };
+  for (const [parentId, section] of Object.entries(expected)) {
+    const product = realCatalog.find(item => Number(item.parent_id) === Number(parentId));
+    assert.ok(product, `parent_id ${parentId} exists`);
+    assert.equal(classifyProduct(product, realConfig).section, section);
+  }
+  const ambiguousBan = realCatalog.find(item => Number(item.parent_id) === 2241);
+  assert.ok(ambiguousBan);
+  assert.equal(classifyProduct(ambiguousBan, realConfig).status, "review");
+});
+
 test("all mapped parent_id rules match the real Nemer snapshot", () => {
   const mappedIds = new Set(Object.keys(realConfig.parentIdRules).map(Number));
   for (const product of realCatalog) {
@@ -157,8 +174,8 @@ test("game UI consumes canonical classifier keys and loads the classifier before
 test("real catalog classification has a stable audited result with no overlaps", () => {
   const report = classifyCatalog(realCatalog, realConfig);
   assert.deepEqual(report.summary, {
-      "classified": 2295,
-      "review": 67,
+      "classified": 2361,
+      "review": 1,
       "unclassified": 3,
       "invalid": 0,
       "bySection": {
@@ -167,9 +184,13 @@ test("real catalog classification has a stable audited result with no overlaps",
           "games": 833,
           "balance": 232,
           "apps": 1054,
+          "numbers": 49,
           "cards": 26,
+          "accounts": 4,
           "software": 7,
+          "vip": 12,
           "shamcash": 1,
+          "website": 1,
           "payments": 2
       }
   });
