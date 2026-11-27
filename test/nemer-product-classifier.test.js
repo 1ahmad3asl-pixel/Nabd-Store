@@ -95,6 +95,24 @@ test("approved non-game parent groups route to their matching homepage sections"
   assert.equal(classifyProduct(ambiguousBan, realConfig).status, "review");
 });
 
+test("VPN, screen and Telegram subscriptions route to their exact homepage sections", () => {
+  const expectedParents = {
+    3932: "vpn", 3933: "vpn", 3934: "vpn", 3935: "vpn",
+    3937: "vpn", 3938: "vpn", 3939: "vpn", 3940: "vpn",
+    3401: "screens", 3403: "screens", 3405: "screens", 4235: "telegram"
+  };
+  for (const [parentId, section] of Object.entries(expectedParents)) {
+    const product = realCatalog.find(item => Number(item.parent_id) === Number(parentId));
+    assert.ok(product, `parent_id ${parentId} exists`);
+    assert.equal(classifyProduct(product, realConfig).section, section);
+  }
+  for (const id of [2191, 4256, 4257, 4258, 4259, 4260, 4261, 4262, 4263]) {
+    const product = realCatalog.find(item => String(item.id) === String(id));
+    assert.ok(product, `product ${id} exists`);
+    assert.equal(classifyProduct(product, realConfig).section, id === 2191 ? "vpn" : "screens");
+  }
+});
+
 test("all mapped parent_id rules match the real Nemer snapshot", () => {
   const mappedIds = new Set(Object.keys(realConfig.parentIdRules).map(Number));
   for (const product of realCatalog) {
@@ -179,16 +197,19 @@ test("real catalog classification has a stable audited result with no overlaps",
       "unclassified": 3,
       "invalid": 0,
       "bySection": {
-          "digital": 101,
+          "screens": 20,
           "boost": 39,
           "games": 833,
           "balance": 232,
           "apps": 1054,
           "numbers": 49,
+          "digital": 44,
           "cards": 26,
           "accounts": 4,
           "software": 7,
+          "telegram": 3,
           "vip": 12,
+          "vpn": 34,
           "shamcash": 1,
           "website": 1,
           "payments": 2

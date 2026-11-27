@@ -1019,7 +1019,7 @@
       "sortRule": "source"
     },
     "3401": {
-      "section": "digital",
+      "section": "screens",
       "group": "parent-3401",
       "expectedCategoryName": "NETFLIX •",
       "sortRule": "source",
@@ -1033,7 +1033,7 @@
       "sortRule": "source"
     },
     "3403": {
-      "section": "digital",
+      "section": "screens",
       "group": "parent-3403",
       "title": "IP TV •",
       "expectedCategoryName": "IP TV •",
@@ -1047,7 +1047,7 @@
       "title": "Apple Music •"
     },
     "3405": {
-      "section": "digital",
+      "section": "screens",
       "group": "parent-3405",
       "title": "Zain 4K •",
       "expectedCategoryName": "Zain 4K •",
@@ -1108,28 +1108,28 @@
       "gameKey": "Roblox"
     },
     "3932": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3932",
       "expectedCategoryName": "Nord VPN (Global) •",
       "sortRule": "source",
       "title": "Nord VPN (Global) •"
     },
     "3933": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3933",
       "expectedCategoryName": "Express vpn •",
       "sortRule": "source",
       "title": "Express vpn •"
     },
     "3934": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3934",
       "expectedCategoryName": "PIA VPN •",
       "sortRule": "source",
       "title": "PIA VPN •"
     },
     "3935": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3935",
       "expectedCategoryName": "Proton VPN •",
       "sortRule": "source",
@@ -1143,28 +1143,28 @@
       "sortRule": "source"
     },
     "3937": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3937",
       "expectedCategoryName": "SurfShark VPN •",
       "sortRule": "source",
       "title": "SurfShark VPN •"
     },
     "3938": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3938",
       "expectedCategoryName": "Pure VPN •",
       "sortRule": "source",
       "title": "Pure VPN •"
     },
     "3939": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3939",
       "expectedCategoryName": "Windscribe VPN •",
       "sortRule": "source",
       "title": "Windscribe VPN •"
     },
     "3940": {
-      "section": "digital",
+      "section": "vpn",
       "group": "parent-3940",
       "expectedCategoryName": "Shield VPN •",
       "sortRule": "source",
@@ -1264,7 +1264,7 @@
       "title": "وحداتسرياتيلs1 ~"
     },
     "4235": {
-      "section": "digital",
+      "section": "telegram",
       "group": "parent-4235",
       "title": "اشتراك تلغرام بريميوم •",
       "expectedCategoryName": "اشتراك تلغرام بريميوم •",
@@ -6959,11 +6959,11 @@
       "expectedCategoryName": "KWAI"
     },
     "2191": {
-      "section": "digital",
+      "section": "vpn",
       "group": "pia-vpn",
-      "reason": "اشتراك PIA VPN مؤكد",
       "title": "PIA VPN",
-      "expectedCategoryName": "PIA VPN - 3 أشهر"
+      "expectedCategoryName": "PIA VPN - 3 أشهر",
+      "reason": "تصنيف واضح من اسم خدمة VPN"
     },
     "2239": {
       "section": "shamcash",
@@ -11518,60 +11518,60 @@
       "expectedCategoryName": "فيزا قابلة للشحن"
     },
     "4256": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 1 شهر | مشترك \""
+      "expectedCategoryName": "شاهد | 1 شهر | مشترك \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4257": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 1 شهر | 5 أجهزة \""
+      "expectedCategoryName": "شاهد | 1 شهر | 5 أجهزة \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4258": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 3 اشهر | 5 أجهزة \""
+      "expectedCategoryName": "شاهد | 3 اشهر | 5 أجهزة \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4259": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 12 شهر | 5 أجهزة \""
+      "expectedCategoryName": "شاهد | 12 شهر | 5 أجهزة \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4260": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 3 اشهر | لبناني \""
+      "expectedCategoryName": "شاهد | 3 اشهر | لبناني \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4261": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 12 شهر | لبناني \""
+      "expectedCategoryName": "شاهد | 12 شهر | لبناني \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4262": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 1 شهر | رياضة \""
+      "expectedCategoryName": "شاهد | 1 شهر | رياضة \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4263": {
-      "section": "digital",
+      "section": "screens",
       "group": "shahid",
-      "reason": "اشتراك شاهد مؤكد من وصف المنتج",
       "title": "شاهد",
-      "expectedCategoryName": "شاهد | 12 شهر | على ايميلك \""
+      "expectedCategoryName": "شاهد | 12 شهر | على ايميلك \"",
+      "reason": "اشتراك منصة مشاهدة ضمن اشتراكات الشاشة"
     },
     "4264": {
       "section": "apps",
