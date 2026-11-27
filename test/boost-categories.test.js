@@ -12,7 +12,7 @@ const normalize = value => String(value).toLowerCase().replace(/[أإآ]/g, "ا"
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
   assert.match(homeSource, /boost\.js\?v=20261125-boost12/);
-  assert.match(homeSource, /app\.js\?v=20261125-order2/);
+  assert.match(homeSource, /app\.js\?v=20261127-games1/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
@@ -21,7 +21,7 @@ test("All configured boost apps use the shared product picker", () => {
   assert.match(boostSource, /image:\"\/public\/images\/رشـق صفحات\/\"\+esc\(g\.image\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
-  assert.match(homeSource, /app\.js\?v=20261125-order2/);
+  assert.match(homeSource, /app\.js\?v=20261127-games1/);
 });
 
 test("Facebook uses the shared product picker with its centered app image", () => {
