@@ -2334,6 +2334,12 @@
       "title": "كيو لايف KIYO  ~",
       "sortRule": "source"
     },
+    "بوبو شات bobo chat": {
+      "section": "appCredits",
+      "group": "app:بوبو شات bobo chat",
+      "title": "بوبو شات BOBO CHAT ~",
+      "sortRule": "source"
+    },
     "لاما شاتlama chat": {
       "section": "appCredits",
       "group": "app:لاما شاتlama chat",
@@ -2392,6 +2398,12 @@
       "section": "appCredits",
       "group": "app:بينمو شات binmo chat",
       "title": "بينمو شات Binmo Chat ~",
+      "sortRule": "source"
+    },
+    "ميو meyo": {
+      "section": "appCredits",
+      "group": "app:ميو meyo",
+      "title": "ميو MEYO ~",
       "sortRule": "source"
     },
     "سويو soyo": {
@@ -3210,10 +3222,28 @@
       "title": "سول شيل - Soul Chill \"",
       "sortRule": "source"
     },
+    "اهلن شات - ahlan chat": {
+      "section": "appCredits",
+      "group": "app:اهلن شات - ahlan chat",
+      "title": "اهلن شات - Ahlan Chat \"",
+      "sortRule": "source"
+    },
+    "سول ستار - soul star": {
+      "section": "appCredits",
+      "group": "app:سول ستار - soul star",
+      "title": "سول ستار - Soul Star \"",
+      "sortRule": "source"
+    },
     "هوني جار - honey jar": {
       "section": "appCredits",
       "group": "app:هوني جار - honey jar",
       "title": "هوني جار - Honey Jar \"",
+      "sortRule": "source"
+    },
+    "بارتي ستار - party star": {
+      "section": "appCredits",
+      "group": "app:بارتي ستار - party star",
+      "title": "بارتي ستار - Party Star \"",
       "sortRule": "source"
     },
     "زينا لايف - xena live": {
@@ -3618,6 +3648,12 @@
       "title": "جولد شات - Gold Chat \"",
       "sortRule": "source"
     },
+    "سهرة شات - sahra chat": {
+      "section": "appCredits",
+      "group": "app:سهرة شات - sahra chat",
+      "title": "سهرة شات - Sahra Chat \"",
+      "sortRule": "source"
+    },
     "لاكي شات - laki chat": {
       "section": "appCredits",
       "group": "app:لاكي شات - laki chat",
@@ -3724,6 +3760,12 @@
       "section": "appCredits",
       "group": "app:بات - baat",
       "title": "بات - Baat \"",
+      "sortRule": "source"
+    },
+    "هوب - hoob": {
+      "section": "appCredits",
+      "group": "app:هوب - hoob",
+      "title": "هوب - Hoob \"",
       "sortRule": "source"
     },
     "مازا - maza": {
@@ -4702,6 +4744,12 @@
       "section": "appCredits",
       "group": "app:olamet",
       "title": "OLAMET °",
+      "sortRule": "source"
+    },
+    "amar chat": {
+      "section": "appCredits",
+      "group": "app:amar chat",
+      "title": "AMAR CHAT °",
       "sortRule": "source"
     },
     "gala star": {
@@ -6924,6 +6972,13 @@
       "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
       "expectedCategoryName": "كيو لايف KIYO  ~"
     },
+    "2416": {
+      "section": "appCredits",
+      "group": "app:بوبو شات bobo chat",
+      "title": "بوبو شات BOBO CHAT ~",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "بوبو شات BOBO CHAT ~"
+    },
     "2417": {
       "section": "appCredits",
       "group": "app:لاما شاتlama chat",
@@ -6993,6 +7048,13 @@
       "title": "بينمو شات Binmo Chat ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "بينمو شات Binmo Chat ~"
+    },
+    "2427": {
+      "section": "appCredits",
+      "group": "app:ميو meyo",
+      "title": "ميو MEYO ~",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "ميو MEYO ~"
     },
     "2428": {
       "section": "appCredits",
@@ -7953,12 +8015,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سول شيل - Soul Chill \""
     },
+    "2969": {
+      "section": "appCredits",
+      "group": "app:اهلن شات - ahlan chat",
+      "title": "اهلن شات - Ahlan Chat \"",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "اهلن شات - Ahlan Chat \""
+    },
+    "2970": {
+      "section": "appCredits",
+      "group": "app:سول ستار - soul star",
+      "title": "سول ستار - Soul Star \"",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "سول ستار - Soul Star \""
+    },
     "2971": {
       "section": "appCredits",
       "group": "app:هوني جار - honey jar",
       "title": "هوني جار - Honey Jar \"",
       "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
       "expectedCategoryName": "هوني جار - Honey Jar \""
+    },
+    "2972": {
+      "section": "appCredits",
+      "group": "app:بارتي ستار - party star",
+      "title": "بارتي ستار - Party Star \"",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "بارتي ستار - Party Star \""
     },
     "2973": {
       "section": "appCredits",
@@ -8429,6 +8512,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "جولد شات - Gold Chat \""
     },
+    "3075": {
+      "section": "appCredits",
+      "group": "app:سهرة شات - sahra chat",
+      "title": "سهرة شات - Sahra Chat \"",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "سهرة شات - Sahra Chat \""
+    },
     "3076": {
       "section": "appCredits",
       "group": "app:لاكي شات - laki chat",
@@ -8554,6 +8644,13 @@
       "title": "بات - Baat \"",
       "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
       "expectedCategoryName": "بات - Baat \""
+    },
+    "3100": {
+      "section": "appCredits",
+      "group": "app:هوب - hoob",
+      "title": "هوب - Hoob \"",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "هوب - Hoob \""
     },
     "3101": {
       "section": "appCredits",
@@ -9849,6 +9946,13 @@
       "title": "KIYO LIVE °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "KIYO LIVE °"
+    },
+    "4011": {
+      "section": "appCredits",
+      "group": "app:amar chat",
+      "title": "AMAR CHAT °",
+      "reason": "فئة تطبيق محددة ومعامل معرف مستخدم/لاعب خاص بالتطبيق",
+      "expectedCategoryName": "AMAR CHAT °"
     },
     "4012": {
       "section": "appCredits",
