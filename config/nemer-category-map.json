@@ -1165,6 +1165,12 @@
       "title": "YOHO",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer"
     },
+    "1674": {
+      "section": "balance",
+      "group": "turkcell-invoices",
+      "title": "تسديد تركسل",
+      "reason": "خدمة تسديد تركسل محددة بالمنتج"
+    },
     "1679": {
       "section": "balance",
       "group": "syriatel-invoices",
@@ -1500,6 +1506,42 @@
       "group": "rcell",
       "reason": "Rcell وفق مصفوفة التدقيق",
       "title": "rcell"
+    },
+    "3951": {
+      "section": "balance",
+      "group": "whish-money",
+      "title": "Whish Money",
+      "reason": "خدمة محفظة مالية محددة بالمنتج"
+    },
+    "3952": {
+      "section": "balance",
+      "group": "instapay",
+      "title": "InstaPay",
+      "reason": "خدمة دفع محددة بالمنتج"
+    },
+    "3953": {
+      "section": "balance",
+      "group": "reflect",
+      "title": "Reflect",
+      "reason": "خدمة دفع محددة بالمنتج"
+    },
+    "3954": {
+      "section": "balance",
+      "group": "papara",
+      "title": "Papara",
+      "reason": "خدمة دفع محددة بالمنتج"
+    },
+    "3955": {
+      "section": "balance",
+      "group": "paypal",
+      "title": "PayPal",
+      "reason": "خدمة دفع محددة بالمنتج"
+    },
+    "3956": {
+      "section": "balance",
+      "group": "payoneer",
+      "title": "Payoneer",
+      "reason": "خدمة دفع محددة بالمنتج"
     },
     "3995": {
       "section": "appCredits",
