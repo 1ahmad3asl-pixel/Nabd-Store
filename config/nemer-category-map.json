@@ -1134,6 +1134,12 @@
       "title": "CHAMET",
       "sortRule": "source"
     },
+    "waho": {
+      "section": "appCredits",
+      "group": "app:waho",
+      "title": "WAHO",
+      "sortRule": "source"
+    },
     "waki star": {
       "section": "appCredits",
       "group": "app:waki star",
@@ -1168,6 +1174,18 @@
       "section": "appCredits",
       "group": "app:cocco live",
       "title": "COCCO LIVE",
+      "sortRule": "source"
+    },
+    "talk talk": {
+      "section": "appCredits",
+      "group": "app:talk talk",
+      "title": "TALK TALK",
+      "sortRule": "source"
+    },
+    "so match": {
+      "section": "appCredits",
+      "group": "app:so match",
+      "title": "SO MATCH",
       "sortRule": "source"
     },
     "sama chat": {
@@ -1512,6 +1530,12 @@
       "title": "YOHO",
       "sortRule": "source"
     },
+    "amar": {
+      "section": "appCredits",
+      "group": "app:amar",
+      "title": "AMAR",
+      "sortRule": "source"
+    },
     "soul star": {
       "section": "appCredits",
       "group": "app:soul star",
@@ -1524,6 +1548,18 @@
       "title": "OOHLA CHAT",
       "sortRule": "source"
     },
+    "yoki": {
+      "section": "appCredits",
+      "group": "app:yoki",
+      "title": "YOKI",
+      "sortRule": "source"
+    },
+    "honey jar": {
+      "section": "appCredits",
+      "group": "app:honey jar",
+      "title": "HONEY JAR",
+      "sortRule": "source"
+    },
     "nahki chat": {
       "section": "appCredits",
       "group": "app:nahki chat",
@@ -1534,6 +1570,12 @@
       "section": "appCredits",
       "group": "app:baat live",
       "title": "Baat Live",
+      "sortRule": "source"
+    },
+    "yena": {
+      "section": "appCredits",
+      "group": "app:yena",
+      "title": "YENA",
       "sortRule": "source"
     },
     "hoob live": {
@@ -1554,6 +1596,12 @@
       "title": "LAMI CHAT",
       "sortRule": "source"
     },
+    "lama": {
+      "section": "appCredits",
+      "group": "app:lama",
+      "title": "LAMA",
+      "sortRule": "source"
+    },
     "tango": {
       "section": "appCredits",
       "group": "app:tango",
@@ -1566,16 +1614,40 @@
       "title": "Wasla Chat",
       "sortRule": "source"
     },
+    "layam": {
+      "section": "appCredits",
+      "group": "app:layam",
+      "title": "LAYAM",
+      "sortRule": "source"
+    },
     "bobo chat": {
       "section": "appCredits",
       "group": "app:bobo chat",
       "title": "BOBO CHAT",
       "sortRule": "source"
     },
+    "hala me": {
+      "section": "appCredits",
+      "group": "app:hala me",
+      "title": "Hala Me",
+      "sortRule": "source"
+    },
     "hi party": {
       "section": "appCredits",
       "group": "app:hi party",
       "title": "HI PARTY",
+      "sortRule": "source"
+    },
+    "top top": {
+      "section": "appCredits",
+      "group": "app:top top",
+      "title": "TOP TOP",
+      "sortRule": "source"
+    },
+    "mr7ba": {
+      "section": "appCredits",
+      "group": "app:mr7ba",
+      "title": "MR7BA",
       "sortRule": "source"
     },
     "pocket chat": {
@@ -1590,16 +1662,34 @@
       "title": "WeGo Party",
       "sortRule": "source"
     },
+    "mazyoun zina": {
+      "section": "appCredits",
+      "group": "app:mazyoun zina",
+      "title": "Mazyoun Zina",
+      "sortRule": "source"
+    },
     "gold chat": {
       "section": "appCredits",
       "group": "app:gold chat",
       "title": "Gold Chat",
       "sortRule": "source"
     },
+    "top voice": {
+      "section": "appCredits",
+      "group": "app:top voice",
+      "title": "TOP VOICE",
+      "sortRule": "source"
+    },
     "pawa live": {
       "section": "appCredits",
       "group": "app:pawa live",
       "title": "PAWA LIVE",
+      "sortRule": "source"
+    },
+    "sawalfna": {
+      "section": "appCredits",
+      "group": "app:sawalfna",
+      "title": "Sawalfna",
       "sortRule": "source"
     },
     "soul u": {
@@ -1620,10 +1710,28 @@
       "title": "ROSTAR",
       "sortRule": "source"
     },
+    "aria": {
+      "section": "appCredits",
+      "group": "app:aria",
+      "title": "Aria",
+      "sortRule": "source"
+    },
     "ayome chat": {
       "section": "appCredits",
       "group": "app:ayome chat",
       "title": "AYOME CHAT",
+      "sortRule": "source"
+    },
+    "maza": {
+      "section": "appCredits",
+      "group": "app:maza",
+      "title": "MAZA",
+      "sortRule": "source"
+    },
+    "leeski": {
+      "section": "appCredits",
+      "group": "app:leeski",
+      "title": "LEESKI",
       "sortRule": "source"
     },
     "kiti live": {
@@ -1638,10 +1746,28 @@
       "title": "Star Maker",
       "sortRule": "source"
     },
+    "yudo fun": {
+      "section": "appCredits",
+      "group": "app:yudo fun",
+      "title": "YUDO FUN",
+      "sortRule": "source"
+    },
     "4party chat": {
       "section": "appCredits",
       "group": "app:4party chat",
       "title": "4PARTY CHAT",
+      "sortRule": "source"
+    },
+    "hayuki": {
+      "section": "appCredits",
+      "group": "app:hayuki",
+      "title": "hayuki",
+      "sortRule": "source"
+    },
+    "yoparti": {
+      "section": "appCredits",
+      "group": "app:yoparti",
+      "title": "YOPARTI",
       "sortRule": "source"
     },
     "asha live": {
@@ -1656,6 +1782,12 @@
       "title": "Party Hero",
       "sortRule": "source"
     },
+    "vilaa": {
+      "section": "appCredits",
+      "group": "app:vilaa",
+      "title": "VILAA",
+      "sortRule": "source"
+    },
     "halla live": {
       "section": "appCredits",
       "group": "app:halla live",
@@ -1668,10 +1800,34 @@
       "title": "PK STAR",
       "sortRule": "source"
     },
+    "hago": {
+      "section": "appCredits",
+      "group": "app:hago",
+      "title": "HAGO",
+      "sortRule": "source"
+    },
+    "hati": {
+      "section": "appCredits",
+      "group": "app:hati",
+      "title": "HATI",
+      "sortRule": "source"
+    },
     "halo star": {
       "section": "appCredits",
       "group": "app:halo star",
       "title": "HALO STAR",
+      "sortRule": "source"
+    },
+    "joyo": {
+      "section": "appCredits",
+      "group": "app:joyo",
+      "title": "JOYO",
+      "sortRule": "source"
+    },
+    "boli": {
+      "section": "appCredits",
+      "group": "app:boli",
+      "title": "BOLI",
       "sortRule": "source"
     },
     "lado live": {
@@ -1686,6 +1842,12 @@
       "title": "LOTFUN CHAT",
       "sortRule": "source"
     },
+    "fun up": {
+      "section": "appCredits",
+      "group": "app:fun up",
+      "title": "FUN UP",
+      "sortRule": "source"
+    },
     "wadi chat": {
       "section": "appCredits",
       "group": "app:wadi chat",
@@ -1696,6 +1858,18 @@
       "section": "appCredits",
       "group": "app:vostar",
       "title": "VOSTAR",
+      "sortRule": "source"
+    },
+    "hoki": {
+      "section": "appCredits",
+      "group": "app:hoki",
+      "title": "Hoki",
+      "sortRule": "source"
+    },
+    "our talk": {
+      "section": "appCredits",
+      "group": "app:our talk",
+      "title": "OUR TALK",
       "sortRule": "source"
     },
     "doli live": {
@@ -1734,10 +1908,22 @@
       "title": "SIYA CHAT",
       "sortRule": "source"
     },
+    "sahi": {
+      "section": "appCredits",
+      "group": "app:sahi",
+      "title": "SAHI",
+      "sortRule": "source"
+    },
     "laka chat": {
       "section": "appCredits",
       "group": "app:laka chat",
       "title": "LAKA CHAT",
+      "sortRule": "source"
+    },
+    "ume": {
+      "section": "appCredits",
+      "group": "app:ume",
+      "title": "UME",
       "sortRule": "source"
     },
     "fomi party": {
@@ -1842,6 +2028,12 @@
       "title": "Zaffa Live",
       "sortRule": "source"
     },
+    "supermeet": {
+      "section": "appCredits",
+      "group": "app:supermeet",
+      "title": "Supermeet",
+      "sortRule": "source"
+    },
     "karak chat": {
       "section": "appCredits",
       "group": "app:karak chat",
@@ -1860,10 +2052,52 @@
       "title": "PIA VPN",
       "sortRule": "source"
     },
+    "يوتيوب مميز - 1 شهر": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "sortRule": "source"
+    },
+    "يوتيوب مميز - 3 اشهر": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "sortRule": "source"
+    },
+    "يوتيوب مميز - 6 اشهر": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "sortRule": "source"
+    },
+    "يوتيوب مميز - 12 شهر": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "sortRule": "source"
+    },
+    "mikoo": {
+      "section": "appCredits",
+      "group": "app:mikoo",
+      "title": "MIKOO",
+      "sortRule": "source"
+    },
+    "up fun": {
+      "section": "appCredits",
+      "group": "app:up fun",
+      "title": "UP FUN",
+      "sortRule": "source"
+    },
     "ti live": {
       "section": "appCredits",
       "group": "app:ti live",
       "title": "TI LIVE",
+      "sortRule": "source"
+    },
+    "عداد جواكر s2": {
+      "section": "games",
+      "group": "games:jawaker-counter-s2",
+      "title": "عداد جواكر S2",
       "sortRule": "source"
     },
     "فور بارتي 4partyr": {
@@ -1872,10 +2106,22 @@
       "title": "فور بارتي 4PARTYR ~",
       "sortRule": "source"
     },
+    "هوني جار honey jar": {
+      "section": "appCredits",
+      "group": "app:هوني جار honey jar",
+      "title": "هوني جار Honey Jar ~",
+      "sortRule": "source"
+    },
     "نيو شات niuchat r": {
       "section": "appCredits",
       "group": "app:نيو شات niuchat r",
       "title": "نيو شات NiuChat R ~",
+      "sortRule": "source"
+    },
+    "فيلا vilaa": {
+      "section": "appCredits",
+      "group": "app:فيلا vilaa",
+      "title": "فيلا VILAA ~",
       "sortRule": "source"
     },
     "شباب شات shabab chat": {
@@ -1888,6 +2134,12 @@
       "section": "appCredits",
       "group": "app:واهو شات waho chat",
       "title": "واهو شات WAHO CHAT ~",
+      "sortRule": "source"
+    },
+    "نحكي nahki": {
+      "section": "appCredits",
+      "group": "app:نحكي nahki",
+      "title": "نحكي NAHKI ~",
       "sortRule": "source"
     },
     "بوبو poppo": {
@@ -1918,6 +2170,12 @@
       "section": "appCredits",
       "group": "app:سوشال كريستال soul chill crystal",
       "title": "سوشال كريستال SOUL CHILL CRYSTAL ~",
+      "sortRule": "source"
+    },
+    "لوتفونlotfun": {
+      "section": "appCredits",
+      "group": "app:لوتفونlotfun",
+      "title": "لوتفونLOTFUN ~",
       "sortRule": "source"
     },
     "اهلن شات ahlan chat": {
@@ -1980,6 +2238,12 @@
       "title": "يويو شات YOYO CHAT ~",
       "sortRule": "source"
     },
+    "يوسو yoso": {
+      "section": "appCredits",
+      "group": "app:يوسو yoso",
+      "title": "يوسو Yoso ~",
+      "sortRule": "source"
+    },
     "فورفون شات 4fun chat": {
       "section": "appCredits",
       "group": "app:فورفون شات 4fun chat",
@@ -2040,6 +2304,18 @@
       "title": "فانسي لايف FANCY LIVE ~",
       "sortRule": "source"
     },
+    "تالك تالك talk talk": {
+      "section": "appCredits",
+      "group": "app:تالك تالك talk talk",
+      "title": "تالك تالك TALK TALK ~",
+      "sortRule": "source"
+    },
+    "روح rooh": {
+      "section": "appCredits",
+      "group": "app:روح rooh",
+      "title": "روح ROOH ~",
+      "sortRule": "source"
+    },
     "هابي شات habby chat": {
       "section": "appCredits",
       "group": "app:هابي شات habby chat",
@@ -2050,6 +2326,12 @@
       "section": "appCredits",
       "group": "app:اوهلا شات oohla chat",
       "title": "اوهلا شات OOHLA CHAT ~",
+      "sortRule": "source"
+    },
+    "كيو لايف kiyo": {
+      "section": "appCredits",
+      "group": "app:كيو لايف kiyo",
+      "title": "كيو لايف KIYO  ~",
       "sortRule": "source"
     },
     "لاما شاتlama chat": {
@@ -2088,16 +2370,40 @@
       "title": "سكي شات SKY CHAT ~",
       "sortRule": "source"
     },
+    "اولوميت olamet": {
+      "section": "appCredits",
+      "group": "app:اولوميت olamet",
+      "title": "اولوميت OLAMET ~",
+      "sortRule": "source"
+    },
     "كواي لايف kwai live": {
       "section": "appCredits",
       "group": "app:كواي لايف kwai live",
       "title": "كواي لايف KWAI LIVE ~",
       "sortRule": "source"
     },
+    "هامستر hamster": {
+      "section": "appCredits",
+      "group": "app:هامستر hamster",
+      "title": "هامستر HAMSTER ~",
+      "sortRule": "source"
+    },
     "بينمو شات binmo chat": {
       "section": "appCredits",
       "group": "app:بينمو شات binmo chat",
       "title": "بينمو شات Binmo Chat ~",
+      "sortRule": "source"
+    },
+    "سويو soyo": {
+      "section": "appCredits",
+      "group": "app:سويو soyo",
+      "title": "سويو SOYO ~",
+      "sortRule": "source"
+    },
+    "سوجو sugo": {
+      "section": "appCredits",
+      "group": "app:سوجو sugo",
+      "title": "سوجو SUGO ~",
       "sortRule": "source"
     },
     "ازال لايف azal live": {
@@ -2116,6 +2422,12 @@
       "section": "appCredits",
       "group": "app:ميجو لايف migo live",
       "title": "ميجو لايف MIGO LIVE ~",
+      "sortRule": "source"
+    },
+    "ايومي ayome": {
+      "section": "appCredits",
+      "group": "app:ايومي ayome",
+      "title": "ايومي Ayome ~",
       "sortRule": "source"
     },
     "كوكو لايف cocco live": {
@@ -2154,6 +2466,12 @@
       "title": "يوبي شات YOBI CHAT ~",
       "sortRule": "source"
     },
+    "توب فيسو top voice": {
+      "section": "appCredits",
+      "group": "app:توب فيسو top voice",
+      "title": "توب فيسو TOP VOICE ~",
+      "sortRule": "source"
+    },
     "توب توب شات top top chat": {
       "section": "appCredits",
       "group": "app:توب توب شات top top chat",
@@ -2176,6 +2494,18 @@
       "section": "appCredits",
       "group": "app:سوالفنا شات sawalfna chat",
       "title": "سوالفنا شات SAWALFNA CHAT ~",
+      "sortRule": "source"
+    },
+    "ولووoloo": {
+      "section": "appCredits",
+      "group": "app:ولووoloo",
+      "title": "ولووOLOO ~",
+      "sortRule": "source"
+    },
+    "هوب hoob": {
+      "section": "appCredits",
+      "group": "app:هوب hoob",
+      "title": "هوب HOOB ~",
       "sortRule": "source"
     },
     "جيمي لايف gimme live": {
@@ -2214,6 +2544,12 @@
       "title": "تادا شات Tada Chat ~",
       "sortRule": "source"
     },
+    "ويجوwego": {
+      "section": "appCredits",
+      "group": "app:ويجوwego",
+      "title": "ويجوWEGO ~",
+      "sortRule": "source"
+    },
     "غلا ستار gala star": {
       "section": "appCredits",
       "group": "app:غلا ستار gala star",
@@ -2244,10 +2580,40 @@
       "title": "شاميت CHAMET ~",
       "sortRule": "source"
     },
+    "سوماتش somatch": {
+      "section": "appCredits",
+      "group": "app:سوماتش somatch",
+      "title": "سوماتش SOMATCH ~",
+      "sortRule": "source"
+    },
+    "عمار amar": {
+      "section": "appCredits",
+      "group": "app:عمار amar",
+      "title": "عمار AMAR ~",
+      "sortRule": "source"
+    },
+    "هالا ميhala me": {
+      "section": "appCredits",
+      "group": "app:هالا ميhala me",
+      "title": "هالا ميHALA ME ~",
+      "sortRule": "source"
+    },
+    "لايام layam": {
+      "section": "appCredits",
+      "group": "app:لايام layam",
+      "title": "لايام LAYAM ~",
+      "sortRule": "source"
+    },
     "مجلس شات majlis chat": {
       "section": "appCredits",
       "group": "app:مجلس شات majlis chat",
       "title": "مجلس شات MAJLIS CHAT ~",
+      "sortRule": "source"
+    },
+    "امو amo": {
+      "section": "appCredits",
+      "group": "app:امو amo",
+      "title": "امو AMO ~",
       "sortRule": "source"
     },
     "بارتي هيرو party hero": {
@@ -2280,6 +2646,12 @@
       "title": "رو ستار RoStar ~",
       "sortRule": "source"
     },
+    "وسلا wasla": {
+      "section": "appCredits",
+      "group": "app:وسلا wasla",
+      "title": "وسلا WASLA ~",
+      "sortRule": "source"
+    },
     "يامي ستار yami star": {
       "section": "appCredits",
       "group": "app:يامي ستار yami star",
@@ -2310,10 +2682,28 @@
       "title": "سايا لايكي SAYA LIKEE ~",
       "sortRule": "source"
     },
+    "يودو فون yudo fun": {
+      "section": "appCredits",
+      "group": "app:يودو فون yudo fun",
+      "title": "يودو فون YUDO FUN ~",
+      "sortRule": "source"
+    },
+    "اب فون up fun": {
+      "section": "appCredits",
+      "group": "app:اب فون up fun",
+      "title": "اب فون UP FUN ~",
+      "sortRule": "source"
+    },
     "ناوا شاتnawa chat": {
       "section": "appCredits",
       "group": "app:ناوا شاتnawa chat",
       "title": "ناوا شاتNAWA CHAT ~",
+      "sortRule": "source"
+    },
+    "مازا maza": {
+      "section": "appCredits",
+      "group": "app:مازا maza",
+      "title": "مازا Maza ~",
       "sortRule": "source"
     },
     "لادو شات lado chat": {
@@ -2326,6 +2716,24 @@
       "section": "appCredits",
       "group": "app:بوتا لايف potalive",
       "title": "بوتا لايف PotaLive ~",
+      "sortRule": "source"
+    },
+    "يو بارتي yoparti": {
+      "section": "appCredits",
+      "group": "app:يو بارتي yoparti",
+      "title": "يو بارتي YOPARTI ~",
+      "sortRule": "source"
+    },
+    "كيتي kiti": {
+      "section": "appCredits",
+      "group": "app:كيتي kiti",
+      "title": "كيتي KITI ~",
+      "sortRule": "source"
+    },
+    "ينفون infun": {
+      "section": "appCredits",
+      "group": "app:ينفون infun",
+      "title": "ينفون INFUN ~",
       "sortRule": "source"
     },
     "باوا لايف pawa live": {
@@ -2346,6 +2754,18 @@
       "title": "واو شات WAAW CHAT ~",
       "sortRule": "source"
     },
+    "جاكو jaco": {
+      "section": "appCredits",
+      "group": "app:جاكو jaco",
+      "title": "جاكو JACO ~",
+      "sortRule": "source"
+    },
+    "بولي boli": {
+      "section": "appCredits",
+      "group": "app:بولي boli",
+      "title": "بولي BOLI ~",
+      "sortRule": "source"
+    },
     "هالو ستار halo star": {
       "section": "appCredits",
       "group": "app:هالو ستار halo star",
@@ -2364,10 +2784,94 @@
       "title": "فوكا VOCA ~",
       "sortRule": "source"
     },
+    "carni": {
+      "section": "appCredits",
+      "group": "app:carni",
+      "title": "CARNI ~",
+      "sortRule": "source"
+    },
+    "ghanny": {
+      "section": "appCredits",
+      "group": "app:ghanny",
+      "title": "GHANNY ~",
+      "sortRule": "source"
+    },
+    "صدا saada": {
+      "section": "appCredits",
+      "group": "app:صدا saada",
+      "title": "صدا SAADA ~",
+      "sortRule": "source"
+    },
+    "هاتي hati": {
+      "section": "appCredits",
+      "group": "app:هاتي hati",
+      "title": "هاتي HATI ~",
+      "sortRule": "source"
+    },
     "يوهو ستار yohoo star": {
       "section": "appCredits",
       "group": "app:يوهو ستار yohoo star",
       "title": "يوهو ستار YOHOO STAR ~",
+      "sortRule": "source"
+    },
+    "ليسكي leesky": {
+      "section": "appCredits",
+      "group": "app:ليسكي leesky",
+      "title": "ليسكي LEESKY ~",
+      "sortRule": "source"
+    },
+    "ساهره sahra": {
+      "section": "appCredits",
+      "group": "app:ساهره sahra",
+      "title": "ساهره SAHRA ~",
+      "sortRule": "source"
+    },
+    "بوكيت pocket": {
+      "section": "appCredits",
+      "group": "app:بوكيت pocket",
+      "title": "بوكيت POCKET ~",
+      "sortRule": "source"
+    },
+    "مزيون mazyoun": {
+      "section": "appCredits",
+      "group": "app:مزيون mazyoun",
+      "title": "مزيون MAZYOUN ~",
+      "sortRule": "source"
+    },
+    "هايوكي hayuki": {
+      "section": "appCredits",
+      "group": "app:هايوكي hayuki",
+      "title": "هايوكي HAYUKI ~",
+      "sortRule": "source"
+    },
+    "جاميت gamet": {
+      "section": "appCredits",
+      "group": "app:جاميت gamet",
+      "title": "جاميت GAMET ~",
+      "sortRule": "source"
+    },
+    "هالا halla": {
+      "section": "appCredits",
+      "group": "app:هالا halla",
+      "title": "هالا HALLA ~",
+      "sortRule": "source"
+    },
+    "لك لك lklk": {
+      "section": "appCredits",
+      "group": "app:لك لك lklk",
+      "title": "لك لك LKLK ~",
+      "sortRule": "source"
+    },
+    "هاجو hago": {
+      "section": "appCredits",
+      "group": "app:هاجو hago",
+      "title": "هاجو HAGO ~",
+      "sortRule": "source"
+    },
+    "كيسميت kessmet": {
+      "section": "appCredits",
+      "group": "app:كيسميت kessmet",
+      "title": "كيسميت KESSMET ~",
       "sortRule": "source"
     },
     "هيلا شات hilla chat": {
@@ -2394,6 +2898,24 @@
       "title": "مرحبا شات MR7BA CHAT ~",
       "sortRule": "source"
     },
+    "فون اب fun up": {
+      "section": "appCredits",
+      "group": "app:فون اب fun up",
+      "title": "فون اب FUN UP ~",
+      "sortRule": "source"
+    },
+    "طيب tayyb": {
+      "section": "appCredits",
+      "group": "app:طيب tayyb",
+      "title": "طيب TAYYB ~",
+      "sortRule": "source"
+    },
+    "ويل شيل will chill": {
+      "section": "appCredits",
+      "group": "app:ويل شيل will chill",
+      "title": "ويل شيل WILL CHILL ~",
+      "sortRule": "source"
+    },
     "شيل شات chill chat": {
       "section": "appCredits",
       "group": "app:شيل شات chill chat",
@@ -2406,10 +2928,46 @@
       "title": "كراك شات KARAK CHAT ~",
       "sortRule": "source"
     },
+    "ساهيsahi": {
+      "section": "appCredits",
+      "group": "app:ساهيsahi",
+      "title": "ساهيSAHI ~",
+      "sortRule": "source"
+    },
+    "سوبر ميت super meet": {
+      "section": "appCredits",
+      "group": "app:سوبر ميت super meet",
+      "title": "سوبر ميت SUPER MEET ~",
+      "sortRule": "source"
+    },
+    "هابي عربي hapi arabi": {
+      "section": "appCredits",
+      "group": "app:هابي عربي hapi arabi",
+      "title": "هابي عربي HAPI ARABI ~",
+      "sortRule": "source"
+    },
+    "اور تالك our talk": {
+      "section": "appCredits",
+      "group": "app:اور تالك our talk",
+      "title": "اور تالك OUR TALK ~",
+      "sortRule": "source"
+    },
+    "يودو yudo": {
+      "section": "appCredits",
+      "group": "app:يودو yudo",
+      "title": "يودو YUDO ~",
+      "sortRule": "source"
+    },
     "وادي شات wadi chat": {
       "section": "appCredits",
       "group": "app:وادي شات wadi chat",
       "title": "وادي شات WADI CHAT ~",
+      "sortRule": "source"
+    },
+    "هارت hart": {
+      "section": "appCredits",
+      "group": "app:هارت hart",
+      "title": "هارت HART ~",
       "sortRule": "source"
     },
     "ديكا بارتي dika party": {
@@ -2442,6 +3000,12 @@
       "title": "دوا لايف DAWA LIVE ~",
       "sortRule": "source"
     },
+    "ويكوو wikoo": {
+      "section": "appCredits",
+      "group": "app:ويكوو wikoo",
+      "title": "ويكوو  WIKOO ~",
+      "sortRule": "source"
+    },
     "يازا شات yaza chat": {
       "section": "appCredits",
       "group": "app:يازا شات yaza chat",
@@ -2452,6 +3016,12 @@
       "section": "appCredits",
       "group": "app:يوكي شات yoki chat",
       "title": "يوكي شات YOKI CHAT ~",
+      "sortRule": "source"
+    },
+    "اومي ume": {
+      "section": "appCredits",
+      "group": "app:اومي ume",
+      "title": "اومي UME ~",
       "sortRule": "source"
     },
     "لاكا شات laka chat": {
@@ -2472,16 +3042,40 @@
       "title": "سايا شات SIYA CHAT ~",
       "sortRule": "source"
     },
+    "زار zaar": {
+      "section": "appCredits",
+      "group": "app:زار zaar",
+      "title": "زار ZAAR ~",
+      "sortRule": "source"
+    },
+    "yo2": {
+      "section": "appCredits",
+      "group": "app:yo2",
+      "title": "YO2 ~",
+      "sortRule": "source"
+    },
     "فور شات 4chat": {
       "section": "appCredits",
       "group": "app:فور شات 4chat",
       "title": "فور شات 4CHAT ~",
       "sortRule": "source"
     },
+    "طموحي tomohi": {
+      "section": "appCredits",
+      "group": "app:طموحي tomohi",
+      "title": "طموحي TOMOHI ~",
+      "sortRule": "source"
+    },
     "نادي ستار naddy star": {
       "section": "appCredits",
       "group": "app:نادي ستار naddy star",
       "title": "نادي ستار NADDY STAR ~",
+      "sortRule": "source"
+    },
+    "فوني vone": {
+      "section": "appCredits",
+      "group": "app:فوني vone",
+      "title": "فوني VONE ~",
       "sortRule": "source"
     },
     "وهلا شات ohla chat": {
@@ -2496,16 +3090,46 @@
       "title": "يوي شات  YOOY CHAT ~",
       "sortRule": "source"
     },
+    "ليتمي litme": {
+      "section": "appCredits",
+      "group": "app:ليتمي litme",
+      "title": "ليتمي Litme ~",
+      "sortRule": "source"
+    },
     "مومو لايف momo live": {
       "section": "appCredits",
       "group": "app:مومو لايف momo live",
       "title": "مومو لايف MOMO LIVE ~",
       "sortRule": "source"
     },
+    "وي شيل we chill": {
+      "section": "appCredits",
+      "group": "app:وي شيل we chill",
+      "title": "وي شيل WE CHILL ~",
+      "sortRule": "source"
+    },
+    "نيتا nita": {
+      "section": "appCredits",
+      "group": "app:نيتا nita",
+      "title": "نيتا NITA ~",
+      "sortRule": "source"
+    },
     "شغف شات shaghaf chat": {
       "section": "appCredits",
       "group": "app:شغف شات shaghaf chat",
       "title": "شغف شات SHAGHAF CHAT ~",
+      "sortRule": "source"
+    },
+    "نفس nafass": {
+      "section": "appCredits",
+      "group": "app:نفس nafass",
+      "title": "نفس NAFASS ~",
+      "sortRule": "source"
+    },
+    "ميكوو mikoo": {
+      "section": "appCredits",
+      "group": "app:ميكوو mikoo",
+      "title": "ميكوو MIKOO ~",
       "sortRule": "source"
     },
     "زافا لايفzaffa live": {
@@ -2520,6 +3144,18 @@
       "title": "نيس شات Nice chat ~",
       "sortRule": "source"
     },
+    "بولالا bulala": {
+      "section": "appCredits",
+      "group": "app:بولالا bulala",
+      "title": "بولالا Bulala ~",
+      "sortRule": "source"
+    },
+    "تايا taya": {
+      "section": "appCredits",
+      "group": "app:تايا taya",
+      "title": "تايا TAYA ~",
+      "sortRule": "source"
+    },
     "يومي شات yumi chat": {
       "section": "appCredits",
       "group": "app:يومي شات yumi chat",
@@ -2532,6 +3168,12 @@
       "title": "اميسو بارتي Amisu Party ~",
       "sortRule": "source"
     },
+    "جوفون gofun": {
+      "section": "appCredits",
+      "group": "app:جوفون gofun",
+      "title": "جوفون Gofun ~",
+      "sortRule": "source"
+    },
     "فولي ستار volistar": {
       "section": "appCredits",
       "group": "app:فولي ستار volistar",
@@ -2542,6 +3184,12 @@
       "section": "appCredits",
       "group": "app:يانا شات yena chat",
       "title": "يانا شات Yena chat ~",
+      "sortRule": "source"
+    },
+    "عداد جواكر s1": {
+      "section": "games",
+      "group": "games:jawaker-counter-s1",
+      "title": "عداد جواكر S1",
       "sortRule": "source"
     },
     "زينا لايف xena live": {
@@ -2560,6 +3208,18 @@
       "section": "appCredits",
       "group": "app:سول شيل - soul chill",
       "title": "سول شيل - Soul Chill \"",
+      "sortRule": "source"
+    },
+    "هوني جار - honey jar": {
+      "section": "appCredits",
+      "group": "app:هوني جار - honey jar",
+      "title": "هوني جار - Honey Jar \"",
+      "sortRule": "source"
+    },
+    "زينا لايف - xena live": {
+      "section": "appCredits",
+      "group": "app:زينا لايف - xena live",
+      "title": "زينا لايف - Xena Live \"",
       "sortRule": "source"
     },
     "لايكي - likee": {
@@ -2586,6 +3246,12 @@
       "title": "عمار شات - Amar Chat \"",
       "sortRule": "source"
     },
+    "كوكو لايف - cocco live": {
+      "section": "appCredits",
+      "group": "app:كوكو لايف - cocco live",
+      "title": "كوكو لايف - Cocco Live \"",
+      "sortRule": "source"
+    },
     "بوتا لايف - pota live": {
       "section": "appCredits",
       "group": "app:بوتا لايف - pota live",
@@ -2602,6 +3268,18 @@
       "section": "appCredits",
       "group": "app:سايا لايكي - saya likee",
       "title": "سايا لايكي - Saya Likee \"",
+      "sortRule": "source"
+    },
+    "فور فان - 4fun": {
+      "section": "appCredits",
+      "group": "app:فور فان - 4fun",
+      "title": "فور فان - 4Fun \"",
+      "sortRule": "source"
+    },
+    "تادا شات - tada chat": {
+      "section": "appCredits",
+      "group": "app:تادا شات - tada chat",
+      "title": "تادا شات - Tada Chat \"",
       "sortRule": "source"
     },
     "ليت شات - lit chat": {
@@ -2622,10 +3300,28 @@
       "title": "لاما شات - Lama Chat \"",
       "sortRule": "source"
     },
+    "سو ماتش - so match": {
+      "section": "appCredits",
+      "group": "app:سو ماتش - so match",
+      "title": "سو ماتش - So Match \"",
+      "sortRule": "source"
+    },
     "ميجو لايف - migo live": {
       "section": "appCredits",
       "group": "app:ميجو لايف - migo live",
       "title": "ميجو لايف - Migo Live \"",
+      "sortRule": "source"
+    },
+    "نيفي - nivi": {
+      "section": "appCredits",
+      "group": "app:نيفي - nivi",
+      "title": "نيفي - Nivi \"",
+      "sortRule": "source"
+    },
+    "هيا شات - hiya chat": {
+      "section": "appCredits",
+      "group": "app:هيا شات - hiya chat",
+      "title": "هيا شات - Hiya Chat \"",
       "sortRule": "source"
     },
     "ميكو شات - mico chat": {
@@ -2646,10 +3342,22 @@
       "title": "تانغو لايف - Tango Live \"",
       "sortRule": "source"
     },
+    "روكا لايف - roka live": {
+      "section": "appCredits",
+      "group": "app:روكا لايف - roka live",
+      "title": "روكا لايف - Roka Live \"",
+      "sortRule": "source"
+    },
     "سلام شات - salam chat": {
       "section": "appCredits",
       "group": "app:سلام شات - salam chat",
       "title": "سلام شات - Salam Chat \"",
+      "sortRule": "source"
+    },
+    "بينمو شات - binmo chat": {
+      "section": "appCredits",
+      "group": "app:بينمو شات - binmo chat",
+      "title": "بينمو شات - Binmo Chat \"",
       "sortRule": "source"
     },
     "كواي - kwai": {
@@ -2664,10 +3372,28 @@
       "title": "فانسي لايف - Fancy Live \"",
       "sortRule": "source"
     },
+    "تالك تالك - talk talk": {
+      "section": "appCredits",
+      "group": "app:تالك تالك - talk talk",
+      "title": "تالك تالك - Talk Talk \"",
+      "sortRule": "source"
+    },
+    "ويجو - wego": {
+      "section": "appCredits",
+      "group": "app:ويجو - wego",
+      "title": "ويجو - Wego \"",
+      "sortRule": "source"
+    },
     "سوبر لايف - super live": {
       "section": "appCredits",
       "group": "app:سوبر لايف - super live",
       "title": "سوبر لايف - Super Live \"",
+      "sortRule": "source"
+    },
+    "هابيhabbe": {
+      "section": "appCredits",
+      "group": "app:هابيhabbe",
+      "title": "هابيHABBE \"",
       "sortRule": "source"
     },
     "هوا شاتhawa chat": {
@@ -2766,6 +3492,18 @@
       "title": "هاي بلاي شات - Hi Play Chat \"",
       "sortRule": "source"
     },
+    "امو - amo": {
+      "section": "appCredits",
+      "group": "app:امو - amo",
+      "title": "امو - Amo \"",
+      "sortRule": "source"
+    },
+    "لاما - layam": {
+      "section": "appCredits",
+      "group": "app:لاما - layam",
+      "title": "لاما - Layam \"",
+      "sortRule": "source"
+    },
     "بارتي هيرو - party hero": {
       "section": "appCredits",
       "group": "app:بارتي هيرو - party hero",
@@ -2782,6 +3520,12 @@
       "section": "appCredits",
       "group": "app:يامي ستار - yami star",
       "title": "يامي ستار - Yami Star \"",
+      "sortRule": "source"
+    },
+    "جاكو - jaco": {
+      "section": "appCredits",
+      "group": "app:جاكو - jaco",
+      "title": "جاكو - Jaco \"",
       "sortRule": "source"
     },
     "صدفي شات - sodfa chat": {
@@ -2832,6 +3576,12 @@
       "title": "يودو شات - Yudo Chat \"",
       "sortRule": "source"
     },
+    "اب فن - up fun": {
+      "section": "appCredits",
+      "group": "app:اب فن - up fun",
+      "title": "اب فن - Up Fun \"",
+      "sortRule": "source"
+    },
     "شات شيل - chat chill": {
       "section": "appCredits",
       "group": "app:شات شيل - chat chill",
@@ -2842,6 +3592,12 @@
       "section": "appCredits",
       "group": "app:سكاي شات - sky chat",
       "title": "سكاي شات - Sky Chat \"",
+      "sortRule": "source"
+    },
+    "مزيون - mazyoun": {
+      "section": "appCredits",
+      "group": "app:مزيون - mazyoun",
+      "title": "مزيون - Mazyoun \"",
       "sortRule": "source"
     },
     "باوا لايف - pawa live": {
@@ -2868,10 +3624,40 @@
       "title": "لاكي شات - Laki Chat \"",
       "sortRule": "source"
     },
+    "ليسكي - leesky": {
+      "section": "appCredits",
+      "group": "app:ليسكي - leesky",
+      "title": "ليسكي - Leesky \"",
+      "sortRule": "source"
+    },
+    "لوت فن - lot fun": {
+      "section": "appCredits",
+      "group": "app:لوت فن - lot fun",
+      "title": "لوت فن - Lot Fun \"",
+      "sortRule": "source"
+    },
+    "روكا - rooka": {
+      "section": "appCredits",
+      "group": "app:روكا - rooka",
+      "title": "روكا - Rooka \"",
+      "sortRule": "source"
+    },
+    "هاي - hayi": {
+      "section": "appCredits",
+      "group": "app:هاي - hayi",
+      "title": "هاي - Hayi \"",
+      "sortRule": "source"
+    },
     "ون ستار شات - 1star chat": {
       "section": "appCredits",
       "group": "app:ون ستار شات - 1star chat",
       "title": "ون ستار شات - 1Star Chat \"",
+      "sortRule": "source"
+    },
+    "هاتي - hati": {
+      "section": "appCredits",
+      "group": "app:هاتي - hati",
+      "title": "هاتي - Hati \"",
       "sortRule": "source"
     },
     "هالو ستار - halo star": {
@@ -2898,16 +3684,52 @@
       "title": "بولي شات - Boli Chat \"",
       "sortRule": "source"
     },
+    "يو بارتي - yoparti": {
+      "section": "appCredits",
+      "group": "app:يو بارتي - yoparti",
+      "title": "يو بارتي - YoParti \"",
+      "sortRule": "source"
+    },
     "نحكي شات - nahki chat": {
       "section": "appCredits",
       "group": "app:نحكي شات - nahki chat",
       "title": "نحكي شات - Nahki Chat \"",
       "sortRule": "source"
     },
+    "يوسو فارم - yoso farm": {
+      "section": "appCredits",
+      "group": "app:يوسو فارم - yoso farm",
+      "title": "يوسو فارم - Yoso Farm \"",
+      "sortRule": "source"
+    },
+    "هاجو - hago": {
+      "section": "appCredits",
+      "group": "app:هاجو - hago",
+      "title": "هاجو - Hago \"",
+      "sortRule": "source"
+    },
     "مانغو ستار - mango star": {
       "section": "appCredits",
       "group": "app:مانغو ستار - mango star",
       "title": "مانغو ستار - Mango Star \"",
+      "sortRule": "source"
+    },
+    "ان فن - infun": {
+      "section": "appCredits",
+      "group": "app:ان فن - infun",
+      "title": "ان فن - InFun \"",
+      "sortRule": "source"
+    },
+    "بات - baat": {
+      "section": "appCredits",
+      "group": "app:بات - baat",
+      "title": "بات - Baat \"",
+      "sortRule": "source"
+    },
+    "مازا - maza": {
+      "section": "appCredits",
+      "group": "app:مازا - maza",
+      "title": "مازا - Maza \"",
       "sortRule": "source"
     },
     "فيلا شات - vilaa chat": {
@@ -2928,6 +3750,156 @@
       "title": "ماستي شات - Masti Chat \"",
       "sortRule": "source"
     },
+    "دوا شات - dawa chat": {
+      "section": "appCredits",
+      "group": "app:دوا شات - dawa chat",
+      "title": "دوا شات - Dawa Chat \"",
+      "sortRule": "source"
+    },
+    "روح شات - rooh chat": {
+      "section": "appCredits",
+      "group": "app:روح شات - rooh chat",
+      "title": "روح شات - Rooh Chat \"",
+      "sortRule": "source"
+    },
+    "هارت لايف - hart live": {
+      "section": "appCredits",
+      "group": "app:هارت لايف - hart live",
+      "title": "هارت لايف - Hart Live \"",
+      "sortRule": "source"
+    },
+    "دولي لايف - doli live": {
+      "section": "appCredits",
+      "group": "app:دولي لايف - doli live",
+      "title": "دولي لايف - Doli Live \"",
+      "sortRule": "source"
+    },
+    "ويل شيل - will chill": {
+      "section": "appCredits",
+      "group": "app:ويل شيل - will chill",
+      "title": "ويل شيل - Will Chill \"",
+      "sortRule": "source"
+    },
+    "زار شات - zaar chat": {
+      "section": "appCredits",
+      "group": "app:زار شات - zaar chat",
+      "title": "زار شات - Zaar Chat \"",
+      "sortRule": "source"
+    },
+    "اي بارتي - e-party": {
+      "section": "appCredits",
+      "group": "app:اي بارتي - e-party",
+      "title": "اي بارتي - E-Party \"",
+      "sortRule": "source"
+    },
+    "هالا شات - halla chat": {
+      "section": "appCredits",
+      "group": "app:هالا شات - halla chat",
+      "title": "هالا شات - Halla Chat \"",
+      "sortRule": "source"
+    },
+    "اور تالك - our talk": {
+      "section": "appCredits",
+      "group": "app:اور تالك - our talk",
+      "title": "اور تالك - Our Talk \"",
+      "sortRule": "source"
+    },
+    "يو تو اب - yo2 app": {
+      "section": "appCredits",
+      "group": "app:يو تو اب - yo2 app",
+      "title": "يو تو اب - Yo2 App \"",
+      "sortRule": "source"
+    },
+    "يوكي شات - yoki chat": {
+      "section": "appCredits",
+      "group": "app:يوكي شات - yoki chat",
+      "title": "يوكي شات - Yoki Chat \"",
+      "sortRule": "source"
+    },
+    "شيل شات - chill chat": {
+      "section": "appCredits",
+      "group": "app:شيل شات - chill chat",
+      "title": "شيل شات - Chill Chat \"",
+      "sortRule": "source"
+    },
+    "مات ميت - mate met": {
+      "section": "appCredits",
+      "group": "app:مات ميت - mate met",
+      "title": "مات ميت - Mate Met \"",
+      "sortRule": "source"
+    },
+    "هابي عربي - hapi arabic": {
+      "section": "appCredits",
+      "group": "app:هابي عربي - hapi arabic",
+      "title": "هابي عربي - Hapi Arabic \"",
+      "sortRule": "source"
+    },
+    "طيب شات - tayyb chat": {
+      "section": "appCredits",
+      "group": "app:طيب شات - tayyb chat",
+      "title": "طيب شات - Tayyb Chat \"",
+      "sortRule": "source"
+    },
+    "اومي - ume": {
+      "section": "appCredits",
+      "group": "app:اومي - ume",
+      "title": "اومي - Ume \"",
+      "sortRule": "source"
+    },
+    "سوبر ميت - super meet": {
+      "section": "appCredits",
+      "group": "app:سوبر ميت - super meet",
+      "title": "سوبر ميت - Super Meet \"",
+      "sortRule": "source"
+    },
+    "يودو - yudo": {
+      "section": "appCredits",
+      "group": "app:يودو - yudo",
+      "title": "يودو - Yudo \"",
+      "sortRule": "source"
+    },
+    "هوبي ستار - hopi star": {
+      "section": "appCredits",
+      "group": "app:هوبي ستار - hopi star",
+      "title": "هوبي ستار - Hopi Star \"",
+      "sortRule": "source"
+    },
+    "يايا شات - yayya chat": {
+      "section": "appCredits",
+      "group": "app:يايا شات - yayya chat",
+      "title": "يايا شات - Yayya Chat \"",
+      "sortRule": "source"
+    },
+    "ديكا لايف - dika live": {
+      "section": "appCredits",
+      "group": "app:ديكا لايف - dika live",
+      "title": "ديكا لايف - Dika Live \"",
+      "sortRule": "source"
+    },
+    "كاراك شات - karak chat": {
+      "section": "appCredits",
+      "group": "app:كاراك شات - karak chat",
+      "title": "كاراك شات - Karak Chat \"",
+      "sortRule": "source"
+    },
+    "اوهلا - ohla": {
+      "section": "appCredits",
+      "group": "app:اوهلا - ohla",
+      "title": "اوهلا - Ohla \"",
+      "sortRule": "source"
+    },
+    "فوني - vone": {
+      "section": "appCredits",
+      "group": "app:فوني - vone",
+      "title": "فوني - Vone \"",
+      "sortRule": "source"
+    },
+    "شباب شات - shabab chat": {
+      "section": "appCredits",
+      "group": "app:شباب شات - shabab chat",
+      "title": "شباب شات - Shabab Chat \"",
+      "sortRule": "source"
+    },
     "بيست لايف - best live": {
       "section": "appCredits",
       "group": "app:بيست لايف - best live",
@@ -2938,6 +3910,12 @@
       "section": "appCredits",
       "group": "app:وهو شات - woho chat",
       "title": "وهو شات - Woho Chat \"",
+      "sortRule": "source"
+    },
+    "ساهي - sahi": {
+      "section": "appCredits",
+      "group": "app:ساهي - sahi",
+      "title": "ساهي - Sahi \"",
       "sortRule": "source"
     },
     "فور شات - 4chat": {
@@ -2970,6 +3948,12 @@
       "title": "نيو شات - Niu Chat \"",
       "sortRule": "source"
     },
+    "بولالا - bulala": {
+      "section": "appCredits",
+      "group": "app:بولالا - bulala",
+      "title": "بولالا - Bulala \"",
+      "sortRule": "source"
+    },
     "تايا شات - taya chat": {
       "section": "appCredits",
       "group": "app:تايا شات - taya chat",
@@ -2982,10 +3966,298 @@
       "title": "تي لايف - Ti Live \"",
       "sortRule": "source"
     },
+    "نفس - nafass": {
+      "section": "appCredits",
+      "group": "app:نفس - nafass",
+      "title": "نفس - Nafass \"",
+      "sortRule": "source"
+    },
+    "ينا - yena": {
+      "section": "appCredits",
+      "group": "app:ينا - yena",
+      "title": "ينا - Yena \"",
+      "sortRule": "source"
+    },
     "فن ستار - fun star": {
       "section": "appCredits",
       "group": "app:فن ستار - fun star",
       "title": "فن ستار - Fun Star \"",
+      "sortRule": "source"
+    },
+    "هيوكي - hayuki": {
+      "section": "appCredits",
+      "group": "app:هيوكي - hayuki",
+      "title": "هيوكي - Hayuki \"",
+      "sortRule": "source"
+    },
+    "ريكسو - rixo": {
+      "section": "appCredits",
+      "group": "app:ريكسو - rixo",
+      "title": "ريكسو - Rixo \"",
+      "sortRule": "source"
+    },
+    "اميسو - amisu": {
+      "section": "appCredits",
+      "group": "app:اميسو - amisu",
+      "title": "اميسو - Amisu \"",
+      "sortRule": "source"
+    },
+    "وحدة - wahda": {
+      "section": "appCredits",
+      "group": "app:وحدة - wahda",
+      "title": "وحدة - Wahda \"",
+      "sortRule": "source"
+    },
+    "فومي - fomi": {
+      "section": "appCredits",
+      "group": "app:فومي - fomi",
+      "title": "فومي - Fomi \"",
+      "sortRule": "source"
+    },
+    "ليت مي - litme": {
+      "section": "appCredits",
+      "group": "app:ليت مي - litme",
+      "title": "ليت مي - Litme \"",
+      "sortRule": "source"
+    },
+    "وينكو - winko": {
+      "section": "appCredits",
+      "group": "app:وينكو - winko",
+      "title": "وينكو - Winko \"",
+      "sortRule": "source"
+    },
+    "كفو - kafu": {
+      "section": "appCredits",
+      "group": "app:كفو - kafu",
+      "title": "كفو - Kafu \"",
+      "sortRule": "source"
+    },
+    "هوكي - hoki": {
+      "section": "appCredits",
+      "group": "app:هوكي - hoki",
+      "title": "هوكي - Hoki \"",
+      "sortRule": "source"
+    },
+    "شيلا - shila": {
+      "section": "appCredits",
+      "group": "app:شيلا - shila",
+      "title": "شيلا - Shila \"",
+      "sortRule": "source"
+    },
+    "يوبي - yobi": {
+      "section": "appCredits",
+      "group": "app:يوبي - yobi",
+      "title": "يوبي - Yobi \"",
+      "sortRule": "source"
+    },
+    "فوستار - vostar": {
+      "section": "appCredits",
+      "group": "app:فوستار - vostar",
+      "title": "فوستار - Vostar \"",
+      "sortRule": "source"
+    },
+    "يازا شات - yaza chat": {
+      "section": "appCredits",
+      "group": "app:يازا شات - yaza chat",
+      "title": "يازا شات - Yaza Chat \"",
+      "sortRule": "source"
+    },
+    "وادي - wadi": {
+      "section": "appCredits",
+      "group": "app:وادي - wadi",
+      "title": "وادي - Wadi \"",
+      "sortRule": "source"
+    },
+    "فومي بارتي - fomi party": {
+      "section": "appCredits",
+      "group": "app:فومي بارتي - fomi party",
+      "title": "فومي بارتي - Fomi Party \"",
+      "sortRule": "source"
+    },
+    "لاكا - laka": {
+      "section": "appCredits",
+      "group": "app:لاكا - laka",
+      "title": "لاكا - Laka \"",
+      "sortRule": "source"
+    },
+    "وي شيل - wechill": {
+      "section": "appCredits",
+      "group": "app:وي شيل - wechill",
+      "title": "وي شيل - Wechill \"",
+      "sortRule": "source"
+    },
+    "صوفيا - sophia": {
+      "section": "appCredits",
+      "group": "app:صوفيا - sophia",
+      "title": "صوفيا - Sophia \"",
+      "sortRule": "source"
+    },
+    "سيلا - sillagcc": {
+      "section": "appCredits",
+      "group": "app:سيلا - sillagcc",
+      "title": "سيلا - SillaGCC \"",
+      "sortRule": "source"
+    },
+    "يولا - yula": {
+      "section": "appCredits",
+      "group": "app:يولا - yula",
+      "title": "يولا - Yula \"",
+      "sortRule": "source"
+    },
+    "كارني لايف - carni live": {
+      "section": "appCredits",
+      "group": "app:كارني لايف - carni live",
+      "title": "كارني لايف - Carni live \"",
+      "sortRule": "source"
+    },
+    "موما - moma": {
+      "section": "appCredits",
+      "group": "app:موما - moma",
+      "title": "موما - Moma \"",
+      "sortRule": "source"
+    },
+    "سوها - sohha": {
+      "section": "appCredits",
+      "group": "app:سوها - sohha",
+      "title": "سوها - Sohha \"",
+      "sortRule": "source"
+    },
+    "شاتا - chata": {
+      "section": "appCredits",
+      "group": "app:شاتا - chata",
+      "title": "شاتا - ChatA \"",
+      "sortRule": "source"
+    },
+    "شاتي - chati": {
+      "section": "appCredits",
+      "group": "app:شاتي - chati",
+      "title": "شاتي - Chati \"",
+      "sortRule": "source"
+    },
+    "هاي شات - hi chat": {
+      "section": "appCredits",
+      "group": "app:هاي شات - hi chat",
+      "title": "هاي شات - Hi Chat \"",
+      "sortRule": "source"
+    },
+    "شغف - shaghaf": {
+      "section": "appCredits",
+      "group": "app:شغف - shaghaf",
+      "title": "شغف - Shaghaf \"",
+      "sortRule": "source"
+    },
+    "نيتا - nita": {
+      "section": "appCredits",
+      "group": "app:نيتا - nita",
+      "title": "نيتا - Nita \"",
+      "sortRule": "source"
+    },
+    "توكي - toki": {
+      "section": "appCredits",
+      "group": "app:توكي - toki",
+      "title": "توكي - Toki \"",
+      "sortRule": "source"
+    },
+    "ليمي لايف - lemi live": {
+      "section": "appCredits",
+      "group": "app:ليمي لايف - lemi live",
+      "title": "ليمي لايف - Lemi Live \"",
+      "sortRule": "source"
+    },
+    "شاموجي - chamoji": {
+      "section": "appCredits",
+      "group": "app:شاموجي - chamoji",
+      "title": "شاموجي - Chamoji \"",
+      "sortRule": "source"
+    },
+    "سامي - sami": {
+      "section": "appCredits",
+      "group": "app:سامي - sami",
+      "title": "سامي - Sami \"",
+      "sortRule": "source"
+    },
+    "وي بارتي - we party": {
+      "section": "appCredits",
+      "group": "app:وي بارتي - we party",
+      "title": "وي بارتي - We Party \"",
+      "sortRule": "source"
+    },
+    "نادي ستار - nady star": {
+      "section": "appCredits",
+      "group": "app:نادي ستار - nady star",
+      "title": "نادي ستار - Nady Star \"",
+      "sortRule": "source"
+    },
+    "يومي - yomee": {
+      "section": "appCredits",
+      "group": "app:يومي - yomee",
+      "title": "يومي - Yomee \"",
+      "sortRule": "source"
+    },
+    "فابي ستار - faby star": {
+      "section": "appCredits",
+      "group": "app:فابي ستار - faby star",
+      "title": "فابي ستار - Faby Star \"",
+      "sortRule": "source"
+    },
+    "فني - funni": {
+      "section": "appCredits",
+      "group": "app:فني - funni",
+      "title": "فني - Funni \"",
+      "sortRule": "source"
+    },
+    "بوتا شات - bota chat": {
+      "section": "appCredits",
+      "group": "app:بوتا شات - bota chat",
+      "title": "بوتا شات - Bota Chat \"",
+      "sortRule": "source"
+    },
+    "سما شات - sama chat": {
+      "section": "appCredits",
+      "group": "app:سما شات - sama chat",
+      "title": "سما شات - Sama Chat \"",
+      "sortRule": "source"
+    },
+    "دريم شات - dream chat": {
+      "section": "appCredits",
+      "group": "app:دريم شات - dream chat",
+      "title": "دريم شات - Dream Chat \"",
+      "sortRule": "source"
+    },
+    "توكي فويس - toki voice": {
+      "section": "appCredits",
+      "group": "app:توكي فويس - toki voice",
+      "title": "توكي فويس - Toki Voice \"",
+      "sortRule": "source"
+    },
+    "جو جوك - gogoc": {
+      "section": "appCredits",
+      "group": "app:جو جوك - gogoc",
+      "title": "جو جوك - GoGoc \"",
+      "sortRule": "source"
+    },
+    "وي ستار - westar": {
+      "section": "appCredits",
+      "group": "app:وي ستار - westar",
+      "title": "وي ستار - WeStar \"",
+      "sortRule": "source"
+    },
+    "سفن ستار - 7star": {
+      "section": "appCredits",
+      "group": "app:سفن ستار - 7star",
+      "title": "سفن ستار - 7Star \"",
+      "sortRule": "source"
+    },
+    "اولو - oloo": {
+      "section": "appCredits",
+      "group": "app:اولو - oloo",
+      "title": "اولو - Oloo \"",
+      "sortRule": "source"
+    },
+    "sohha": {
+      "section": "appCredits",
+      "group": "app:sohha",
+      "title": "SOHHA",
       "sortRule": "source"
     },
     "متابعين?انستغرام الاسرع عالميًا مع هدية50٪?": {
@@ -3216,10 +4488,58 @@
       "title": "كواي",
       "sortRule": "source"
     },
+    "اويونيoyuni": {
+      "section": "appCredits",
+      "group": "app:اويونيoyuni",
+      "title": "اويونيOyuni ~",
+      "sortRule": "source"
+    },
+    "hawk صقر": {
+      "section": "appCredits",
+      "group": "app:hawk صقر",
+      "title": "Hawk صقر ~",
+      "sortRule": "source"
+    },
+    "diwan talk": {
+      "section": "appCredits",
+      "group": "app:diwan talk",
+      "title": "DIWAN TALK ~",
+      "sortRule": "source"
+    },
     "voca chat": {
       "section": "appCredits",
       "group": "app:voca chat",
       "title": "Voca Chat ~",
+      "sortRule": "source"
+    },
+    "هيب hebba": {
+      "section": "appCredits",
+      "group": "app:هيب hebba",
+      "title": "هيب Hebba ~",
+      "sortRule": "source"
+    },
+    "كاب كات | 1 شهر | حساب جاهز": {
+      "section": "digital",
+      "group": "digital:capcut-1m-ready",
+      "title": "CapCut | شهر | حساب جاهز",
+      "sortRule": "source"
+    },
+    "كاب كات برو | 1 شهر | حساب شخصي": {
+      "section": "digital",
+      "group": "digital:capcut-1m-personal",
+      "title": "CapCut | شهر | حساب شخصي",
+      "sortRule": "source"
+    },
+    "كاب كات برو | 6 اشهر | حساب شخصي": {
+      "section": "digital",
+      "group": "digital:capcut-6m-personal",
+      "title": "CapCut | 6 أشهر | حساب شخصي",
+      "sortRule": "source"
+    },
+    "كاب كات برو | 12 شهر | حساب شخصي": {
+      "section": "digital",
+      "group": "digital:capcut-12m-personal",
+      "title": "CapCut | 12 شهر | حساب شخصي",
       "sortRule": "source"
     },
     "rcell": {
@@ -3264,10 +4584,22 @@
       "title": "Payoneer",
       "sortRule": "source"
     },
+    "هيليلي شات - helili chat": {
+      "section": "appCredits",
+      "group": "app:هيليلي شات - helili chat",
+      "title": "هيليلي شات - Helili Chat\"",
+      "sortRule": "source"
+    },
     "هيليلي شات helili chat": {
       "section": "appCredits",
       "group": "app:هيليلي شات helili chat",
       "title": "هيليلي شات Helili Chat~",
+      "sortRule": "source"
+    },
+    "روفا - ruffa": {
+      "section": "appCredits",
+      "group": "app:روفا - ruffa",
+      "title": "روفا - Ruffa\"",
       "sortRule": "source"
     },
     "بشار شات bishar chat": {
@@ -3282,6 +4614,12 @@
       "title": "كراش لايف CRUSH LIVE •",
       "sortRule": "source"
     },
+    "جيمني | 18 شهر | رابط تفعيل": {
+      "section": "digital",
+      "group": "digital:gemini-18m",
+      "title": "Gemini | 18 شهر",
+      "sortRule": "source"
+    },
     "yaahlan chat 1": {
       "section": "appCredits",
       "group": "app:yaahlan chat 1",
@@ -3294,16 +4632,52 @@
       "title": "WAHO CHAT °",
       "sortRule": "source"
     },
+    "sugo": {
+      "section": "appCredits",
+      "group": "app:sugo",
+      "title": "SUGO °",
+      "sortRule": "source"
+    },
+    "soyo": {
+      "section": "appCredits",
+      "group": "app:soyo",
+      "title": "SOYO °",
+      "sortRule": "source"
+    },
     "bishar chat": {
       "section": "appCredits",
       "group": "app:bishar chat",
       "title": "BISHAR CHAT °",
       "sortRule": "source"
     },
+    "saada": {
+      "section": "appCredits",
+      "group": "app:saada",
+      "title": "SAADA °",
+      "sortRule": "source"
+    },
+    "majlis": {
+      "section": "appCredits",
+      "group": "app:majlis",
+      "title": "MAJLIS °",
+      "sortRule": "source"
+    },
+    "dana": {
+      "section": "appCredits",
+      "group": "app:dana",
+      "title": "DANA °",
+      "sortRule": "source"
+    },
     "kwai live": {
       "section": "appCredits",
       "group": "app:kwai live",
       "title": "KWAI LIVE °",
+      "sortRule": "source"
+    },
+    "higo chat": {
+      "section": "appCredits",
+      "group": "app:higo chat",
+      "title": "HIGO CHAT °",
       "sortRule": "source"
     },
     "yoho waka": {
@@ -3322,6 +4696,12 @@
       "section": "appCredits",
       "group": "app:lama chat",
       "title": "LAMA CHAT °",
+      "sortRule": "source"
+    },
+    "olamet": {
+      "section": "appCredits",
+      "group": "app:olamet",
+      "title": "OLAMET °",
       "sortRule": "source"
     },
     "gala star": {
@@ -3384,6 +4764,18 @@
       "title": "MAAN CHAT °",
       "sortRule": "source"
     },
+    "moli star": {
+      "section": "appCredits",
+      "group": "app:moli star",
+      "title": "MOLI STAR °",
+      "sortRule": "source"
+    },
+    "hamster": {
+      "section": "appCredits",
+      "group": "app:hamster",
+      "title": "HAMSTER °",
+      "sortRule": "source"
+    },
     "haya chat": {
       "section": "appCredits",
       "group": "app:haya chat",
@@ -3408,6 +4800,30 @@
       "title": "YIGO CHAT °",
       "sortRule": "source"
     },
+    "halla": {
+      "section": "appCredits",
+      "group": "app:halla",
+      "title": "HALLA °",
+      "sortRule": "source"
+    },
+    "lklk": {
+      "section": "appCredits",
+      "group": "app:lklk",
+      "title": "LKLK °",
+      "sortRule": "source"
+    },
+    "kiti": {
+      "section": "appCredits",
+      "group": "app:kiti",
+      "title": "KITI °",
+      "sortRule": "source"
+    },
+    "sahra": {
+      "section": "appCredits",
+      "group": "app:sahra",
+      "title": "SAHRA °",
+      "sortRule": "source"
+    },
     "ghanny live": {
       "section": "appCredits",
       "group": "app:ghanny live",
@@ -3418,6 +4834,12 @@
       "section": "appCredits",
       "group": "app:1star chat",
       "title": "1STAR CHAT °",
+      "sortRule": "source"
+    },
+    "kafu": {
+      "section": "appCredits",
+      "group": "app:kafu",
+      "title": "KAFU °",
       "sortRule": "source"
     },
     "yohoo star": {
@@ -3450,6 +4872,12 @@
       "title": "DITTO LIVE °",
       "sortRule": "source"
     },
+    "infun": {
+      "section": "appCredits",
+      "group": "app:infun",
+      "title": "INFUN °",
+      "sortRule": "source"
+    },
     "vilaa chat": {
       "section": "appCredits",
       "group": "app:vilaa chat",
@@ -3468,10 +4896,22 @@
       "title": "VOCA °",
       "sortRule": "source"
     },
+    "we chill": {
+      "section": "appCredits",
+      "group": "app:we chill",
+      "title": "WE CHILL °",
+      "sortRule": "source"
+    },
     "naddy star": {
       "section": "appCredits",
       "group": "app:naddy star",
       "title": "NADDY STAR °",
+      "sortRule": "source"
+    },
+    "zaar": {
+      "section": "appCredits",
+      "group": "app:zaar",
+      "title": "ZAAR °",
       "sortRule": "source"
     },
     "hopi star": {
@@ -3492,6 +4932,12 @@
       "title": "YOKI CHAT °",
       "sortRule": "source"
     },
+    "hapi عربي": {
+      "section": "appCredits",
+      "group": "app:hapi عربي",
+      "title": "HAPI عربي °",
+      "sortRule": "source"
+    },
     "dawa chat": {
       "section": "appCredits",
       "group": "app:dawa chat",
@@ -3502,6 +4948,12 @@
       "section": "appCredits",
       "group": "app:tayyb chat",
       "title": "TAYYB CHAT °",
+      "sortRule": "source"
+    },
+    "super meet": {
+      "section": "appCredits",
+      "group": "app:super meet",
+      "title": "SUPER MEET °",
       "sortRule": "source"
     },
     "yudo chat": {
@@ -3522,6 +4974,12 @@
       "title": "OHLA LIVE °",
       "sortRule": "source"
     },
+    "winko": {
+      "section": "appCredits",
+      "group": "app:winko",
+      "title": "WINKO °",
+      "sortRule": "source"
+    },
     "4chat": {
       "section": "appCredits",
       "group": "app:4chat",
@@ -3532,6 +4990,12 @@
       "section": "appCredits",
       "group": "app:shabab chat",
       "title": "SHABAB CHAT °",
+      "sortRule": "source"
+    },
+    "vone": {
+      "section": "appCredits",
+      "group": "app:vone",
+      "title": "VONE °",
       "sortRule": "source"
     },
     "chata": {
@@ -3546,10 +5010,34 @@
       "title": "NIU CHAT °",
       "sortRule": "source"
     },
+    "litme": {
+      "section": "appCredits",
+      "group": "app:litme",
+      "title": "LITME °",
+      "sortRule": "source"
+    },
     "masti chat": {
       "section": "appCredits",
       "group": "app:masti chat",
       "title": "MASTI CHAT °",
+      "sortRule": "source"
+    },
+    "oloo": {
+      "section": "appCredits",
+      "group": "app:oloo",
+      "title": "OLOO °",
+      "sortRule": "source"
+    },
+    "sillagcc": {
+      "section": "appCredits",
+      "group": "app:sillagcc",
+      "title": "SILLAGCC °",
+      "sortRule": "source"
+    },
+    "nivi": {
+      "section": "appCredits",
+      "group": "app:nivi",
+      "title": "NIVI °",
       "sortRule": "source"
     },
     "chati": {
@@ -3580,6 +5068,18 @@
       "section": "appCredits",
       "group": "app:yena chat",
       "title": "YENA CHAT °",
+      "sortRule": "source"
+    },
+    "nafass": {
+      "section": "appCredits",
+      "group": "app:nafass",
+      "title": "NAFASS °",
+      "sortRule": "source"
+    },
+    "wikoo": {
+      "section": "appCredits",
+      "group": "app:wikoo",
+      "title": "WIKOO °",
       "sortRule": "source"
     },
     "yula chat": {
@@ -3630,6 +5130,12 @@
       "title": "SOHHA LIVE °",
       "sortRule": "source"
     },
+    "hayi": {
+      "section": "appCredits",
+      "group": "app:hayi",
+      "title": "HAYI °",
+      "sortRule": "source"
+    },
     "hi chat": {
       "section": "appCredits",
       "group": "app:hi chat",
@@ -3642,16 +5148,76 @@
       "title": "SHAGHAF CHAT °",
       "sortRule": "source"
     },
+    "funni": {
+      "section": "appCredits",
+      "group": "app:funni",
+      "title": "FUNNI °",
+      "sortRule": "source"
+    },
+    "yomee": {
+      "section": "appCredits",
+      "group": "app:yomee",
+      "title": "YOMEE °",
+      "sortRule": "source"
+    },
+    "toki voice": {
+      "section": "appCredits",
+      "group": "app:toki voice",
+      "title": "TOKI VOICE °",
+      "sortRule": "source"
+    },
+    "limmatna": {
+      "section": "appCredits",
+      "group": "app:limmatna",
+      "title": "LIMMATNA °",
+      "sortRule": "source"
+    },
+    "yumi": {
+      "section": "appCredits",
+      "group": "app:yumi",
+      "title": "YUMI °",
+      "sortRule": "source"
+    },
+    "lemi": {
+      "section": "appCredits",
+      "group": "app:lemi",
+      "title": "LEMI °",
+      "sortRule": "source"
+    },
+    "chamoji": {
+      "section": "appCredits",
+      "group": "app:chamoji",
+      "title": "CHAMOJI °",
+      "sortRule": "source"
+    },
     "laika chat": {
       "section": "appCredits",
       "group": "app:laika chat",
       "title": "LAIKA CHAT °",
       "sortRule": "source"
     },
+    "sami": {
+      "section": "appCredits",
+      "group": "app:sami",
+      "title": "SAMI °",
+      "sortRule": "source"
+    },
+    "gofun": {
+      "section": "appCredits",
+      "group": "app:gofun",
+      "title": "GOFUN °",
+      "sortRule": "source"
+    },
     "nice chat": {
       "section": "appCredits",
       "group": "app:nice chat",
       "title": "NICE CHAT °",
+      "sortRule": "source"
+    },
+    "guguk": {
+      "section": "appCredits",
+      "group": "app:guguk",
+      "title": "GUGUK °",
       "sortRule": "source"
     },
     "bota chat": {
@@ -3672,16 +5238,64 @@
       "title": "HELILI CHAT °",
       "sortRule": "source"
     },
+    "nita": {
+      "section": "appCredits",
+      "group": "app:nita",
+      "title": "NITA °",
+      "sortRule": "source"
+    },
+    "hilla": {
+      "section": "appCredits",
+      "group": "app:hilla",
+      "title": "HILLA °",
+      "sortRule": "source"
+    },
     "we party": {
       "section": "appCredits",
       "group": "app:we party",
       "title": "WE PARTY °",
       "sortRule": "source"
     },
+    "ruffa": {
+      "section": "appCredits",
+      "group": "app:ruffa",
+      "title": "RUFFA °",
+      "sortRule": "source"
+    },
+    "سوها sohha": {
+      "section": "appCredits",
+      "group": "app:سوها sohha",
+      "title": "سوها Sohha ~",
+      "sortRule": "source"
+    },
+    "روفا ruffa": {
+      "section": "appCredits",
+      "group": "app:روفا ruffa",
+      "title": "روفا Ruffa ~",
+      "sortRule": "source"
+    },
     "hoki chat": {
       "section": "appCredits",
       "group": "app:hoki chat",
       "title": "HOKI CHAT ~",
+      "sortRule": "source"
+    },
+    "bota grren": {
+      "section": "appCredits",
+      "group": "app:bota grren",
+      "title": "BOTA GRREN ~",
+      "sortRule": "source"
+    },
+    "نجوم تلغرام": {
+      "section": "appCredits",
+      "group": "app:telegram stars",
+      "title": "Telegram Stars",
+      "sortRule": "source"
+    },
+    "فيزا قابلة للشحن": {
+      "section": "giftCards",
+      "group": "digital-cards:visa-recharge",
+      "title": "فيزا قابلة للشحن",
       "sortRule": "source"
     },
     "شاهد | 1 شهر | مشترك": {
@@ -3732,10 +5346,28 @@
       "title": "شاهد",
       "sortRule": "source"
     },
+    "سانا لايف - sana live": {
+      "section": "appCredits",
+      "group": "app:سانا لايف - sana live",
+      "title": "سانا لايف - Sana Live \"",
+      "sortRule": "source"
+    },
+    "tayyb": {
+      "section": "appCredits",
+      "group": "app:tayyb",
+      "title": "TAYYB",
+      "sortRule": "source"
+    },
     "يابي شات - yabi chat": {
       "section": "appCredits",
       "group": "app:يابي شات - yabi chat",
       "title": "يابي شات - Yabi Chat \"",
+      "sortRule": "source"
+    },
+    "اولفا - ulfaa": {
+      "section": "appCredits",
+      "group": "app:اولفا - ulfaa",
+      "title": "اولفا - Ulfaa \"",
       "sortRule": "source"
     },
     "تامي شات - tami chat": {
@@ -3780,6 +5412,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "CHAMET"
     },
+    "1431": {
+      "section": "appCredits",
+      "group": "app:waho",
+      "title": "WAHO",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "WAHO"
+    },
     "1432": {
       "section": "appCredits",
       "group": "app:waki star",
@@ -3821,6 +5460,20 @@
       "title": "COCCO LIVE",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "COCCO LIVE"
+    },
+    "1438": {
+      "section": "appCredits",
+      "group": "app:talk talk",
+      "title": "TALK TALK",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TALK TALK"
+    },
+    "1439": {
+      "section": "appCredits",
+      "group": "app:so match",
+      "title": "SO MATCH",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SO MATCH"
     },
     "1440": {
       "section": "appCredits",
@@ -4221,6 +5874,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "YOHO"
     },
+    "1522": {
+      "section": "appCredits",
+      "group": "app:amar",
+      "title": "AMAR",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "AMAR"
+    },
     "1523": {
       "section": "appCredits",
       "group": "app:soul star",
@@ -4234,6 +5894,20 @@
       "title": "OOHLA CHAT",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "OOHLA CHAT"
+    },
+    "1525": {
+      "section": "appCredits",
+      "group": "app:yoki",
+      "title": "YOKI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YOKI"
+    },
+    "1526": {
+      "section": "appCredits",
+      "group": "app:honey jar",
+      "title": "HONEY JAR",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HONEY JAR"
     },
     "1527": {
       "section": "appCredits",
@@ -4256,6 +5930,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "COCCO LIVE"
     },
+    "1530": {
+      "section": "appCredits",
+      "group": "app:talk talk",
+      "title": "TALK TALK",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TALK TALK"
+    },
+    "1531": {
+      "section": "appCredits",
+      "group": "app:so match",
+      "title": "SO MATCH",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SO MATCH"
+    },
     "1532": {
       "section": "appCredits",
       "group": "app:party star",
@@ -4277,6 +5965,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "YOOY CHAT"
     },
+    "1535": {
+      "section": "appCredits",
+      "group": "app:waho",
+      "title": "WAHO",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "WAHO"
+    },
     "1536": {
       "section": "appCredits",
       "group": "app:waki star",
@@ -4290,6 +5985,13 @@
       "title": "Yami Star",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Yami Star"
+    },
+    "1539": {
+      "section": "appCredits",
+      "group": "app:yena",
+      "title": "YENA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YENA"
     },
     "1540": {
       "section": "appCredits",
@@ -4311,6 +6013,13 @@
       "title": "LAMI CHAT",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LAMI CHAT"
+    },
+    "1543": {
+      "section": "appCredits",
+      "group": "app:lama",
+      "title": "LAMA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LAMA"
     },
     "1544": {
       "section": "appCredits",
@@ -4347,6 +6056,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Wasla Chat"
     },
+    "1549": {
+      "section": "appCredits",
+      "group": "app:layam",
+      "title": "LAYAM",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LAYAM"
+    },
     "1550": {
       "section": "appCredits",
       "group": "app:bobo chat",
@@ -4354,12 +6070,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "BOBO CHAT"
     },
+    "1551": {
+      "section": "appCredits",
+      "group": "app:hala me",
+      "title": "Hala Me",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Hala Me"
+    },
     "1552": {
       "section": "appCredits",
       "group": "app:hi party",
       "title": "HI PARTY",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HI PARTY"
+    },
+    "1553": {
+      "section": "appCredits",
+      "group": "app:top top",
+      "title": "TOP TOP",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TOP TOP"
+    },
+    "1554": {
+      "section": "appCredits",
+      "group": "app:mr7ba",
+      "title": "MR7BA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MR7BA"
     },
     "1555": {
       "section": "appCredits",
@@ -4375,6 +6112,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "WeGo Party"
     },
+    "1560": {
+      "section": "appCredits",
+      "group": "app:mazyoun zina",
+      "title": "Mazyoun Zina",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Mazyoun Zina"
+    },
     "1561": {
       "section": "appCredits",
       "group": "app:gold chat",
@@ -4382,12 +6126,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Gold Chat"
     },
+    "1562": {
+      "section": "appCredits",
+      "group": "app:top voice",
+      "title": "TOP VOICE",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TOP VOICE"
+    },
     "1563": {
       "section": "appCredits",
       "group": "app:pawa live",
       "title": "PAWA LIVE",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "PAWA LIVE"
+    },
+    "1564": {
+      "section": "appCredits",
+      "group": "app:sawalfna",
+      "title": "Sawalfna",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Sawalfna"
     },
     "1565": {
       "section": "appCredits",
@@ -4410,12 +6168,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ROSTAR"
     },
+    "1568": {
+      "section": "appCredits",
+      "group": "app:aria",
+      "title": "Aria",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Aria"
+    },
     "1569": {
       "section": "appCredits",
       "group": "app:ayome chat",
       "title": "AYOME CHAT",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "AYOME CHAT"
+    },
+    "1578": {
+      "section": "appCredits",
+      "group": "app:maza",
+      "title": "MAZA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MAZA"
+    },
+    "1579": {
+      "section": "appCredits",
+      "group": "app:leeski",
+      "title": "LEESKI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LEESKI"
     },
     "1580": {
       "section": "appCredits",
@@ -4431,12 +6210,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Star Maker"
     },
+    "1582": {
+      "section": "appCredits",
+      "group": "app:yudo fun",
+      "title": "YUDO FUN",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YUDO FUN"
+    },
     "1583": {
       "section": "appCredits",
       "group": "app:4party chat",
       "title": "4PARTY CHAT",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "4PARTY CHAT"
+    },
+    "1584": {
+      "section": "appCredits",
+      "group": "app:hayuki",
+      "title": "hayuki",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "hayuki"
+    },
+    "1585": {
+      "section": "appCredits",
+      "group": "app:yoparti",
+      "title": "YOPARTI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YOPARTI"
     },
     "1586": {
       "section": "appCredits",
@@ -4452,6 +6252,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Party Hero"
     },
+    "1590": {
+      "section": "appCredits",
+      "group": "app:vilaa",
+      "title": "VILAA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "VILAA"
+    },
     "1591": {
       "section": "appCredits",
       "group": "app:halla live",
@@ -4466,12 +6273,40 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "PK STAR"
     },
+    "1593": {
+      "section": "appCredits",
+      "group": "app:hago",
+      "title": "HAGO",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAGO"
+    },
+    "1594": {
+      "section": "appCredits",
+      "group": "app:hati",
+      "title": "HATI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HATI"
+    },
     "1595": {
       "section": "appCredits",
       "group": "app:halo star",
       "title": "HALO STAR",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HALO STAR"
+    },
+    "1596": {
+      "section": "appCredits",
+      "group": "app:joyo",
+      "title": "JOYO",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "JOYO"
+    },
+    "1597": {
+      "section": "appCredits",
+      "group": "app:boli",
+      "title": "BOLI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "BOLI"
     },
     "1599": {
       "section": "appCredits",
@@ -4487,6 +6322,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LOTFUN CHAT"
     },
+    "1601": {
+      "section": "appCredits",
+      "group": "app:fun up",
+      "title": "FUN UP",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "FUN UP"
+    },
     "1603": {
       "section": "appCredits",
       "group": "app:wadi chat",
@@ -4500,6 +6342,20 @@
       "title": "VOSTAR",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "VOSTAR"
+    },
+    "1605": {
+      "section": "appCredits",
+      "group": "app:hoki",
+      "title": "Hoki",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Hoki"
+    },
+    "1606": {
+      "section": "appCredits",
+      "group": "app:our talk",
+      "title": "OUR TALK",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "OUR TALK"
     },
     "1607": {
       "section": "appCredits",
@@ -4550,12 +6406,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SIYA CHAT"
     },
+    "1617": {
+      "section": "appCredits",
+      "group": "app:sahi",
+      "title": "SAHI",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SAHI"
+    },
     "1618": {
       "section": "appCredits",
       "group": "app:laka chat",
       "title": "LAKA CHAT",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LAKA CHAT"
+    },
+    "1619": {
+      "section": "appCredits",
+      "group": "app:ume",
+      "title": "UME",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "UME"
     },
     "1620": {
       "section": "appCredits",
@@ -4683,6 +6553,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Zaffa Live"
     },
+    "1707": {
+      "section": "appCredits",
+      "group": "app:supermeet",
+      "title": "Supermeet",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Supermeet"
+    },
     "1714": {
       "section": "appCredits",
       "group": "app:karak chat",
@@ -4718,12 +6595,61 @@
       "title": "PIA VPN",
       "expectedCategoryName": "PIA VPN - 3 أشهر"
     },
+    "2272": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "reason": "اشتراك YouTube Premium",
+      "expectedCategoryName": "يوتيوب مميز - 1 شهر"
+    },
+    "2273": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "reason": "اشتراك YouTube Premium",
+      "expectedCategoryName": "يوتيوب مميز - 3 أشهر"
+    },
+    "2274": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "reason": "اشتراك YouTube Premium",
+      "expectedCategoryName": "يوتيوب مميز - 6 أشهر"
+    },
+    "2275": {
+      "section": "digital",
+      "group": "digital:youtube-premium",
+      "title": "YouTube Premium",
+      "reason": "اشتراك YouTube Premium",
+      "expectedCategoryName": "يوتيوب مميز - 12 شهر"
+    },
+    "2293": {
+      "section": "appCredits",
+      "group": "app:mikoo",
+      "title": "MIKOO",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MIKOO"
+    },
+    "2303": {
+      "section": "appCredits",
+      "group": "app:up fun",
+      "title": "UP FUN",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "UP FUN"
+    },
     "2334": {
       "section": "appCredits",
       "group": "app:ti live",
       "title": "TI LIVE",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "TI LIVE"
+    },
+    "2338": {
+      "section": "games",
+      "group": "games:jawaker-counter-s2",
+      "title": "عداد جواكر S2",
+      "reason": "عداد جواكر بمعرف اللاعب",
+      "expectedCategoryName": "عداد جواكر S2"
     },
     "2375": {
       "section": "appCredits",
@@ -4732,12 +6658,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فور بارتي 4PARTYR ~"
     },
+    "2376": {
+      "section": "appCredits",
+      "group": "app:هوني جار honey jar",
+      "title": "هوني جار Honey Jar ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هوني جار Honey Jar ~"
+    },
     "2377": {
       "section": "appCredits",
       "group": "app:نيو شات niuchat r",
       "title": "نيو شات NiuChat R ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "نيو شات NiuChat R ~"
+    },
+    "2378": {
+      "section": "appCredits",
+      "group": "app:فيلا vilaa",
+      "title": "فيلا VILAA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فيلا VILAA ~"
     },
     "2379": {
       "section": "appCredits",
@@ -4752,6 +6692,13 @@
       "title": "واهو شات WAHO CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "واهو شات WAHO CHAT ~"
+    },
+    "2381": {
+      "section": "appCredits",
+      "group": "app:نحكي nahki",
+      "title": "نحكي NAHKI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نحكي NAHKI ~"
     },
     "2382": {
       "section": "appCredits",
@@ -4787,6 +6734,13 @@
       "title": "سوشال كريستال SOUL CHILL CRYSTAL ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سوشال كريستال SOUL CHILL CRYSTAL ~"
+    },
+    "2388": {
+      "section": "appCredits",
+      "group": "app:لوتفونlotfun",
+      "title": "لوتفونLOTFUN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لوتفونLOTFUN ~"
     },
     "2389": {
       "section": "appCredits",
@@ -4858,6 +6812,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يويو شات YOYO CHAT ~"
     },
+    "2400": {
+      "section": "appCredits",
+      "group": "app:يوسو yoso",
+      "title": "يوسو Yoso ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يوسو Yoso ~"
+    },
     "2401": {
       "section": "appCredits",
       "group": "app:فورفون شات 4fun chat",
@@ -4928,6 +6889,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فانسي لايف FANCY LIVE ~"
     },
+    "2411": {
+      "section": "appCredits",
+      "group": "app:تالك تالك talk talk",
+      "title": "تالك تالك TALK TALK ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "تالك تالك TALK TALK ~"
+    },
+    "2412": {
+      "section": "appCredits",
+      "group": "app:روح rooh",
+      "title": "روح ROOH ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روح ROOH ~"
+    },
     "2413": {
       "section": "appCredits",
       "group": "app:هابي شات habby chat",
@@ -4941,6 +6916,13 @@
       "title": "اوهلا شات OOHLA CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "اوهلا شات OOHLA CHAT ~"
+    },
+    "2415": {
+      "section": "appCredits",
+      "group": "app:كيو لايف kiyo",
+      "title": "كيو لايف KIYO  ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كيو لايف KIYO  ~"
     },
     "2417": {
       "section": "appCredits",
@@ -4984,6 +6966,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سكي شات SKY CHAT ~"
     },
+    "2423": {
+      "section": "appCredits",
+      "group": "app:اولوميت olamet",
+      "title": "اولوميت OLAMET ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اولوميت OLAMET ~"
+    },
     "2424": {
       "section": "appCredits",
       "group": "app:كواي لايف kwai live",
@@ -4991,12 +6980,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "كواي لايف KWAI LIVE ~"
     },
+    "2425": {
+      "section": "appCredits",
+      "group": "app:هامستر hamster",
+      "title": "هامستر HAMSTER ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هامستر HAMSTER ~"
+    },
     "2426": {
       "section": "appCredits",
       "group": "app:بينمو شات binmo chat",
       "title": "بينمو شات Binmo Chat ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "بينمو شات Binmo Chat ~"
+    },
+    "2428": {
+      "section": "appCredits",
+      "group": "app:سويو soyo",
+      "title": "سويو SOYO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سويو SOYO ~"
+    },
+    "2429": {
+      "section": "appCredits",
+      "group": "app:سوجو sugo",
+      "title": "سوجو SUGO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوجو SUGO ~"
     },
     "2430": {
       "section": "appCredits",
@@ -5018,6 +7028,13 @@
       "title": "ميجو لايف MIGO LIVE ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ميجو لايف MIGO LIVE ~"
+    },
+    "2433": {
+      "section": "appCredits",
+      "group": "app:ايومي ayome",
+      "title": "ايومي Ayome ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ايومي Ayome ~"
     },
     "2434": {
       "section": "appCredits",
@@ -5061,6 +7078,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يوبي شات YOBI CHAT ~"
     },
+    "2440": {
+      "section": "appCredits",
+      "group": "app:توب فيسو top voice",
+      "title": "توب فيسو TOP VOICE ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "توب فيسو TOP VOICE ~"
+    },
     "2442": {
       "section": "appCredits",
       "group": "app:توب توب شات top top chat",
@@ -5088,6 +7112,20 @@
       "title": "سوالفنا شات SAWALFNA CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سوالفنا شات SAWALFNA CHAT ~"
+    },
+    "2446": {
+      "section": "appCredits",
+      "group": "app:ولووoloo",
+      "title": "ولووOLOO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ولووOLOO ~"
+    },
+    "2447": {
+      "section": "appCredits",
+      "group": "app:هوب hoob",
+      "title": "هوب HOOB ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هوب HOOB ~"
     },
     "2448": {
       "section": "appCredits",
@@ -5131,6 +7169,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "تادا شات Tada Chat ~"
     },
+    "2454": {
+      "section": "appCredits",
+      "group": "app:ويجوwego",
+      "title": "ويجوWEGO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ويجوWEGO ~"
+    },
     "2455": {
       "section": "appCredits",
       "group": "app:غلا ستار gala star",
@@ -5166,12 +7211,47 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "شاميت CHAMET ~"
     },
+    "2460": {
+      "section": "appCredits",
+      "group": "app:سوماتش somatch",
+      "title": "سوماتش SOMATCH ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوماتش SOMATCH ~"
+    },
+    "2461": {
+      "section": "appCredits",
+      "group": "app:عمار amar",
+      "title": "عمار AMAR ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "عمار AMAR ~"
+    },
+    "2462": {
+      "section": "appCredits",
+      "group": "app:هالا ميhala me",
+      "title": "هالا ميHALA ME ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هالا ميHALA ME ~"
+    },
+    "2463": {
+      "section": "appCredits",
+      "group": "app:لايام layam",
+      "title": "لايام LAYAM ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لايام LAYAM ~"
+    },
     "2464": {
       "section": "appCredits",
       "group": "app:مجلس شات majlis chat",
       "title": "مجلس شات MAJLIS CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "مجلس شات MAJLIS CHAT ~"
+    },
+    "2465": {
+      "section": "appCredits",
+      "group": "app:امو amo",
+      "title": "امو AMO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "امو AMO ~"
     },
     "2466": {
       "section": "appCredits",
@@ -5207,6 +7287,13 @@
       "title": "رو ستار RoStar ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "رو ستار RoStar ~"
+    },
+    "2472": {
+      "section": "appCredits",
+      "group": "app:وسلا wasla",
+      "title": "وسلا WASLA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وسلا WASLA ~"
     },
     "2473": {
       "section": "appCredits",
@@ -5250,12 +7337,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سايا لايكي SAYA LIKEE ~"
     },
+    "2479": {
+      "section": "appCredits",
+      "group": "app:يودو فون yudo fun",
+      "title": "يودو فون YUDO FUN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يودو فون YUDO FUN ~"
+    },
+    "2480": {
+      "section": "appCredits",
+      "group": "app:اب فون up fun",
+      "title": "اب فون UP FUN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اب فون UP FUN ~"
+    },
     "2481": {
       "section": "appCredits",
       "group": "app:ناوا شاتnawa chat",
       "title": "ناوا شاتNAWA CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ناوا شاتNAWA CHAT ~"
+    },
+    "2482": {
+      "section": "appCredits",
+      "group": "app:مازا maza",
+      "title": "مازا Maza ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "مازا Maza ~"
     },
     "2483": {
       "section": "appCredits",
@@ -5270,6 +7378,27 @@
       "title": "بوتا لايف PotaLive ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "بوتا لايف PotaLive ~"
+    },
+    "2485": {
+      "section": "appCredits",
+      "group": "app:يو بارتي yoparti",
+      "title": "يو بارتي YOPARTI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يو بارتي YOPARTI ~"
+    },
+    "2486": {
+      "section": "appCredits",
+      "group": "app:كيتي kiti",
+      "title": "كيتي KITI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كيتي KITI ~"
+    },
+    "2487": {
+      "section": "appCredits",
+      "group": "app:ينفون infun",
+      "title": "ينفون INFUN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ينفون INFUN ~"
     },
     "2488": {
       "section": "appCredits",
@@ -5292,6 +7421,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "واو شات WAAW CHAT ~"
     },
+    "2491": {
+      "section": "appCredits",
+      "group": "app:جاكو jaco",
+      "title": "جاكو JACO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "جاكو JACO ~"
+    },
+    "2492": {
+      "section": "appCredits",
+      "group": "app:بولي boli",
+      "title": "بولي BOLI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بولي BOLI ~"
+    },
     "2493": {
       "section": "appCredits",
       "group": "app:هالو ستار halo star",
@@ -5313,12 +7456,110 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فوكا VOCA ~"
     },
+    "2497": {
+      "section": "appCredits",
+      "group": "app:carni",
+      "title": "CARNI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "CARNI ~"
+    },
+    "2498": {
+      "section": "appCredits",
+      "group": "app:ghanny",
+      "title": "GHANNY ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "GHANNY ~"
+    },
+    "2499": {
+      "section": "appCredits",
+      "group": "app:صدا saada",
+      "title": "صدا SAADA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "صدا SAADA ~"
+    },
+    "2500": {
+      "section": "appCredits",
+      "group": "app:هاتي hati",
+      "title": "هاتي HATI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاتي HATI ~"
+    },
     "2502": {
       "section": "appCredits",
       "group": "app:يوهو ستار yohoo star",
       "title": "يوهو ستار YOHOO STAR ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يوهو ستار YOHOO STAR ~"
+    },
+    "2503": {
+      "section": "appCredits",
+      "group": "app:ليسكي leesky",
+      "title": "ليسكي LEESKY ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ليسكي LEESKY ~"
+    },
+    "2505": {
+      "section": "appCredits",
+      "group": "app:ساهره sahra",
+      "title": "ساهره SAHRA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ساهره SAHRA ~"
+    },
+    "2506": {
+      "section": "appCredits",
+      "group": "app:بوكيت pocket",
+      "title": "بوكيت POCKET ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بوكيت POCKET ~"
+    },
+    "2507": {
+      "section": "appCredits",
+      "group": "app:مزيون mazyoun",
+      "title": "مزيون MAZYOUN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "مزيون MAZYOUN ~"
+    },
+    "2508": {
+      "section": "appCredits",
+      "group": "app:هايوكي hayuki",
+      "title": "هايوكي HAYUKI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هايوكي HAYUKI ~"
+    },
+    "2509": {
+      "section": "appCredits",
+      "group": "app:جاميت gamet",
+      "title": "جاميت GAMET ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "جاميت GAMET ~"
+    },
+    "2510": {
+      "section": "appCredits",
+      "group": "app:هالا halla",
+      "title": "هالا HALLA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هالا HALLA ~"
+    },
+    "2511": {
+      "section": "appCredits",
+      "group": "app:لك لك lklk",
+      "title": "لك لك LKLK ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لك لك LKLK ~"
+    },
+    "2512": {
+      "section": "appCredits",
+      "group": "app:هاجو hago",
+      "title": "هاجو HAGO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاجو HAGO ~"
+    },
+    "2514": {
+      "section": "appCredits",
+      "group": "app:كيسميت kessmet",
+      "title": "كيسميت KESSMET ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كيسميت KESSMET ~"
     },
     "2516": {
       "section": "appCredits",
@@ -5348,6 +7589,27 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "مرحبا شات MR7BA CHAT ~"
     },
+    "2520": {
+      "section": "appCredits",
+      "group": "app:فون اب fun up",
+      "title": "فون اب FUN UP ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فون اب FUN UP ~"
+    },
+    "2521": {
+      "section": "appCredits",
+      "group": "app:طيب tayyb",
+      "title": "طيب TAYYB ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "طيب TAYYB ~"
+    },
+    "2522": {
+      "section": "appCredits",
+      "group": "app:ويل شيل will chill",
+      "title": "ويل شيل WILL CHILL ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ويل شيل WILL CHILL ~"
+    },
     "2523": {
       "section": "appCredits",
       "group": "app:شيل شات chill chat",
@@ -5362,12 +7624,54 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "كراك شات KARAK CHAT ~"
     },
+    "2525": {
+      "section": "appCredits",
+      "group": "app:ساهيsahi",
+      "title": "ساهيSAHI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ساهيSAHI ~"
+    },
+    "2526": {
+      "section": "appCredits",
+      "group": "app:سوبر ميت super meet",
+      "title": "سوبر ميت SUPER MEET ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوبر ميت SUPER MEET ~"
+    },
+    "2527": {
+      "section": "appCredits",
+      "group": "app:هابي عربي hapi arabi",
+      "title": "هابي عربي HAPI ARABI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هابي عربي HAPI ARABI ~"
+    },
+    "2528": {
+      "section": "appCredits",
+      "group": "app:اور تالك our talk",
+      "title": "اور تالك OUR TALK ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اور تالك OUR TALK ~"
+    },
+    "2529": {
+      "section": "appCredits",
+      "group": "app:يودو yudo",
+      "title": "يودو YUDO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يودو YUDO ~"
+    },
     "2530": {
       "section": "appCredits",
       "group": "app:وادي شات wadi chat",
       "title": "وادي شات WADI CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "وادي شات WADI CHAT ~"
+    },
+    "2531": {
+      "section": "appCredits",
+      "group": "app:هارت hart",
+      "title": "هارت HART ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هارت HART ~"
     },
     "2532": {
       "section": "appCredits",
@@ -5404,6 +7708,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "دوا لايف DAWA LIVE ~"
     },
+    "2537": {
+      "section": "appCredits",
+      "group": "app:ويكوو wikoo",
+      "title": "ويكوو  WIKOO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ويكوو  WIKOO ~"
+    },
     "2538": {
       "section": "appCredits",
       "group": "app:يازا شات yaza chat",
@@ -5417,6 +7728,13 @@
       "title": "يوكي شات YOKI CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يوكي شات YOKI CHAT ~"
+    },
+    "2540": {
+      "section": "appCredits",
+      "group": "app:اومي ume",
+      "title": "اومي UME ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اومي UME ~"
     },
     "2541": {
       "section": "appCredits",
@@ -5439,6 +7757,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سايا شات SIYA CHAT ~"
     },
+    "2544": {
+      "section": "appCredits",
+      "group": "app:زار zaar",
+      "title": "زار ZAAR ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "زار ZAAR ~"
+    },
+    "2545": {
+      "section": "appCredits",
+      "group": "app:yo2",
+      "title": "YO2 ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YO2 ~"
+    },
     "2546": {
       "section": "appCredits",
       "group": "app:فور شات 4chat",
@@ -5446,12 +7778,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فور شات 4CHAT ~"
     },
+    "2547": {
+      "section": "appCredits",
+      "group": "app:طموحي tomohi",
+      "title": "طموحي TOMOHI ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "طموحي TOMOHI ~"
+    },
     "2548": {
       "section": "appCredits",
       "group": "app:نادي ستار naddy star",
       "title": "نادي ستار NADDY STAR ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "نادي ستار NADDY STAR ~"
+    },
+    "2549": {
+      "section": "appCredits",
+      "group": "app:فوني vone",
+      "title": "فوني VONE ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فوني VONE ~"
     },
     "2550": {
       "section": "appCredits",
@@ -5467,6 +7813,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يوي شات  YOOY CHAT ~"
     },
+    "2552": {
+      "section": "appCredits",
+      "group": "app:ليتمي litme",
+      "title": "ليتمي Litme ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ليتمي Litme ~"
+    },
     "2553": {
       "section": "appCredits",
       "group": "app:مومو لايف momo live",
@@ -5474,12 +7827,40 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "مومو لايف MOMO LIVE ~"
     },
+    "2554": {
+      "section": "appCredits",
+      "group": "app:وي شيل we chill",
+      "title": "وي شيل WE CHILL ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وي شيل WE CHILL ~"
+    },
+    "2555": {
+      "section": "appCredits",
+      "group": "app:نيتا nita",
+      "title": "نيتا NITA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نيتا NITA ~"
+    },
     "2557": {
       "section": "appCredits",
       "group": "app:شغف شات shaghaf chat",
       "title": "شغف شات SHAGHAF CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "شغف شات SHAGHAF CHAT ~"
+    },
+    "2558": {
+      "section": "appCredits",
+      "group": "app:نفس nafass",
+      "title": "نفس NAFASS ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نفس NAFASS ~"
+    },
+    "2559": {
+      "section": "appCredits",
+      "group": "app:ميكوو mikoo",
+      "title": "ميكوو MIKOO ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ميكوو MIKOO ~"
     },
     "2560": {
       "section": "appCredits",
@@ -5495,6 +7876,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "نيس شات Nice chat ~"
     },
+    "2563": {
+      "section": "appCredits",
+      "group": "app:بولالا bulala",
+      "title": "بولالا Bulala ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بولالا Bulala ~"
+    },
+    "2564": {
+      "section": "appCredits",
+      "group": "app:تايا taya",
+      "title": "تايا TAYA ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "تايا TAYA ~"
+    },
     "2565": {
       "section": "appCredits",
       "group": "app:يومي شات yumi chat",
@@ -5509,6 +7904,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "اميسو بارتي Amisu Party ~"
     },
+    "2567": {
+      "section": "appCredits",
+      "group": "app:جوفون gofun",
+      "title": "جوفون Gofun ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "جوفون Gofun ~"
+    },
     "2568": {
       "section": "appCredits",
       "group": "app:فولي ستار volistar",
@@ -5522,6 +7924,13 @@
       "title": "يانا شات Yena chat ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يانا شات Yena chat ~"
+    },
+    "2574": {
+      "section": "games",
+      "group": "games:jawaker-counter-s1",
+      "title": "عداد جواكر S1",
+      "reason": "عداد جواكر بمعرف اللاعب",
+      "expectedCategoryName": "عداد جواكر ~s1"
     },
     "2961": {
       "section": "appCredits",
@@ -5543,6 +7952,20 @@
       "title": "سول شيل - Soul Chill \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سول شيل - Soul Chill \""
+    },
+    "2971": {
+      "section": "appCredits",
+      "group": "app:هوني جار - honey jar",
+      "title": "هوني جار - Honey Jar \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هوني جار - Honey Jar \""
+    },
+    "2973": {
+      "section": "appCredits",
+      "group": "app:زينا لايف - xena live",
+      "title": "زينا لايف - Xena Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "زينا لايف - Xena Live \""
     },
     "2974": {
       "section": "appCredits",
@@ -5572,6 +7995,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "عمار شات - Amar Chat \""
     },
+    "2979": {
+      "section": "appCredits",
+      "group": "app:كوكو لايف - cocco live",
+      "title": "كوكو لايف - Cocco Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كوكو لايف - Cocco Live \""
+    },
     "2980": {
       "section": "appCredits",
       "group": "app:بوتا لايف - pota live",
@@ -5592,6 +8022,20 @@
       "title": "سايا لايكي - Saya Likee \"",
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer",
       "expectedCategoryName": "سايا لايكي - Saya Likee \""
+    },
+    "2984": {
+      "section": "appCredits",
+      "group": "app:فور فان - 4fun",
+      "title": "فور فان - 4Fun \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فور فان - 4Fun \""
+    },
+    "2986": {
+      "section": "appCredits",
+      "group": "app:تادا شات - tada chat",
+      "title": "تادا شات - Tada Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "تادا شات - Tada Chat \""
     },
     "2988": {
       "section": "appCredits",
@@ -5614,12 +8058,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "لاما شات - Lama Chat \""
     },
+    "2991": {
+      "section": "appCredits",
+      "group": "app:سو ماتش - so match",
+      "title": "سو ماتش - So Match \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سو ماتش - So Match \""
+    },
     "2992": {
       "section": "appCredits",
       "group": "app:ميجو لايف - migo live",
       "title": "ميجو لايف - Migo Live \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ميجو لايف - Migo Live \""
+    },
+    "2993": {
+      "section": "appCredits",
+      "group": "app:نيفي - nivi",
+      "title": "نيفي - Nivi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نيفي - Nivi \""
+    },
+    "2994": {
+      "section": "appCredits",
+      "group": "app:هيا شات - hiya chat",
+      "title": "هيا شات - Hiya Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هيا شات - Hiya Chat \""
     },
     "2996": {
       "section": "appCredits",
@@ -5642,12 +8107,26 @@
       "reason": "رصيد/عملة تطبيق محدد من بيانات Nemer",
       "expectedCategoryName": "تانغو لايف - Tango Live \""
     },
+    "3007": {
+      "section": "appCredits",
+      "group": "app:روكا لايف - roka live",
+      "title": "روكا لايف - Roka Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روكا لايف - Roka Live \""
+    },
     "3008": {
       "section": "appCredits",
       "group": "app:سلام شات - salam chat",
       "title": "سلام شات - Salam Chat \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سلام شات - Salam Chat \""
+    },
+    "3009": {
+      "section": "appCredits",
+      "group": "app:بينمو شات - binmo chat",
+      "title": "بينمو شات - Binmo Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بينمو شات - Binmo Chat \""
     },
     "3011": {
       "section": "appCredits",
@@ -5663,12 +8142,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فانسي لايف - Fancy Live \""
     },
+    "3013": {
+      "section": "appCredits",
+      "group": "app:تالك تالك - talk talk",
+      "title": "تالك تالك - Talk Talk \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "تالك تالك - Talk Talk \""
+    },
+    "3014": {
+      "section": "appCredits",
+      "group": "app:ويجو - wego",
+      "title": "ويجو - Wego \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ويجو - Wego \""
+    },
     "3015": {
       "section": "appCredits",
       "group": "app:سوبر لايف - super live",
       "title": "سوبر لايف - Super Live \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سوبر لايف - Super Live \""
+    },
+    "3016": {
+      "section": "appCredits",
+      "group": "app:هابيhabbe",
+      "title": "هابيHABBE \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هابيHABBE \""
     },
     "3017": {
       "section": "appCredits",
@@ -5782,6 +8282,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "هاي بلاي شات - Hi Play Chat \""
     },
+    "3048": {
+      "section": "appCredits",
+      "group": "app:امو - amo",
+      "title": "امو - Amo \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "امو - Amo \""
+    },
+    "3049": {
+      "section": "appCredits",
+      "group": "app:لاما - layam",
+      "title": "لاما - Layam \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لاما - Layam \""
+    },
     "3050": {
       "section": "appCredits",
       "group": "app:بارتي هيرو - party hero",
@@ -5802,6 +8316,13 @@
       "title": "يامي ستار - Yami Star \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يامي ستار - Yami Star \""
+    },
+    "3055": {
+      "section": "appCredits",
+      "group": "app:جاكو - jaco",
+      "title": "جاكو - Jaco \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "جاكو - Jaco \""
     },
     "3056": {
       "section": "appCredits",
@@ -5859,6 +8380,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "يودو شات - Yudo Chat \""
     },
+    "3066": {
+      "section": "appCredits",
+      "group": "app:اب فن - up fun",
+      "title": "اب فن - Up Fun \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اب فن - Up Fun \""
+    },
     "3067": {
       "section": "appCredits",
       "group": "app:شات شيل - chat chill",
@@ -5872,6 +8400,13 @@
       "title": "سكاي شات - Sky Chat \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "سكاي شات - Sky Chat \""
+    },
+    "3069": {
+      "section": "appCredits",
+      "group": "app:مزيون - mazyoun",
+      "title": "مزيون - Mazyoun \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "مزيون - Mazyoun \""
     },
     "3071": {
       "section": "appCredits",
@@ -5901,12 +8436,47 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "لاكي شات - Laki Chat \""
     },
+    "3077": {
+      "section": "appCredits",
+      "group": "app:ليسكي - leesky",
+      "title": "ليسكي - Leesky \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ليسكي - Leesky \""
+    },
+    "3078": {
+      "section": "appCredits",
+      "group": "app:لوت فن - lot fun",
+      "title": "لوت فن - Lot Fun \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لوت فن - Lot Fun \""
+    },
+    "3080": {
+      "section": "appCredits",
+      "group": "app:روكا - rooka",
+      "title": "روكا - Rooka \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روكا - Rooka \""
+    },
+    "3081": {
+      "section": "appCredits",
+      "group": "app:هاي - hayi",
+      "title": "هاي - Hayi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاي - Hayi \""
+    },
     "3082": {
       "section": "appCredits",
       "group": "app:ون ستار شات - 1star chat",
       "title": "ون ستار شات - 1Star Chat \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ون ستار شات - 1Star Chat \""
+    },
+    "3083": {
+      "section": "appCredits",
+      "group": "app:هاتي - hati",
+      "title": "هاتي - Hati \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاتي - Hati \""
     },
     "3087": {
       "section": "appCredits",
@@ -5936,6 +8506,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "بولي شات - Boli Chat \""
     },
+    "3091": {
+      "section": "appCredits",
+      "group": "app:يو بارتي - yoparti",
+      "title": "يو بارتي - YoParti \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يو بارتي - YoParti \""
+    },
     "3093": {
       "section": "appCredits",
       "group": "app:نحكي شات - nahki chat",
@@ -5943,12 +8520,47 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "نحكي شات - Nahki Chat \""
     },
+    "3094": {
+      "section": "appCredits",
+      "group": "app:يوسو فارم - yoso farm",
+      "title": "يوسو فارم - Yoso Farm \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يوسو فارم - Yoso Farm \""
+    },
+    "3095": {
+      "section": "appCredits",
+      "group": "app:هاجو - hago",
+      "title": "هاجو - Hago \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاجو - Hago \""
+    },
     "3096": {
       "section": "appCredits",
       "group": "app:مانغو ستار - mango star",
       "title": "مانغو ستار - Mango Star \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "مانغو ستار - Mango Star \""
+    },
+    "3098": {
+      "section": "appCredits",
+      "group": "app:ان فن - infun",
+      "title": "ان فن - InFun \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ان فن - InFun \""
+    },
+    "3099": {
+      "section": "appCredits",
+      "group": "app:بات - baat",
+      "title": "بات - Baat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بات - Baat \""
+    },
+    "3101": {
+      "section": "appCredits",
+      "group": "app:مازا - maza",
+      "title": "مازا - Maza \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "مازا - Maza \""
     },
     "3103": {
       "section": "appCredits",
@@ -5971,6 +8583,181 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "ماستي شات - Masti Chat \""
     },
+    "3106": {
+      "section": "appCredits",
+      "group": "app:دوا شات - dawa chat",
+      "title": "دوا شات - Dawa Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "دوا شات - Dawa Chat \""
+    },
+    "3107": {
+      "section": "appCredits",
+      "group": "app:روح شات - rooh chat",
+      "title": "روح شات - Rooh Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روح شات - Rooh Chat \""
+    },
+    "3108": {
+      "section": "appCredits",
+      "group": "app:هارت لايف - hart live",
+      "title": "هارت لايف - Hart Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هارت لايف - Hart Live \""
+    },
+    "3109": {
+      "section": "appCredits",
+      "group": "app:دولي لايف - doli live",
+      "title": "دولي لايف - Doli Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "دولي لايف - Doli Live \""
+    },
+    "3110": {
+      "section": "appCredits",
+      "group": "app:ويل شيل - will chill",
+      "title": "ويل شيل - Will Chill \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ويل شيل - Will Chill \""
+    },
+    "3111": {
+      "section": "appCredits",
+      "group": "app:زار شات - zaar chat",
+      "title": "زار شات - Zaar Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "زار شات - Zaar Chat \""
+    },
+    "3112": {
+      "section": "appCredits",
+      "group": "app:اي بارتي - e-party",
+      "title": "اي بارتي - E-Party \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اي بارتي - E-Party \""
+    },
+    "3113": {
+      "section": "appCredits",
+      "group": "app:هالا شات - halla chat",
+      "title": "هالا شات - Halla Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هالا شات - Halla Chat \""
+    },
+    "3114": {
+      "section": "appCredits",
+      "group": "app:اور تالك - our talk",
+      "title": "اور تالك - Our Talk \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اور تالك - Our Talk \""
+    },
+    "3115": {
+      "section": "appCredits",
+      "group": "app:يو تو اب - yo2 app",
+      "title": "يو تو اب - Yo2 App \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يو تو اب - Yo2 App \""
+    },
+    "3116": {
+      "section": "appCredits",
+      "group": "app:يوكي شات - yoki chat",
+      "title": "يوكي شات - Yoki Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يوكي شات - Yoki Chat \""
+    },
+    "3117": {
+      "section": "appCredits",
+      "group": "app:شيل شات - chill chat",
+      "title": "شيل شات - Chill Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شيل شات - Chill Chat \""
+    },
+    "3118": {
+      "section": "appCredits",
+      "group": "app:مات ميت - mate met",
+      "title": "مات ميت - Mate Met \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "مات ميت - Mate Met \""
+    },
+    "3119": {
+      "section": "appCredits",
+      "group": "app:هابي عربي - hapi arabic",
+      "title": "هابي عربي - Hapi Arabic \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هابي عربي - Hapi Arabic \""
+    },
+    "3120": {
+      "section": "appCredits",
+      "group": "app:طيب شات - tayyb chat",
+      "title": "طيب شات - Tayyb Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "طيب شات - Tayyb Chat \""
+    },
+    "3121": {
+      "section": "appCredits",
+      "group": "app:اومي - ume",
+      "title": "اومي - Ume \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اومي - Ume \""
+    },
+    "3122": {
+      "section": "appCredits",
+      "group": "app:سوبر ميت - super meet",
+      "title": "سوبر ميت - Super Meet \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوبر ميت - Super Meet \""
+    },
+    "3123": {
+      "section": "appCredits",
+      "group": "app:يودو - yudo",
+      "title": "يودو - Yudo \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يودو - Yudo \""
+    },
+    "3124": {
+      "section": "appCredits",
+      "group": "app:هوبي ستار - hopi star",
+      "title": "هوبي ستار - Hopi Star \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هوبي ستار - Hopi Star \""
+    },
+    "3125": {
+      "section": "appCredits",
+      "group": "app:يايا شات - yayya chat",
+      "title": "يايا شات - Yayya Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يايا شات - Yayya Chat \""
+    },
+    "3126": {
+      "section": "appCredits",
+      "group": "app:ديكا لايف - dika live",
+      "title": "ديكا لايف - Dika Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ديكا لايف - Dika Live \""
+    },
+    "3127": {
+      "section": "appCredits",
+      "group": "app:كاراك شات - karak chat",
+      "title": "كاراك شات - Karak Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كاراك شات - Karak Chat \""
+    },
+    "3128": {
+      "section": "appCredits",
+      "group": "app:اوهلا - ohla",
+      "title": "اوهلا - Ohla \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اوهلا - Ohla \""
+    },
+    "3129": {
+      "section": "appCredits",
+      "group": "app:فوني - vone",
+      "title": "فوني - Vone \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فوني - Vone \""
+    },
+    "3130": {
+      "section": "appCredits",
+      "group": "app:شباب شات - shabab chat",
+      "title": "شباب شات - Shabab Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شباب شات - Shabab Chat \""
+    },
     "3132": {
       "section": "appCredits",
       "group": "app:بيست لايف - best live",
@@ -5984,6 +8771,13 @@
       "title": "وهو شات - Woho Chat \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "وهو شات - Woho Chat \""
+    },
+    "3134": {
+      "section": "appCredits",
+      "group": "app:ساهي - sahi",
+      "title": "ساهي - Sahi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ساهي - Sahi \""
     },
     "3135": {
       "section": "appCredits",
@@ -6020,6 +8814,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "نيو شات - Niu Chat \""
     },
+    "3140": {
+      "section": "appCredits",
+      "group": "app:بولالا - bulala",
+      "title": "بولالا - Bulala \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بولالا - Bulala \""
+    },
     "3141": {
       "section": "appCredits",
       "group": "app:تايا شات - taya chat",
@@ -6034,12 +8835,348 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "تي لايف - Ti Live \""
     },
+    "3143": {
+      "section": "appCredits",
+      "group": "app:نفس - nafass",
+      "title": "نفس - Nafass \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نفس - Nafass \""
+    },
+    "3144": {
+      "section": "appCredits",
+      "group": "app:ينا - yena",
+      "title": "ينا - Yena \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ينا - Yena \""
+    },
     "3145": {
       "section": "appCredits",
       "group": "app:فن ستار - fun star",
       "title": "فن ستار - Fun Star \"",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "فن ستار - Fun Star \""
+    },
+    "3146": {
+      "section": "appCredits",
+      "group": "app:هيوكي - hayuki",
+      "title": "هيوكي - Hayuki \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هيوكي - Hayuki \""
+    },
+    "3147": {
+      "section": "appCredits",
+      "group": "app:ريكسو - rixo",
+      "title": "ريكسو - Rixo \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ريكسو - Rixo \""
+    },
+    "3148": {
+      "section": "appCredits",
+      "group": "app:اميسو - amisu",
+      "title": "اميسو - Amisu \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اميسو - Amisu \""
+    },
+    "3149": {
+      "section": "appCredits",
+      "group": "app:وحدة - wahda",
+      "title": "وحدة - Wahda \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وحدة - Wahda \""
+    },
+    "3150": {
+      "section": "appCredits",
+      "group": "app:فومي - fomi",
+      "title": "فومي - Fomi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فومي - Fomi \""
+    },
+    "3151": {
+      "section": "appCredits",
+      "group": "app:ليت مي - litme",
+      "title": "ليت مي - Litme \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ليت مي - Litme \""
+    },
+    "3152": {
+      "section": "appCredits",
+      "group": "app:وينكو - winko",
+      "title": "وينكو - Winko \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وينكو - Winko \""
+    },
+    "3153": {
+      "section": "appCredits",
+      "group": "app:كفو - kafu",
+      "title": "كفو - Kafu \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كفو - Kafu \""
+    },
+    "3154": {
+      "section": "appCredits",
+      "group": "app:هوكي - hoki",
+      "title": "هوكي - Hoki \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هوكي - Hoki \""
+    },
+    "3155": {
+      "section": "appCredits",
+      "group": "app:شيلا - shila",
+      "title": "شيلا - Shila \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شيلا - Shila \""
+    },
+    "3156": {
+      "section": "appCredits",
+      "group": "app:يوبي - yobi",
+      "title": "يوبي - Yobi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يوبي - Yobi \""
+    },
+    "3158": {
+      "section": "appCredits",
+      "group": "app:فوستار - vostar",
+      "title": "فوستار - Vostar \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فوستار - Vostar \""
+    },
+    "3159": {
+      "section": "appCredits",
+      "group": "app:يازا شات - yaza chat",
+      "title": "يازا شات - Yaza Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يازا شات - Yaza Chat \""
+    },
+    "3160": {
+      "section": "appCredits",
+      "group": "app:وادي - wadi",
+      "title": "وادي - Wadi \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وادي - Wadi \""
+    },
+    "3161": {
+      "section": "appCredits",
+      "group": "app:فومي بارتي - fomi party",
+      "title": "فومي بارتي - Fomi Party \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فومي بارتي - Fomi Party \""
+    },
+    "3162": {
+      "section": "appCredits",
+      "group": "app:لاكا - laka",
+      "title": "لاكا - Laka \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "لاكا - Laka \""
+    },
+    "3163": {
+      "section": "appCredits",
+      "group": "app:وي شيل - wechill",
+      "title": "وي شيل - Wechill \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وي شيل - Wechill \""
+    },
+    "3164": {
+      "section": "appCredits",
+      "group": "app:صوفيا - sophia",
+      "title": "صوفيا - Sophia \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "صوفيا - Sophia \""
+    },
+    "3165": {
+      "section": "appCredits",
+      "group": "app:سيلا - sillagcc",
+      "title": "سيلا - SillaGCC \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سيلا - SillaGCC \""
+    },
+    "3166": {
+      "section": "appCredits",
+      "group": "app:يولا - yula",
+      "title": "يولا - Yula \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يولا - Yula \""
+    },
+    "3167": {
+      "section": "appCredits",
+      "group": "app:كارني لايف - carni live",
+      "title": "كارني لايف - Carni live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "كارني لايف - Carni live \""
+    },
+    "3168": {
+      "section": "appCredits",
+      "group": "app:موما - moma",
+      "title": "موما - Moma \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "موما - Moma \""
+    },
+    "3169": {
+      "section": "appCredits",
+      "group": "app:سوها - sohha",
+      "title": "سوها - Sohha \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوها - Sohha \""
+    },
+    "3170": {
+      "section": "appCredits",
+      "group": "app:شاتا - chata",
+      "title": "شاتا - ChatA \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شاتا - ChatA \""
+    },
+    "3171": {
+      "section": "appCredits",
+      "group": "app:شاتي - chati",
+      "title": "شاتي - Chati \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شاتي - Chati \""
+    },
+    "3172": {
+      "section": "appCredits",
+      "group": "app:هاي شات - hi chat",
+      "title": "هاي شات - Hi Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هاي شات - Hi Chat \""
+    },
+    "3173": {
+      "section": "appCredits",
+      "group": "app:شغف - shaghaf",
+      "title": "شغف - Shaghaf \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شغف - Shaghaf \""
+    },
+    "3176": {
+      "section": "appCredits",
+      "group": "app:نيتا - nita",
+      "title": "نيتا - Nita \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نيتا - Nita \""
+    },
+    "3177": {
+      "section": "appCredits",
+      "group": "app:توكي - toki",
+      "title": "توكي - Toki \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "توكي - Toki \""
+    },
+    "3178": {
+      "section": "appCredits",
+      "group": "app:ليمي لايف - lemi live",
+      "title": "ليمي لايف - Lemi Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ليمي لايف - Lemi Live \""
+    },
+    "3179": {
+      "section": "appCredits",
+      "group": "app:شاموجي - chamoji",
+      "title": "شاموجي - Chamoji \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "شاموجي - Chamoji \""
+    },
+    "3180": {
+      "section": "appCredits",
+      "group": "app:سامي - sami",
+      "title": "سامي - Sami \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سامي - Sami \""
+    },
+    "3181": {
+      "section": "appCredits",
+      "group": "app:وي بارتي - we party",
+      "title": "وي بارتي - We Party \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وي بارتي - We Party \""
+    },
+    "3182": {
+      "section": "appCredits",
+      "group": "app:نادي ستار - nady star",
+      "title": "نادي ستار - Nady Star \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "نادي ستار - Nady Star \""
+    },
+    "3184": {
+      "section": "appCredits",
+      "group": "app:يومي - yomee",
+      "title": "يومي - Yomee \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "يومي - Yomee \""
+    },
+    "3185": {
+      "section": "appCredits",
+      "group": "app:فابي ستار - faby star",
+      "title": "فابي ستار - Faby Star \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فابي ستار - Faby Star \""
+    },
+    "3186": {
+      "section": "appCredits",
+      "group": "app:فني - funni",
+      "title": "فني - Funni \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "فني - Funni \""
+    },
+    "3187": {
+      "section": "appCredits",
+      "group": "app:بوتا شات - bota chat",
+      "title": "بوتا شات - Bota Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "بوتا شات - Bota Chat \""
+    },
+    "3189": {
+      "section": "appCredits",
+      "group": "app:سما شات - sama chat",
+      "title": "سما شات - Sama Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سما شات - Sama Chat \""
+    },
+    "3190": {
+      "section": "appCredits",
+      "group": "app:دريم شات - dream chat",
+      "title": "دريم شات - Dream Chat \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "دريم شات - Dream Chat \""
+    },
+    "3232": {
+      "section": "appCredits",
+      "group": "app:توكي فويس - toki voice",
+      "title": "توكي فويس - Toki Voice \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "توكي فويس - Toki Voice \""
+    },
+    "3233": {
+      "section": "appCredits",
+      "group": "app:جو جوك - gogoc",
+      "title": "جو جوك - GoGoc \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "جو جوك - GoGoc \""
+    },
+    "3235": {
+      "section": "appCredits",
+      "group": "app:وي ستار - westar",
+      "title": "وي ستار - WeStar \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "وي ستار - WeStar \""
+    },
+    "3240": {
+      "section": "appCredits",
+      "group": "app:سفن ستار - 7star",
+      "title": "سفن ستار - 7Star \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سفن ستار - 7Star \""
+    },
+    "3241": {
+      "section": "appCredits",
+      "group": "app:اولو - oloo",
+      "title": "اولو - Oloo \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اولو - Oloo \""
+    },
+    "3358": {
+      "section": "appCredits",
+      "group": "app:sohha",
+      "title": "SOHHA",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SOHHA"
     },
     "3408": {
       "section": "boost",
@@ -6307,12 +9444,68 @@
       "title": "كواي",
       "expectedCategoryName": "متابعين كواي الارخص •"
     },
+    "3923": {
+      "section": "appCredits",
+      "group": "app:اويونيoyuni",
+      "title": "اويونيOyuni ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اويونيOyuni ~"
+    },
+    "3924": {
+      "section": "appCredits",
+      "group": "app:hawk صقر",
+      "title": "Hawk صقر ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Hawk صقر ~"
+    },
+    "3925": {
+      "section": "appCredits",
+      "group": "app:diwan talk",
+      "title": "DIWAN TALK ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "DIWAN TALK ~"
+    },
     "3926": {
       "section": "appCredits",
       "group": "app:voca chat",
       "title": "Voca Chat ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Voca Chat ~"
+    },
+    "3927": {
+      "section": "appCredits",
+      "group": "app:هيب hebba",
+      "title": "هيب Hebba ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هيب Hebba ~"
+    },
+    "3942": {
+      "section": "digital",
+      "group": "digital:capcut-1m-ready",
+      "title": "CapCut | شهر | حساب جاهز",
+      "reason": "اشتراك CapCut جاهز لمدة شهر",
+      "expectedCategoryName": "كاب كات | 1 شهر | حساب جاهز"
+    },
+    "3943": {
+      "section": "digital",
+      "group": "digital:capcut-1m-personal",
+      "title": "CapCut | شهر | حساب شخصي",
+      "reason": "اشتراك CapCut شخصي لمدة شهر",
+      "expectedCategoryName": "كاب كات برو | 1 شهر | حساب شخصي"
+    },
+    "3944": {
+      "section": "digital",
+      "group": "digital:capcut-6m-personal",
+      "title": "CapCut | 6 أشهر | حساب شخصي",
+      "reason": "اشتراك CapCut شخصي لمدة 6 أشهر",
+      "expectedCategoryName": "كاب كات برو | 6 اشهر | حساب شخصي"
+    },
+    "3945": {
+      "section": "digital",
+      "group": "digital:capcut-12m-personal",
+      "title": "CapCut | 12 شهر | حساب شخصي",
+      "reason": "اشتراك CapCut شخصي لمدة 12 شهر",
+      "expectedCategoryName": "كاب كات برو | 12 شهر | حساب شخصي"
     },
     "3950": {
       "section": "balance",
@@ -6363,12 +9556,26 @@
       "reason": "خدمة دفع محددة بالمنتج",
       "expectedCategoryName": "Payoneer •"
     },
+    "3961": {
+      "section": "appCredits",
+      "group": "app:هيليلي شات - helili chat",
+      "title": "هيليلي شات - Helili Chat\"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "هيليلي شات - Helili Chat\""
+    },
     "3962": {
       "section": "appCredits",
       "group": "app:هيليلي شات helili chat",
       "title": "هيليلي شات Helili Chat~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "هيليلي شات Helili Chat~"
+    },
+    "3963": {
+      "section": "appCredits",
+      "group": "app:روفا - ruffa",
+      "title": "روفا - Ruffa\"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روفا - Ruffa\""
     },
     "3964": {
       "section": "appCredits",
@@ -6383,6 +9590,13 @@
       "title": "كراش لايف CRUSH LIVE •",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "كراش لايف CRUSH LIVE •"
+    },
+    "3967": {
+      "section": "digital",
+      "group": "digital:gemini-18m",
+      "title": "Gemini | 18 شهر",
+      "reason": "اشتراك Gemini لمدة 18 شهر",
+      "expectedCategoryName": "جيمني | 18 شهر | رابط تفعيل"
     },
     "3970": {
       "section": "appCredits",
@@ -6405,12 +9619,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "WAHO CHAT °"
     },
+    "3973": {
+      "section": "appCredits",
+      "group": "app:sugo",
+      "title": "SUGO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SUGO °"
+    },
     "3975": {
       "section": "appCredits",
       "group": "app:4fun chat",
       "title": "4FUN CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "4FUN CHAT °"
+    },
+    "3977": {
+      "section": "appCredits",
+      "group": "app:maza",
+      "title": "MAZA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MAZA °"
+    },
+    "3978": {
+      "section": "appCredits",
+      "group": "app:soyo",
+      "title": "SOYO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SOYO °"
     },
     "3979": {
       "section": "appCredits",
@@ -6433,6 +9668,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "BISHAR CHAT °"
     },
+    "3983": {
+      "section": "appCredits",
+      "group": "app:saada",
+      "title": "SAADA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SAADA °"
+    },
     "3984": {
       "section": "appCredits",
       "group": "app:yooy chat",
@@ -6447,6 +9689,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SUPER LIVE °"
     },
+    "3986": {
+      "section": "appCredits",
+      "group": "app:honey jar",
+      "title": "HONEY JAR °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HONEY JAR °"
+    },
     "3987": {
       "section": "appCredits",
       "group": "app:hiya chat",
@@ -6460,6 +9709,20 @@
       "title": "DiMO CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "DiMO CHAT °"
+    },
+    "3989": {
+      "section": "appCredits",
+      "group": "app:majlis",
+      "title": "MAJLIS °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MAJLIS °"
+    },
+    "3990": {
+      "section": "appCredits",
+      "group": "app:dana",
+      "title": "DANA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "DANA °"
     },
     "3992": {
       "section": "appCredits",
@@ -6489,6 +9752,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "KWAI LIVE °"
     },
+    "3996": {
+      "section": "appCredits",
+      "group": "app:higo chat",
+      "title": "HIGO CHAT °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HIGO CHAT °"
+    },
     "3997": {
       "section": "appCredits",
       "group": "app:yoho waka",
@@ -6516,6 +9786,20 @@
       "title": "LAMA CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LAMA CHAT °"
+    },
+    "4001": {
+      "section": "appCredits",
+      "group": "app:talk talk",
+      "title": "TALK TALK °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TALK TALK °"
+    },
+    "4003": {
+      "section": "appCredits",
+      "group": "app:olamet",
+      "title": "OLAMET °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "OLAMET °"
     },
     "4004": {
       "section": "appCredits",
@@ -6769,12 +10053,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "PAWA LIVE °"
     },
+    "4049": {
+      "section": "appCredits",
+      "group": "app:mazyoun zina",
+      "title": "Mazyoun Zina °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Mazyoun Zina °"
+    },
     "4051": {
       "section": "appCredits",
       "group": "app:hawa chat",
       "title": "HAWA CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HAWA CHAT °"
+    },
+    "4052": {
+      "section": "appCredits",
+      "group": "app:layam",
+      "title": "LAYAM °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LAYAM °"
     },
     "4053": {
       "section": "appCredits",
@@ -6789,6 +10087,13 @@
       "title": "WAKI STAR °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "WAKI STAR °"
+    },
+    "4055": {
+      "section": "appCredits",
+      "group": "app:up fun",
+      "title": "UP FUN °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "UP FUN °"
     },
     "4056": {
       "section": "appCredits",
@@ -6825,12 +10130,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "MAAN CHAT °"
     },
+    "4063": {
+      "section": "appCredits",
+      "group": "app:moli star",
+      "title": "MOLI STAR °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "MOLI STAR °"
+    },
+    "4064": {
+      "section": "appCredits",
+      "group": "app:hala me",
+      "title": "HALA ME °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HALA ME °"
+    },
     "4065": {
       "section": "appCredits",
       "group": "app:hiplay chat",
       "title": "HIPLAY CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HIPLAY CHAT °"
+    },
+    "4066": {
+      "section": "appCredits",
+      "group": "app:hamster",
+      "title": "HAMSTER °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAMSTER °"
     },
     "4068": {
       "section": "appCredits",
@@ -6867,6 +10193,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "GAMET LIVE °"
     },
+    "4075": {
+      "section": "appCredits",
+      "group": "app:hago",
+      "title": "HAGO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAGO °"
+    },
     "4076": {
       "section": "appCredits",
       "group": "app:yigo chat",
@@ -6881,12 +10214,40 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "4PARTY CHAT °"
     },
+    "4079": {
+      "section": "appCredits",
+      "group": "app:halla",
+      "title": "HALLA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HALLA °"
+    },
     "4080": {
       "section": "appCredits",
       "group": "app:kessmet chat",
       "title": "KESSMET CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "KESSMET CHAT °"
+    },
+    "4082": {
+      "section": "appCredits",
+      "group": "app:hayuki",
+      "title": "HAYUKI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAYUKI °"
+    },
+    "4083": {
+      "section": "appCredits",
+      "group": "app:yudo fun",
+      "title": "YUDO FUN °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YUDO FUN °"
+    },
+    "4084": {
+      "section": "appCredits",
+      "group": "app:lklk",
+      "title": "LKLK °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LKLK °"
     },
     "4085": {
       "section": "appCredits",
@@ -6895,12 +10256,54 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SALAM CHAT °"
     },
+    "4086": {
+      "section": "appCredits",
+      "group": "app:kiti",
+      "title": "KITI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "KITI °"
+    },
+    "4087": {
+      "section": "appCredits",
+      "group": "app:boli",
+      "title": "BOLI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "BOLI °"
+    },
+    "4088": {
+      "section": "appCredits",
+      "group": "app:sahra",
+      "title": "SAHRA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SAHRA °"
+    },
+    "4089": {
+      "section": "appCredits",
+      "group": "app:yoparti",
+      "title": "YOPARTI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YOPARTI °"
+    },
+    "4090": {
+      "section": "appCredits",
+      "group": "app:joyo",
+      "title": "JOYO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "JOYO °"
+    },
     "4092": {
       "section": "appCredits",
       "group": "app:laki chat",
       "title": "LAKI CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LAKI CHAT °"
+    },
+    "4093": {
+      "section": "appCredits",
+      "group": "app:leeski",
+      "title": "LEESKI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LEESKI °"
     },
     "4094": {
       "section": "appCredits",
@@ -6915,6 +10318,13 @@
       "title": "1STAR CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "1STAR CHAT °"
+    },
+    "4096": {
+      "section": "appCredits",
+      "group": "app:kafu",
+      "title": "KAFU °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "KAFU °"
     },
     "4097": {
       "section": "appCredits",
@@ -6957,6 +10367,13 @@
       "title": "DITTO LIVE °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "DITTO LIVE °"
+    },
+    "4103": {
+      "section": "appCredits",
+      "group": "app:infun",
+      "title": "INFUN °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "INFUN °"
     },
     "4105": {
       "section": "appCredits",
@@ -7007,6 +10424,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HART LIVE °"
     },
+    "4112": {
+      "section": "appCredits",
+      "group": "app:our talk",
+      "title": "OUR TALK °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "OUR TALK °"
+    },
     "4113": {
       "section": "appCredits",
       "group": "app:doli live",
@@ -7021,12 +10445,26 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "VOCA °"
     },
+    "4115": {
+      "section": "appCredits",
+      "group": "app:we chill",
+      "title": "WE CHILL °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "WE CHILL °"
+    },
     "4116": {
       "section": "appCredits",
       "group": "app:naddy star",
       "title": "NADDY STAR °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "NADDY STAR °"
+    },
+    "4117": {
+      "section": "appCredits",
+      "group": "app:zaar",
+      "title": "ZAAR °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "ZAAR °"
     },
     "4119": {
       "section": "appCredits",
@@ -7048,6 +10486,20 @@
       "title": "YOKI CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "YOKI CHAT °"
+    },
+    "4124": {
+      "section": "appCredits",
+      "group": "app:hati",
+      "title": "HATI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HATI °"
+    },
+    "4125": {
+      "section": "appCredits",
+      "group": "app:hapi عربي",
+      "title": "HAPI عربي °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAPI عربي °"
     },
     "4126": {
       "section": "appCredits",
@@ -7091,6 +10543,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "KARAK CHAT °"
     },
+    "4133": {
+      "section": "appCredits",
+      "group": "app:super meet",
+      "title": "SUPER MEET °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SUPER MEET °"
+    },
     "4134": {
       "section": "appCredits",
       "group": "app:yudo chat",
@@ -7111,6 +10570,13 @@
       "title": "SAHI LIVE °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SAHI LIVE °"
+    },
+    "4137": {
+      "section": "appCredits",
+      "group": "app:ume",
+      "title": "UME °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "UME °"
     },
     "4138": {
       "section": "appCredits",
@@ -7147,6 +10613,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "OHLA LIVE °"
     },
+    "4143": {
+      "section": "appCredits",
+      "group": "app:winko",
+      "title": "WINKO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "WINKO °"
+    },
     "4144": {
       "section": "appCredits",
       "group": "app:4chat",
@@ -7160,6 +10633,13 @@
       "title": "SHABAB CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SHABAB CHAT °"
+    },
+    "4146": {
+      "section": "appCredits",
+      "group": "app:vone",
+      "title": "VONE °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "VONE °"
     },
     "4147": {
       "section": "appCredits",
@@ -7182,12 +10662,40 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "BEST LIVE °"
     },
+    "4150": {
+      "section": "appCredits",
+      "group": "app:litme",
+      "title": "LITME °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LITME °"
+    },
     "4151": {
       "section": "appCredits",
       "group": "app:masti chat",
       "title": "MASTI CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "MASTI CHAT °"
+    },
+    "4152": {
+      "section": "appCredits",
+      "group": "app:oloo",
+      "title": "OLOO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "OLOO °"
+    },
+    "4153": {
+      "section": "appCredits",
+      "group": "app:sillagcc",
+      "title": "SILLAGCC °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SILLAGCC °"
+    },
+    "4155": {
+      "section": "appCredits",
+      "group": "app:nivi",
+      "title": "NIVI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "NIVI °"
     },
     "4156": {
       "section": "appCredits",
@@ -7230,6 +10738,20 @@
       "title": "YENA CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "YENA CHAT °"
+    },
+    "4165": {
+      "section": "appCredits",
+      "group": "app:nafass",
+      "title": "NAFASS °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "NAFASS °"
+    },
+    "4166": {
+      "section": "appCredits",
+      "group": "app:wikoo",
+      "title": "WIKOO °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "WIKOO °"
     },
     "4167": {
       "section": "appCredits",
@@ -7301,6 +10823,13 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SOHHA LIVE °"
     },
+    "4178": {
+      "section": "appCredits",
+      "group": "app:hayi",
+      "title": "HAYI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HAYI °"
+    },
     "4179": {
       "section": "appCredits",
       "group": "app:hi chat",
@@ -7315,6 +10844,55 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "SHAGHAF CHAT °"
     },
+    "4183": {
+      "section": "appCredits",
+      "group": "app:funni",
+      "title": "FUNNI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "FUNNI °"
+    },
+    "4184": {
+      "section": "appCredits",
+      "group": "app:yomee",
+      "title": "YOMEE °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YOMEE °"
+    },
+    "4186": {
+      "section": "appCredits",
+      "group": "app:toki voice",
+      "title": "TOKI VOICE °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TOKI VOICE °"
+    },
+    "4187": {
+      "section": "appCredits",
+      "group": "app:limmatna",
+      "title": "LIMMATNA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LIMMATNA °"
+    },
+    "4188": {
+      "section": "appCredits",
+      "group": "app:yumi",
+      "title": "YUMI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YUMI °"
+    },
+    "4190": {
+      "section": "appCredits",
+      "group": "app:lemi",
+      "title": "LEMI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "LEMI °"
+    },
+    "4191": {
+      "section": "appCredits",
+      "group": "app:chamoji",
+      "title": "CHAMOJI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "CHAMOJI °"
+    },
     "4192": {
       "section": "appCredits",
       "group": "app:laika chat",
@@ -7322,12 +10900,33 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "LAIKA CHAT °"
     },
+    "4193": {
+      "section": "appCredits",
+      "group": "app:sami",
+      "title": "SAMI °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "SAMI °"
+    },
+    "4194": {
+      "section": "appCredits",
+      "group": "app:gofun",
+      "title": "GOFUN °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "GOFUN °"
+    },
     "4195": {
       "section": "appCredits",
       "group": "app:nice chat",
       "title": "NICE CHAT °",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "NICE CHAT °"
+    },
+    "4196": {
+      "section": "appCredits",
+      "group": "app:guguk",
+      "title": "GUGUK °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "GUGUK °"
     },
     "4198": {
       "section": "appCredits",
@@ -7350,6 +10949,20 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HELILI CHAT °"
     },
+    "4202": {
+      "section": "appCredits",
+      "group": "app:nita",
+      "title": "NITA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "NITA °"
+    },
+    "4206": {
+      "section": "appCredits",
+      "group": "app:hilla",
+      "title": "HILLA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "HILLA °"
+    },
     "4207": {
       "section": "appCredits",
       "group": "app:we party",
@@ -7357,12 +10970,47 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "WE PARTY °"
     },
+    "4208": {
+      "section": "appCredits",
+      "group": "app:ruffa",
+      "title": "RUFFA °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "RUFFA °"
+    },
+    "4210": {
+      "section": "appCredits",
+      "group": "app:yo2",
+      "title": "YO2 °",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "YO2 °"
+    },
+    "4217": {
+      "section": "appCredits",
+      "group": "app:سوها sohha",
+      "title": "سوها Sohha ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سوها Sohha ~"
+    },
+    "4218": {
+      "section": "appCredits",
+      "group": "app:روفا ruffa",
+      "title": "روفا Ruffa ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "روفا Ruffa ~"
+    },
     "4220": {
       "section": "appCredits",
       "group": "app:hoki chat",
       "title": "HOKI CHAT ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "HOKI CHAT ~"
+    },
+    "4222": {
+      "section": "appCredits",
+      "group": "app:winko",
+      "title": "Winko ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Winko ~"
     },
     "4223": {
       "section": "appCredits",
@@ -7378,12 +11026,40 @@
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "WE PARTY ~"
     },
+    "4227": {
+      "section": "appCredits",
+      "group": "app:bota grren",
+      "title": "BOTA GRREN ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "BOTA GRREN ~"
+    },
+    "4229": {
+      "section": "appCredits",
+      "group": "app:limmatna",
+      "title": "Limmatna ~",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "Limmatna ~"
+    },
     "4230": {
       "section": "appCredits",
       "group": "app:chati",
       "title": "Chati ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "Chati ~"
+    },
+    "4236": {
+      "section": "appCredits",
+      "group": "app:telegram stars",
+      "title": "Telegram Stars",
+      "reason": "شحن نجوم تلغرام وفق اسم المنتج ومعرف تلغرام",
+      "expectedCategoryName": "نجوم تلغرام \""
+    },
+    "4237": {
+      "section": "giftCards",
+      "group": "digital-cards:visa-recharge",
+      "title": "فيزا قابلة للشحن",
+      "reason": "بطاقة Visa قابلة للشحن",
+      "expectedCategoryName": "فيزا قابلة للشحن"
     },
     "4256": {
       "section": "digital",
@@ -7441,6 +11117,20 @@
       "title": "شاهد",
       "expectedCategoryName": "شاهد | 12 شهر | على ايميلك \""
     },
+    "4264": {
+      "section": "appCredits",
+      "group": "app:سانا لايف - sana live",
+      "title": "سانا لايف - Sana Live \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "سانا لايف - Sana Live \""
+    },
+    "4276": {
+      "section": "appCredits",
+      "group": "app:tayyb",
+      "title": "TAYYB",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "TAYYB"
+    },
     "4277": {
       "section": "appCredits",
       "group": "app:يابي شات - yabi chat",
@@ -7454,6 +11144,13 @@
       "title": "TAKA LIVE ~",
       "reason": "تصنيف رصيد تطبيق مؤكد من فئة Nemer ومعامل UID/USER_ID",
       "expectedCategoryName": "TAKA LIVE ~"
+    },
+    "4279": {
+      "section": "appCredits",
+      "group": "app:اولفا - ulfaa",
+      "title": "اولفا - Ulfaa \"",
+      "reason": "فئة تطبيق محددة من Nemer وبها حقل معرف مستخدم/UID",
+      "expectedCategoryName": "اولفا - Ulfaa \""
     },
     "4280": {
       "section": "appCredits",
