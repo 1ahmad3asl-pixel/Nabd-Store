@@ -52,3 +52,20 @@ test("the two restored supplier sections have dedicated homepage entries", () =>
     assert.ok(keys.includes("apps"));
     assert.ok(keys.includes("shamcash"));
 });
+
+test("all 20 homepage section tiles use existing local GitHub assets", () => {
+    const tiles = [...html.matchAll(
+        /<button class="category category-tile"[^>]*>[\\s\\S]*?<\\/button>/g
+    )].map((match) => match[0]);
+
+    assert.equal(tiles.length, 20);
+    for (const tile of tiles) {
+        const image = tile.match(/<img src="([^"]+)"/);
+        assert.ok(image, "each section tile must have an image");
+        const relativePath = image[1].replace(/^\\/+/, "");
+        assert.ok(
+            fs.existsSync(path.join(root, relativePath)),
+            `missing local category image: ${image[1]}`
+        );
+    }
+});
