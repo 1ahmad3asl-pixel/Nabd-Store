@@ -136,8 +136,8 @@
       "title": "وحدات s2 MTN"
     },
     "2276": {
-      "section": "digital",
-      "group": "parent-2276",
+      "section": "verify",
+      "group": "verify:snapchat-plus",
       "expectedCategoryName": "Snapchat Plus",
       "sortRule": "source",
       "title": "Snapchat Plus"
@@ -6882,11 +6882,11 @@
       "expectedCategoryName": "YOHO"
     },
     "1666": {
-      "section": "software",
-      "group": "boreno",
+      "section": "repair",
+      "group": "repair:boreno",
       "title": "BORENO",
       "expectedCategoryName": "BORENOخدمة تفعيل مشتر....",
-      "reason": "اعتماد المستخدم: قسم السوفت وير"
+      "reason": "اعتماد المستخدم: المنتج موجود ضمن قسم برامج الصيانة"
     },
     "1674": {
       "section": "balance",
@@ -6973,32 +6973,32 @@
       "reason": "اعتماد المستخدم: استرداد رصيد عبر شام كاش"
     },
     "2272": {
-      "section": "digital",
-      "group": "digital:youtube-premium",
+      "section": "verify",
+      "group": "verify:youtube-premium",
       "title": "YouTube Premium",
-      "reason": "اشتراك YouTube Premium",
-      "expectedCategoryName": "يوتيوب مميز - 1 شهر"
+      "expectedCategoryName": "يوتيوب مميز - 1 شهر",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم توثيق الحسابات"
     },
     "2273": {
-      "section": "digital",
-      "group": "digital:youtube-premium",
+      "section": "verify",
+      "group": "verify:youtube-premium",
       "title": "YouTube Premium",
-      "reason": "اشتراك YouTube Premium",
-      "expectedCategoryName": "يوتيوب مميز - 3 أشهر"
+      "expectedCategoryName": "يوتيوب مميز - 3 أشهر",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم توثيق الحسابات"
     },
     "2274": {
-      "section": "digital",
-      "group": "digital:youtube-premium",
+      "section": "verify",
+      "group": "verify:youtube-premium",
       "title": "YouTube Premium",
-      "reason": "اشتراك YouTube Premium",
-      "expectedCategoryName": "يوتيوب مميز - 6 أشهر"
+      "expectedCategoryName": "يوتيوب مميز - 6 أشهر",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم توثيق الحسابات"
     },
     "2275": {
-      "section": "digital",
-      "group": "digital:youtube-premium",
+      "section": "verify",
+      "group": "verify:youtube-premium",
       "title": "YouTube Premium",
-      "reason": "اشتراك YouTube Premium",
-      "expectedCategoryName": "يوتيوب مميز - 12 شهر"
+      "expectedCategoryName": "يوتيوب مميز - 12 شهر",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم توثيق الحسابات"
     },
     "2293": {
       "section": "apps",
@@ -8324,6 +8324,27 @@
       "reason": "عداد جواكر بمعرف اللاعب",
       "expectedCategoryName": "عداد جواكر ~s1",
       "gameKey": "جواكر"
+    },
+    "2578": {
+      "section": "promo",
+      "group": "promo:packages",
+      "title": "الباقة البرونزية",
+      "expectedCategoryName": "الباقه البرونزيه",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم الترويج الحقيقي"
+    },
+    "2579": {
+      "section": "promo",
+      "group": "promo:packages",
+      "title": "الباقة الفضية",
+      "expectedCategoryName": "الباقه الفضيه",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم الترويج الحقيقي"
+    },
+    "2580": {
+      "section": "promo",
+      "group": "promo:packages",
+      "title": "الباقة الألماسية",
+      "expectedCategoryName": "الباقه الالماسيه",
+      "reason": "اعتماد المستخدم: المنتجات موجودة ضمن قسم الترويج الحقيقي"
     },
     "2961": {
       "section": "apps",
