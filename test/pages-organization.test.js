@@ -20,7 +20,8 @@ const pageNames = [
 
 test("public HTML pages are grouped in pages/ and served at their existing URLs", () => {
   const rootHtmlFiles = fs.readdirSync(projectRoot).filter((name) => name.endsWith(".html"));
-  assert.deepEqual(rootHtmlFiles, []);
+  assert.deepEqual(rootHtmlFiles.filter((name) => name !== "nemer.html"), []);
+  assert.equal(fs.existsSync(path.join(projectRoot, "nemer.html")), true, "Nemer supplier reference stays in the repository root and is not a public page");
 
   for (const pageName of pageNames) {
     assert.equal(fs.existsSync(path.join(projectRoot, "pages", pageName)), true, `${pageName} is in pages/`);
