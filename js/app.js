@@ -11,6 +11,7 @@ const state = {
     gameProductsSource: null,
     nemerCategoryMap: null,
     nemerCategoryMapPromise: null,
+    nemerCategoryMapFailed: false,
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -35,6 +36,7 @@ async function ensureNemerCategoryMap() {
             return config;
         }).catch(function(error) {
             state.nemerCategoryMapPromise = null;
+            state.nemerCategoryMapFailed = true;
             throw error;
         });
     }
@@ -3799,10 +3801,15 @@ function getProductCategory(product) {
 async function loadProducts(options) {
     options = options || {};
     if (state.productsLoadingPromise) return state.productsLoadingPromise;
-    try {
-        await ensureNemerCategoryMap();
-    } catch (error) {
-        console.error("Unified product classifier unavailable; using legacy game matching:", error);
+    if (!state.nemerCategoryMap && !state.nemerCategoryMapFailed) {
+        state.productsLoadingPromise = ensureNemerCategoryMap().catch(function(error) {
+            console.error("Unified product classifier unavailable; using legacy game matching:", error);
+            return null;
+        }).then(function() {
+            state.productsLoadingPromise = null;
+            return loadProducts(options);
+        });
+        return state.productsLoadingPromise;
     }
 
     // اعرض آخر نسخة محفوظة فورًا، ثم حدّثها في الخلفية. هذا يلغي انتظار
