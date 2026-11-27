@@ -48,6 +48,7 @@ async function nemerRequest(endpoint, options = {}) {
         const apiCode = data.code !== undefined ? " (code " + data.code + ")" : "";
         const safeMessage = String(apiMessage || responseText.slice(0, 240) || response.statusText || "No response details")
             .replace(/\s+/g, " ")
+            .split(apiToken).join("[REDACTED]")
             .slice(0, 240);
         throw new Error("Nemer Card API HTTP " + response.status + apiCode + ": " + safeMessage);
     }
