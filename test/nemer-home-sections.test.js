@@ -54,15 +54,17 @@ test("the two restored supplier sections have dedicated homepage entries", () =>
 });
 
 test("all 20 homepage section tiles use existing local GitHub assets", () => {
-    const tiles = [...html.matchAll(
-        /<button class="category category-tile"[^>]*>[\\s\\S]*?<\\/button>/g
-    )].map((match) => match[0]);
+    const marker = '<button class="category category-tile"';
+    const tiles = html.split(marker).slice(1).map((part) => {
+        const end = part.indexOf("</button>");
+        return marker + part.slice(0, end + "</button>".length);
+    });
 
     assert.equal(tiles.length, 20);
     for (const tile of tiles) {
         const image = tile.match(/<img src="([^"]+)"/);
         assert.ok(image, "each section tile must have an image");
-        const relativePath = image[1].replace(/^\\/+/, "");
+        const relativePath = image[1].startsWith("/") ? image[1].slice(1) : image[1];
         assert.ok(
             fs.existsSync(path.join(root, relativePath)),
             `missing local category image: ${image[1]}`
