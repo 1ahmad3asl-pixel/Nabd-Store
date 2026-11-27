@@ -113,6 +113,21 @@ test("VPN, screen and Telegram subscriptions route to their exact homepage secti
   }
 });
 
+
+test("confirmed promotion, verification and repair products use the supplier's sections", () => {
+  const expected = {
+    2578: "promo", 2579: "promo", 2580: "promo",
+    2272: "verify", 2273: "verify", 2274: "verify", 2275: "verify",
+    2276001: "verify", 2276002: "verify", 2276003: "verify",
+    1666: "repair"
+  };
+  for (const [id, section] of Object.entries(expected)) {
+    const product = realCatalog.find(item => String(item.id) === id);
+    assert.ok(product, `product ${id} exists`);
+    assert.equal(classifyProduct(product, realConfig).section, section);
+  }
+});
+
 test("all mapped parent_id rules match the real Nemer snapshot", () => {
   const mappedIds = new Set(Object.keys(realConfig.parentIdRules).map(Number));
   for (const product of realCatalog) {
@@ -192,21 +207,24 @@ test("game UI consumes canonical classifier keys and loads the classifier before
 test("real catalog classification has a stable audited result with no overlaps", () => {
   const report = classifyCatalog(realCatalog, realConfig);
   assert.deepEqual(report.summary, {
-      "classified": 2361,
+      "classified": 2364,
       "review": 1,
-      "unclassified": 3,
+      "unclassified": 0,
       "invalid": 0,
       "bySection": {
           "screens": 20,
           "boost": 39,
+          "promo": 3,
+          "verify": 7,
+          "repair": 1,
           "games": 833,
           "balance": 232,
           "apps": 1054,
           "numbers": 49,
-          "digital": 44,
+          "digital": 37,
           "cards": 26,
           "accounts": 4,
-          "software": 7,
+          "software": 6,
           "telegram": 3,
           "vip": 12,
           "vpn": 34,
