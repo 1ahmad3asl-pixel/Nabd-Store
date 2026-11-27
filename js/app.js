@@ -746,7 +746,7 @@ const GAME_CATALOG = [
     { title:"Roblox", aliases:["roblox","roblox game","روبلوكس"] },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
-    { title:"Clash of Clans", aliases:["clash of clans","clash"] },
+    { title:"Clash of Clans", aliases:["clash of clans"] },
     { title:"فري فاير", aliases:["free fire","فري فاير"] },
     { title:"Yalla Ludo Gold", aliases:["yalla ludo gold"] },
     { title:"Lords mobile", aliases:["lords mobile"] },
@@ -758,13 +758,13 @@ const GAME_CATALOG = [
     { title:"City Of Crime Gang War", aliases:["city of crime gang war","city of crime gang wars"] },
     { title:"Marvel Rivals", aliases:["marvel rivals","marvel reveals","مارفل ريفيلز","مارفل رايفلز"] },
     { title:"Whiteout Survival", aliases:["whiteout survival"] },
-    { title:"Genshin Impact", aliases:["genshin impact"] },
+    { title:"Genshin Impact", aliases:["genshin impact","genshen impact","جينشن امباكت","جينشن"] },
     { title:"Super SUS", aliases:["super sus"] },
     { title:"Stumble Guys", aliases:["stumble guys"] },
     { title:"Honkai: Star Rail", aliases:["honkai","honkai star rail","star rail","honkai : star rail","هونكاي ستار ريل"] },
     { title:"Yalla Ludo Gold Codes", aliases:["yalla ludo gold codes"] },
     { title:"Yalla Ludo Diamonds Codes", aliases:["yalla ludo diamonds codes"] },
-    { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mlbb","موبايل ليجندز"] },
+    { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mobile legend global","mlbb","موبايل ليجندز"] },
     { title:"Hero Clash", aliases:["hero clash"] },
     { title:"Oxide : Survival Island", aliases:["oxide","survival island"] },
         { title:"King Shot", aliases:["king shot"] },
@@ -775,7 +775,7 @@ const GAME_CATALOG = [
     { title:"Blood Strike", aliases:["blood strike","bloodstrike","بلود سترايك"] },
     { title:"Acecraft", aliases:["acecraft","ace craft","إيس كرافت","ايس كرافت"] },
     { title:"Arena Breakout", aliases:["arena breakout","arena breakout mobile","أرينا بريك أوت"] },
-    { title:"Ludo Club", aliases:["ludo club","ludo club game","لودو كلوب"] },
+    { title:"Ludo Club", aliases:["ludo club","ludo club game","ludo clud","لودو كلوب"] },
         { title:"AFK Journey", aliases:["afk journey"] },
     { title:"Division Resurgence", aliases:["division resurgence"] },
     { title:"Age Of Empires Mobile", aliases:["age of empires"] },
@@ -840,7 +840,12 @@ const GAME_CATALOG = [
     { title:"Overmortal Idle Global", aliases:["overmortal idle"] },
     { title:"Onmyoji Arena", aliases:["onmyoji arena"] },
     { title:"My Singing Monsters", aliases:["my singing","monsters"] },
-    { title:"Stormshot", aliases:["stormshot"] }
+    { title:"Stormshot", aliases:["stormshot"] },
+    { title:"Honor of Kings", aliases:["honor of kings","honor of king"] },
+    { title:"Isekai Feast", aliases:["isekai feast","isekai feast tales of recipes"] },
+    { title:"Jade Dynasty", aliases:["jade dynasty","jade dynasty new fantasy"] },
+    { title:"Deadly Dudes", aliases:["deadly dudes"] },
+    { title:"Ensemble Stars Music", aliases:["ensemble stars music"] }
 ];
 
 function normalizeGameText(value) {
