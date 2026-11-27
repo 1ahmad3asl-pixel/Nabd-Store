@@ -11460,15 +11460,19 @@
   "reviewPolicy": "unclassified",
   "sectionTopology": {
     "supplierMainCategoryCount": 20,
-    "storeMainSectionCount": 18,
+    "storeMainSectionCount": 20,
     "storeSections": [
+      {
+        "key": "balance",
+        "title": "الارصدة"
+      },
+      {
+        "key": "apps",
+        "title": "قسم التطبيقات"
+      },
       {
         "key": "games",
         "title": "الألعاب"
-      },
-      {
-        "key": "balance",
-        "title": "الأرصدة"
       },
       {
         "key": "numbers",
@@ -11491,10 +11495,6 @@
         "title": "حسابات جاهزة"
       },
       {
-        "key": "payments",
-        "title": "الدفع الإلكتروني"
-      },
-      {
         "key": "promo",
         "title": "ترويج حقيقي"
       },
@@ -11507,36 +11507,173 @@
         "title": "قسم برامج الصيانة"
       },
       {
-        "key": "transfers",
-        "title": "قسم الحوالات"
-      },
-      {
-        "key": "telegram",
-        "title": "خدمات تيليجرام"
-      },
-      {
         "key": "verify",
         "title": "توثيق حسابات"
       },
       {
-        "key": "screens",
-        "title": "اشتراكات شاشة"
+        "key": "telegram",
+        "title": "خدمات تليجرام"
       },
       {
-        "key": "vpn",
-        "title": "اشتراكات VPN"
+        "key": "transfers",
+        "title": "قسم الحوالات"
       },
       {
         "key": "vip",
         "title": "مستويات VIP"
       },
       {
+        "key": "vpn",
+        "title": "اشتراكات VPN"
+      },
+      {
+        "key": "screens",
+        "title": "اشتراكات شاشة"
+      },
+      {
+        "key": "shamcash",
+        "title": "استرداد رصيد عبر شام كاش"
+      },
+      {
         "key": "website",
-        "title": "إنشاء موقع"
+        "title": "انشاء موقع"
+      },
+      {
+        "key": "payments",
+        "title": "خدمات الدفع السوريه"
       }
     ],
-    "policy": "Nemer's 20 top-level categories are a source taxonomy, not 20 new Nabd-Store home tiles. Preserve the existing 18 store sections and map each supplier category to an existing store section or a reviewed hidden/internal group. Do not infer a one-to-one relationship. The supplier's 20 category names and IDs have not yet been captured from the API, so their individual routes remain pending and must not be guessed.",
-    "supplierMainCategoryNames": [],
-    "supplierCategoryNameStatus": "pending_api_inventory"
+    "policy": "Nemer Card's 20 homepage categories are the exact top-level taxonomy for Nabd-Store. Keep the same order and create one distinct store tile/key for every supplier category. Product classification must route products into these 20 sections; do not merge categories, infer cross-category matches, or treat any game as special. Product parent_id/category_name rules determine placement within the mapped top-level section.",
+    "supplierMainCategoryNames": [
+      "الارصدة",
+      "قسم التطبيقات",
+      "الألعاب",
+      "الأرقام",
+      "رشق صفحات",
+      "اشتراكات رقمية",
+      "البطاقات",
+      "حسابات جاهزة",
+      "ترويج حقيقي",
+      "قسم السوفت وير",
+      "قسم برامج الصيانة",
+      "توثيق حسابات",
+      "خدمات تليجرام",
+      "قسم الحوالات",
+      "مستويات VIP",
+      "اشتراكات VPN",
+      "اشتراكات شاشة",
+      "استرداد رصيد عبر شام كاش",
+      "انشاء موقع",
+      "خدمات الدفع السوريه"
+    ],
+    "supplierCategoryNameStatus": "captured_from_nemer_homepage_html",
+    "supplierSource": {
+      "file": "nemer.html",
+      "repository": "1ahmad3asl-pixel/Nabd-Store",
+      "branch": "main",
+      "extraction": "visible h3 text inside each .provider-card; whitespace normalized"
+    },
+    "supplierToStoreMappings": [
+      {
+        "supplierName": "الارصدة",
+        "storeKey": "balance",
+        "storeTitle": "الارصدة"
+      },
+      {
+        "supplierName": "قسم التطبيقات",
+        "storeKey": "apps",
+        "storeTitle": "قسم التطبيقات"
+      },
+      {
+        "supplierName": "الألعاب",
+        "storeKey": "games",
+        "storeTitle": "الألعاب"
+      },
+      {
+        "supplierName": "الأرقام",
+        "storeKey": "numbers",
+        "storeTitle": "الأرقام"
+      },
+      {
+        "supplierName": "رشق صفحات",
+        "storeKey": "boost",
+        "storeTitle": "رشق صفحات"
+      },
+      {
+        "supplierName": "اشتراكات رقمية",
+        "storeKey": "digital",
+        "storeTitle": "اشتراكات رقمية"
+      },
+      {
+        "supplierName": "البطاقات",
+        "storeKey": "cards",
+        "storeTitle": "البطاقات"
+      },
+      {
+        "supplierName": "حسابات جاهزة",
+        "storeKey": "accounts",
+        "storeTitle": "حسابات جاهزة"
+      },
+      {
+        "supplierName": "ترويج حقيقي",
+        "storeKey": "promo",
+        "storeTitle": "ترويج حقيقي"
+      },
+      {
+        "supplierName": "قسم السوفت وير",
+        "storeKey": "software",
+        "storeTitle": "قسم السوفت وير"
+      },
+      {
+        "supplierName": "قسم برامج الصيانة",
+        "storeKey": "repair",
+        "storeTitle": "قسم برامج الصيانة"
+      },
+      {
+        "supplierName": "توثيق حسابات",
+        "storeKey": "verify",
+        "storeTitle": "توثيق حسابات"
+      },
+      {
+        "supplierName": "خدمات تليجرام",
+        "storeKey": "telegram",
+        "storeTitle": "خدمات تليجرام"
+      },
+      {
+        "supplierName": "قسم الحوالات",
+        "storeKey": "transfers",
+        "storeTitle": "قسم الحوالات"
+      },
+      {
+        "supplierName": "مستويات VIP",
+        "storeKey": "vip",
+        "storeTitle": "مستويات VIP"
+      },
+      {
+        "supplierName": "اشتراكات VPN",
+        "storeKey": "vpn",
+        "storeTitle": "اشتراكات VPN"
+      },
+      {
+        "supplierName": "اشتراكات شاشة",
+        "storeKey": "screens",
+        "storeTitle": "اشتراكات شاشة"
+      },
+      {
+        "supplierName": "استرداد رصيد عبر شام كاش",
+        "storeKey": "shamcash",
+        "storeTitle": "استرداد رصيد عبر شام كاش"
+      },
+      {
+        "supplierName": "انشاء موقع",
+        "storeKey": "website",
+        "storeTitle": "انشاء موقع"
+      },
+      {
+        "supplierName": "خدمات الدفع السوريه",
+        "storeKey": "payments",
+        "storeTitle": "خدمات الدفع السوريه"
+      }
+    ]
   }
 }

@@ -717,10 +717,11 @@ function removeAllCategory() {
 
     state.selectedCategory = "games";
 
-    const firstCategory =
+    const defaultCategory =
+        document.querySelector('.category[data-category="games"]') ||
         document.querySelector(".category");
 
-    if (firstCategory) {
+    if (defaultCategory) {
 
         document
             .querySelectorAll(".category")
@@ -729,10 +730,10 @@ function removeAllCategory() {
 
             });
 
-        firstCategory.classList.add("active");
+        defaultCategory.classList.add("active");
 
         state.selectedCategory =
-            firstCategory.getAttribute(
+            defaultCategory.getAttribute(
                 "data-category"
             ) || "games";
     }
