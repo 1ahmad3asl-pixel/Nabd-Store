@@ -9,6 +9,8 @@ const state = {
     productsCacheKey: "nabd-products-cache-v2",
     gameProductsIndex: null,
     gameProductsSource: null,
+    nemerCategoryMap: null,
+    nemerCategoryMapPromise: null,
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -18,6 +20,26 @@ const state = {
 
 const BACKEND_URL = "";
 let pendingNotificationRead = null;
+
+async function ensureNemerCategoryMap() {
+    if (state.nemerCategoryMap) return state.nemerCategoryMap;
+    if (!state.nemerCategoryMapPromise) {
+        state.nemerCategoryMapPromise = fetch("/config/nemer-category-map.json", {
+            headers: {Accept: "application/json"},
+            cache: "no-cache"
+        }).then(function(response) {
+            if (!response.ok) throw new Error("تعذر تحميل خريطة تصنيف المنتجات.");
+            return response.json();
+        }).then(function(config) {
+            state.nemerCategoryMap = config;
+            return config;
+        }).catch(function(error) {
+            state.nemerCategoryMapPromise = null;
+            throw error;
+        });
+    }
+    return state.nemerCategoryMapPromise;
+}
 
 /*
  * NABD ISOLATION CONTRACT
@@ -869,11 +891,22 @@ function getGameProductsIndex() {
     if (state.gameProductsSource === state.products && state.gameProductsIndex) return state.gameProductsIndex;
 
     const index = new Map();
+    const classifier = window.NemerProductClassifier;
+    const categoryMap = state.nemerCategoryMap;
     state.products.forEach(function(product) {
-        const match = findGameMatch(product);
-        if (!match) return;
-        if (!index.has(match.title)) index.set(match.title, []);
-        index.get(match.title).push(product);
+        let gameKey = null;
+        if (classifier && categoryMap) {
+            const classification = classifier.classifyProduct(product, categoryMap);
+            if (classification.status !== "classified" || classification.section !== "games") return;
+            gameKey = classification.gameKey;
+            if (!gameKey) return;
+        } else {
+            const match = findGameMatch(product);
+            gameKey = match && match.title;
+        }
+        if (!gameKey) return;
+        if (!index.has(gameKey)) index.set(gameKey, []);
+        index.get(gameKey).push(product);
     });
 
     state.gameProductsSource = state.products;
@@ -1069,25 +1102,7 @@ function cleanGameCategoryName(value) {
 }
 
 function getGameProducts(gameTitle) {
-    return state.products.filter(function(product) {
-        const text = normalizeGameText(
-            String(product.category_name || "") + " " +
-            String(product.name || "")
-        );
-
-        if (isPubgGame(gameTitle)) {
-            return text.includes("ببجي") || text.includes("pubg");
-        }
-
-        // جواكر: اربط كل منتجات جواكر مباشرة بالنص القادم من الكتالوج،
-        // ثم دع getJawakerGroupTitle يفرزها إلى المربعات الثلاثة.
-        if (normalizeGameText(gameTitle).includes("jawaker") || normalizeGameText(gameTitle).includes("جواكر")) {
-            return text.includes("جواكر") || text.includes("jawaker");
-        }
-
-        const match = findGameMatch(product);
-        return match && match.title === gameTitle;
-    });
+    return getProductsForGame(gameTitle);
 }
 
 function getRobloxGroupTitle(product) {
@@ -3779,6 +3794,11 @@ function getProductCategory(product) {
 async function loadProducts(options) {
     options = options || {};
     if (state.productsLoadingPromise) return state.productsLoadingPromise;
+    try {
+        await ensureNemerCategoryMap();
+    } catch (error) {
+        console.error("Unified product classifier unavailable; using legacy game matching:", error);
+    }
 
     // اعرض آخر نسخة محفوظة فورًا، ثم حدّثها في الخلفية. هذا يلغي انتظار
     // اتصال Nemer عند كل فتح للموقع أو صفحة الألعاب.
