@@ -9,6 +9,9 @@ const state = {
     productsCacheKey: "nabd-products-cache-v2",
     gameProductsIndex: null,
     gameProductsSource: null,
+    nemerCategoryMap: null,
+    nemerCategoryMapPromise: null,
+    nemerCategoryMapFailed: false,
     selectedCategory: "all",
     balance: 0,
     user: null,
@@ -18,6 +21,27 @@ const state = {
 
 const BACKEND_URL = "";
 let pendingNotificationRead = null;
+
+async function ensureNemerCategoryMap() {
+    if (state.nemerCategoryMap) return state.nemerCategoryMap;
+    if (!state.nemerCategoryMapPromise) {
+        state.nemerCategoryMapPromise = fetch("/config/nemer-category-map.json", {
+            headers: {Accept: "application/json"},
+            cache: "no-cache"
+        }).then(function(response) {
+            if (!response.ok) throw new Error("تعذر تحميل خريطة تصنيف المنتجات.");
+            return response.json();
+        }).then(function(config) {
+            state.nemerCategoryMap = config;
+            return config;
+        }).catch(function(error) {
+            state.nemerCategoryMapPromise = null;
+            state.nemerCategoryMapFailed = true;
+            throw error;
+        });
+    }
+    return state.nemerCategoryMapPromise;
+}
 
 /*
  * NABD ISOLATION CONTRACT
@@ -693,10 +717,11 @@ function removeAllCategory() {
 
     state.selectedCategory = "games";
 
-    const firstCategory =
+    const defaultCategory =
+        document.querySelector('.category[data-category="games"]') ||
         document.querySelector(".category");
 
-    if (firstCategory) {
+    if (defaultCategory) {
 
         document
             .querySelectorAll(".category")
@@ -705,10 +730,10 @@ function removeAllCategory() {
 
             });
 
-        firstCategory.classList.add("active");
+        defaultCategory.classList.add("active");
 
         state.selectedCategory =
-            firstCategory.getAttribute(
+            defaultCategory.getAttribute(
                 "data-category"
             ) || "games";
     }
@@ -724,7 +749,7 @@ const GAME_CATALOG = [
     { title:"Roblox", aliases:["roblox","roblox game","روبلوكس"] },
     { title:"جواكر", aliases:["جواكر","jawaker"] },
     { title:"Yalla Ludo", aliases:["yalla ludo","يلا لودو"] },
-    { title:"Clash of Clans", aliases:["clash of clans","clash"] },
+    { title:"Clash of Clans", aliases:["clash of clans"] },
     { title:"فري فاير", aliases:["free fire","فري فاير"] },
     { title:"Yalla Ludo Gold", aliases:["yalla ludo gold"] },
     { title:"Lords mobile", aliases:["lords mobile"] },
@@ -736,13 +761,13 @@ const GAME_CATALOG = [
     { title:"City Of Crime Gang War", aliases:["city of crime gang war","city of crime gang wars"] },
     { title:"Marvel Rivals", aliases:["marvel rivals","marvel reveals","مارفل ريفيلز","مارفل رايفلز"] },
     { title:"Whiteout Survival", aliases:["whiteout survival"] },
-    { title:"Genshin Impact", aliases:["genshin impact"] },
+    { title:"Genshin Impact", aliases:["genshin impact","genshen impact","جينشن امباكت","جينشن"] },
     { title:"Super SUS", aliases:["super sus"] },
     { title:"Stumble Guys", aliases:["stumble guys"] },
     { title:"Honkai: Star Rail", aliases:["honkai","honkai star rail","star rail","honkai : star rail","هونكاي ستار ريل"] },
     { title:"Yalla Ludo Gold Codes", aliases:["yalla ludo gold codes"] },
     { title:"Yalla Ludo Diamonds Codes", aliases:["yalla ludo diamonds codes"] },
-    { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mlbb","موبايل ليجندز"] },
+    { title:"Mobile Legends: Bang Bang", aliases:["mobile legends","mobile legends turkish","mobile legends bang bang","mobile legend global","mlbb","موبايل ليجندز"] },
     { title:"Hero Clash", aliases:["hero clash"] },
     { title:"Oxide : Survival Island", aliases:["oxide","survival island"] },
         { title:"King Shot", aliases:["king shot"] },
@@ -753,7 +778,7 @@ const GAME_CATALOG = [
     { title:"Blood Strike", aliases:["blood strike","bloodstrike","بلود سترايك"] },
     { title:"Acecraft", aliases:["acecraft","ace craft","إيس كرافت","ايس كرافت"] },
     { title:"Arena Breakout", aliases:["arena breakout","arena breakout mobile","أرينا بريك أوت"] },
-    { title:"Ludo Club", aliases:["ludo club","ludo club game","لودو كلوب"] },
+    { title:"Ludo Club", aliases:["ludo club","ludo club game","ludo clud","لودو كلوب"] },
         { title:"AFK Journey", aliases:["afk journey"] },
     { title:"Division Resurgence", aliases:["division resurgence"] },
     { title:"Age Of Empires Mobile", aliases:["age of empires"] },
@@ -818,7 +843,12 @@ const GAME_CATALOG = [
     { title:"Overmortal Idle Global", aliases:["overmortal idle"] },
     { title:"Onmyoji Arena", aliases:["onmyoji arena"] },
     { title:"My Singing Monsters", aliases:["my singing","monsters"] },
-    { title:"Stormshot", aliases:["stormshot"] }
+    { title:"Stormshot", aliases:["stormshot"] },
+    { title:"Honor of Kings", aliases:["honor of kings","honor of king"] },
+    { title:"Isekai Feast", aliases:["isekai feast","isekai feast tales of recipes"] },
+    { title:"Jade Dynasty", aliases:["jade dynasty","jade dynasty new fantasy"] },
+    { title:"Deadly Dudes", aliases:["deadly dudes"] },
+    { title:"Ensemble Stars Music", aliases:["ensemble stars music"] }
 ];
 
 function normalizeGameText(value) {
@@ -869,11 +899,22 @@ function getGameProductsIndex() {
     if (state.gameProductsSource === state.products && state.gameProductsIndex) return state.gameProductsIndex;
 
     const index = new Map();
+    const classifier = window.NemerProductClassifier;
+    const categoryMap = state.nemerCategoryMap;
     state.products.forEach(function(product) {
-        const match = findGameMatch(product);
-        if (!match) return;
-        if (!index.has(match.title)) index.set(match.title, []);
-        index.get(match.title).push(product);
+        let gameKey = null;
+        if (classifier && categoryMap) {
+            const classification = classifier.classifyProduct(product, categoryMap);
+            if (classification.status !== "classified" || classification.section !== "games") return;
+            gameKey = classification.gameKey;
+            if (!gameKey) return;
+        } else {
+            const match = findGameMatch(product);
+            gameKey = match && match.title;
+        }
+        if (!gameKey) return;
+        if (!index.has(gameKey)) index.set(gameKey, []);
+        index.get(gameKey).push(product);
     });
 
     state.gameProductsSource = state.products;
@@ -1069,25 +1110,7 @@ function cleanGameCategoryName(value) {
 }
 
 function getGameProducts(gameTitle) {
-    return state.products.filter(function(product) {
-        const text = normalizeGameText(
-            String(product.category_name || "") + " " +
-            String(product.name || "")
-        );
-
-        if (isPubgGame(gameTitle)) {
-            return text.includes("ببجي") || text.includes("pubg");
-        }
-
-        // جواكر: اربط كل منتجات جواكر مباشرة بالنص القادم من الكتالوج،
-        // ثم دع getJawakerGroupTitle يفرزها إلى المربعات الثلاثة.
-        if (normalizeGameText(gameTitle).includes("jawaker") || normalizeGameText(gameTitle).includes("جواكر")) {
-            return text.includes("جواكر") || text.includes("jawaker");
-        }
-
-        const match = findGameMatch(product);
-        return match && match.title === gameTitle;
-    });
+    return getProductsForGame(gameTitle);
 }
 
 function getRobloxGroupTitle(product) {
@@ -3769,16 +3792,26 @@ function renderBalanceProductPicker(group) {
     window.scrollTo({top:0,behavior:"smooth"});
 }
 function getProductCategory(product) {
-    const text = String(product.category_name || product.name || "").toLowerCase();
-    if (/جواكر|فري فاير|free fire|ببجي|pubg|لودو|blood strike|روبلوكس|roblox|كلاش|clash|فالورانت|valorant|minecraft|ماينكرافت|fifa|فورتنايت|fortnite/.test(text)) return "games";
-    if (/انستغرام|instagram|فيس بوك|facebook|تيك توك|tiktok|تلجرام|telegram|وتساب|whatsapp|واتساب|سناب|snapchat|كواي|kwai|يوتيوب|youtube|تويتر|twitter/.test(text)) return "social";
-    if (/رقم|وحدات|رصيد|شحن|استرداد رصيد|mtn|syriatel|زين|شامنا/.test(text)) return "numbers";
-    return "other";
+    const classifier = window.NemerProductClassifier;
+    const categoryMap = state.nemerCategoryMap;
+    if (!classifier || !categoryMap) return "other";
+    const classification = classifier.classifyProduct(product, categoryMap);
+    return classification.status === "classified" ? classification.section : "other";
 }
 
 async function loadProducts(options) {
     options = options || {};
     if (state.productsLoadingPromise) return state.productsLoadingPromise;
+    if (!state.nemerCategoryMap && !state.nemerCategoryMapFailed) {
+        state.productsLoadingPromise = ensureNemerCategoryMap().catch(function(error) {
+            console.error("Unified product classifier unavailable; using legacy game matching:", error);
+            return null;
+        }).then(function() {
+            state.productsLoadingPromise = null;
+            return loadProducts(options);
+        });
+        return state.productsLoadingPromise;
+    }
 
     // اعرض آخر نسخة محفوظة فورًا، ثم حدّثها في الخلفية. هذا يلغي انتظار
     // اتصال Nemer عند كل فتح للموقع أو صفحة الألعاب.

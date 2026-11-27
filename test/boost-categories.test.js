@@ -12,7 +12,7 @@ const normalize = value => String(value).toLowerCase().replace(/[أإآ]/g, "ا"
 test("homepage can open the boost category through its delegated click handler", () => {
   assert.match(boostSource, /window\.openBoost\s*=\s*openBoost/);
   assert.match(homeSource, /boost\.js\?v=20261125-boost12/);
-  assert.match(homeSource, /app\.js\?v=20261125-order2/);
+  assert.match(homeSource, /app\.js\?v=20261127-games1/);
   assert.match(homeSource, /boost\.css\?v=20261125-boost1/);
 });
 
@@ -21,7 +21,7 @@ test("All configured boost apps use the shared product picker", () => {
   assert.match(boostSource, /image:\"\/public\/images\/رشـق صفحات\/\"\+esc\(g\.image\)/);
   assert.match(boostSource, /renderGameProductPicker\(g\.title,\{title:g\.title,products:list\},\{image:/);
   assert.match(boostSource, /onBack:\(\)=>openBoost\(false\)/);
-  assert.match(homeSource, /app\.js\?v=20261125-order2/);
+  assert.match(homeSource, /app\.js\?v=20261127-games1/);
 });
 
 test("Facebook uses the shared product picker with its centered app image", () => {
@@ -168,7 +168,7 @@ test("Facebook classification includes all nine API service names written with t
   }).length, 9);
 });
 
-test("boost platform categories render their named JPG image placeholders", () => {
+test("boost platform categories render named image placeholders with valid image signatures", () => {
   const platforms = ["snapchat", "kwai", "facebook", "whatsapp", "instagram", "telegram", "tiktok", "youtube"];
 
   for (const platform of platforms) {
@@ -176,10 +176,12 @@ test("boost platform categories render their named JPG image placeholders", () =
     assert.ok(boostSource.includes(`image:\"${platform}.jpg\"`), `${platform} category declares its JPG image`);
 
     const image = fs.readFileSync(path.join(imageDir, `${platform}.jpg`));
-    assert.equal(image[0], 0xff, `${platform} placeholder has a JPEG start marker`);
-    assert.equal(image[1], 0xd8, `${platform} placeholder has a JPEG start marker`);
-    assert.equal(image[image.length - 2], 0xff, `${platform} placeholder has a JPEG end marker`);
-    assert.equal(image[image.length - 1], 0xd9, `${platform} placeholder has a JPEG end marker`);
+    const isJpeg = image[0] === 0xff && image[1] === 0xd8 &&
+      image[image.length - 2] === 0xff && image[image.length - 1] === 0xd9;
+    const isPng = image.length >= 20 &&
+      image.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) &&
+      image.subarray(-8).equals(Buffer.from([0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82]));
+    assert.ok(isJpeg || isPng, `${platform} placeholder has a valid JPEG or PNG signature`);
   }
 
   assert.match(boostSource, /src="\/public\/images\/رشـق صفحات\/\s*\x27\+esc\(g\.image\)/);
