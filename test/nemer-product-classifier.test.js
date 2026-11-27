@@ -189,10 +189,18 @@ test("ambiguous game parent categories use their explicit canonical game keys", 
   }
 });
 
-test("the 20 supplier categories remain distinct from the 18 existing store home tiles", () => {
+test("the 20 supplier categories have a one-to-one homepage counterpart", () => {
   const homeSource = fs.readFileSync(path.join(__dirname, "..", "pages", "index.html"), "utf8");
+  const tiles = [...homeSource.matchAll(/<button class="category category-tile" data-category="([^"]+)" data-category-title="([^"]+)"/g)]
+    .map(match => ({ key: match[1], title: match[2] }));
   assert.equal(realConfig.sectionTopology.supplierMainCategoryCount, 20);
-  assert.equal(realConfig.sectionTopology.storeMainSectionCount, 18);
-  assert.equal(realConfig.sectionTopology.storeSections.length, 18);
-  assert.equal((homeSource.match(/<button class="category category-tile"/g) || []).length, 18);
+  assert.equal(realConfig.sectionTopology.storeMainSectionCount, 20);
+  assert.equal(realConfig.sectionTopology.storeSections.length, 20);
+  assert.equal(realConfig.sectionTopology.supplierToStoreMappings.length, 20);
+  assert.equal(tiles.length, 20);
+  assert.deepEqual(tiles, realConfig.sectionTopology.storeSections);
+  assert.deepEqual(
+    tiles.map(tile => tile.title),
+    realConfig.sectionTopology.supplierMainCategoryNames
+  );
 });
