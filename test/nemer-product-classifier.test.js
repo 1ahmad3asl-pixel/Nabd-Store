@@ -92,3 +92,15 @@ test("real Nemer snapshot has unique product IDs and no invalid records", () => 
   assert.equal(new Set(ids).size, ids.length);
   assert.ok(realCatalog.every(product => product.id != null && product.category_name));
 });
+
+test("exact parentless category names classify future products without fuzzy matching", () => {
+  const result = classifyProduct({ id: 999999, parent_id: 0, category_name: "TAKA LIVE ~" }, realConfig);
+  assert.equal(result.status, "classified");
+  assert.equal(result.section, "appCredits");
+});
+
+test("product ID override is sent to review if its category name changes", () => {
+  const result = classifyProduct({ id: 2382, parent_id: 0, category_name: "منتج مختلف" }, realConfig);
+  assert.equal(result.status, "review");
+  assert.equal(result.reason, "product_override_category_conflict");
+});
