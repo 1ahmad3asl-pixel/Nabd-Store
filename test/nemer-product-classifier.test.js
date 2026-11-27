@@ -94,7 +94,7 @@ test("real Nemer snapshot has unique product IDs and no invalid records", () => 
 });
 
 test("exact parentless category names classify future products without fuzzy matching", () => {
-  const result = classifyProduct({ id: 999999, parent_id: 0, category_name: "TAKA LIVE ~" }, realConfig);
+  const result = classifyProduct({ id: 999999, parent_id: 0, category_name: "TAKA LIVE" }, realConfig);
   assert.equal(result.status, "classified");
   assert.equal(result.section, "appCredits");
 });
