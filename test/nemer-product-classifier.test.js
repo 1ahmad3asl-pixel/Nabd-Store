@@ -6,11 +6,11 @@ const { classifyProduct, classifyCatalog, sortClassifiedProducts } = require("..
 const config = {
   parentIdRules: {
     "4232": { section: "balance", group: "syriatel-s1", expectedCategoryName: "وحداتسرياتيلs1 ~", sortRule: "price_asc" },
-    "3966": { section: "games", group: "clash-of-clans", expectedCategoryName: "Clash of clans •", sortRule: "source" }
+    "3966": { section: "games", group: "parent-3966", title: "Clash of clans •", expectedCategoryName: "Clash of clans •", sortRule: "source" }
   },
   categoryNameRules: {},
   productIdOverrides: {
-    "3418": { section: "boost", group: "facebook" }
+    "3418": { section: "boost", group: "facebook", title: "فيسبوك" }
   },
   sortRules: { facebook: "source" }
 };
